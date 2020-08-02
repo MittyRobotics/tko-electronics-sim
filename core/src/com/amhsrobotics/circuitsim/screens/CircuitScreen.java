@@ -35,6 +35,8 @@ public class CircuitScreen implements Screen {
 
     public CircuitScreen(final Game game) {
 
+        //Setup stage
+
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
@@ -51,14 +53,15 @@ public class CircuitScreen implements Screen {
         tStyle.up = skin.getDrawable("button_03");
         tStyle.down = skin.getDrawable("button_02");
 
+        //Add back button
 
-        back = new TextButton("Back", tStyle);
+        back = new TextButton(" Back ", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
+                Tools.slideOut(back, "left", 0.2f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
                         game.setScreen(new MenuScreen(game));
@@ -67,7 +70,7 @@ public class CircuitScreen implements Screen {
             }
         });
 
-        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
+        Tools.slideIn(back, "left", 0.2f, Interpolation.exp10, 100);
 
         stage.addActor(back);
     }
@@ -76,12 +79,30 @@ public class CircuitScreen implements Screen {
         FileHandle fontFile = Gdx.files.internal(fontfile);
         generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 20;
+        parameter.size = 30;
         return generator.generateFont(parameter);
     }
 
     @Override
     public void render(float delta) {
+
+        //Render Grid
+
+        this.renderer.begin(ShapeRenderer.ShapeType.Line);
+
+        this.renderer.setColor(0, 0, 30/255f, 1);
+
+        for(int i = 10; i < Gdx.graphics.getWidth(); i+=40) {
+            for (int j = 10; j < Gdx.graphics.getHeight(); j += 40) {
+                this.renderer.line(i, 0, i, Gdx.graphics.getHeight());
+                this.renderer.line(0, j, Gdx.graphics.getWidth(), j);
+            }
+        }
+        this.renderer.end();
+
+
+        //Stage
+
         stage.act(delta);
         stage.draw();
     }
