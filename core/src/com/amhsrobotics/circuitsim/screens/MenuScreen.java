@@ -153,19 +153,19 @@ public class MenuScreen implements Screen {
 //        if(new Rectangle(title.getX(), title.getY(), title.getWidth(), title.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {;
 //        }
 
-        if (new Rectangle(rohan.getX(), rohan.getY(), rohan.getWidth(), rohan.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-            if(Gdx.input.justTouched()) {
-                openWebpage("https://github.com/Rohan-Bansal");
-            }
-        } else if (new Rectangle(andy.getX(), andy.getY(), andy.getWidth(), andy.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-            if(Gdx.input.justTouched()) {
-                openWebpage("https://github.com/AndyLi23");
-            }
-        } else {
-            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-        }
+//        if (new Rectangle(rohan.getX(), rohan.getY(), rohan.getWidth(), rohan.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
+//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+//            if(Gdx.input.justTouched()) {
+//                openWebpage("https://github.com/Rohan-Bansal");
+//            }
+//        } else if (new Rectangle(andy.getX(), andy.getY(), andy.getWidth(), andy.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
+//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+//            if(Gdx.input.justTouched()) {
+//                openWebpage("https://github.com/AndyLi23");
+//            }
+//        } else {
+//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+//        }
     }
 
     public static void openWebpage(String urlString) {
