@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -88,21 +87,6 @@ public class ImportScreen implements Screen {
     @Override
     public void render(float delta) {
         //Render Grid
-
-        this.renderer.begin(ShapeRenderer.ShapeType.Line);
-
-        this.renderer.setColor(0, 0, 30/255f, 1);
-
-        this.width = Gdx.graphics.getWidth();
-        this.height = Gdx.graphics.getHeight();
-
-        for(int i = 3; i < width; i+=40) {
-            for (int j = 3; j < height; j += 40) {
-                this.renderer.line(i, 0, i, height);
-                this.renderer.line(0, j, width, j);
-            }
-        }
-        this.renderer.end();
 
 
         //Stage
