@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -38,6 +39,11 @@ public class CircuitScreen implements Screen {
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
         this.font = renderFont("font/Abel-Regular.ttf");
+
+        this.renderer.begin(ShapeRenderer.ShapeType.Line);
+        this.renderer.setColor(1, 1, 1, 1);
+        this.renderer.line(0, 0, 400, 400);
+        this.renderer.end();
 
         atlas = new TextureAtlas(Gdx.files.internal("skin/ui-orange.atlas"));
         skin = new Skin(atlas);
