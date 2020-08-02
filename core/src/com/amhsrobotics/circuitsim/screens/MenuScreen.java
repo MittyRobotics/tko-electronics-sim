@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -67,10 +68,10 @@ public class MenuScreen implements Screen {
         lStyle.font = this.font;
         lStyle.fontColor = Color.SALMON;
 
-        new_circuit = new TextButton("New Circuit", tStyle);
-        import_circuit = new TextButton("Import Circuit", tStyle);
-        credits = new TextButton("Credits", tStyle);
-        contests = new TextButton("Contests", tStyle);
+        new_circuit = new TextButton(" New Circuit ", tStyle);
+        import_circuit = new TextButton(" Import Circuit ", tStyle);
+        credits = new TextButton(" Credits ", tStyle);
+        contests = new TextButton(" Contests ", tStyle);
 
         rohan = new Label("Rohan Bansal", lStyle);
         rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
@@ -88,9 +89,9 @@ public class MenuScreen implements Screen {
         new_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.sequenceSlideOut("right", 1, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
-                Tools.sequenceSlideOut("down", 1, Interpolation.pow3, 300, 0.2f, credits);
-                Tools.slideOut(title, "top", 2, Interpolation.exp10, 100, new Runnable() {
+                Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
+                Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
+                Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
                         dispose();
@@ -117,9 +118,9 @@ public class MenuScreen implements Screen {
         import_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.sequenceSlideOut("right", 1, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
-                Tools.sequenceSlideOut("down", 1, Interpolation.pow3, 300, 0.2f, credits);
-                Tools.slideOut(title, "top", 2, Interpolation.exp10, 100, new Runnable() {
+                Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
+                Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
+                Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
                         dispose();
@@ -147,17 +148,24 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        this.renderer.begin(ShapeRenderer.ShapeType.Line);
+
+        this.renderer.setColor(0, 0, 30/255f, 1);
+
+        for(int i = 10; i < Gdx.graphics.getWidth(); i+=40) {
+            for (int j = 10; j < Gdx.graphics.getHeight(); j += 40) {
+                this.renderer.line(i, 0, i, Gdx.graphics.getHeight());
+                this.renderer.line(0, j, Gdx.graphics.getWidth(), j);
+            }
+        }
+        this.renderer.end();
+
         stage.act(delta);
         stage.draw();
 
 //        if(new Rectangle(title.getX(), title.getY(), title.getWidth(), title.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {;
 //        }
 
-//        if (new Rectangle(rohan.getX(), rohan.getY(), rohan.getWidth(), rohan.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-//            if(Gdx.input.justTouched()) {
-//                openWebpage("https://github.com/Rohan-Bansal");
-//            }
 //        } else if (new Rectangle(andy.getX(), andy.getY(), andy.getWidth(), andy.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
 //            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
 //            if(Gdx.input.justTouched()) {
