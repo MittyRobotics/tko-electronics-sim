@@ -67,7 +67,7 @@ public class MenuScreen implements Screen {
         credits = new TextButton("Credits", tStyle);
         contests = new TextButton("Contests", tStyle);
 
-        title = new Image(new Texture(Gdx.files.internal("img/circuitsim.png")));
+        title = new Image(new Texture(Gdx.files.internal("img/circuitsim2.png")));
         title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 200);
 
         new_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - new_circuit.getWidth() / 2, 400);
@@ -86,7 +86,6 @@ public class MenuScreen implements Screen {
                         game.setScreen(new CircuitScreen(game));
                     }
                 });
-
             }
         });
 
@@ -101,7 +100,6 @@ public class MenuScreen implements Screen {
                         game.setScreen(new ImportScreen(game));
                     }
                 });
-
             }
         });
 
