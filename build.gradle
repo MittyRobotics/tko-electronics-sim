@@ -45,6 +45,7 @@ project(":desktop") {
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
@@ -65,5 +66,7 @@ project(":core") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "me.rohanbansal.ricochet:ricochet:1.9.5-SNAPSHOT"
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+
     }
 }
