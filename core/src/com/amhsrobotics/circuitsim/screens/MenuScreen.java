@@ -57,7 +57,7 @@ public class MenuScreen implements Screen {
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         Gdx.input.setInputProcessor(stage);
 
-        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-orange.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
         skin = new Skin(atlas);
 
         TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
@@ -108,9 +108,9 @@ public class MenuScreen implements Screen {
                 if(creditsShown) {
                     rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 50);
                     andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 20);
-                    Tools.sequenceSlideIn("down", 2f, Interpolation.pow3, 100, 0.4f, rohan, andy);
+                    Tools.sequenceSlideIn("down", 1f, Interpolation.pow3, 100, 0.4f, rohan, andy);
                 } else {
-                    Tools.sequenceSlideOut("down", 2f, Interpolation.pow3, 100, 0.4f, andy, rohan);
+                    Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
                 }
             }
         });
