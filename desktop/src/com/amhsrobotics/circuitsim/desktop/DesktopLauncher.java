@@ -12,7 +12,6 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.width = 1366;
 		config.height = 768;
-		config.forceExit = false;
 //		config.setTitle("TKO 1351 Circuit Simulator");
 //		config.setResizable(false);
 //		config.setHdpiMode(HdpiMode.Logical);
