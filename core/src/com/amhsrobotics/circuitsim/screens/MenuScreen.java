@@ -68,7 +68,7 @@ public class MenuScreen implements Screen {
         contests = new TextButton("Contests", tStyle);
 
         title = new Image(new Texture(Gdx.files.internal("img/circuitsim.png")));
-        title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 200);
+        title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 250);
 
         new_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - new_circuit.getWidth() / 2, 400);
         import_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - import_circuit.getWidth() / 2, 330);
@@ -103,9 +103,9 @@ public class MenuScreen implements Screen {
             }
         });
 
-        Tools.sequenceSlideIn("left", 2, Interpolation.exp10, 300, 0.4f, new_circuit, import_circuit, contests);
-        Tools.slideIn(credits, "down", 3, Interpolation.exp5, 50);
-        Tools.slideIn(title, "top", 1.5f, Interpolation.exp5, 300);
+        Tools.sequenceSlideIn("left", 1.5f, Interpolation.exp10, 300, 0.4f, new_circuit, import_circuit, contests);
+        Tools.slideIn(credits, "down", 1.5f, Interpolation.exp5, 50);
+        Tools.slideIn(title, "top", 1.0f, Interpolation.exp5, 300);
 
         stage.addActors(new_circuit, import_circuit, contests, credits, title);
     }
