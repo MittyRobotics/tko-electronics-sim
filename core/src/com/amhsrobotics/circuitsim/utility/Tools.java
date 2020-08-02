@@ -1,6 +1,9 @@
 package com.amhsrobotics.circuitsim.utility;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -8,6 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Tools {
+
+    public static BitmapFont renderFont(String fontfile, int size) {
+        FileHandle fontFile = Gdx.files.internal(fontfile);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 30;
+        BitmapFont fnt = generator.generateFont(parameter);
+        generator.dispose();
+        return fnt;
+    }
 
     public static void slideIn(Actor actor, String direction, float duration, Interpolation interp, int offset, Runnable... runnable) {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());

@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.screens;
 
+import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
@@ -33,16 +34,12 @@ public class MenuScreen implements Screen {
     private final Game game;
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
-    private BitmapFont font, font_alternate;
-    private TextureAtlas atlas;
-    private Skin skin;
 
     private int height, width;
 
     private TextButton new_circuit, import_circuit, credits, contests;
     private Label rohan, andy;
     private Image title;
-    FreeTypeFontGenerator generator;
 
     private boolean creditsShown = false;
 
@@ -51,23 +48,17 @@ public class MenuScreen implements Screen {
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
 
-        this.font = renderFont("font/Abel-Regular.ttf");
-        this.font_alternate = new BitmapFont(Gdx.files.internal("font/ari2.fnt"));
-        font_alternate.getData().setScale(0.8f);
-
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         Gdx.input.setInputProcessor(stage);
 
-        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
-        skin = new Skin(atlas);
 
         TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
-        tStyle.font = this.font;
-        tStyle.up = skin.getDrawable("button_03");
-        tStyle.down = skin.getDrawable("button_02");
+        tStyle.font = Constants.FONT;
+        tStyle.up = Constants.SKIN.getDrawable("button_03");
+        tStyle.down = Constants.SKIN.getDrawable("button_02");
 
         Label.LabelStyle lStyle = new Label.LabelStyle();
-        lStyle.font = this.font;
+        lStyle.font = Constants.FONT;
         lStyle.fontColor = Color.SALMON;
 
         new_circuit = new TextButton(" New Circuit ", tStyle);
@@ -139,14 +130,6 @@ public class MenuScreen implements Screen {
         stage.addActors(new_circuit, import_circuit, contests, credits, title, andy, rohan);
     }
 
-    private BitmapFont renderFont(String fontfile) {
-        FileHandle fontFile = Gdx.files.internal(fontfile);
-        generator = new FreeTypeFontGenerator(fontFile);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
-        return generator.generateFont(parameter);
-    }
-
     @Override
     public void render(float delta) {
 
@@ -167,34 +150,20 @@ public class MenuScreen implements Screen {
 
         stage.act(delta);
         stage.draw();
-
-//        if(new Rectangle(title.getX(), title.getY(), title.getWidth(), title.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {;
-//        }
-
-//        } else if (new Rectangle(andy.getX(), andy.getY(), andy.getWidth(), andy.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
-//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-//            if(Gdx.input.justTouched()) {
-//                openWebpage("https://github.com/AndyLi23");
-//            }
-//        } else {
-//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-//        }
     }
 
-    public static void openWebpage(String urlString) {
-        try {
-            Desktop.getDesktop().browse(new URL(urlString).toURI());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void openWebpage(String urlString) {
+//        try {
+//            Desktop.getDesktop().browse(new URL(urlString).toURI());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void dispose() {
         renderer.dispose();
-        font.dispose();
         stage.dispose();
-        generator.dispose();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.screens;
 
+import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
@@ -26,14 +27,9 @@ public class CircuitScreen implements Screen {
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
 
-    private BitmapFont font;
-    private TextureAtlas atlas;
-    private Skin skin;
-
     private int height, width;
 
     private TextButton back;
-    FreeTypeFontGenerator generator;
 
     public CircuitScreen(final Game game) {
 
@@ -42,18 +38,14 @@ public class CircuitScreen implements Screen {
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
-        this.font = renderFont("font/Abel-Regular.ttf");
-
-        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
-        skin = new Skin(atlas);
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         Gdx.input.setInputProcessor(stage);
 
         TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
-        tStyle.font = this.font;
-        tStyle.up = skin.getDrawable("button_03");
-        tStyle.down = skin.getDrawable("button_02");
+        tStyle.font = Constants.FONT;
+        tStyle.up = Constants.SKIN.getDrawable("button_03");
+        tStyle.down = Constants.SKIN.getDrawable("button_02");
 
         //Add back button
 
@@ -75,14 +67,6 @@ public class CircuitScreen implements Screen {
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
 
         stage.addActor(back);
-    }
-
-    private BitmapFont renderFont(String fontfile) {
-        FileHandle fontFile = Gdx.files.internal(fontfile);
-        generator = new FreeTypeFontGenerator(fontFile);
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
-        return generator.generateFont(parameter);
     }
 
     @Override
@@ -115,9 +99,7 @@ public class CircuitScreen implements Screen {
     @Override
     public void dispose() {
         renderer.dispose();
-        font.dispose();
         stage.dispose();
-        generator.dispose();
     }
 
     @Override
