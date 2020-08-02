@@ -132,9 +132,9 @@ public class MenuScreen implements Screen {
             }
         });
 
-        Tools.sequenceSlideIn("left", 1.5f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit, contests);
-        Tools.slideIn(credits, "down", 1.5f, Interpolation.exp5, 50);
-        Tools.slideIn(title, "top", 1.0f, Interpolation.exp5, 300);
+        Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit, contests);
+        Tools.slideIn(credits, "down", 1.0f, Interpolation.exp5, 50);
+        Tools.slideIn(title, "top", 0.5f, Interpolation.exp5, 300);
 
         stage.addActors(new_circuit, import_circuit, contests, credits, title, andy, rohan);
     }
