@@ -71,8 +71,8 @@ public class MenuScreen implements Screen {
         title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 200);
 
         new_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - new_circuit.getWidth() / 2, 400);
-        import_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - import_circuit.getWidth() / 2, 350);
-        contests.setPosition((float) Gdx.graphics.getWidth() / 2 - contests.getWidth() / 2, 300);
+        import_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - import_circuit.getWidth() / 2, 330);
+        contests.setPosition((float) Gdx.graphics.getWidth() / 2 - contests.getWidth() / 2, 260);
         credits.setPosition((float) Gdx.graphics.getWidth() / 2 - credits.getWidth() / 2, 160);
 
         new_circuit.addListener(new ChangeListener() {
@@ -116,7 +116,7 @@ public class MenuScreen implements Screen {
         FileHandle fontFile = Gdx.files.internal(fontfile);
         generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 18;
+        parameter.size = 30;
         return generator.generateFont(parameter);
     }
 
