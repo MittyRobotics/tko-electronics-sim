@@ -39,23 +39,25 @@ public class CircuitScreen implements Screen {
         this.renderer = new ModifiedShapeRenderer();
         this.font = renderFont("font/Abel-Regular.ttf");
 
-        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-orange.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
         skin = new Skin(atlas);
+
+        stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
+        Gdx.input.setInputProcessor(stage);
 
         TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
         tStyle.font = this.font;
         tStyle.up = skin.getDrawable("button_03");
         tStyle.down = skin.getDrawable("button_02");
 
-        stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
 
-        back = new TextButton("<-Back", tStyle);
-        back.setPosition((float) 20, Gdx.graphics.getHeight()-70);
+        back = new TextButton("Back", tStyle);
+        back.setPosition(20, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.slideOut(back, "right", 0.5f, Interpolation.exp10, 100, new Runnable() {
+                Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
                         game.setScreen(new MenuScreen(game));
@@ -64,16 +66,16 @@ public class CircuitScreen implements Screen {
             }
         });
 
-        Tools.sequenceSlideIn("left", 0.5f, Interpolation.exp10, 100, 0.0f, back);
+        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
 
-        stage.addActors(back);
+        stage.addActor(back);
     }
 
     private BitmapFont renderFont(String fontfile) {
         FileHandle fontFile = Gdx.files.internal(fontfile);
         generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
+        parameter.size = 20;
         return generator.generateFont(parameter);
     }
 
