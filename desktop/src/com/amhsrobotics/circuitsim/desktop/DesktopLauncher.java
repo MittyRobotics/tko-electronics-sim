@@ -1,19 +1,23 @@
 package com.amhsrobotics.circuitsim.desktop;
 
 import com.amhsrobotics.circuitsim.Main;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.glutils.HdpiMode;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
-		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.setTitle("TKO 1351 Circuit Simulator");
-		config.setResizable(false);
-		config.setHdpiMode(HdpiMode.Logical);
-		config.setWindowedMode(1366, 768);
+		config.title = "TKO 1351 Circuit Simulator";
+		config.resizable = false;
+		config.width = 1366;
+		config.height = 768;
+//		config.setTitle("TKO 1351 Circuit Simulator");
+//		config.setResizable(false);
+//		config.setHdpiMode(HdpiMode.Logical);
+//		config.setWindowedMode(1366, 768);
 
-		new Lwjgl3Application(new Main(), config);
+		new LwjglApplication(new Main(), config);
 	}
 }
