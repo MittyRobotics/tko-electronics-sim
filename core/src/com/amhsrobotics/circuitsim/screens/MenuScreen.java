@@ -1,12 +1,13 @@
 package com.amhsrobotics.circuitsim.screens;
 
-import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,17 +16,16 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import javax.swing.*;
-
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import java.awt.*;
+import java.net.URL;
 
 
 public class MenuScreen implements Screen {
@@ -39,8 +39,11 @@ public class MenuScreen implements Screen {
     private Skin skin;
 
     private TextButton new_circuit, import_circuit, credits, contests;
+    private Label rohan, andy;
     private Image title;
     FreeTypeFontGenerator generator;
+
+    private boolean creditsShown = false;
 
     public MenuScreen(final Game game) {
         this.game = game;
@@ -62,10 +65,19 @@ public class MenuScreen implements Screen {
         tStyle.up = skin.getDrawable("button_03");
         tStyle.down = skin.getDrawable("button_02");
 
+        Label.LabelStyle lStyle = new Label.LabelStyle();
+        lStyle.font = this.font;
+        lStyle.fontColor = Color.SALMON;
+
         new_circuit = new TextButton("New Circuit", tStyle);
         import_circuit = new TextButton("Import Circuit", tStyle);
         credits = new TextButton("Credits", tStyle);
         contests = new TextButton("Contests", tStyle);
+
+        rohan = new Label("Rohan Bansal", lStyle);
+        rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
+        andy = new Label("Andy Li", lStyle);
+        andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, -100);
 
         title = new Image(new Texture(Gdx.files.internal("img/circuitsim.png")));
         title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 200);
@@ -89,6 +101,20 @@ public class MenuScreen implements Screen {
             }
         });
 
+        credits.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                creditsShown = !creditsShown;
+                if(creditsShown) {
+                    rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 50);
+                    andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 20);
+                    Tools.sequenceSlideIn("down", 2f, Interpolation.pow3, 100, 0.4f, rohan, andy);
+                } else {
+                    Tools.sequenceSlideOut("down", 2f, Interpolation.pow3, 100, 0.4f, andy, rohan);
+                }
+            }
+        });
+
         import_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -104,10 +130,10 @@ public class MenuScreen implements Screen {
         });
 
         Tools.sequenceSlideIn("left", 2, Interpolation.exp10, 300, 0.4f, new_circuit, import_circuit, contests);
-        Tools.slideIn(credits, "down", 3, Interpolation.exp5, 50);
+        Tools.slideIn(credits, "down", 3, Interpolation.exp5, 70);
         Tools.slideIn(title, "top", 1.5f, Interpolation.exp5, 300);
 
-        stage.addActors(new_circuit, import_circuit, contests, credits, title);
+        stage.addActors(new_circuit, import_circuit, contests, credits, title, andy, rohan);
     }
 
     private BitmapFont renderFont(String fontfile) {
@@ -126,6 +152,28 @@ public class MenuScreen implements Screen {
 
 //        if(new Rectangle(title.getX(), title.getY(), title.getWidth(), title.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {;
 //        }
+
+        if (new Rectangle(rohan.getX(), rohan.getY(), rohan.getWidth(), rohan.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
+            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            if(Gdx.input.justTouched()) {
+                openWebpage("https://github.com/Rohan-Bansal");
+            }
+        } else if (new Rectangle(andy.getX(), andy.getY(), andy.getWidth(), andy.getHeight()).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
+            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+            if(Gdx.input.justTouched()) {
+                openWebpage("https://github.com/AndyLi23");
+            }
+        } else {
+            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+        }
+    }
+
+    public static void openWebpage(String urlString) {
+        try {
+            Desktop.getDesktop().browse(new URL(urlString).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
