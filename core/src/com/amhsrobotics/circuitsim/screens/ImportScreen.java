@@ -62,7 +62,7 @@ public class ImportScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.slideOut(back, "left", 0.2f, Interpolation.exp10, 100, new Runnable() {
+                Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
                         game.setScreen(new MenuScreen(game));
@@ -71,7 +71,7 @@ public class ImportScreen implements Screen {
             }
         });
 
-        Tools.slideIn(back, "left", 0.2f, Interpolation.exp10, 100);
+        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
 
         stage.addActor(back);
     }
