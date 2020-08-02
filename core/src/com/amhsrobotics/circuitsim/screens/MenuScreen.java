@@ -7,14 +7,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -95,6 +93,7 @@ public class MenuScreen implements Screen {
                 Tools.slideOut(title, "top", 2, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
+                        dispose();
                         game.setScreen(new CircuitScreen(game));
                     }
                 });
@@ -123,13 +122,14 @@ public class MenuScreen implements Screen {
                 Tools.slideOut(title, "top", 2, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
+                        dispose();
                         game.setScreen(new ImportScreen(game));
                     }
                 });
             }
         });
 
-        Tools.sequenceSlideIn("left", 1.5f, Interpolation.exp10, 300, 0.4f, new_circuit, import_circuit, contests);
+        Tools.sequenceSlideIn("left", 1.5f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit, contests);
         Tools.slideIn(credits, "down", 1.5f, Interpolation.exp5, 50);
         Tools.slideIn(title, "top", 1.0f, Interpolation.exp5, 300);
 
