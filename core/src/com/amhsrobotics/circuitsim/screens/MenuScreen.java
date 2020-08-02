@@ -39,6 +39,8 @@ public class MenuScreen implements Screen {
     private TextureAtlas atlas;
     private Skin skin;
 
+    private int height, width;
+
     private TextButton new_circuit, import_circuit, credits, contests;
     private Label rohan, andy;
     private Image title;
@@ -152,10 +154,13 @@ public class MenuScreen implements Screen {
 
         this.renderer.setColor(0, 0, 30/255f, 1);
 
-        for(int i = 10; i < Gdx.graphics.getWidth(); i+=40) {
-            for (int j = 10; j < Gdx.graphics.getHeight(); j += 40) {
-                this.renderer.line(i, 0, i, Gdx.graphics.getHeight());
-                this.renderer.line(0, j, Gdx.graphics.getWidth(), j);
+        this.width = Gdx.graphics.getWidth();
+        this.height = Gdx.graphics.getHeight();
+
+        for(int i = 3; i < width; i+=40) {
+            for (int j = 3; j < height; j += 40) {
+                this.renderer.line(i, 0, i, height);
+                this.renderer.line(0, j, width, j);
             }
         }
         this.renderer.end();
