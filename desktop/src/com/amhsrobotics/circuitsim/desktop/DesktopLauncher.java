@@ -3,7 +3,6 @@ package com.amhsrobotics.circuitsim.desktop;
 import com.amhsrobotics.circuitsim.Main;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.badlogic.gdx.graphics.glutils.HdpiMode;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -13,6 +12,7 @@ public class DesktopLauncher {
 		config.resizable = false;
 		config.width = 1366;
 		config.height = 768;
+		config.forceExit = false;
 //		config.setTitle("TKO 1351 Circuit Simulator");
 //		config.setResizable(false);
 //		config.setHdpiMode(HdpiMode.Logical);
