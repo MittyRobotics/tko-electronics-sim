@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -27,53 +28,22 @@ public class CircuitScreen implements Screen {
     private final ModifiedShapeRenderer renderer;
     private ClippedCameraController camera;
 
-    private TextButton back;
+    private CircuitGUIManager manager;
 
     public CircuitScreen(final Game game) {
-
-        //Setup stage
 
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
 
         camera = new ClippedCameraController(true);
-
         camera.getCamera().translate(Constants.WORLD_DIM.x / 2, Constants.WORLD_DIM.y / 2);
         camera.attachCameraSequence(new ArrayList<CameraAction>() {{
             add(Actions.zoomCameraTo(2f, 1f, Interpolation.exp10));
         }});
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
-
-        TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
-        tStyle.font = Constants.FONT_SMALL;
-        tStyle.up = Constants.SKIN.getDrawable("button_03");
-        tStyle.down = Constants.SKIN.getDrawable("button_02");
-
-        //Add back button
-
-        back = new TextButton(" Back ", tStyle);
-        back.setPosition(20, Gdx.graphics.getHeight() - 70);
-
-        back.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                camera.attachCameraSequence(new ArrayList<CameraAction>() {{
-                    add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
-                }});
-                Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
-                    @Override
-                    public void run() {
-                        game.setScreen(new MenuScreen(game));
-                    }
-                });
-            }
-        });
-
-        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
-
-        stage.addActor(back);
+        manager = new CircuitGUIManager(stage, camera, game);
 
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
@@ -124,8 +94,7 @@ public class CircuitScreen implements Screen {
         renderer.circle(mpos.x, mpos.y, 10);
         renderer.end();
 
-        stage.act(delta);
-        stage.draw();
+        manager.update(delta);
     }
 
     @Override
