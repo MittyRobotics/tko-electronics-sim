@@ -24,6 +24,7 @@ import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CircuitGUIManager {
 
@@ -32,13 +33,20 @@ public class CircuitGUIManager {
     private TextButton back;
     private Table container;
 
+    private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
+
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
 
-        TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
+        final TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;
         tStyle.up = Constants.SKIN.getDrawable("button_03");
         tStyle.down = Constants.SKIN.getDrawable("button_02");
+
+        final TextButton.TextButtonStyle t2Style = new TextButton.TextButtonStyle();
+        t2Style.font = Constants.FONT_SMALL;
+        t2Style.up = Constants.SKIN_ALTERNATE.getDrawable("button_03");
+        t2Style.down = Constants.SKIN_ALTERNATE.getDrawable("button_02");
 
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = Constants.FONT_SMALL;
@@ -55,10 +63,8 @@ public class CircuitGUIManager {
         stage.addActor(container);
 
         Table table = new Table();
-
         ScrollPane scroll = new ScrollPane(table, sStyle);
         scroll.setScrollingDisabled(true,false);
-
         table.pad(10).defaults().expandX().space(4);
         for (int i = 0; i < 100; i++) {
             table.row();
@@ -78,19 +84,73 @@ public class CircuitGUIManager {
         stage.addActor(filters);
 
         Table table2 = new Table();
-
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
         scrollFilters.setScrollingDisabled(true,false);
-
         table2.pad(5).defaults().expandX().space(6);
-        for (int i = 0; i < 2; i++) {
-            table2.row();
-            TextButton btn = new TextButton(" Filter ", tStyle);
-            table2.add(btn).width(70);
-            TextButton btn2 = new TextButton(" Filter ", tStyle);
-            table2.add(btn2).width(70);
-        }
+        final TextButton fil1 = new TextButton("Elec.", tStyle);
+        table2.add(fil1).width(70);
+        filtersMap.put(fil1, false);
+        final TextButton fil2 = new TextButton("Pneum.", tStyle);
+        table2.add(fil2).width(70);
+        filtersMap.put(fil2, false);
+        table2.row();
+        final TextButton fil3 = new TextButton("Wires", tStyle);
+        table2.add(fil3).width(70);
+        filtersMap.put(fil3, false);
+        final TextButton fil4 = new TextButton("Other", tStyle);
+        table2.add(fil4).width(70);
+        filtersMap.put(fil4, false);
         filters.add(scrollFilters).expand().fill();
+
+        fil1.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(filtersMap.get(fil1)) {
+                    filtersMap.put(fil1, false);
+                    fil1.setStyle(t2Style);
+                } else {
+                    filtersMap.put(fil1, true);
+                    fil1.setStyle(tStyle);
+                }
+            }
+        });
+        fil2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(filtersMap.get(fil2)) {
+                    filtersMap.put(fil2, false);
+                    fil2.setStyle(t2Style);
+                } else {
+                    filtersMap.put(fil2, true);
+                    fil2.setStyle(tStyle);
+                }
+            }
+        });
+        fil3.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(filtersMap.get(fil3)) {
+                    filtersMap.put(fil3, false);
+                    fil3.setStyle(t2Style);
+                } else {
+                    filtersMap.put(fil3, true);
+                    fil3.setStyle(tStyle);
+                }
+            }
+        });
+        fil4.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(filtersMap.get(fil4)) {
+                    filtersMap.put(fil4, false);
+                    fil4.setStyle(t2Style);
+                } else {
+                    filtersMap.put(fil4, true);
+                    fil4.setStyle(tStyle);
+                }
+            }
+        });
+
 
         back = new TextButton(" Back ", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);

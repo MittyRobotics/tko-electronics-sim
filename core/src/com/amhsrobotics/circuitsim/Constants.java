@@ -12,7 +12,9 @@ public class Constants {
     public static final BitmapFont FONT = Tools.renderFont("font/Abel-Regular.ttf", 30);
     public static final BitmapFont FONT_SMALL = Tools.renderFont("font/Abel-Regular.ttf", 20);
     public static final TextureAtlas ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
+    public static final TextureAtlas ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
     public static final Skin SKIN = new Skin(ATLAS);
+    public static final Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
     public static final Vector2 WORLD_DIM = new Vector2(5000, 5000);
     public static final int GRID_SIZE = 40;
@@ -21,6 +23,8 @@ public class Constants {
         FONT.dispose();
         FONT_SMALL.dispose();
         ATLAS.dispose();
+        ATLAS_ALTERNATE.dispose();
+        SKIN_ALTERNATE.dispose();
         SKIN.dispose();
     }
 }
