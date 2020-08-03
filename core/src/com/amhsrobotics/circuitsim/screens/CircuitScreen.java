@@ -1,17 +1,14 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.InputManager;
-import com.amhsrobotics.circuitsim.utility.ModifiedStage;
-import com.amhsrobotics.circuitsim.utility.Tools;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
+import com.amhsrobotics.circuitsim.utility.*;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -91,13 +88,18 @@ public class CircuitScreen implements Screen {
 
             @Override
             public boolean scrolled(int amount) {
-                camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
-                if(camera.getCamera().zoom > 3.55) {
-                    camera.getCamera().zoom = 3.55f;
-                } else if(camera.getCamera().zoom < 0.2) {
-                    camera.getCamera().zoom = 0.2f;
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    camera.getCamera().translate(0, amount > 0 ? 12.1f : -12.1f);
+                } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+                    camera.getCamera().translate(amount > 0 ? 12.1f : -12.1f, 0);
+                } else {
+                    camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
+                    if(camera.getCamera().zoom > 3.55) {
+                        camera.getCamera().zoom = 3.55f;
+                    } else if(camera.getCamera().zoom < 0.2) {
+                        camera.getCamera().zoom = 0.2f;
+                    }
                 }
-
                 return super.scrolled(amount);
             }
         });
@@ -111,17 +113,16 @@ public class CircuitScreen implements Screen {
         camera.calculateBounds();
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
-        this.renderer.setColor(0, 0, 30/255f, 1);
+        SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
-        this.renderer.begin(ShapeRenderer.ShapeType.Line);
-        for(int i = 3; i < Constants.WORLD_DIM.x; i += 40) {
-            for (int j = 3; j < Constants.WORLD_DIM.y; j += 40) {
-                this.renderer.line(i, 0, i, Constants.WORLD_DIM.y);
-                this.renderer.line(0, j, Constants.WORLD_DIM.x, j);
-            }
-        }
-        this.renderer.end();
+        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.getCamera().unproject(mousePos);
+        Vector2 mpos = new Vector2(mousePos.x, mousePos.y);
+        SnapGrid.calculateSnap(mpos);
 
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.circle(mpos.x, mpos.y, 10);
+        renderer.end();
 
         stage.act(delta);
         stage.draw();

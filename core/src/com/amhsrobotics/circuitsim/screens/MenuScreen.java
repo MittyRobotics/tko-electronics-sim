@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -9,8 +10,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -26,8 +27,6 @@ public class MenuScreen implements Screen {
     private final Game game;
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
-
-    private int height, width;
 
     private TextButton new_circuit, import_circuit, credits, contests;
     private Label rohan, andy;
@@ -93,7 +92,7 @@ public class MenuScreen implements Screen {
                 creditsShown = !creditsShown;
                 if(creditsShown) {
                     rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 50);
-                    andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 20);
+                    andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 15);
                     Tools.sequenceSlideIn("down", 1f, Interpolation.pow3, 100, 0.4f, rohan, andy);
                 } else {
                     Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
@@ -127,20 +126,7 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        this.renderer.begin(ShapeRenderer.ShapeType.Line);
-
-        this.renderer.setColor(0, 0, 30/255f, 1);
-
-        this.width = Gdx.graphics.getWidth();
-        this.height = Gdx.graphics.getHeight();
-
-        for(int i = 3; i < width; i+=40) {
-            for (int j = 3; j < height; j += 40) {
-                this.renderer.line(i, 0, i, height);
-                this.renderer.line(0, j, width, j);
-            }
-        }
-        this.renderer.end();
+        SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
         stage.act(delta);
         stage.draw();
