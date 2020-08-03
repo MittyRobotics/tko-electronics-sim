@@ -51,7 +51,7 @@ public class MenuScreen implements Screen {
 
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = Constants.FONT;
-        lStyle.fontColor = Color.SALMON;
+        lStyle.fontColor = Color.CYAN;
 
         new_circuit = new TextButton(" New Circuit ", tStyle);
         import_circuit = new TextButton(" Import Circuit ", tStyle);
