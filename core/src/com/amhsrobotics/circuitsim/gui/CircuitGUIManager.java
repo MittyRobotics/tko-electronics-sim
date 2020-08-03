@@ -111,16 +111,17 @@ public class CircuitGUIManager {
         });
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
+        Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
 
         stage.addActor(back);
     }
 
     public void update(float delta, ModifiedShapeRenderer renderer) {
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.DARK_GRAY);
-        renderer.rect(Gdx.graphics.getWidth() - 200, 0, 200, Gdx.graphics.getHeight());
-        renderer.end();
+//        renderer.begin(ShapeRenderer.ShapeType.Filled);
+//        renderer.setColor(Color.DARK_GRAY);
+//        renderer.rect(Gdx.graphics.getWidth() - 200, 0, 200, Gdx.graphics.getHeight());
+//        renderer.end();
 
         stage.act(delta);
         stage.draw();
