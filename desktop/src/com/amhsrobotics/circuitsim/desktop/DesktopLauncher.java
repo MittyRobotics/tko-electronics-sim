@@ -13,7 +13,7 @@ public class DesktopLauncher {
 			LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 			config.title = "TKO 1351 Circuit Simulator";
-			config.addIcon("img/logo.png", Files.FileType.Internal);
+			config.addIcon("img/logo/logo.png", Files.FileType.Internal);
 			config.resizable = false;
 			config.width = 1366;
 			config.height = 768;
