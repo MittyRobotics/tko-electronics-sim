@@ -16,7 +16,7 @@ public class Tools {
         FileHandle fontFile = Gdx.files.internal(fontfile);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 30;
+        parameter.size = size;
         BitmapFont fnt = generator.generateFont(parameter);
         generator.dispose();
         return fnt;
