@@ -61,17 +61,17 @@ public class MenuScreen implements Screen {
         lStyle.font = Constants.FONT;
         lStyle.fontColor = Color.SALMON;
 
-        new_circuit = new TextButton(" New Circuit ", tStyle);
+        new_circuit = new TextButton("   New Circuit   ", tStyle);
         import_circuit = new TextButton(" Import Circuit ", tStyle);
-        credits = new TextButton(" Credits ", tStyle);
-        contests = new TextButton(" Contests ", tStyle);
+        credits = new TextButton("      Credits      ", tStyle);
+        contests = new TextButton("    Contests    ", tStyle);
 
-        rohan = new Label("Rohan Bansal", lStyle);
+        rohan = new Label(" Rohan Bansal ", lStyle);
         rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
-        andy = new Label("Andy Li", lStyle);
+        andy = new Label(" Andy Li ", lStyle);
         andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, -100);
 
-        title = new Image(new Texture(Gdx.files.internal("img/circuitsim.png")));
+        title = new Image(new Texture(Gdx.files.internal("img/logo/circuitsim.png")));
         title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 250);
 
         new_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - new_circuit.getWidth() / 2, 400);
@@ -127,7 +127,7 @@ public class MenuScreen implements Screen {
         Tools.slideIn(credits, "down", 1.0f, Interpolation.exp5, 50);
         Tools.slideIn(title, "top", 0.5f, Interpolation.exp5, 300);
 
-        stage.addActors(new_circuit, import_circuit, contests, credits, title, andy, rohan);
+        stage.addActors(new_circuit, import_circuit, credits, title, andy, rohan);
     }
 
     @Override
