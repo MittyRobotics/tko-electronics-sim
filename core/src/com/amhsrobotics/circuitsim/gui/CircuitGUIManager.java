@@ -2,27 +2,37 @@ package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
+import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
 
 public class CircuitGUIManager {
 
-    private Stage stage;
+    private ModifiedStage stage;
 
     private TextButton back;
+    private Table container;
 
-    public CircuitGUIManager(Stage stage, final CameraController camera, final Game game) {
+    public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
 
         TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
@@ -30,7 +40,57 @@ public class CircuitGUIManager {
         tStyle.up = Constants.SKIN.getDrawable("button_03");
         tStyle.down = Constants.SKIN.getDrawable("button_02");
 
-        //Add back button
+        Label.LabelStyle lStyle = new Label.LabelStyle();
+        lStyle.font = Constants.FONT_SMALL;
+        lStyle.fontColor = Color.SALMON;
+
+        ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
+        sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
+
+        container = new Table();
+        container.setBackground(Constants.SKIN.getDrawable("textbox_01"));
+        container.setWidth(200);
+        container.setPosition(Gdx.graphics.getWidth() - 200, 0);
+        container.setHeight(Gdx.graphics.getHeight() - 150);
+        stage.addActor(container);
+
+        Table table = new Table();
+
+        ScrollPane scroll = new ScrollPane(table, sStyle);
+        scroll.setScrollingDisabled(true,false);
+
+        table.pad(10).defaults().expandX().space(4);
+        for (int i = 0; i < 100; i++) {
+            table.row();
+
+            Label label = new Label("Device " + (i + 1) + " Image", lStyle);
+            label.setAlignment(Align.center);
+            label.setWrap(true);
+            table.add(label).width(Gdx.graphics.getWidth());
+        }
+        container.add(scroll).expand().fill();
+
+        Table filters = new Table();
+        filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
+        filters.setWidth(180);
+        filters.setHeight(130);
+        filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
+        stage.addActor(filters);
+
+        Table table2 = new Table();
+
+        ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
+        scrollFilters.setScrollingDisabled(true,false);
+
+        table2.pad(5).defaults().expandX().space(6);
+        for (int i = 0; i < 2; i++) {
+            table2.row();
+            TextButton btn = new TextButton(" Filter ", tStyle);
+            table2.add(btn).width(70);
+            TextButton btn2 = new TextButton(" Filter ", tStyle);
+            table2.add(btn2).width(70);
+        }
+        filters.add(scrollFilters).expand().fill();
 
         back = new TextButton(" Back ", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
@@ -55,7 +115,13 @@ public class CircuitGUIManager {
         stage.addActor(back);
     }
 
-    public void update(float delta) {
+    public void update(float delta, ModifiedShapeRenderer renderer) {
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.DARK_GRAY);
+        renderer.rect(Gdx.graphics.getWidth() - 200, 0, 200, Gdx.graphics.getHeight());
+        renderer.end();
+
         stage.act(delta);
         stage.draw();
     }

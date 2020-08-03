@@ -2,17 +2,14 @@ package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.*;
+import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.InputManager;
+import com.amhsrobotics.circuitsim.utility.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -26,6 +23,7 @@ public class CircuitScreen implements Screen {
     private final Game game;
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
+    private final ModifiedShapeRenderer HUDrenderer;
     private ClippedCameraController camera;
 
     private CircuitGUIManager manager;
@@ -35,6 +33,7 @@ public class CircuitScreen implements Screen {
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
+        this.HUDrenderer = new ModifiedShapeRenderer();
 
         camera = new ClippedCameraController(true);
         camera.getCamera().translate(Constants.WORLD_DIM.x / 2, Constants.WORLD_DIM.y / 2);
@@ -85,16 +84,16 @@ public class CircuitScreen implements Screen {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
-        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.getCamera().unproject(mousePos);
-        Vector2 mpos = new Vector2(mousePos.x, mousePos.y);
-        SnapGrid.calculateSnap(mpos);
+//        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+//        camera.getCamera().unproject(mousePos);
+//        Vector2 mpos = new Vector2(mousePos.x, mousePos.y);
+//        SnapGrid.calculateSnap(mpos);
+//
+//        renderer.begin(ShapeRenderer.ShapeType.Filled);
+//        renderer.circle(mpos.x, mpos.y, 10);
+//        renderer.end();
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.circle(mpos.x, mpos.y, 10);
-        renderer.end();
-
-        manager.update(delta);
+        manager.update(delta, HUDrenderer);
     }
 
     @Override

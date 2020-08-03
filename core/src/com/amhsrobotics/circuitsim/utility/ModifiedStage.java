@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.utility;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,5 +19,12 @@ public class ModifiedStage extends Stage {
                 addActor(actor);
             }
         }
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.unfocusAll();
+        Gdx.input.setOnscreenKeyboardVisible(false);
+        return super.touchDown(screenX, screenY, pointer, button);
     }
 }
