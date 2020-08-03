@@ -117,7 +117,7 @@ public class MenuScreen implements Screen {
             }
         });
 
-        Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit, contests);
+        Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit);
         Tools.slideIn(credits, "down", 1.0f, Interpolation.exp5, 50);
         Tools.slideIn(title, "top", 0.5f, Interpolation.exp5, 300);
 
