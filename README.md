@@ -5,10 +5,13 @@
 
 ### Features
 
-- Accurate circuit simulation with real FRC parts
-- Importing circuits
 - Native, can be run anywhere
 - CPU-efficient
+
+### Near Future
+
+- Accurate circuit simulation with real FRC parts
+- Importing circuits
 
 ### Use
 
