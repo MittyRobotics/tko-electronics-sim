@@ -131,7 +131,7 @@ public class Cable implements Disposable {
                 }
             }
 
-            if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) && movingNode == null) {
+            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
                 CableManager.deleteCable(this);
                 CableManager.currentCable = null;
             }
@@ -150,7 +150,7 @@ public class Cable implements Disposable {
                 renderer.circle(vec2.x, vec2.y, 5);
             } else if(movingNode != null) {
                 movingNode.set(vec2.x, vec2.y);
-                if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
+                if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
                     coordinates.remove(movingNode);
                     movingNode = null;
                     backupNode = null;
