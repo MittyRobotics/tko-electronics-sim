@@ -103,43 +103,36 @@ public class CircuitScreen implements Screen {
             HUDrenderer.end();
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                CableManager.currentCable = null;
                 Constants.placing_object = null;
             }
 
             if(Constants.placing_object == ObjectType.WIRE) {
-                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camera.getCamera().unproject(vec);
-                Vector2 vec2 = new Vector2(vec.x, vec.y);
-
-                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    SnapGrid.calculateSnap(vec2);
-                }
-
-                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    if(CableManager.currentCable != null) {
-                        CableManager.currentCable.addCoordinates(new Vector2(vec2.x, vec2.y));
-                    } else {
-                        Cable temp = new Cable(new Vector2(vec2.x, vec2.y));
-                        CableManager.addCable(temp);
-                        CableManager.currentCable = temp;
-                    }
-
-                }
+                handleCable();
             }
         }
 
-
-//        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        camera.getCamera().unproject(mousePos);
-//        Vector2 mpos = new Vector2(mousePos.x, mousePos.y);
-//        SnapGrid.calculateSnap(mpos);
-//
-//        renderer.begin(ShapeRenderer.ShapeType.Filled);
-//        renderer.circle(mpos.x, mpos.y, 10);
-//        renderer.end();
         CableManager.update(renderer, camera);
         manager.update(delta, HUDrenderer);
+    }
+
+    private void handleCable() {
+        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.getCamera().unproject(vec);
+        Vector2 vec2 = new Vector2(vec.x, vec.y);
+
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            if(CableManager.currentCable == null) {
+                Cable temp = new Cable(new Vector2(vec2.x, vec2.y));
+                CableManager.addCable(temp);
+                CableManager.currentCable = temp;
+                Constants.placing_object = null;
+            }
+        }
     }
 
     @Override

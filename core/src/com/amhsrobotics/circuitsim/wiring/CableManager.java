@@ -17,7 +17,17 @@ public class CableManager {
         }
     }
 
+//    public static Cable getHoveringEndpoint(ClippedCameraController camera) {
+//        for(Cable c : cables) {
+//            if(c.hoveringOnEndpoint(camera)) {
+//                return c;
+//            }
+//        }
+//        return null;
+//    }
+
     public static void addCable(Cable cable) {
+        cable.setAppendingFromEnd(true);
         cables.add(cable);
     }
 
