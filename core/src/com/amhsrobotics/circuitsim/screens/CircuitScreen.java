@@ -107,6 +107,15 @@ public class CircuitScreen implements Screen {
             cable.addCoordinates(new Vector2(vec.x, vec.y));
         }
 
+        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.getCamera().unproject(vec);
+        cable.renderHover(renderer, camera, vec.x, vec.y);
+
+
+        if(cable.getPressed(vec.x, vec.y)) {
+            Gdx.app.log("", "Stupid.");
+        }
+
         manager.update(delta, HUDrenderer);
     }
 
