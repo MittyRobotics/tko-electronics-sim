@@ -99,7 +99,7 @@ public class CircuitScreen implements Screen {
 //        renderer.begin(ShapeRenderer.ShapeType.Filled);
 //        renderer.circle(mpos.x, mpos.y, 10);
 //        renderer.end();
-        cable.update(renderer, camera);
+        cable.update(renderer, camera, true);
 
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -109,7 +109,7 @@ public class CircuitScreen implements Screen {
 
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.getCamera().unproject(vec);
-        cable.renderHover(renderer, camera, vec.x, vec.y);
+        cable.renderHover(renderer, camera, vec.x, vec.y, true);
 
 
         if(cable.getPressed(vec.x, vec.y)) {

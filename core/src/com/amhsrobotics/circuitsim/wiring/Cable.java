@@ -40,26 +40,37 @@ public class Cable implements Disposable {
         this.coordinates.add(point);
     }
 
-    public void renderHover(ModifiedShapeRenderer renderer, ClippedCameraController camera, float x, float y) {
+    public void renderHover(ModifiedShapeRenderer renderer, ClippedCameraController camera, float x, float y, boolean selected) {
         if(coordinates.size() > 0) {
             renderer.setProjectionMatrix(camera.getCamera().combined);
             renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-            renderer.setColor(color);
+
 
             Vector2 vec = new Vector2(x, y);
+            if(selected) {
+                renderer.setColor(Color.WHITE);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), vec, 6f);
+            };
+            renderer.setColor(color);
             renderer.rectLine(coordinates.get(coordinates.size() - 1), vec, 3f);
+
             renderer.end();
         }
     }
 
-    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera, boolean selected) {
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
         renderer.setColor(color);
         for(int i = 0; i < coordinates.size() - 1; ++i) {
+            if(selected) {
+                renderer.setColor(Color.WHITE);
+                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
+            };
+            renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
         }
         renderer.end();
