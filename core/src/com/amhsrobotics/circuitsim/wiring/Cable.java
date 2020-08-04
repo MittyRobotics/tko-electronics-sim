@@ -55,26 +55,6 @@ public class Cable implements Disposable {
         this.coordinates.add(point);
     }
 
-    public void renderHover(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-
-        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.getCamera().unproject(vec);
-
-        renderer.setProjectionMatrix(camera.getCamera().combined);
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        renderer.setColor(color);
-        for (int i = 0; i < coordinates.size() - 1; ++i) {
-
-            renderer.setColor(new Color(217 / 255f, 233 / 255f, 217 / 255f, 1));
-            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
-
-            renderer.setColor(color);
-            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
-        }
-        renderer.end();
-    }
-
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
@@ -87,6 +67,10 @@ public class Cable implements Disposable {
                     renderer.setColor(new Color(217/255f, 233/255f, 217/255f, 1));
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
                 }
+            }
+            if(hoveringMouse(camera)) {
+                renderer.setColor(new Color(217 / 255f, 233 / 255f, 217 / 255f, 1));
+                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
             }
             renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
