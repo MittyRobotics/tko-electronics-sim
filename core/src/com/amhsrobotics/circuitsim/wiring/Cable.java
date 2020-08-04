@@ -63,6 +63,12 @@ public class Cable implements Disposable {
         return coordinates;
     }
 
+    public void getPressed(float x, float y) {
+        for(int i = 0; i < coordinates.size() - 1; ++i) {
+
+        }
+    }
+
     @Override
     public void dispose() {
 
