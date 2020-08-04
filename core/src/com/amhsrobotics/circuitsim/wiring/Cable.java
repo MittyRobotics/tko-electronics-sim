@@ -2,10 +2,13 @@ package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
+import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class Cable implements Disposable {
         this.gauge = gauge;
         this.coordinates = coordinates;
         this.connections = connections;
-        this.color = Color.GREEN;
+        this.color = new Color(158/255f, 205/255f, 158/255f, 1);
     }
 
     public Cable(float voltage, float gauge) {
@@ -41,23 +44,24 @@ public class Cable implements Disposable {
         this.coordinates.add(point);
     }
 
-    public void renderHover(ModifiedShapeRenderer renderer, ClippedCameraController camera, float x, float y, boolean selected) {
-        if(coordinates.size() > 0) {
-            renderer.setProjectionMatrix(camera.getCamera().combined);
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
+    public void renderHover(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
+        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        camera.getCamera().unproject(vec);
 
+        renderer.setProjectionMatrix(camera.getCamera().combined);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-            Vector2 vec = new Vector2(x, y);
-            if(selected) {
-                renderer.setColor(Color.WHITE);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), vec, 6f);
-            };
+        renderer.setColor(color);
+        for (int i = 0; i < coordinates.size() - 1; ++i) {
+
+            renderer.setColor(new Color(217 / 255f, 233 / 255f, 217 / 255f, 1));
+            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
+
             renderer.setColor(color);
-            renderer.rectLine(coordinates.get(coordinates.size() - 1), vec, 3f);
-
-            renderer.end();
+            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
         }
+        renderer.end();
     }
 
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -69,15 +73,21 @@ public class Cable implements Disposable {
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             if(CableManager.currentCable != null) {
                 if(CableManager.currentCable == this) {
-                    renderer.setColor(Color.WHITE);
+                    renderer.setColor(new Color(217/255f, 233/255f, 217/255f, 1));
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 6f);
-                };
+                }
             }
-
-
             renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
         }
+        if(Constants.placing_object) {
+            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.getCamera().unproject(vec);
+
+            renderer.setColor(color);
+            renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec.x, vec.y), 3f);
+        }
+
         renderer.end();
     }
 
@@ -93,7 +103,12 @@ public class Cable implements Disposable {
         return coordinates;
     }
 
-    public boolean getPressed(float x, float y) {
+    public boolean hoveringMouse(CameraController cameraController) {
+        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        cameraController.getCamera().unproject(vec);
+        float x = vec.x;
+        float y = vec.y;
+
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             x1 = coordinates.get(i).x;
             x2 = coordinates.get(i + 1).x;

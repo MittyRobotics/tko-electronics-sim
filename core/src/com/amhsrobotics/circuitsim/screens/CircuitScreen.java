@@ -92,8 +92,6 @@ public class CircuitScreen implements Screen {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
-        manager.update(delta, HUDrenderer);
-
         if(Constants.placing_object) {
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -125,6 +123,7 @@ public class CircuitScreen implements Screen {
 
         }
 
+
 //        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 //        camera.getCamera().unproject(mousePos);
 //        Vector2 mpos = new Vector2(mousePos.x, mousePos.y);
@@ -134,6 +133,7 @@ public class CircuitScreen implements Screen {
 //        renderer.circle(mpos.x, mpos.y, 10);
 //        renderer.end();
         CableManager.update(renderer, camera);
+        manager.update(delta, HUDrenderer);
     }
 
     @Override

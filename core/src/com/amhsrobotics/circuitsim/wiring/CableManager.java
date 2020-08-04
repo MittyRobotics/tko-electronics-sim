@@ -13,7 +13,11 @@ public class CableManager {
 
     public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
         for(Cable c : cables) {
-            c.update(renderer, cam);
+            if (c.hoveringMouse(cam)) {
+                c.renderHover(renderer, cam);
+            } else {
+                c.update(renderer, cam);
+            }
         }
     }
 
