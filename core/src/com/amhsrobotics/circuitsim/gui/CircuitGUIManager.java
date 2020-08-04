@@ -76,7 +76,7 @@ public class CircuitGUIManager {
         }
         container.add(scroll).expand().fill();
 
-        Table filters = new Table();
+        final Table filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         filters.setWidth(180);
         filters.setHeight(130);
@@ -167,6 +167,7 @@ public class CircuitGUIManager {
                         game.setScreen(new MenuScreen(game));
                     }
                 });
+                Tools.sequenceSlideOut("right", 0.5f, Interpolation.exp10, 100, 0.2f, filters, container);
             }
         });
 
