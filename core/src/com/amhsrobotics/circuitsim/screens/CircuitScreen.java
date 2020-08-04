@@ -53,7 +53,7 @@ public class CircuitScreen implements Screen {
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(Constants.placing_object != null) {
+                if(Constants.placing_object == null) {
                     float x = Gdx.input.getDeltaX();
                     float y = Gdx.input.getDeltaY();
 

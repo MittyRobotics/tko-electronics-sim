@@ -126,10 +126,13 @@ public class Cable implements Disposable {
             y1 = coordinates.get(i).y;
             y2 = coordinates.get(i + 1).y;
 
-            a = -1*((y2-y1)/(x2-x1));
+            if(((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))&&((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
 
-            if((float)(Math.abs(x*a+y+(((y2-y1)/(x2-x1))*x1 - y1))/Math.sqrt(a*a+1)) < 2) {
-                return true;
+                a = -1 * ((y2 - y1) / (x2 - x1));
+
+                if ((float) Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < 5) {
+                    return true;
+                }
             }
         }
         return false;
