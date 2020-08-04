@@ -4,8 +4,6 @@ import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import java.util.ArrayList;
-
 public class CableManager {
 
     public static Cable currentCable = null;

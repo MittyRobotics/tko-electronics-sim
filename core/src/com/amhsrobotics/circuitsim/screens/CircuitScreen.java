@@ -127,6 +127,7 @@ public class CircuitScreen implements Screen {
             }
 
             if(CableManager.currentCable == null) {
+                CircuitGUIManager.propertiesBox.show();
                 Cable temp = new Cable(new Vector2(vec2.x, vec2.y));
                 CableManager.addCable(temp);
                 CableManager.currentCable = temp;

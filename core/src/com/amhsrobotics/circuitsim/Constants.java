@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class Constants {
 
     public static final BitmapFont FONT = Tools.renderFont("font/Abel-Regular.ttf", 30);
+    public static final BitmapFont FONT_MEDIUM = Tools.renderFont("font/Abel-Regular.ttf", 25);
     public static final BitmapFont FONT_SMALL = Tools.renderFont("font/Abel-Regular.ttf", 20);
     public static final TextureAtlas ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
     public static final TextureAtlas ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
@@ -23,6 +24,7 @@ public class Constants {
 
     public static void disposeAll() {
         FONT.dispose();
+        FONT_MEDIUM.dispose();
         FONT_SMALL.dispose();
         ATLAS.dispose();
         ATLAS_ALTERNATE.dispose();

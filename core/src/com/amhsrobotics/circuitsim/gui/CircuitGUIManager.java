@@ -31,9 +31,12 @@ public class CircuitGUIManager {
     private Table container;
 
     private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
+    public static PropertiesBox propertiesBox;
 
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
+
+        propertiesBox = new PropertiesBox(stage);
 
         final TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;

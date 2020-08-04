@@ -1,5 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.gui.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.badlogic.gdx.Gdx;
@@ -9,12 +11,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Disposable;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Cable implements Disposable {
 
@@ -36,7 +42,9 @@ public class Cable implements Disposable {
         this.gauge = gauge;
         this.coordinates = coordinates;
         this.connections = connections;
-        this.color = new Color(158/255f, 205/255f, 158/255f, 1);
+        this.color = DeviceUtil.COLORS.get("Green");
+
+        populateProperties();
     }
 
     public Cable(float voltage, float gauge) {
@@ -45,12 +53,64 @@ public class Cable implements Disposable {
 
     public Cable(Vector2 startPoint) {
         voltage = 0;
-        gauge = 0;
+        gauge = DeviceUtil.GAUGES[0];
         coordinates = new ArrayList<>();
         connections = new HashMap<>();
-        this.color = new Color(158/255f, 205/255f, 158/255f, 1);
+        this.color = DeviceUtil.COLORS.get("Green");
 
         coordinates.add(startPoint);
+
+        populateProperties();
+    }
+
+    private void populateProperties() {
+        if(CircuitGUIManager.propertiesBox.isVisible()) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Cable", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+            CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
+            CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
+
+            CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
+            CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
+
+            cb.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
+                    for(String str : keys) {
+                        if(str.contentEquals(cb.getText())) {
+                            if(keys.indexOf(str) == keys.size() - 1) {
+                                cb.setText(keys.get(0));
+                                color = DeviceUtil.COLORS.get(keys.get(0));
+                            } else {
+                                cb.setText(keys.get(keys.indexOf(str) + 1));
+                                color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
+                            }
+                            break;
+                        }
+                    }
+                }
+            });
+            ga.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
+                    for(int gau : gauges) {
+                        if(gau == gauge) {
+                            if(gauges.indexOf(gau) == gauges.size() - 1) {
+                                gauge = gauges.get(0);
+                                ga.setText(gauge + "");
+                            } else {
+                                gauge = gauges.get(gauges.indexOf(gau) + 1);
+                                ga.setText(gauge + "");
+                            }
+                            break;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     public void setColor(Color color) {
@@ -116,6 +176,7 @@ public class Cable implements Disposable {
                     movingNode = null;
                     backupNode = null;
                 }
+                CircuitGUIManager.propertiesBox.hideAndClear();
             }
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -134,6 +195,7 @@ public class Cable implements Disposable {
             if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
                 CableManager.deleteCable(this);
                 CableManager.currentCable = null;
+                CircuitGUIManager.propertiesBox.hide();
             }
 
             drawNodes(renderer, camera, Color.SALMON);
@@ -182,7 +244,11 @@ public class Cable implements Disposable {
                 backupNode = new Vector2(hoveringOnNode(camera));
             }
 
-            CableManager.currentCable = this;
+            if(CableManager.currentCable != this) {
+                CableManager.currentCable = this;
+                CircuitGUIManager.propertiesBox.show();
+                populateProperties();
+            }
         }
     }
 
