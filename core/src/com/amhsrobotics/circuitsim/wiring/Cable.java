@@ -1,9 +1,12 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
@@ -40,9 +43,9 @@ public class Cable implements Disposable {
     }
 
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        renderer.setProjectionMatrix(camera.getCamera().combined);
 
-        renderer.begin(ShapeRenderer.ShapeType.Line);
+        renderer.setProjectionMatrix(camera.getCamera().combined);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
 
         renderer.setColor(color);
         for(int i = 0; i < coordinates.size() - 1; ++i) {

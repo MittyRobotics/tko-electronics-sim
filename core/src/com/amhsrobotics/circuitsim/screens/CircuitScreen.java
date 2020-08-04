@@ -6,10 +6,13 @@ import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.InputManager;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -25,6 +28,8 @@ public class CircuitScreen implements Screen {
     private final ModifiedShapeRenderer renderer;
     private final ModifiedShapeRenderer HUDrenderer;
     private ClippedCameraController camera;
+
+    Cable cable;
 
     private CircuitGUIManager manager;
 
@@ -73,6 +78,8 @@ public class CircuitScreen implements Screen {
             }
         });
         Gdx.input.setInputProcessor(plexer);
+
+        cable = new Cable(0, 0);
     }
 
     @Override
@@ -92,6 +99,7 @@ public class CircuitScreen implements Screen {
 //        renderer.begin(ShapeRenderer.ShapeType.Filled);
 //        renderer.circle(mpos.x, mpos.y, 10);
 //        renderer.end();
+        cable.update(renderer, camera);
 
         manager.update(delta, HUDrenderer);
     }
