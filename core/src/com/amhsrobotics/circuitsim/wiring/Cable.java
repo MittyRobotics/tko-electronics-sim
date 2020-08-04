@@ -1,7 +1,5 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.badlogic.gdx.Gdx;
@@ -15,7 +13,6 @@ import com.badlogic.gdx.utils.Disposable;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import javax.sound.sampled.Clip;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,6 +27,8 @@ public class Cable implements Disposable {
     private float x1, x2, y1, y2, a;
 
     private boolean appendingFromEnd, appendingFromBegin;
+    private boolean nodeChanged = false;
+    private Vector2 movingNode, backupNode;
 
 
     public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates, HashMap<Float, Float> connections) {
@@ -71,6 +70,12 @@ public class Cable implements Disposable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
+        if(nodeChanged) {
+            nodeChanged = false;
+        }
+
+        // DRAW CABLE
+        // ---------------------------------------------------------------------
         renderer.setColor(color);
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             if(CableManager.currentCable != null) {
@@ -89,7 +94,10 @@ public class Cable implements Disposable {
             renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
         }
+        // ---------------------------------------------------------------------
 
+        // CABLE SELECTED MECHANICS
+        // ---------------------------------------------------------------------
         if(CableManager.currentCable == this) {
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
@@ -103,6 +111,11 @@ public class Cable implements Disposable {
                 CableManager.currentCable = null;
                 appendingFromBegin = false;
                 appendingFromEnd = false;
+                if(movingNode != null) {
+                    coordinates.set(coordinates.indexOf(movingNode), backupNode);
+                    movingNode = null;
+                    backupNode = null;
+                }
             }
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -110,11 +123,16 @@ public class Cable implements Disposable {
                     addCoordinates(new Vector2(vec2.x, vec2.y), false);
                 } else if(appendingFromBegin) {
                     addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                } else if(movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                    coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                    movingNode = null;
+                    backupNode = null;
+                    nodeChanged = true;
                 }
             }
 
             drawNodes(renderer, camera, Color.SALMON);
-            checkForClick(camera);
+//            checkForClick(camera);
 
             if(appendingFromEnd) {
                 // draw potential cable wire
@@ -126,14 +144,20 @@ public class Cable implements Disposable {
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), 3f);
                 renderer.circle(vec2.x, vec2.y, 5);
+            } else if(movingNode != null) {
+                movingNode.set(vec2.x, vec2.y);
             }
 
         }
+        // ---------------------------------------------------------------------
 
+        // HOVERING OVER CABLE
+        // ---------------------------------------------------------------------
         if(hoveringMouse(camera)) {
             drawNodes(renderer, camera, Color.SALMON);
             checkForClick(camera);
         }
+        // ---------------------------------------------------------------------
 
         renderer.end();
     }
@@ -144,8 +168,9 @@ public class Cable implements Disposable {
                 appendingFromBegin = true;
             } else if(hoveringOnEndpoint(camera) == 2) {
                 appendingFromEnd = true;
-            } else if(hoveringOnNode(camera) != null) {
-                Gdx.app.log("middle", "");
+            } else if(hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
+                movingNode = hoveringOnNode(camera);
+                backupNode = new Vector2(hoveringOnNode(camera));
             }
 
             CableManager.currentCable = this;
@@ -172,7 +197,6 @@ public class Cable implements Disposable {
             renderer.setColor(color[0]);
         }
         for(Vector2 coords : coordinates) {
-
             renderer.circle(coords.x, coords.y, 6);
         }
         if(hoveringOnEndpoint(cam) == 1) {
@@ -182,8 +206,10 @@ public class Cable implements Disposable {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, 6);
         } else if(hoveringOnNode(cam) != null) {
-            renderer.setColor(hoverColor);
-            renderer.circle(hoveringOnNode(cam).x, hoveringOnNode(cam).y, 6);
+            if(movingNode == null) {
+                renderer.setColor(hoverColor);
+                renderer.circle(hoveringOnNode(cam).x, hoveringOnNode(cam).y, 6);
+            }
         }
     }
 
@@ -248,6 +274,5 @@ public class Cable implements Disposable {
 
     @Override
     public void dispose() {
-
     }
 }
