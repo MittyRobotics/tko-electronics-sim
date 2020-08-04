@@ -101,6 +101,12 @@ public class CircuitScreen implements Screen {
 //        renderer.end();
         cable.update(renderer, camera);
 
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.getCamera().unproject(vec);
+            cable.addCoordinates(new Vector2(vec.x, vec.y));
+        }
+
         manager.update(delta, HUDrenderer);
     }
 
