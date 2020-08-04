@@ -3,7 +3,9 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -40,8 +42,8 @@ public class Cable implements Disposable {
     public Cable(Vector2 startPoint) {
         voltage = 0;
         gauge = 0;
-        coordinates = new ArrayList<Vector2>();
-        connections = new HashMap<Float, Float>();
+        coordinates = new ArrayList<>();
+        connections = new HashMap<>();
         this.color = new Color(158/255f, 205/255f, 158/255f, 1);
 
         coordinates.add(startPoint);
@@ -78,9 +80,14 @@ public class Cable implements Disposable {
         if(Constants.placing_object == ObjectType.WIRE && CableManager.currentCable == this) {
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
+            Vector2 vec2 = new Vector2(vec.x, vec.y);
+
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
 
             renderer.setColor(color);
-            renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec.x, vec.y), 3f);
+            renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), 3f);
         }
 
         renderer.end();

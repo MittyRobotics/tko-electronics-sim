@@ -110,12 +110,17 @@ public class CircuitScreen implements Screen {
             if(Constants.placing_object == ObjectType.WIRE) {
                 Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 camera.getCamera().unproject(vec);
+                Vector2 vec2 = new Vector2(vec.x, vec.y);
+
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    SnapGrid.calculateSnap(vec2);
+                }
 
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     if(CableManager.currentCable != null) {
-                        CableManager.currentCable.addCoordinates(new Vector2(vec.x, vec.y));
+                        CableManager.currentCable.addCoordinates(new Vector2(vec2.x, vec2.y));
                     } else {
-                        Cable temp = new Cable(new Vector2(vec.x, vec.y));
+                        Cable temp = new Cable(new Vector2(vec2.x, vec2.y));
                         CableManager.addCable(temp);
                         CableManager.currentCable = temp;
                     }
