@@ -6,12 +6,14 @@ import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.InputManager;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
@@ -62,18 +64,16 @@ public class CircuitScreen implements Screen {
 
             @Override
             public boolean scrolled(int amount) {
-                if(!Constants.placing_object) {
-                    if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                        camera.getCamera().translate(0, amount > 0 ? 12.1f : -12.1f);
-                    } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
-                        camera.getCamera().translate(amount > 0 ? 12.1f : -12.1f, 0);
-                    } else {
-                        camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
-                        if(camera.getCamera().zoom > 3.55) {
-                            camera.getCamera().zoom = 3.55f;
-                        } else if(camera.getCamera().zoom < 0.2) {
-                            camera.getCamera().zoom = 0.2f;
-                        }
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    camera.getCamera().translate(0, amount > 0 ? 12.1f : -12.1f);
+                } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+                    camera.getCamera().translate(amount > 0 ? 12.1f : -12.1f, 0);
+                } else {
+                    camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
+                    if(camera.getCamera().zoom > 3.55) {
+                        camera.getCamera().zoom = 3.55f;
+                    } else if(camera.getCamera().zoom < 0.2) {
+                        camera.getCamera().zoom = 0.2f;
                     }
                 }
 
@@ -103,20 +103,26 @@ public class CircuitScreen implements Screen {
             HUDrenderer.rectLine(0, 0, Gdx.graphics.getWidth(), 0, 4);
             HUDrenderer.end();
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-                camera.getCamera().unproject(vec);
-                cable.addCoordinates(new Vector2(vec.x, vec.y));
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                CableManager.currentCable = null;
+                Constants.placing_object = false;
             }
 
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
-            cable.renderHover(renderer, camera, vec.x, vec.y);
 
+            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.addCoordinates(new Vector2(vec.x, vec.y));
+                } else {
+                    Cable temp = new Cable(0, 0);
+                    CableManager.addCable(temp);
+                    temp.addCoordinates(new Vector2(vec.x, vec.y));
+                    CableManager.currentCable = temp;
+                }
 
-            if(cable.getPressed(vec.x, vec.y)) {
-                Gdx.app.log("", "Stupid.");
             }
+
         }
 
 //        Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -127,22 +133,7 @@ public class CircuitScreen implements Screen {
 //        renderer.begin(ShapeRenderer.ShapeType.Filled);
 //        renderer.circle(mpos.x, mpos.y, 10);
 //        renderer.end();
-//        cable.update(renderer, camera);
-//
-//        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-//            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//            camera.getCamera().unproject(vec);
-//            cable.addCoordinates(new Vector2(vec.x, vec.y));
-//        }
-//
-//        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-//        camera.getCamera().unproject(vec);
-//        cable.renderHover(renderer, camera, vec.x, vec.y);
-//
-//
-//        if(cable.getPressed(vec.x, vec.y)) {
-//            Gdx.app.log("", "Stupid.");
-//        }
+        CableManager.update(renderer, camera);
     }
 
     @Override

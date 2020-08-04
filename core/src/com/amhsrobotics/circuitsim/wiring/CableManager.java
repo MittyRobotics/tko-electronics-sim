@@ -1,7 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ public class CableManager {
 
     public static Cable currentCable = null;
 
-    private static ArrayList<Cable> cables;
+    private static ArrayList<Cable> cables = new ArrayList<>();
 
     public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
         for(Cable c : cables) {
