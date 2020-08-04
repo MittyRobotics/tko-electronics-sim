@@ -4,6 +4,8 @@ import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -66,15 +68,25 @@ public class CircuitGUIManager {
         ScrollPane scroll = new ScrollPane(table, sStyle);
         scroll.setScrollingDisabled(true,false);
         table.pad(10).defaults().expandX().space(4);
-        for (int i = 0; i < 100; i++) {
-            table.row();
-
-            Label label = new Label("Device " + (i + 1) + " Image", lStyle);
-            label.setAlignment(Align.center);
-            label.setWrap(true);
-            table.add(label).width(Gdx.graphics.getWidth());
-        }
+//        for (int i = 0; i < 100; i++) {
+//            table.row();
+//
+//            Label label = new Label("Device " + (i + 1) + " Image", lStyle);
+//            label.setAlignment(Align.center);
+//            label.setWrap(true);
+//            table.add(label).width(Gdx.graphics.getWidth());
+//        }
+        table.row();
+        TextButton reg_cable = new TextButton("Regular Cable", tStyle);
+        table.add(reg_cable).width(120);
         container.add(scroll).expand().fill();
+
+        reg_cable.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = !Constants.placing_object;
+            }
+        });
 
         final Table filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
@@ -82,6 +94,7 @@ public class CircuitGUIManager {
         filters.setHeight(130);
         filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
         stage.addActor(filters);
+
 
         Table table2 = new Table();
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);

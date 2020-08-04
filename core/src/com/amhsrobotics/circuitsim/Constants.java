@@ -16,6 +16,8 @@ public class Constants {
     public static final Skin SKIN = new Skin(ATLAS);
     public static final Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
+    public static boolean placing_object = false;
+
     public static final Vector2 WORLD_DIM = new Vector2(5000, 5000);
     public static final int GRID_SIZE = 40;
 
