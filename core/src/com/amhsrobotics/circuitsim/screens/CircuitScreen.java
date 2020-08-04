@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.InputManager;
@@ -52,7 +53,7 @@ public class CircuitScreen implements Screen {
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(!Constants.placing_object) {
+                if(Constants.placing_object != null) {
                     float x = Gdx.input.getDeltaX();
                     float y = Gdx.input.getDeltaY();
 
@@ -92,7 +93,7 @@ public class CircuitScreen implements Screen {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
-        if(Constants.placing_object) {
+        if(Constants.placing_object != null) {
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
             HUDrenderer.rectLine(0, 0, 0, Gdx.graphics.getHeight(), 4);
@@ -103,24 +104,24 @@ public class CircuitScreen implements Screen {
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 CableManager.currentCable = null;
-                Constants.placing_object = false;
+                Constants.placing_object = null;
             }
 
-            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.getCamera().unproject(vec);
+            if(Constants.placing_object == ObjectType.WIRE) {
+                Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                camera.getCamera().unproject(vec);
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.addCoordinates(new Vector2(vec.x, vec.y));
-                } else {
-                    Cable temp = new Cable(0, 0);
-                    CableManager.addCable(temp);
-                    temp.addCoordinates(new Vector2(vec.x, vec.y));
-                    CableManager.currentCable = temp;
+                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    if(CableManager.currentCable != null) {
+                        CableManager.currentCable.addCoordinates(new Vector2(vec.x, vec.y));
+                    } else {
+                        Cable temp = new Cable(new Vector2(vec.x, vec.y));
+                        CableManager.addCable(temp);
+                        CableManager.currentCable = temp;
+                    }
+
                 }
-
             }
-
         }
 
 

@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -34,6 +35,16 @@ public class Cable implements Disposable {
 
     public Cable(float voltage, float gauge) {
         this(voltage, gauge, new ArrayList<Vector2>(), new HashMap<Float, Float>());
+    }
+
+    public Cable(Vector2 startPoint) {
+        voltage = 0;
+        gauge = 0;
+        coordinates = new ArrayList<Vector2>();
+        connections = new HashMap<Float, Float>();
+        this.color = new Color(158/255f, 205/255f, 158/255f, 1);
+
+        coordinates.add(startPoint);
     }
 
     public void setColor(Color color) {
@@ -80,7 +91,7 @@ public class Cable implements Disposable {
             renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), 3f);
         }
-        if(Constants.placing_object) {
+        if(Constants.placing_object == ObjectType.WIRE && CableManager.currentCable == this) {
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
 
@@ -117,7 +128,7 @@ public class Cable implements Disposable {
 
             a = -1*((y2-y1)/(x2-x1));
 
-            if((float)(Math.abs(x*a+y+(((y2-y1)/(x2-x1))*x1 - y1))/Math.sqrt(a*a+1)) < 5) {
+            if((float)(Math.abs(x*a+y+(((y2-y1)/(x2-x1))*x1 - y1))/Math.sqrt(a*a+1)) < 2) {
                 return true;
             }
         }

@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
@@ -84,7 +85,7 @@ public class CircuitGUIManager {
         reg_cable.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = !Constants.placing_object;
+                Constants.placing_object = ObjectType.WIRE;
             }
         });
 
