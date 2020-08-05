@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -84,12 +85,33 @@ public class CircuitGUIManager {
         TextButton reg_cable = new TextButton("Regular Cable", tStyle);
         reg_cable.addListener(new TextTooltip("A regular hardware to hardware wire", ttStyle));
         table.add(reg_cable).width(120);
+        table.row();
+        TextButton sandcrab = new TextButton("2-Way Wago", tStyle);
+        sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
+        table.add(sandcrab).width(120);
+        table.row();
+        TextButton sandcrab3 = new TextButton("3-Way Wago", tStyle);
+        sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
+        table.add(sandcrab3).width(120);
+
         container.add(scroll).expand().fill();
 
         reg_cable.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.WIRE;
+            }
+        });
+        sandcrab.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.WAGO2;
+            }
+        });
+        sandcrab3.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.WAGO3;
             }
         });
 

@@ -1,11 +1,15 @@
 package com.amhsrobotics.circuitsim.utility;
 
+import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -20,6 +24,12 @@ public class Tools {
         BitmapFont fnt = generator.generateFont(parameter);
         generator.dispose();
         return fnt;
+    }
+
+    public static Vector2 mouseScreenToWorld(ClippedCameraController cam) {
+        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        cam.getCamera().unproject(vec);
+        return new Vector2(vec.x, vec.y);
     }
 
     public static void slideIn(Actor actor, String direction, float duration, Interpolation interp, int offset, Runnable... runnable) {

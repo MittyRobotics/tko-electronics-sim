@@ -3,10 +3,7 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.InputManager;
-import com.amhsrobotics.circuitsim.utility.ModifiedStage;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
+import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
@@ -108,11 +105,29 @@ public class CircuitScreen implements Screen {
 
             if(Constants.placing_object == ObjectType.WIRE) {
                 handleCable();
+            } else if(Constants.placing_object == ObjectType.WAGO2) {
+                handleWago2();
             }
         }
 
-        CableManager.update(renderer, camera);
+        CableManager.update(renderer, batch, camera);
         manager.update(delta, HUDrenderer);
+    }
+
+    private void handleWago2() {
+
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            if(CableManager.currentConnector == null) {
+                CableManager.addDoubleSandCrab(vec2.x, vec2.y);
+                Constants.placing_object = null;
+            }
+        }
     }
 
     private void handleCable() {
@@ -127,10 +142,7 @@ public class CircuitScreen implements Screen {
             }
 
             if(CableManager.currentCable == null) {
-                CircuitGUIManager.propertiesBox.show();
-                Cable temp = new Cable(new Vector2(vec2.x, vec2.y));
-                CableManager.addCable(temp);
-                CableManager.currentCable = temp;
+                CableManager.addCable(vec2.x, vec2.y);
                 Constants.placing_object = null;
             }
         }
