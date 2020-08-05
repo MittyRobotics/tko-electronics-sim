@@ -10,10 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
@@ -52,6 +49,15 @@ public class CircuitGUIManager {
         lStyle.font = Constants.FONT_SMALL;
         lStyle.fontColor = Color.SALMON;
 
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = Constants.FONT_SMALL;
+        l2Style.fontColor = Color.BLACK;
+
+        final TextTooltip.TextTooltipStyle ttStyle = new TextTooltip.TextTooltipStyle();
+        ttStyle.background = Constants.SKIN.getDrawable("button_01");
+        ttStyle.wrapWidth = 150;
+        ttStyle.label = lStyle;
+
         ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
         sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
 
@@ -76,6 +82,7 @@ public class CircuitGUIManager {
 //        }
         table.row();
         TextButton reg_cable = new TextButton("Regular Cable", tStyle);
+        reg_cable.addListener(new TextTooltip("A regular hardware to hardware wire", ttStyle));
         table.add(reg_cable).width(120);
         container.add(scroll).expand().fill();
 
@@ -99,9 +106,11 @@ public class CircuitGUIManager {
         scrollFilters.setScrollingDisabled(true,false);
         table2.pad(5).defaults().expandX().space(6);
         final TextButton fil1 = new TextButton("Elec.", tStyle);
+        fil1.addListener(new TextTooltip("Electronics", ttStyle));
         table2.add(fil1).width(70);
         filtersMap.put(fil1, false);
         final TextButton fil2 = new TextButton("Pneum.", tStyle);
+        fil2.addListener(new TextTooltip("Pneumatics", ttStyle));
         table2.add(fil2).width(70);
         filtersMap.put(fil2, false);
         table2.row();
