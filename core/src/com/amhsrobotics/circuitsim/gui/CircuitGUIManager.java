@@ -251,18 +251,18 @@ public class CircuitGUIManager {
         helpTable.add(new Label("Remove a node or device", lStyle)).width(180).align(Align.center);
         helpTable.row();
         helpTable.add(new Label("LSHIFT", l2Style)).width(80).align(Align.center);
-        helpTable.add(new Label("Snap node or device to grid", lStyle)).width(195).align(Align.center);
+        helpTable.add(new Label("Snap node or device to grid", lStyle)).width(180).align(Align.center);
         helpTable.row();
         helpTable.add(new Label("SCROLL", l2Style)).width(80).align(Align.center);
         helpTable.add(new Label("Zoom in/out grid", lStyle)).width(180).align(Align.center);
         helpTable.row();
-        helpTable.add(new Label("SCROLL + LSHIFT", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("SCROLL + LSHIFT", l2Style)).width(155).align(Align.center);
         helpTable.add(new Label("Vertical scroll grid", lStyle)).width(180).align(Align.center);
         helpTable.row();
-        helpTable.add(new Label("SCROLL + LALT", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("SCROLL + LALT", l2Style)).width(155).align(Align.center);
         helpTable.add(new Label("Horizontal scroll grid", lStyle)).width(180).align(Align.center);
         helpTable.row();
-        helpTable.add(new Label("ESCAPE", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("ESCAPE", l2Style)).width(80).align(Align.center);
         helpTable.add(new Label("Remove focus from device", lStyle)).width(180).align(Align.center);
 
         helpMenu.row();
