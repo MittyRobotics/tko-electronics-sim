@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,11 +26,14 @@ public class CircuitGUIManager {
 
     private ModifiedStage stage;
 
-    private TextButton back;
+    private TextButton back, help;
     private Table container;
+    private Window helpMenu;
 
     private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
+
+    public boolean helpMenuShown = false;
 
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
@@ -58,6 +62,11 @@ public class CircuitGUIManager {
         ttStyle.background = Constants.SKIN.getDrawable("button_01");
         ttStyle.wrapWidth = 150;
         ttStyle.label = lStyle;
+
+        final Window.WindowStyle wStyle = new Window.WindowStyle();
+        wStyle.background = Constants.SKIN.getDrawable("window_02");
+        wStyle.titleFont = Constants.FONT_MEDIUM;
+        wStyle.titleFontColor = Color.WHITE;
 
         ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
         sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
@@ -194,8 +203,10 @@ public class CircuitGUIManager {
         });
 
 
-        back = new TextButton(" Back ", tStyle);
+        back = new TextButton("Quit", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
+        help = new TextButton("Help", tStyle);
+        help.setPosition(100, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
@@ -203,6 +214,7 @@ public class CircuitGUIManager {
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
+                Tools.slideOut(help, "top", 0.5f, Interpolation.exp10, 100);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -212,11 +224,66 @@ public class CircuitGUIManager {
                 Tools.sequenceSlideOut("right", 0.5f, Interpolation.exp10, 100, 0.2f, filters, container);
             }
         });
+        help.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(helpMenuShown) {
+                    hideHelpMenu();
+                } else {
+                    showHelpMenu();
+                }
+            }
+        });
+
+        helpMenu = new Window("Help", wStyle);
+        helpMenu.setWidth(500);
+        helpMenu.setHeight(600);
+        helpMenu.setKeepWithinStage(false);
+        helpMenu.setMovable(false);
+        helpMenu.setPosition(-700, -700);
+
+        Table helpTable = new Table();
+        helpMenu.add(helpTable).expand().fill();
+        helpTable.row();
+        helpTable.add(new Label("Keybinds", l2Style)).width(80).colspan(2).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("DELETE", l2Style)).width(80).align(Align.center);
+        helpTable.add(new Label("Remove a node or device", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("LSHIFT", l2Style)).width(80).align(Align.center);
+        helpTable.add(new Label("Snap node or device to grid", lStyle)).width(195).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("SCROLL", l2Style)).width(80).align(Align.center);
+        helpTable.add(new Label("Zoom in/out grid", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("SCROLL + LSHIFT", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("Vertical scroll grid", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("SCROLL + LALT", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("Horizontal scroll grid", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("ESCAPE", l2Style)).width(160).align(Align.center);
+        helpTable.add(new Label("Remove focus from device", lStyle)).width(180).align(Align.center);
+
+        helpMenu.row();
+        helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
+        Tools.slideIn(help, "top", 1f, Interpolation.exp10, 100);
 
-        stage.addActor(back);
+        stage.addActors(back, help, helpMenu);
+    }
+
+    private void showHelpMenu() {
+        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
+        Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 600);
+        helpMenuShown = true;
+    }
+
+    private void hideHelpMenu() {
+        Tools.slideOut(helpMenu, "down", 1f, Interpolation.exp10, 700);
+        helpMenuShown = false;
     }
 
     public void update(float delta, ModifiedShapeRenderer renderer) {
@@ -225,6 +292,12 @@ public class CircuitGUIManager {
 //        renderer.setColor(Color.DARK_GRAY);
 //        renderer.rect(Gdx.graphics.getWidth() - 200, 0, 200, Gdx.graphics.getHeight());
 //        renderer.end();
+
+        if(helpMenuShown) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                hideHelpMenu();
+            }
+        }
 
         stage.act(delta);
         stage.draw();
