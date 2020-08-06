@@ -239,7 +239,7 @@ public class CircuitGUIManager {
                 if(helpMenuShown) {
                     hideHelpMenu();
                 } else {
-                    optionsMenuShown = false;
+                    hideOptionsMenu();
                     showHelpMenu();
                 }
             }
@@ -250,7 +250,7 @@ public class CircuitGUIManager {
                 if(optionsMenuShown) {
                     hideOptionsMenu();
                 } else {
-                    helpMenuShown = false;
+                    hideHelpMenu();
                     showOptionsMenu();
                 }
             }
