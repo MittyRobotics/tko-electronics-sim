@@ -18,6 +18,7 @@ public class PropertiesBox {
     public final TextButton.TextButtonStyle TBUTTON_ALT = new TextButton.TextButtonStyle();
     public final Label.LabelStyle LABEL = new Label.LabelStyle();
     public final Label.LabelStyle LABEL_SMALL = new Label.LabelStyle();
+    public final TextTooltip.TextTooltipStyle TOOLTIP = new TextTooltip.TextTooltipStyle();
     private ScrollPane scroll;
 
     private boolean visible;
@@ -38,6 +39,10 @@ public class PropertiesBox {
 
         LABEL_SMALL.font = Constants.FONT_SMALL;
         LABEL_SMALL.fontColor = Color.BLACK;
+
+        TOOLTIP.background = Constants.SKIN.getDrawable("button_01");
+        TOOLTIP.wrapWidth = 150;
+        TOOLTIP.label = LABEL_SMALL;
 
         ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
         sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");

@@ -1,9 +1,9 @@
 package com.amhsrobotics.circuitsim.hardware;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -12,14 +12,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+
+import java.util.HashMap;
 
 public class DoubleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2;
 
+    private HashMap<Cable, Hardware> connections;
+
     public DoubleSandCrab(Vector2 position) {
         super(position);
+
+        connections = new HashMap<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
         connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
@@ -39,6 +46,8 @@ public class DoubleSandCrab extends Hardware {
             drawHover(renderer);
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HardwareManager.currentHardware = this;
+                CircuitGUIManager.propertiesBox.show();
+                populateProperties();
             }
         }
 
@@ -46,6 +55,7 @@ public class DoubleSandCrab extends Hardware {
             drawHover(renderer);
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                CircuitGUIManager.propertiesBox.hideAndClear();
                 HardwareManager.currentHardware = null;
             }
         }
@@ -55,6 +65,17 @@ public class DoubleSandCrab extends Hardware {
         connector1.draw(batch);
         connector2.draw(batch);
         batch.end();
+    }
+
+    private void populateProperties() {
+        CircuitGUIManager.propertiesBox.clearTable();
+        if (CircuitGUIManager.propertiesBox.isVisible()) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label("null", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label("null", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        }
     }
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {

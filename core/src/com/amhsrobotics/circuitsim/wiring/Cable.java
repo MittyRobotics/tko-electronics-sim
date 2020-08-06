@@ -67,6 +67,7 @@ public class Cable implements Disposable {
     }
 
     private void populateProperties() {
+        CircuitGUIManager.propertiesBox.clearTable();
         if(CircuitGUIManager.propertiesBox.isVisible()) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Cable", CircuitGUIManager.propertiesBox.LABEL), true, 2);
             CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
