@@ -112,7 +112,7 @@ public class CircuitScreen implements Screen {
 
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
-        manager.update(delta, HUDrenderer);
+        manager.update(delta);
     }
 
     private void handleWago2() {

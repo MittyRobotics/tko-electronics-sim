@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.gui;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Game;
@@ -17,7 +18,6 @@ import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +26,15 @@ public class CircuitGUIManager {
 
     private ModifiedStage stage;
 
-    private TextButton back, help;
+    private TextButton back, help, options;
     private Table container;
-    private Window helpMenu;
+    private Window helpMenu, optionsMenu;
 
     private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
+    private TextField gridSizingX, gridSizingY, gridSpacing;
 
-    public boolean helpMenuShown = false;
+    public boolean helpMenuShown, optionsMenuShown = false;
 
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
@@ -67,6 +68,12 @@ public class CircuitGUIManager {
         wStyle.background = Constants.SKIN.getDrawable("window_02");
         wStyle.titleFont = Constants.FONT_MEDIUM;
         wStyle.titleFontColor = Color.WHITE;
+
+        final TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.background = Constants.SKIN.getDrawable("textbox_02");
+        textFieldStyle.cursor = Constants.SKIN.getDrawable("textbox_cursor_02");
+        textFieldStyle.font = Constants.FONT_SMALL;
+        textFieldStyle.fontColor = Color.BLACK;
 
         ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
         sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
@@ -207,6 +214,8 @@ public class CircuitGUIManager {
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
         help = new TextButton("Help", tStyle);
         help.setPosition(100, Gdx.graphics.getHeight() - 70);
+        options = new TextButton("Options", tStyle);
+        options.setPosition(180, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
@@ -214,7 +223,7 @@ public class CircuitGUIManager {
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
-                Tools.slideOut(help, "top", 0.5f, Interpolation.exp10, 100);
+                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.2f, options, help);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -230,11 +239,34 @@ public class CircuitGUIManager {
                 if(helpMenuShown) {
                     hideHelpMenu();
                 } else {
+                    optionsMenuShown = false;
                     showHelpMenu();
                 }
             }
         });
+        options.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(optionsMenuShown) {
+                    hideOptionsMenu();
+                } else {
+                    helpMenuShown = false;
+                    showOptionsMenu();
+                }
+            }
+        });
 
+        buildHelpMenu(wStyle, lStyle, l2Style);
+        buildOptionsMenu(wStyle, lStyle, l2Style, textFieldStyle);
+
+        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
+        Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
+        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, help, options);
+
+        stage.addActors(back, help, helpMenu, optionsMenu, options);
+    }
+
+    private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
         helpMenu = new Window("Help", wStyle);
         helpMenu.setWidth(500);
         helpMenu.setHeight(600);
@@ -267,12 +299,48 @@ public class CircuitGUIManager {
 
         helpMenu.row();
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
+    }
 
-        Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
-        Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
-        Tools.slideIn(help, "top", 1f, Interpolation.exp10, 100);
+    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle) {
+        optionsMenu = new Window("Options", wStyle);
+        optionsMenu.setWidth(500);
+        optionsMenu.setHeight(600);
+        optionsMenu.setKeepWithinStage(false);
+        optionsMenu.setMovable(false);
+        optionsMenu.setPosition(-700, -700);
 
-        stage.addActors(back, help, helpMenu);
+        Table optionsTable = new Table();
+        optionsMenu.add(optionsTable).expand().fill();
+
+        optionsTable.row();
+        Label spacing = new Label("Grid Spacing", l2Style);
+        spacing.setAlignment(Align.center);
+        optionsTable.add(spacing).width(180);
+
+        gridSpacing = new TextField(Constants.GRID_SIZE + "", textFieldStyle);
+        gridSpacing.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
+        optionsTable.add(gridSpacing).width(180);
+
+        optionsTable.row();
+        Label size = new Label("Grid Size X", l2Style);
+        size.setAlignment(Align.center);
+        optionsTable.add(size).width(180);
+
+        gridSizingX = new TextField(Constants.WORLD_DIM.x + "", textFieldStyle);
+        gridSizingX.setTextFieldFilter(new DigitFilter());
+        optionsTable.add(gridSizingX).width(180);
+
+        optionsTable.row();
+        Label sizey = new Label("Grid Size Y", l2Style);
+        sizey.setAlignment(Align.center);
+        optionsTable.add(sizey).width(180);
+
+        gridSizingY = new TextField(Constants.WORLD_DIM.y + "", textFieldStyle);
+        gridSizingY.setTextFieldFilter(new DigitFilter());
+        optionsTable.add(gridSizingY).width(180);
+
+        optionsMenu.row();
+        optionsMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
     }
 
     private void showHelpMenu() {
@@ -286,16 +354,32 @@ public class CircuitGUIManager {
         helpMenuShown = false;
     }
 
-    public void update(float delta, ModifiedShapeRenderer renderer) {
+    private void showOptionsMenu() {
+        optionsMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
+        Tools.slideIn(optionsMenu, "down", 1f, Interpolation.exp10, 600);
+        optionsMenuShown = true;
+    }
 
-//        renderer.begin(ShapeRenderer.ShapeType.Filled);
-//        renderer.setColor(Color.DARK_GRAY);
-//        renderer.rect(Gdx.graphics.getWidth() - 200, 0, 200, Gdx.graphics.getHeight());
-//        renderer.end();
+    private void hideOptionsMenu() {
+        Tools.slideOut(optionsMenu, "down", 1f, Interpolation.exp10, 700);
+        optionsMenuShown = false;
+
+        Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
+        Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
+    }
+
+    public void update(float delta) {
+
 
         if(helpMenuShown) {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideHelpMenu();
+            }
+        }
+
+        if(optionsMenuShown) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                hideOptionsMenu();
             }
         }
 

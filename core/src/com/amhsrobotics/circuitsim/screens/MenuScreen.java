@@ -91,8 +91,8 @@ public class MenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 creditsShown = !creditsShown;
                 if(creditsShown) {
-                    rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 50);
-                    andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 15);
+                    rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 46);
+                    andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 10);
                     Tools.sequenceSlideIn("down", 1f, Interpolation.pow3, 100, 0.4f, rohan, andy);
                 } else {
                     Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
