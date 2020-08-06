@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -12,15 +13,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import javax.sound.sampled.Clip;
-
 public class DoubleSandCrab {
 
     private Sprite bottom, connector1, connector2;
     private Vector2 position;
 
+    private int hardwareID;
+
     public DoubleSandCrab(Vector2 position) {
         this.position = position;
+        this.hardwareID = DeviceUtil.getNewHardwareID();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
         connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
@@ -57,6 +59,18 @@ public class DoubleSandCrab {
         connector1.draw(batch);
         connector2.draw(batch);
         batch.end();
+    }
+
+    public int getHardwareID() {
+        return hardwareID;
+    }
+
+    public Sprite getConnector1() {
+        return connector1;
+    }
+
+    public Sprite getConnector2() {
+        return connector2;
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {

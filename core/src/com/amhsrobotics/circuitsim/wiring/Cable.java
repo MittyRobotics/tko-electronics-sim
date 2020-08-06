@@ -1,7 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.gui.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.badlogic.gdx.Gdx;
@@ -29,33 +29,33 @@ public class Cable implements Disposable {
     private Color color;
     private Color hoverColor = Color.WHITE;
     private ArrayList<Vector2> coordinates;
-    private HashMap<Float, Float> connections;
+    private int connection1, connection2;
     private float x1, x2, y1, y2, a;
 
     private boolean appendingFromEnd, appendingFromBegin;
     private boolean nodeChanged = false;
     private Vector2 movingNode, backupNode;
 
+    private boolean disableEnd, disableBegin;
 
-    public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates, HashMap<Float, Float> connections) {
+
+    public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates) {
         this.voltage = voltage;
         this.gauge = gauge;
         this.coordinates = coordinates;
-        this.connections = connections;
         this.color = DeviceUtil.COLORS.get("Green");
 
         populateProperties();
     }
 
     public Cable(float voltage, float gauge) {
-        this(voltage, gauge, new ArrayList<Vector2>(), new HashMap<Float, Float>());
+        this(voltage, gauge, new ArrayList<Vector2>());
     }
 
     public Cable(Vector2 startPoint) {
         voltage = 0;
         gauge = DeviceUtil.GAUGES[0];
         coordinates = new ArrayList<>();
-        connections = new HashMap<>();
         this.color = DeviceUtil.COLORS.get("Green");
 
         coordinates.add(startPoint);
@@ -180,16 +180,43 @@ public class Cable implements Disposable {
             }
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                if(appendingFromEnd) {
-                    addCoordinates(new Vector2(vec2.x, vec2.y), false);
-                } else if(appendingFromBegin) {
-                    addCoordinates(new Vector2(vec2.x, vec2.y), true);
-                } else if(movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                    coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
-                    movingNode = null;
-                    backupNode = null;
-                    nodeChanged = true;
+                HashMap<DoubleSandCrab, Integer> crab = CableManager.wireHoveringSandcrab(vec2);
+                if(crab != null) {
+                    ArrayList<DoubleSandCrab> clist = new ArrayList<>(crab.keySet());
+                    if(crab.containsValue(1)) {
+                        if(appendingFromBegin) {
+                            connection1 = clist.get(0).getHardwareID();
+                            addCoordinates(new Vector2(clist.get(0).getConnector1().getX() + clist.get(0).getConnector1().getWidth() / 2, clist.get(0).getConnector1().getY() + 20), true);
+                            disableBegin = true;
+                        } else if(appendingFromEnd) {
+                            connection2 = clist.get(0).getHardwareID();
+                            addCoordinates(new Vector2(clist.get(0).getConnector1().getX() + clist.get(0).getConnector1().getWidth() / 2, clist.get(0).getConnector1().getY() + 20), false);
+                            disableEnd = true;
+                        }
+                    } else if(crab.containsValue(2)) {
+                        if(appendingFromBegin) {
+                            connection1 = clist.get(0).getHardwareID();
+                            addCoordinates(new Vector2(clist.get(0).getConnector2().getX() + clist.get(0).getConnector2().getWidth() / 2, clist.get(0).getConnector2().getY() + 20), true);
+                            disableBegin = true;
+                        } else if(appendingFromEnd) {
+                            connection2 = clist.get(0).getHardwareID();
+                            addCoordinates(new Vector2(clist.get(0).getConnector2().getX() + clist.get(0).getConnector2().getWidth() / 2, clist.get(0).getConnector2().getY() + 20), false);
+                            disableEnd = true;
+                        }
+                    }
+                } else {
+                    if(appendingFromEnd && !disableEnd) {
+                        addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                    } else if(appendingFromBegin && !disableBegin) {
+                        addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                    } else if(movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                        coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                        movingNode = null;
+                        backupNode = null;
+                        nodeChanged = true;
+                    }
                 }
+
             }
 
             if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
@@ -200,12 +227,12 @@ public class Cable implements Disposable {
 
             drawNodes(renderer, camera, Color.SALMON);
 
-            if(appendingFromEnd) {
+            if(appendingFromEnd && !disableEnd) {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), 3f);
                 renderer.circle(vec2.x, vec2.y, 5);
-            } else if(appendingFromBegin) {
+            } else if(appendingFromBegin && !disableBegin) {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), 3f);

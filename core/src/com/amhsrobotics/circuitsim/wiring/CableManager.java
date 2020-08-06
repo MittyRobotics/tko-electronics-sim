@@ -1,12 +1,13 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+
+import java.util.HashMap;
 
 public class CableManager {
 
@@ -30,10 +31,26 @@ public class CableManager {
         cables.add(cable);
     }
 
+    public static HashMap<DoubleSandCrab, Integer> wireHoveringSandcrab(Vector2 vec) {
+        for(DoubleSandCrab crab : sandcrabs) {
+            if(crab.getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
+                return new HashMap<DoubleSandCrab, Integer>() {{
+                    put(crab, 1);
+                }};
+            } else if(crab.getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
+                return new HashMap<DoubleSandCrab, Integer>() {{
+                    put(crab, 2);
+                }};
+            }
+        }
+        return null;
+    }
+
     public static void addDoubleSandCrab(float startX, float startY) {
         CircuitGUIManager.propertiesBox.show();
         DoubleSandCrab temp = new DoubleSandCrab(new Vector2(startX, startY));
-        CableManager.currentConnector = temp;
+        currentConnector = temp;
+        currentCable = null;
 
         sandcrabs.add(temp);
     }
@@ -41,7 +58,8 @@ public class CableManager {
     public static void addCable(float startX, float startY) {
         CircuitGUIManager.propertiesBox.show();
         Cable temp = new Cable(new Vector2(startX, startY));
-        CableManager.currentCable = temp;
+        currentCable = temp;
+        currentConnector = null;
 
         temp.setAppendingFromEnd(true);
         cables.add(temp);

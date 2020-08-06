@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.gui;
+package com.amhsrobotics.circuitsim.utility;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -20,6 +20,8 @@ public class DeviceUtil {
 
     public static final int[] GAUGES = IntStream.iterate(10, n -> n + 2).limit(11).toArray();
 
+    private static int curID = 0;
+
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
             if (Objects.equals(value, entry.getValue())) {
@@ -27,5 +29,10 @@ public class DeviceUtil {
             }
         }
         return null;
+    }
+
+    public static int getNewHardwareID() {
+        curID++;
+        return curID;
     }
 }
