@@ -1,6 +1,9 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.DoubleSandCrab;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
@@ -130,9 +133,14 @@ public class Cable implements Disposable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
+        // LOGIC
+        // ---------------------------------------------------------------------
         if(nodeChanged) {
             nodeChanged = false;
         }
+        disableBegin = connection1 != 0;
+        disableEnd = connection2 != 0;
+        // ---------------------------------------------------------------------
 
         // DRAW CABLE
         // ---------------------------------------------------------------------
@@ -180,30 +188,9 @@ public class Cable implements Disposable {
             }
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                HashMap<DoubleSandCrab, Integer> crab = CableManager.wireHoveringSandcrab(vec2);
-                if(crab != null) {
-                    ArrayList<DoubleSandCrab> clist = new ArrayList<>(crab.keySet());
-                    if(crab.containsValue(1)) {
-                        if(appendingFromBegin) {
-                            connection1 = clist.get(0).getHardwareID();
-                            addCoordinates(new Vector2(clist.get(0).getConnector1().getX() + clist.get(0).getConnector1().getWidth() / 2, clist.get(0).getConnector1().getY() + 20), true);
-                            disableBegin = true;
-                        } else if(appendingFromEnd) {
-                            connection2 = clist.get(0).getHardwareID();
-                            addCoordinates(new Vector2(clist.get(0).getConnector1().getX() + clist.get(0).getConnector1().getWidth() / 2, clist.get(0).getConnector1().getY() + 20), false);
-                            disableEnd = true;
-                        }
-                    } else if(crab.containsValue(2)) {
-                        if(appendingFromBegin) {
-                            connection1 = clist.get(0).getHardwareID();
-                            addCoordinates(new Vector2(clist.get(0).getConnector2().getX() + clist.get(0).getConnector2().getWidth() / 2, clist.get(0).getConnector2().getY() + 20), true);
-                            disableBegin = true;
-                        } else if(appendingFromEnd) {
-                            connection2 = clist.get(0).getHardwareID();
-                            addCoordinates(new Vector2(clist.get(0).getConnector2().getX() + clist.get(0).getConnector2().getWidth() / 2, clist.get(0).getConnector2().getY() + 20), false);
-                            disableEnd = true;
-                        }
-                    }
+                HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
+                if(hardware != null) {
+                    processHardwareClick(hardware);
                 } else {
                     if(appendingFromEnd && !disableEnd) {
                         addCoordinates(new Vector2(vec2.x, vec2.y), false);
@@ -260,12 +247,26 @@ public class Cable implements Disposable {
         renderer.end();
     }
 
+    private void processHardwareClick(HashMap<Hardware, Integer> hardware) {
+        ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());
+        if(clist.get(0) instanceof DoubleSandCrab) {
+            DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
+            if(appendingFromEnd) {
+                crab.attachWire(this, hardware.get(clist.get(0)), true);
+            } else if(appendingFromBegin) {
+                crab.attachWire(this, hardware.get(clist.get(0)), false);
+            }
+        }
+    }
+
     private void checkForClick(ClippedCameraController camera) {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             if(hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
+                appendingFromEnd = false;
             } else if(hoveringOnEndpoint(camera) == 2) {
                 appendingFromEnd = true;
+                appendingFromBegin = false;
             } else if(hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
                 movingNode = hoveringOnNode(camera);
                 backupNode = new Vector2(hoveringOnNode(camera));
@@ -328,6 +329,22 @@ public class Cable implements Disposable {
             return 1;
         }
         return 0;
+    }
+
+    public int getConnection1() {
+        return connection1;
+    }
+
+    public void setConnection1(int connection1) {
+        this.connection1 = connection1;
+    }
+
+    public int getConnection2() {
+        return connection2;
+    }
+
+    public void setConnection2(int connection2) {
+        this.connection2 = connection2;
     }
 
     public float getVoltage() {

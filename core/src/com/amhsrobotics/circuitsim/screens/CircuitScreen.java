@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -111,6 +112,7 @@ public class CircuitScreen implements Screen {
         }
 
         CableManager.update(renderer, batch, camera);
+        HardwareManager.update(renderer, batch, camera);
         manager.update(delta, HUDrenderer);
     }
 
@@ -123,8 +125,8 @@ public class CircuitScreen implements Screen {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            if(CableManager.currentConnector == null) {
-                CableManager.addDoubleSandCrab(vec2.x, vec2.y);
+            if(HardwareManager.currentHardware == null) {
+                HardwareManager.addDoubleSandCrab(vec2.x, vec2.y);
                 Constants.placing_object = null;
             }
         }

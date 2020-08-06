@@ -1,8 +1,9 @@
-package com.amhsrobotics.circuitsim.wiring;
+package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -13,16 +14,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-public class DoubleSandCrab {
+public class DoubleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2;
-    private Vector2 position;
-
-    private int hardwareID;
 
     public DoubleSandCrab(Vector2 position) {
-        this.position = position;
-        this.hardwareID = DeviceUtil.getNewHardwareID();
+        super(position);
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
         connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
@@ -34,26 +31,25 @@ public class DoubleSandCrab {
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        super.update(batch, renderer, camera);
 
-        renderer.setProjectionMatrix(camera.getCamera().combined);
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
         if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
             drawHover(renderer);
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                CableManager.currentConnector = this;
+                HardwareManager.currentHardware = this;
             }
         }
 
-        if(CableManager.currentConnector == this) {
+        if(HardwareManager.currentHardware == this) {
             drawHover(renderer);
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                CableManager.currentConnector = null;
+                HardwareManager.currentHardware = null;
             }
         }
 
-        batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
         bottom.draw(batch);
         connector1.draw(batch);
@@ -61,8 +57,23 @@ public class DoubleSandCrab {
         batch.end();
     }
 
-    public int getHardwareID() {
-        return hardwareID;
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+        if(endOfWire) {
+            cable.setConnection2(getHardwareID());
+            if(port == 1) {
+                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
+            } else if(port == 2) {
+                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
+            }
+        } else {
+            cable.setConnection1(getHardwareID());
+            if(port == 1) {
+                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
+            } else if(port == 2) {
+                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
+            }
+
+        }
     }
 
     public Sprite getConnector1() {
@@ -77,7 +88,7 @@ public class DoubleSandCrab {
         renderer.setColor(Color.WHITE);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(position.x - (bottom.getWidth() / 2), position.y - (bottom.getHeight() / 2), bottom.getWidth(), bottom.getHeight(), 15);
+        renderer.roundedRect(getPosition().x - (bottom.getWidth() / 2), getPosition().y - (bottom.getHeight() / 2), bottom.getWidth(), bottom.getHeight(), 15);
         renderer.end();
     }
 }
