@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -27,6 +28,10 @@ public class Hardware {
 
     public void setPosition(float x, float y) {
         position.set(x, y);
+    }
+
+    public void clearConnection(Cable cable) {
+
     }
 
     public int getHardwareID() {
