@@ -15,4 +15,5 @@ public class DigitFilter implements TextField.TextFieldFilter {
         for (char a : accepted)
             if (a == c) return true;
         return false;
-    }}
+    }
+}

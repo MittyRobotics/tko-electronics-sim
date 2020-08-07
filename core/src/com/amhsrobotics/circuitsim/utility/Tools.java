@@ -13,6 +13,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class Tools {
 
+
     public static BitmapFont renderFont(String fontfile, int size) {
         FileHandle fontFile = Gdx.files.internal(fontfile);
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
