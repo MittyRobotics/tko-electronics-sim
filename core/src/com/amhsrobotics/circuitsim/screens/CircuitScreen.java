@@ -126,12 +126,10 @@ public class CircuitScreen implements Screen {
 
 
             if(vec3.x <= Gdx.graphics.getWidth()-200) {
-                //drawPlacing(vec2.x, vec2.y);
 
 
                 if (Constants.placing_object == ObjectType.WIRE) {
-                    currentPlacingCable = new Cable(new Vector2(vec2.x, vec2.y));
-                    currentPlacingCable.display(renderer, camera);
+                    drawPlacing(vec2.x, vec2.y);
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
                     currentPlacingDoubleSandCrab = new DoubleSandCrab(new Vector2(vec2.x, vec2.y));
@@ -179,7 +177,7 @@ public class CircuitScreen implements Screen {
     private void drawPlacing(float x, float y) {
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(Color.RED);
-        renderer.circle(x, y, 10);
+        renderer.circle(x, y, 5);
         renderer.end();
     }
 
