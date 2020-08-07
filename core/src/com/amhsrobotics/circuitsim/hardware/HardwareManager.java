@@ -63,6 +63,10 @@ public class HardwareManager {
         hardwares.removeValue(crab, true);
     }
 
+    public static void removeSandCrab(TripleSandCrab crab) {
+        hardwares.removeValue(crab, true);
+    }
+
     public static void addTripleSandCrab(float x, float y) {
         CircuitGUIManager.propertiesBox.show();
         TripleSandCrab temp = new TripleSandCrab(new Vector2(x, y));

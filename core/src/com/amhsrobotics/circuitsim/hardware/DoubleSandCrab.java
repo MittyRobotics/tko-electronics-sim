@@ -29,26 +29,26 @@ public class DoubleSandCrab extends Hardware {
     private HashMap<Cable, Hardware> connections;
     boolean canMove;
 
-    public DoubleSandCrab(Vector2 position) {
+    public DoubleSandCrab(Vector2 position, boolean... isTriple) {
         super(position);
+        if(isTriple.length > 0 && !isTriple[0]) {
+            connections = new HashMap<>();
 
-        connections = new HashMap<>();
+            bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
+            connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+            connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
 
-        bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-        connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+            bottom.setCenter(position.x, position.y);
+            connector1.setCenter(position.x - 30, position.y - 20);
+            connector2.setCenter(position.x + 30, position.y - 20);
 
-        bottom.setCenter(position.x, position.y);
-        connector1.setCenter(position.x - 30, position.y - 20);
-        connector2.setCenter(position.x + 30, position.y - 20);
+            conn1 = "None";
+            conn2 = "None";
+            conn1c = null;
+            conn2c = null;
 
-        conn1 = "None";
-        conn2 = "None";
-        conn1c = null;
-        conn2c = null;
-
-        canMove = false;
-
+            canMove = false;
+        }
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {

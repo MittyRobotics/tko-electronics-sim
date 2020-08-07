@@ -19,7 +19,7 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.HashMap;
 
-public class TripleSandCrab extends DoubleSandCrab {
+public class TripleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2, connector3;
     private String conn1, conn2, conn3;
@@ -42,7 +42,7 @@ public class TripleSandCrab extends DoubleSandCrab {
         bottom.setCenter(position.x, position.y);
         connector1.setCenter(position.x - 80, position.y - 20);
         connector2.setCenter(position.x, position.y - 20);
-        connector2.setCenter(position.x + 80, position.y - 20);
+        connector3.setCenter(position.x + 80, position.y - 20);
 
         conn1 = "None";
         conn2 = "None";
@@ -61,7 +61,7 @@ public class TripleSandCrab extends DoubleSandCrab {
         bottom.setCenter(getPosition().x, getPosition().y);
         connector1.setCenter(getPosition().x - 80, getPosition().y - 20);
         connector2.setCenter(getPosition().x, getPosition().y - 20);
-        connector2.setCenter(getPosition().x + 80, getPosition().y - 20);
+        connector3.setCenter(getPosition().x + 80, getPosition().y - 20);
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
@@ -139,6 +139,8 @@ public class TripleSandCrab extends DoubleSandCrab {
         CircuitGUIManager.propertiesBox.addElement(new Label(conn1, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label(conn2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 3", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(conn3, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
     }
 
     public void clearConnection(Cable cable) {
@@ -148,6 +150,9 @@ public class TripleSandCrab extends DoubleSandCrab {
         } else if(cable == conn2c) {
             conn2c = null;
             conn2 = "None";
+        } else if(cable == conn3c) {
+            conn3c = null;
+            conn3 = "None";
         }
     }
 
@@ -165,6 +170,11 @@ public class TripleSandCrab extends DoubleSandCrab {
                 conn2 = "Cable";
                 conn2c = cable;
                 endOfWire2 = true;
+            } else if(port == 3) {
+                cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), false);
+                conn3 = "Cable";
+                conn3c = cable;
+                endOfWire3 = true;
             }
 
         } else {
@@ -179,12 +189,21 @@ public class TripleSandCrab extends DoubleSandCrab {
                 conn2 = "Cable";
                 conn2c = cable;
                 endOfWire2 = false;
+            } else if(port == 3) {
+                cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), true);
+                conn3 = "Cable";
+                conn3c = cable;
+                endOfWire3 = true;
             }
 
         }
 
         CableManager.currentCable = null;
 
+    }
+
+    public Sprite getConnector3() {
+        return connector3;
     }
 
     public Sprite getConnector1() {
