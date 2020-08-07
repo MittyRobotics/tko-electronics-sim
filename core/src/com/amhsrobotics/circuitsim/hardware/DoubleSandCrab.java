@@ -77,6 +77,7 @@ public class DoubleSandCrab extends Hardware {
                     HardwareManager.movingObject = false;
                 }
             }
+
         }
 
         batch.begin();
