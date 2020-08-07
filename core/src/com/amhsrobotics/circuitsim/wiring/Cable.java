@@ -290,7 +290,7 @@ public class Cable implements Disposable {
     }
 
     private void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200)) {
             if(hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
                 appendingFromEnd = false;

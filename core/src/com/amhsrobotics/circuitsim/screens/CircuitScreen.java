@@ -124,9 +124,8 @@ public class CircuitScreen implements Screen {
             Vector3 vec3 = new Vector3(vec2.x, vec2.y, 0);
             camera.getCamera().project(vec3);
 
-
-            if(vec3.x <= Gdx.graphics.getWidth()-200) {
-
+            Gdx.app.log(Gdx.input.getX() + "", Gdx.input.getY() + "");
+            if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
 
                 if (Constants.placing_object == ObjectType.WIRE) {
                     drawPlacing(vec2.x, vec2.y);
