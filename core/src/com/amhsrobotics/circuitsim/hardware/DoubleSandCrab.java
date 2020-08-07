@@ -21,6 +21,9 @@ import java.util.HashMap;
 public class DoubleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2;
+    private String conn1, conn2;
+    private Cable conn1c, conn2c;
+    private boolean endOfWire1, endOfWire2;
 
     private HashMap<Cable, Hardware> connections;
 
@@ -36,6 +39,11 @@ public class DoubleSandCrab extends Hardware {
         bottom.setCenter(position.x, position.y);
         connector1.setCenter(position.x - 30, position.y - 20);
         connector2.setCenter(position.x + 30, position.y - 20);
+
+        conn1 = "null";
+        conn2 = "null";
+        conn1c = null;
+        conn2c = null;
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -72,6 +80,12 @@ public class DoubleSandCrab extends Hardware {
                     }
                     HardwareManager.movingObject = true;
                     setPosition(vec.x, vec.y);
+                    if(conn1c != null) {
+                        conn1c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire1);
+                    }
+                    if(conn2c != null) {
+                        conn2c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire2);
+                    }
                 }
             } else {
                 if(HardwareManager.movingObject) {
@@ -93,9 +107,9 @@ public class DoubleSandCrab extends Hardware {
         if (CircuitGUIManager.propertiesBox.isVisible()) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            CircuitGUIManager.propertiesBox.addElement(new Label("null", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label(conn1, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            CircuitGUIManager.propertiesBox.addElement(new Label("null", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label(conn2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
     }
 
@@ -104,18 +118,32 @@ public class DoubleSandCrab extends Hardware {
             cable.setConnection2(getHardwareID());
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
+                conn1 = "Cable";
+                conn1c = cable;
+                endOfWire1 = true;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
+                conn2 = "Cable";
+                conn2c = cable;
+                endOfWire2 = true;
             }
+
         } else {
             cable.setConnection1(getHardwareID());
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
+                conn1 = "Cable";
+                conn1c = cable;
+                endOfWire1 = false;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
+                conn2 = "Cable";
+                conn2c = cable;
+                endOfWire2 = false;
             }
 
         }
+
     }
 
     public Sprite getConnector1() {
