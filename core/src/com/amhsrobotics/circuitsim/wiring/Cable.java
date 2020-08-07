@@ -140,15 +140,6 @@ public class Cable implements Disposable {
 
     }
 
-    public void display(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.SALMON);
-        for(Vector2 coords : coordinates) {
-            renderer.circle(coords.x, coords.y, limit);
-        }
-        renderer.end();
-    }
-
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
         limit = (gauge/2f + 3f)/2;
