@@ -35,7 +35,7 @@ public class Cable implements Disposable {
     private Color color;
     private Color hoverColor = Color.WHITE;
     private ArrayList<Vector2> coordinates;
-    private int connection1, connection2;
+    private Hardware connection1, connection2;
     private float x1, x2, y1, y2, a;
 
     private boolean appendingFromEnd, appendingFromBegin;
@@ -52,10 +52,6 @@ public class Cable implements Disposable {
         this.color = DeviceUtil.COLORS.get("Green");
 
         populateProperties();
-    }
-
-    public Cable(float voltage, float gauge) {
-        this(voltage, gauge, new ArrayList<Vector2>());
     }
 
     public Cable(Vector2 startPoint) {
@@ -151,8 +147,8 @@ public class Cable implements Disposable {
         if(nodeChanged) {
             nodeChanged = false;
         }
-        disableBegin = connection1 != 0;
-        disableEnd = connection2 != 0;
+        disableBegin = connection1 != null;
+        disableEnd = connection2 != null;
         // ---------------------------------------------------------------------
 
         // DRAW CABLE
@@ -223,6 +219,10 @@ public class Cable implements Disposable {
                 CableManager.deleteCable(this);
                 CableManager.currentCable = null;
                 CircuitGUIManager.propertiesBox.hide();
+                HardwareManager.removeCableFromHardware(this, connection1);
+                HardwareManager.removeCableFromHardware(this, connection2);
+                connection2 = null;
+                connection1 = null;
             }
 
             drawNodes(renderer, camera, Color.SALMON);
@@ -344,19 +344,19 @@ public class Cable implements Disposable {
         return 0;
     }
 
-    public int getConnection1() {
+    public Hardware getConnection1() {
         return connection1;
     }
 
-    public void setConnection1(int connection1) {
+    public void setConnection1(Hardware connection1) {
         this.connection1 = connection1;
     }
 
-    public int getConnection2() {
+    public Hardware getConnection2() {
         return connection2;
     }
 
-    public void setConnection2(int connection2) {
+    public void setConnection2(Hardware connection2) {
         this.connection2 = connection2;
     }
 

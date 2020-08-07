@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -40,6 +41,12 @@ public class HardwareManager {
 
         }
         return null;
+    }
+
+    public static void removeCableFromHardware(Cable cable, Hardware hardware) {
+        if(hardware instanceof DoubleSandCrab) {
+            ((DoubleSandCrab) hardware).clearConnection(cable);
+        }
     }
 
     public static void addDoubleSandCrab(float startX, float startY) {

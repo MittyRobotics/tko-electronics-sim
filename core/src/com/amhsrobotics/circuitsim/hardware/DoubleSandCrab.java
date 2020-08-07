@@ -41,8 +41,8 @@ public class DoubleSandCrab extends Hardware {
         connector1.setCenter(position.x - 30, position.y - 20);
         connector2.setCenter(position.x + 30, position.y - 20);
 
-        conn1 = "null";
-        conn2 = "null";
+        conn1 = "None";
+        conn2 = "None";
         conn1c = null;
         conn2c = null;
 
@@ -121,9 +121,20 @@ public class DoubleSandCrab extends Hardware {
         }
     }
 
+    public void clearConnection(Cable cable) {
+        if(cable == conn1c) {
+            conn1c = null;
+            conn1 = "None";
+        } else if(cable == conn2c) {
+            conn2c = null;
+            conn2 = "None";
+        }
+    }
+
+
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         if(endOfWire) {
-            cable.setConnection2(getHardwareID());
+            cable.setConnection2(this);
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
                 conn1 = "Cable";
@@ -137,7 +148,7 @@ public class DoubleSandCrab extends Hardware {
             }
 
         } else {
-            cable.setConnection1(getHardwareID());
+            cable.setConnection1(this);
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
                 conn1 = "Cable";
