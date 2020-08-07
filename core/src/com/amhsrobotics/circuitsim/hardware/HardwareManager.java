@@ -57,4 +57,13 @@ public class HardwareManager {
 
         hardwares.add(temp);
     }
+
+    public static void addTripleSandCrab(float x, float y) {
+        CircuitGUIManager.propertiesBox.show();
+        TripleSandCrab temp = new TripleSandCrab(new Vector2(x, y));
+        currentHardware = temp;
+        CableManager.currentCable = null;
+
+        hardwares.add(temp);
+    }
 }
