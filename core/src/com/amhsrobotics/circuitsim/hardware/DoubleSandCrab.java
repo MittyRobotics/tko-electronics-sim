@@ -54,6 +54,7 @@ public class DoubleSandCrab extends Hardware {
                 CircuitGUIManager.propertiesBox.show();
                 populateProperties();
             }
+
         }
 
         if(HardwareManager.currentHardware == this) {
