@@ -88,11 +88,12 @@ public class DoubleSandCrab extends Hardware {
                 if(conn2c != null) {
                     conn2c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire2);
                 }
-            } else if (Gdx.input.isTouched() && Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0) {
-                canMove = true;
-                HardwareManager.movingObject = true;
             } else if (Gdx.input.isTouched()) {
+                if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
+                    canMove = true;
+                }
                 HardwareManager.movingObject = true;
+
             } else {
                 if(HardwareManager.movingObject) {
                     canMove = false;
