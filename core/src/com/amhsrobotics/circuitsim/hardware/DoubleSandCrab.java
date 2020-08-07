@@ -26,6 +26,7 @@ public class DoubleSandCrab extends Hardware {
     private boolean endOfWire1, endOfWire2;
 
     private HashMap<Cable, Hardware> connections;
+    boolean canMove;
 
     public DoubleSandCrab(Vector2 position) {
         super(position);
@@ -44,6 +45,9 @@ public class DoubleSandCrab extends Hardware {
         conn2 = "null";
         conn1c = null;
         conn2c = null;
+
+        canMove = false;
+
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -73,22 +77,25 @@ public class DoubleSandCrab extends Hardware {
                 HardwareManager.currentHardware = null;
             }
 
-            if(Gdx.input.isTouched()) {
-                if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
-                    if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                        SnapGrid.calculateSnap(vec);
-                    }
-                    HardwareManager.movingObject = true;
-                    setPosition(vec.x, vec.y);
-                    if(conn1c != null) {
-                        conn1c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire1);
-                    }
-                    if(conn2c != null) {
-                        conn2c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire2);
-                    }
+            if(Gdx.input.isTouched() && canMove) {
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    SnapGrid.calculateSnap(vec);
                 }
+                setPosition(vec.x, vec.y);
+                if(conn1c != null) {
+                    conn1c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire1);
+                }
+                if(conn2c != null) {
+                    conn2c.editCoordinates(new Vector2(vec.x, vec.y), endOfWire2);
+                }
+            } else if (Gdx.input.isTouched() && Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0) {
+                canMove = true;
+                HardwareManager.movingObject = true;
+            } else if (Gdx.input.isTouched()) {
+                HardwareManager.movingObject = true;
             } else {
                 if(HardwareManager.movingObject) {
+                    canMove = false;
                     HardwareManager.movingObject = false;
                 }
             }
