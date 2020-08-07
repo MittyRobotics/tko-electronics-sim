@@ -184,6 +184,8 @@ public class Cable implements Disposable {
             // draw actual cable
             renderer.setColor(color);
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), gauge/2f);
+
+            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
         }
         // ---------------------------------------------------------------------
 
