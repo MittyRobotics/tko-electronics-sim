@@ -35,7 +35,7 @@ public class DoubleSandCrab extends Hardware {
         connections = new HashMap<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
         connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
 
         bottom.setCenter(position.x, position.y);
@@ -187,7 +187,7 @@ public class DoubleSandCrab extends Hardware {
         renderer.setColor(Color.WHITE);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (bottom.getWidth() / 2), getPosition().y - (bottom.getHeight() / 2), bottom.getWidth(), bottom.getHeight(), 15);
+        renderer.roundedRect(getPosition().x - (bottom.getWidth() / 2), getPosition().y - (bottom.getHeight() / 2), bottom.getWidth()-1, bottom.getHeight(), 15);
         renderer.end();
     }
 }

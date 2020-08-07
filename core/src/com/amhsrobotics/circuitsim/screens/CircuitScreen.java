@@ -3,8 +3,11 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.DoubleSandCrab;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.TripleSandCrab;
 import com.amhsrobotics.circuitsim.utility.*;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -31,7 +34,13 @@ public class CircuitScreen implements Screen {
     private final ModifiedShapeRenderer HUDrenderer;
     private ClippedCameraController camera;
 
+
+    private Cable currentPlacingCable;
+    private DoubleSandCrab currentPlacingDoubleSandCrab;
+    private TripleSandCrab currentPlacingTripleSandCrab;
+
     private CircuitGUIManager manager;
+
 
     public CircuitScreen(final Game game) {
 
@@ -97,6 +106,7 @@ public class CircuitScreen implements Screen {
         if(Constants.placing_object != null) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
             if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
@@ -118,14 +128,20 @@ public class CircuitScreen implements Screen {
 
 
             if(vec3.x <= Gdx.graphics.getWidth()-200) {
-                drawPlacing(vec2.x, vec2.y);
+                //drawPlacing(vec2.x, vec2.y);
 
 
                 if (Constants.placing_object == ObjectType.WIRE) {
+                    currentPlacingCable = new Cable(new Vector2(vec2.x, vec2.y));
+                    currentPlacingCable.display(renderer, camera);
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
+                    currentPlacingDoubleSandCrab = new DoubleSandCrab(new Vector2(vec2.x, vec2.y));
+                    currentPlacingDoubleSandCrab.update(batch, renderer, camera);
                     handleWago(1);
                 } else if (Constants.placing_object == ObjectType.WAGO3) {
+                    currentPlacingTripleSandCrab = new TripleSandCrab(new Vector2(vec2.x, vec2.y));
+                    currentPlacingTripleSandCrab.update(batch, renderer, camera);
                     handleWago(2);
                 }
             }
@@ -150,14 +166,14 @@ public class CircuitScreen implements Screen {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            if(HardwareManager.currentHardware == null) {
-                if(type == 1) {
-                    HardwareManager.addDoubleSandCrab(vec2.x, vec2.y);
-                } else if(type == 2) {
-                    HardwareManager.addTripleSandCrab(vec2.x, vec2.y);
-                }
-                Constants.placing_object = null;
+            HardwareManager.currentHardware = null;
+            if(type == 1) {
+                HardwareManager.addDoubleSandCrab(vec2.x, vec2.y);
+            } else if(type == 2) {
+                HardwareManager.addTripleSandCrab(vec2.x, vec2.y);
             }
+            Constants.placing_object = null;
+
         }
 
     }
@@ -183,10 +199,10 @@ public class CircuitScreen implements Screen {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            if(CableManager.currentCable == null) {
-                CableManager.addCable(vec2.x, vec2.y);
-                Constants.placing_object = null;
-            }
+            CableManager.currentCable = null;
+            CableManager.addCable(vec2.x, vec2.y);
+            Constants.placing_object = null;
+
         }
     }
 
