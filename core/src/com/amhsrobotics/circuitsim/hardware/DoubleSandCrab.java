@@ -31,7 +31,7 @@ public class DoubleSandCrab extends Hardware {
 
     public DoubleSandCrab(Vector2 position, boolean... isTriple) {
         super(position);
-        if(isTriple.length > 0 && !isTriple[0]) {
+        if(isTriple.length == 0) {
             connections = new HashMap<>();
 
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
