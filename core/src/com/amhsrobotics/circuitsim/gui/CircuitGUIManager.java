@@ -228,6 +228,7 @@ public class CircuitGUIManager {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
