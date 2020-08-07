@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class DeviceUtil {
 
     public static final LinkedHashMap<String, Color> COLORS = new LinkedHashMap<String, Color>() {{
-        put("Green", new Color(0/255f, 255/255f, 0/255f, 1));
+        put("Green", new Color(0/255f, 180/255f, 0/255f, 1));
         put("Blue", new Color(0/255f, 0/255f, 255/255f, 1));
         put("Red", new Color(255/255f, 0/255f, 0/255f, 1));
         put("Yellow", new Color(255/255f, 255/255f, 0/255f, 1));
