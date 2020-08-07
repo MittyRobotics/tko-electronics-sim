@@ -26,6 +26,10 @@ public class Hardware {
         return position;
     }
 
+    public void delete() {
+
+    }
+
     public void setPosition(float x, float y) {
         position.set(x, y);
     }

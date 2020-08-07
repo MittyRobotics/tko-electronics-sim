@@ -104,9 +104,7 @@ public class DoubleSandCrab extends Hardware {
             }
 
             if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
-                HardwareManager.removeDoubleSandCrab(this);
-                HardwareManager.currentHardware = null;
-                CircuitGUIManager.propertiesBox.hide();
+               this.delete();
             }
 
         }
@@ -118,7 +116,12 @@ public class DoubleSandCrab extends Hardware {
         batch.end();
     }
 
-
+    @Override
+    public void delete() {
+        HardwareManager.removeSandCrab(this);
+        HardwareManager.currentHardware = null;
+        CircuitGUIManager.propertiesBox.hide();
+    }
 
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();

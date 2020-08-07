@@ -59,7 +59,7 @@ public class HardwareManager {
     }
 
 
-    public static void removeDoubleSandCrab(DoubleSandCrab crab) {
+    public static void removeSandCrab(DoubleSandCrab crab) {
         hardwares.removeValue(crab, true);
     }
 
