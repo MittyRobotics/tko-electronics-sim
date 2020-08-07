@@ -277,9 +277,11 @@ public class Cable implements Disposable {
             if(hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
                 appendingFromEnd = false;
+                HardwareManager.currentHardware = null;
             } else if(hoveringOnEndpoint(camera) == 2) {
                 appendingFromEnd = true;
                 appendingFromBegin = false;
+                HardwareManager.currentHardware = null;
             } else if(hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
                 movingNode = hoveringOnNode(camera);
                 backupNode = new Vector2(hoveringOnNode(camera));
@@ -288,6 +290,7 @@ public class Cable implements Disposable {
             if(CableManager.currentCable != this) {
                 CableManager.currentCable = this;
                 CircuitGUIManager.propertiesBox.show();
+                HardwareManager.currentHardware = null;
                 populateProperties();
             }
         }

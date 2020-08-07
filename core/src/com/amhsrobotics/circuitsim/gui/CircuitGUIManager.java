@@ -2,10 +2,12 @@ package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -27,7 +29,7 @@ public class CircuitGUIManager {
     private ModifiedStage stage;
 
     private TextButton back, help, options;
-    private Table container;
+    public static Table container;
     private Window helpMenu, optionsMenu;
 
     private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
@@ -116,18 +118,24 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.WIRE;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
             }
         });
         sandcrab.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.WAGO2;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
             }
         });
         sandcrab3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.WAGO3;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
             }
         });
 

@@ -5,6 +5,7 @@ import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -63,6 +64,7 @@ public class DoubleSandCrab extends Hardware {
             drawHover(renderer);
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HardwareManager.currentHardware = this;
+                CableManager.currentCable = null;
                 CircuitGUIManager.propertiesBox.show();
                 populateProperties();
             }
@@ -101,6 +103,12 @@ public class DoubleSandCrab extends Hardware {
                 }
             }
 
+            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
+                HardwareManager.removeDoubleSandCrab(this);
+                HardwareManager.currentHardware = null;
+                CircuitGUIManager.propertiesBox.hide();
+            }
+
         }
 
         batch.begin();
@@ -109,6 +117,8 @@ public class DoubleSandCrab extends Hardware {
         connector2.draw(batch);
         batch.end();
     }
+
+
 
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
@@ -160,6 +170,8 @@ public class DoubleSandCrab extends Hardware {
             }
 
         }
+
+        CableManager.currentCable = null;
 
     }
 

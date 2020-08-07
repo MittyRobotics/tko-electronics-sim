@@ -57,4 +57,8 @@ public class HardwareManager {
 
         hardwares.add(temp);
     }
+
+    public static void removeDoubleSandCrab(DoubleSandCrab crab) {
+        hardwares.removeValue(crab, true);
+    }
 }

@@ -8,6 +8,8 @@ import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -33,6 +35,7 @@ public class CircuitScreen implements Screen {
 
     public CircuitScreen(final Game game) {
 
+
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
@@ -50,7 +53,7 @@ public class CircuitScreen implements Screen {
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(Constants.placing_object == null && !HardwareManager.movingObject) {
+                if(Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null) {
                     float x = Gdx.input.getDeltaX();
                     float y = Gdx.input.getDeltaY();
 
@@ -87,10 +90,17 @@ public class CircuitScreen implements Screen {
         camera.update();
         camera.calculateBounds();
 
+
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
         if(Constants.placing_object != null) {
+
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
             HUDrenderer.rectLine(0, 0, 0, Gdx.graphics.getHeight(), 4);
@@ -103,11 +113,21 @@ public class CircuitScreen implements Screen {
                 Constants.placing_object = null;
             }
 
-            if(Constants.placing_object == ObjectType.WIRE) {
-                handleCable();
-            } else if(Constants.placing_object == ObjectType.WAGO2) {
-                handleWago2();
+            Vector3 vec3 = new Vector3(vec2.x, vec2.y, 0);
+            camera.getCamera().project(vec3);
+
+
+            if(vec3.x <= Gdx.graphics.getWidth()-200) {
+                drawPlacing(vec2.x, vec2.y);
+
+
+                if (Constants.placing_object == ObjectType.WIRE) {
+                    handleCable();
+                } else if (Constants.placing_object == ObjectType.WAGO2) {
+                    handleWago2();
+                }
             }
+
         }
 
         CableManager.update(renderer, batch, camera);
@@ -118,6 +138,8 @@ public class CircuitScreen implements Screen {
     }
 
     private void handleWago2() {
+
+        CableManager.currentCable = null;
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -131,9 +153,19 @@ public class CircuitScreen implements Screen {
                 Constants.placing_object = null;
             }
         }
+
+    }
+
+    private void drawPlacing(float x, float y) {
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.RED);
+        renderer.circle(x, y, 10);
+        renderer.end();
     }
 
     private void handleCable() {
+        HardwareManager.currentHardware = null;
+
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.getCamera().unproject(vec);
         Vector2 vec2 = new Vector2(vec.x, vec.y);
