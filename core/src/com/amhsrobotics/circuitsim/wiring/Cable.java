@@ -255,6 +255,7 @@ public class Cable implements Disposable {
             drawNodes(renderer, camera, Color.SALMON);
             checkForClick(camera);
         }
+
         // ---------------------------------------------------------------------
 
         renderer.end();
@@ -388,6 +389,10 @@ public class Cable implements Disposable {
         cameraController.getCamera().unproject(vec);
         float x = vec.x;
         float y = vec.y;
+
+        if(hoveringOnEndpoint(cameraController) != 0) {
+            return true;
+        }
 
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             x1 = coordinates.get(i).x;
