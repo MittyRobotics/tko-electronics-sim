@@ -25,6 +25,10 @@ public class Hardware {
         return position;
     }
 
+    public void setPosition(float x, float y) {
+        position.set(x, y);
+    }
+
     public int getHardwareID() {
         return hardwareID;
     }

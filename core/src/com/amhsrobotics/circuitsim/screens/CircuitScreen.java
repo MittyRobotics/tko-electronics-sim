@@ -50,7 +50,7 @@ public class CircuitScreen implements Screen {
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(Constants.placing_object == null) {
+                if(Constants.placing_object == null && !HardwareManager.movingObject) {
                     float x = Gdx.input.getDeltaX();
                     float y = Gdx.input.getDeltaY();
 
@@ -113,6 +113,8 @@ public class CircuitScreen implements Screen {
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
         manager.update(delta);
+
+//        HardwareManager.movingObject = false;
     }
 
     private void handleWago2() {

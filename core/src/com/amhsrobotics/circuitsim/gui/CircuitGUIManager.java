@@ -239,7 +239,6 @@ public class CircuitGUIManager {
                 if(helpMenuShown) {
                     hideHelpMenu();
                 } else {
-                    hideOptionsMenu();
                     showHelpMenu();
                 }
             }
@@ -250,7 +249,6 @@ public class CircuitGUIManager {
                 if(optionsMenuShown) {
                     hideOptionsMenu();
                 } else {
-                    hideHelpMenu();
                     showOptionsMenu();
                 }
             }
@@ -296,6 +294,12 @@ public class CircuitGUIManager {
         helpTable.row();
         helpTable.add(new Label("ESCAPE", l2Style)).width(80).align(Align.center);
         helpTable.add(new Label("Remove focus from device", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("CTRL + LSHIFT + /", l2Style)).width(155).align(Align.center);
+        helpTable.add(new Label("Help Menu", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("CTRL + LSHIFT + .", l2Style)).width(155).align(Align.center);
+        helpTable.add(new Label("Options Menu", lStyle)).width(180).align(Align.center);
 
         helpMenu.row();
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
@@ -344,6 +348,7 @@ public class CircuitGUIManager {
     }
 
     private void showHelpMenu() {
+        hideOptionsMenu();
         helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
         Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 600);
         helpMenuShown = true;
@@ -355,6 +360,7 @@ public class CircuitGUIManager {
     }
 
     private void showOptionsMenu() {
+        hideHelpMenu();
         optionsMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
         Tools.slideIn(optionsMenu, "down", 1f, Interpolation.exp10, 600);
         optionsMenuShown = true;
@@ -380,6 +386,14 @@ public class CircuitGUIManager {
         if(optionsMenuShown) {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideOptionsMenu();
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
+                showHelpMenu();
+            } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
+                showOptionsMenu();
             }
         }
 

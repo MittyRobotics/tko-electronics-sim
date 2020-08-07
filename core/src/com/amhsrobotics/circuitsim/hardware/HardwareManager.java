@@ -13,6 +13,7 @@ import java.util.HashMap;
 public class HardwareManager {
 
     public static Hardware currentHardware = null;
+    public static boolean movingObject = false;
 
     private static DelayedRemovalArray<Hardware> hardwares = new DelayedRemovalArray<>();
 

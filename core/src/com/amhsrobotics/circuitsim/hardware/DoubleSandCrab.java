@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.Gdx;
@@ -40,6 +41,10 @@ public class DoubleSandCrab extends Hardware {
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
 
+        bottom.setCenter(getPosition().x, getPosition().y);
+        connector1.setCenter(getPosition().x - 30, getPosition().y - 20);
+        connector2.setCenter(getPosition().x + 30, getPosition().y - 20);
+
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
         if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
@@ -57,6 +62,20 @@ public class DoubleSandCrab extends Hardware {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 CircuitGUIManager.propertiesBox.hideAndClear();
                 HardwareManager.currentHardware = null;
+            }
+
+            if(Gdx.input.isTouched()) {
+                if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
+                    if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                        SnapGrid.calculateSnap(vec);
+                    }
+                    HardwareManager.movingObject = true;
+                    setPosition(vec.x, vec.y);
+                }
+            } else {
+                if(HardwareManager.movingObject) {
+                    HardwareManager.movingObject = false;
+                }
             }
         }
 

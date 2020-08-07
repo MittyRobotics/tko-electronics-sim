@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.wiring;
+package com.amhsrobotics.circuitsim.hardware;
 
 public class TripleSandCrab {
 
