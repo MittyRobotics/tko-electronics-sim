@@ -131,11 +131,19 @@ public class Cable implements Disposable {
         }
     }
 
-    public void editCoordinates(Vector2 point, boolean endOfWire) {
+    public void editCoordinates(Vector2 point, boolean endOfWire, boolean second) {
         if(endOfWire) {
-            this.coordinates.set(this.coordinates.size()-1, point);
+            if(second) {
+                this.coordinates.set(this.coordinates.size() - 2, point);
+            } else {
+                this.coordinates.set(this.coordinates.size() - 1, point);
+            }
         } else {
-            this.coordinates.set(0, point);
+            if(second) {
+                this.coordinates.set(1, point);
+            } else {
+                this.coordinates.set(0, point);
+            }
         }
 
     }
