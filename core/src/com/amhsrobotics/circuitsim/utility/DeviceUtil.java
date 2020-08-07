@@ -11,11 +11,12 @@ public class DeviceUtil {
 
     public static final LinkedHashMap<String, Color> COLORS = new LinkedHashMap<String, Color>() {{
         put("Green", new Color(158/255f, 205/255f, 158/255f, 1));
-        put("Blue", new Color(142/255f, 190/255f, 209/255f, 1));
-        put("Red", new Color(209/255f, 142/255f, 166/255f, 1));
+        put("Red", new Color(232/255f, 101/255f, 88/255f, 1));
         put("Yellow", new Color(231/255f, 224/255f, 110/255f, 1));
         put("Orange", new Color(231/255f, 180/255f, 110/255f, 1));
         put("Purple", new Color(212/255f, 140/255f, 225/255f, 1));
+        put("White", new Color(243/255f, 237/255f, 236/255f, 1));
+        put("Black", new Color(15/255f, 14/255f, 14/255f, 1));
     }};
 
     public static final int[] GAUGES = IntStream.iterate(10, n -> n + 2).limit(11).toArray();
