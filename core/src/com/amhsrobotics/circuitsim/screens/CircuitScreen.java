@@ -124,7 +124,9 @@ public class CircuitScreen implements Screen {
                 if (Constants.placing_object == ObjectType.WIRE) {
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
-                    handleWago2();
+                    handleWago(1);
+                } else if (Constants.placing_object == ObjectType.WAGO3) {
+                    handleWago(2);
                 }
             }
 
@@ -137,7 +139,7 @@ public class CircuitScreen implements Screen {
 //        HardwareManager.movingObject = false;
     }
 
-    private void handleWago2() {
+    private void handleWago(int type) {
 
         CableManager.currentCable = null;
 
@@ -149,7 +151,11 @@ public class CircuitScreen implements Screen {
             }
 
             if(HardwareManager.currentHardware == null) {
-                HardwareManager.addDoubleSandCrab(vec2.x, vec2.y);
+                if(type == 1) {
+                    HardwareManager.addDoubleSandCrab(vec2.x, vec2.y);
+                } else if(type == 2) {
+                    HardwareManager.addTripleSandCrab(vec2.x, vec2.y);
+                }
                 Constants.placing_object = null;
             }
         }
@@ -162,6 +168,7 @@ public class CircuitScreen implements Screen {
         renderer.circle(x, y, 10);
         renderer.end();
     }
+
 
     private void handleCable() {
         HardwareManager.currentHardware = null;
