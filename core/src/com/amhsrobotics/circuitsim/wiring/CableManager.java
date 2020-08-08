@@ -2,12 +2,12 @@ package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import sun.util.resources.be.CalendarData_be;
 
 public class CableManager {
 
@@ -22,23 +22,28 @@ public class CableManager {
         }
     }
 
-    public static Cable wireHoveringWire(ClippedCameraController camera, Cable cable) {
-        for (Cable c : cables) {
-            if (c.getID() != cable.getID()) {
-                Gdx.app.log(String.valueOf(c.getID()), Integer.toString(cable.getID()));
-                int ans = c.hoveringOnEndpoint(camera);
-                if (ans == 1) {
-                    mergeCables(c, cable, true);
-                } else if (ans == 2) {
-                    mergeCables(c, cable, false);
-                }
-            }
-        }
-    }
-
     public static void addCable(Cable cable) {
         cable.setAppendingFromEnd(true);
         cables.add(cable);
+    }
+
+    public static DelayedRemovalArray<Cable> getCables() {
+        return cables;
+    }
+
+
+    public static Tuple<Cable, Integer> wireHoveringWire(ClippedCameraController camera, Cable cable) {
+        for (Cable c : cables) {
+            if (c.getID() != cable.getID()) {
+                int ans = c.hoveringOnEndpoint(camera);
+                if (ans == 1) {
+                    return new Tuple<>(c, 1);
+                } else if (ans == 2) {
+                    return new Tuple<>(c, 2);
+                }
+            }
+        }
+        return null;
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable2begin) {

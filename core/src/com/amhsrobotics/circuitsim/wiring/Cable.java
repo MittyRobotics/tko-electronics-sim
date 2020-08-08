@@ -8,6 +8,7 @@ import com.amhsrobotics.circuitsim.hardware.TripleSandCrab;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
+import com.amhsrobotics.circuitsim.utility.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -310,6 +311,10 @@ public class Cable implements Disposable {
 
     private void checkForClick(ClippedCameraController camera) {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200)) {
+            if(CableManager.wireHoveringWire(camera, this) != null) {
+                Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
+                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1);
+            }
             if(hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
                 appendingFromEnd = false;
@@ -354,7 +359,6 @@ public class Cable implements Disposable {
         for(Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit);
         }
-        if(CableManager.wireHoveringWire();)
         if(hoveringOnEndpoint(cam) == 1) {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
