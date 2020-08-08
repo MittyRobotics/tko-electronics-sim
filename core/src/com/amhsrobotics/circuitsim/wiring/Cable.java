@@ -193,6 +193,7 @@ public class Cable implements Disposable {
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
         }
+        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit);
         // ---------------------------------------------------------------------
 
         // CABLE SELECTED MECHANICS
@@ -353,6 +354,7 @@ public class Cable implements Disposable {
         for(Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit);
         }
+        if(CableManager.wireHoveringWire();)
         if(hoveringOnEndpoint(cam) == 1) {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
