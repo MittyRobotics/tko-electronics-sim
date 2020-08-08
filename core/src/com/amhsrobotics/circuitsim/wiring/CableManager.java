@@ -54,6 +54,15 @@ public class CableManager {
         deleteCable(cable1);
     }
 
+    public static Cable getCableByID(int ID) {
+        for(int x = 0; x < cables.size; x++) {
+            if(cables.get(x).getID() == ID) {
+                return cables.get(x);
+            }
+        }
+        return null;
+    }
+
     public static void addCable(float startX, float startY) {
         CircuitGUIManager.propertiesBox.show();
         Cable temp = new Cable(new Vector2(startX, startY), id);

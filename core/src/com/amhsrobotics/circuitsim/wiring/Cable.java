@@ -371,7 +371,6 @@ public class Cable implements Disposable {
                 renderer.circle(hoveringOnNode(cam).x, hoveringOnNode(cam).y, limit);
             }
         }
-
     }
 
     public int hoveringOnEndpoint(CameraController cameraController) {
