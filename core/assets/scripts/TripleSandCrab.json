@@ -1,0 +1,19 @@
+{
+  "name": "TripleSandCrab",
+  "totalPins": 3,
+  "totalSprites": 4,
+  "pins": [
+    {
+      "position": [-80, -20],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [0, -20],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [80, -20],
+      "dimensions": [50, 130]
+    }
+  ]
+}

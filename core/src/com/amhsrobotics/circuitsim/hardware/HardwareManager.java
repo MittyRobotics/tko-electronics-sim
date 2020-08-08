@@ -2,7 +2,6 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.Tuple;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +23,6 @@ public class HardwareManager {
             h.update(batch, renderer, cam);
         }
     }
-
 
     public static HashMap<Hardware, Integer> wireHoveringHardware(Vector2 vec) {
         for(Hardware h : hardwares) {
