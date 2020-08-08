@@ -221,7 +221,7 @@ public class Cable implements Disposable {
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
-                CableManager.wireHoveringWire(camera, this);
+                // CableManager.wireHoveringWire(camera, this);
 
                 if(hardware != null) {
                     processHardwareClick(hardware);
