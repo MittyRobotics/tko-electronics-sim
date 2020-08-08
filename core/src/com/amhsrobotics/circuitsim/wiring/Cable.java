@@ -208,6 +208,10 @@ public class Cable implements Disposable {
             camera.getCamera().unproject(vec);
             Vector2 vec2 = new Vector2(vec.x, vec.y);
 
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
             if(CableManager.merging) {
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
@@ -224,10 +228,6 @@ public class Cable implements Disposable {
 
             } else {
 
-
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    SnapGrid.calculateSnap(vec2);
-                }
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                     CableManager.currentCable = null;
@@ -450,7 +450,6 @@ public class Cable implements Disposable {
             for(int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
-
         } else {
             for(int i = l.size()-1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
