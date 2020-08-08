@@ -37,6 +37,20 @@ public class HardwareManager {
                         put(h, 2);
                     }};
                 }
+            } else if (h instanceof TripleSandCrab) {
+                if(((TripleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
+                    return new HashMap<Hardware, Integer>() {{
+                        put(h, 1);
+                    }};
+                } else if(((TripleSandCrab) h).getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
+                    return new HashMap<Hardware, Integer>() {{
+                        put(h, 2);
+                    }};
+                } else if(((TripleSandCrab) h).getConnector3().getBoundingRectangle().contains(vec.x, vec.y)) {
+                    return new HashMap<Hardware, Integer>() {{
+                        put(h, 3);
+                    }};
+                }
             }
 
         }
