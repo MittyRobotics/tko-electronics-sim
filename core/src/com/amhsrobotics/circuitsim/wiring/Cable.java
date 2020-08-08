@@ -455,8 +455,8 @@ public class Cable implements Disposable {
             for(int i = l.size()-1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
-
         }
+
         CableManager.currentCable = null;
         appendingFromBegin = false;
         appendingFromEnd = false;
