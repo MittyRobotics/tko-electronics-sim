@@ -273,10 +273,16 @@ public class Cable implements Disposable {
 
                 drawNodes(renderer, camera, Color.SALMON);
 
-                if ((appendingFromEnd && !disableEnd)||(appendingFromBegin && !disableBegin)) {
+                if (appendingFromEnd && !disableEnd) {
                     // draw potential cable wire
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                } else if (appendingFromBegin && !disableBegin){
+                    // draw potential cable wire
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), gauge / 2f);
                     renderer.setColor(Color.SALMON);
                     renderer.circle(vec2.x, vec2.y, limit);
                 } else if (movingNode != null) {
@@ -326,20 +332,20 @@ public class Cable implements Disposable {
 
     private void checkForClick(ClippedCameraController camera) {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) && !CableManager.merging) {
-            if(CableManager.currentCable == this) {
-                if (hoveringOnEndpoint(camera) == 1) {
-                    appendingFromBegin = true;
-                    appendingFromEnd = false;
-                    HardwareManager.currentHardware = null;
-                } else if (hoveringOnEndpoint(camera) == 2) {
-                    appendingFromEnd = true;
-                    appendingFromBegin = false;
-                    HardwareManager.currentHardware = null;
-                } else if (hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
-                    movingNode = hoveringOnNode(camera);
-                    backupNode = new Vector2(hoveringOnNode(camera));
-                }
-            } else {
+            if (hoveringOnEndpoint(camera) == 1) {
+                appendingFromBegin = true;
+                appendingFromEnd = false;
+                HardwareManager.currentHardware = null;
+            } else if (hoveringOnEndpoint(camera) == 2) {
+                appendingFromEnd = true;
+                appendingFromBegin = false;
+                HardwareManager.currentHardware = null;
+            } else if (hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
+                movingNode = hoveringOnNode(camera);
+                backupNode = new Vector2(hoveringOnNode(camera));
+            }
+
+            if(CableManager.currentCable != this) {
                 CableManager.currentCable = this;
                 CircuitGUIManager.propertiesBox.show();
                 HardwareManager.currentHardware = null;
@@ -440,24 +446,16 @@ public class Cable implements Disposable {
         /*Gdx.app.log("", begin + " " + cable1begin);
         Gdx.app.log("", this.connection1 + " " + this.connection2);
         Gdx.app.log("", cable2.connection1 + " " + cable2.connection2);*/
-        if(!cable1begin) {
-            for(int i = l.size() - 1; i >= 0; i--) {
-                this.addCoordinates(l.get(i), begin);
-            }
-            /*if(begin) {
-                this.connection2 = cable2.connection2;
-            } else {
-                this.connection1 = cable2.connection2;
-            }*/
-        } else {
+        if(cable1begin) {
             for(int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
-            /*if(begin) {
-                this.connection2 = cable2.connection1;
-            } else {
-                this.connection1 = cable2.connection1;
-            }*/
+
+        } else {
+            for(int i = l.size()-1; i >= 0; i--) {
+                this.addCoordinates(l.get(i), begin);
+            }
+
         }
         CableManager.currentCable = null;
         appendingFromBegin = false;
