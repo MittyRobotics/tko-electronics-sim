@@ -25,7 +25,7 @@ public class CableManager {
     }
 
     public static void wireHoveringWire(ClippedCameraController camera, Cable cable) {
-        /*for (Cable c : cables) {
+        for (Cable c : cables) {
             if (c.getID() != cable.getID()) {
                 Gdx.app.log(String.valueOf(c.getID()), Integer.toString(cable.getID()));
                 int ans = c.hoveringOnEndpoint(camera);
@@ -37,7 +37,7 @@ public class CableManager {
                     currentCable = cable;
                 }
             }
-        }*/
+        }
     }
 
     public static void addCable(Cable cable) {
