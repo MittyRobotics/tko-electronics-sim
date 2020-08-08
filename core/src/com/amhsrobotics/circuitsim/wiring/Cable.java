@@ -213,21 +213,24 @@ public class Cable implements Disposable {
             }
 
             if(CableManager.merging) {
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
-                renderer.setColor(Color.SALMON);
-                renderer.circle(vec2.x, vec2.y, limit);
+                if(appendingFromBegin) {
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), gauge / 2f);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                } else {
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                }
             }
 
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if (secondCable != null) {
-                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
-                }
-
+            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
 
             } else {
-
 
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                     CableManager.currentCable = null;
