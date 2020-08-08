@@ -15,6 +15,7 @@ public class CableManager {
 
     public static Cable currentCable = null;
     private static int id = 1;
+    public static boolean merging = false;
 
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
@@ -39,9 +40,12 @@ public class CableManager {
         for (int x = 0; x < cables.size; x++) {
             if (cables.get(x).getID() != cable.getID()) {
                 int ans = cables.get(x).hoveringOnEndpoint(camera);
+                Gdx.app.log(""+cables.get(x).getID(), ""+ans);
                 if (ans == 1) {
+                    merging = true;
                     return new Tuple<>(cables.get(x), 1);
                 } else if (ans == 2) {
+                    merging = true;
                     return new Tuple<>(cables.get(x), 2);
                 }
             }
@@ -50,8 +54,9 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable2begin, boolean cable1begin) {
-        cable2.mergeCable(cable1, cable2begin, cable1begin);
-        deleteCable(cable1);
+        cable1.mergeCable(cable2, cable1begin, cable2begin);
+        deleteCable(cable2);
+        merging = false;
     }
 
     public static Cable getCableByID(int ID) {

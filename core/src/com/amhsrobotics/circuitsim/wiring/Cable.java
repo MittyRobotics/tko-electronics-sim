@@ -199,79 +199,93 @@ public class Cable implements Disposable {
 
         // CABLE SELECTED MECHANICS
         // ---------------------------------------------------------------------
+
+
+
         if(CableManager.currentCable == this) {
+
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
             Vector2 vec2 = new Vector2(vec.x, vec.y);
 
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
+            if(CableManager.merging) {
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
+                renderer.setColor(Color.SALMON);
+                renderer.circle(vec2.x, vec2.y, limit);
             }
 
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                CableManager.currentCable = null;
-                appendingFromBegin = false;
-                appendingFromEnd = false;
-                if(movingNode != null) {
-                    coordinates.set(coordinates.indexOf(movingNode), backupNode);
-                    movingNode = null;
-                    backupNode = null;
+            Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
+            if (secondCable != null) {
+                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
                 }
-                CircuitGUIManager.propertiesBox.hideAndClear();
-            }
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
-                // CableManager.wireHoveringWire(camera, this);
+            } else {
 
-                if(hardware != null) {
-                    processHardwareClick(hardware);
-                } else {
-                    if(appendingFromEnd && !disableEnd) {
-                        addCoordinates(new Vector2(vec2.x, vec2.y), false);
-                    } else if(appendingFromBegin && !disableBegin) {
-                        addCoordinates(new Vector2(vec2.x, vec2.y), true);
-                    } else if(movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                        coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+
+                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    SnapGrid.calculateSnap(vec2);
+                }
+
+                if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                    CableManager.currentCable = null;
+                    appendingFromBegin = false;
+                    appendingFromEnd = false;
+                    if (movingNode != null) {
+                        coordinates.set(coordinates.indexOf(movingNode), backupNode);
                         movingNode = null;
                         backupNode = null;
-                        nodeChanged = true;
                     }
+                    CircuitGUIManager.propertiesBox.hideAndClear();
                 }
 
-            }
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !CableManager.merging) {
+                    HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
-            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
-                CableManager.deleteCable(this);
-                CableManager.currentCable = null;
-                CircuitGUIManager.propertiesBox.hide();
-                HardwareManager.removeCableFromHardware(this, connection1);
-                HardwareManager.removeCableFromHardware(this, connection2);
-                connection2 = null;
-                connection1 = null;
-            }
+                    if (hardware != null) {
+                        processHardwareClick(hardware);
+                    } else {
+                        if (appendingFromEnd && !disableEnd) {
+                            addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                        } else if (appendingFromBegin && !disableBegin) {
+                            addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                        } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                            coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                            movingNode = null;
+                            backupNode = null;
+                            nodeChanged = true;
+                        }
+                    }
 
-            drawNodes(renderer, camera, Color.SALMON);
+                }
 
-            if(appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge/2f);
-                renderer.setColor(Color.SALMON);
-                renderer.circle(vec2.x, vec2.y, limit);
-            } else if(appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), gauge/2f);
-                renderer.setColor(Color.SALMON);
-                renderer.circle(vec2.x, vec2.y, limit);
-            } else if(movingNode != null) {
-                movingNode.set(vec2.x, vec2.y);
-                if(Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
-                    coordinates.remove(movingNode);
-                    movingNode = null;
-                    backupNode = null;
+                if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
+                    CableManager.deleteCable(this);
+                    CableManager.currentCable = null;
+                    CircuitGUIManager.propertiesBox.hide();
+                    HardwareManager.removeCableFromHardware(this, connection1);
+                    HardwareManager.removeCableFromHardware(this, connection2);
+                    connection2 = null;
+                    connection1 = null;
+                }
+
+                drawNodes(renderer, camera, Color.SALMON);
+
+                if ((appendingFromEnd && !disableEnd)||(appendingFromBegin && !disableBegin)) {
+                    // draw potential cable wire
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), gauge / 2f);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                } else if (movingNode != null) {
+                    movingNode.set(vec2.x, vec2.y);
+                    if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
+                        coordinates.remove(movingNode);
+                        movingNode = null;
+                        backupNode = null;
+                    }
                 }
             }
 
@@ -280,6 +294,7 @@ public class Cable implements Disposable {
 
         // HOVERING OVER CABLE
         // ---------------------------------------------------------------------
+
         if(hoveringMouse(camera)) {
             drawNodes(renderer, camera, Color.SALMON);
             checkForClick(camera);
@@ -310,25 +325,21 @@ public class Cable implements Disposable {
     }
 
     private void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200)) {
-            if(CableManager.wireHoveringWire(camera, this) != null) {
-                Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
-            }
-            if(hoveringOnEndpoint(camera) == 1) {
-                appendingFromBegin = true;
-                appendingFromEnd = false;
-                HardwareManager.currentHardware = null;
-            } else if(hoveringOnEndpoint(camera) == 2) {
-                appendingFromEnd = true;
-                appendingFromBegin = false;
-                HardwareManager.currentHardware = null;
-            } else if(hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
-                movingNode = hoveringOnNode(camera);
-                backupNode = new Vector2(hoveringOnNode(camera));
-            }
-
-            if(CableManager.currentCable != this) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) && !CableManager.merging) {
+            if(CableManager.currentCable == this) {
+                if (hoveringOnEndpoint(camera) == 1) {
+                    appendingFromBegin = true;
+                    appendingFromEnd = false;
+                    HardwareManager.currentHardware = null;
+                } else if (hoveringOnEndpoint(camera) == 2) {
+                    appendingFromEnd = true;
+                    appendingFromBegin = false;
+                    HardwareManager.currentHardware = null;
+                } else if (hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
+                    movingNode = hoveringOnNode(camera);
+                    backupNode = new Vector2(hoveringOnNode(camera));
+                }
+            } else {
                 CableManager.currentCable = this;
                 CircuitGUIManager.propertiesBox.show();
                 HardwareManager.currentHardware = null;
@@ -426,16 +437,33 @@ public class Cable implements Disposable {
 
     public void mergeCable(Cable cable2, boolean begin, boolean cable1begin) {
         ArrayList<Vector2> l = cable2.getCoordinates();
+        /*Gdx.app.log("", begin + " " + cable1begin);
+        Gdx.app.log("", this.connection1 + " " + this.connection2);
+        Gdx.app.log("", cable2.connection1 + " " + cable2.connection2);*/
         if(!cable1begin) {
             for(int i = l.size() - 1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
+            /*if(begin) {
+                this.connection2 = cable2.connection2;
+            } else {
+                this.connection1 = cable2.connection2;
+            }*/
         } else {
-            for(int i = 0; i < l.size(); ++i) {
+            for(int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
+            /*if(begin) {
+                this.connection2 = cable2.connection1;
+            } else {
+                this.connection1 = cable2.connection1;
+            }*/
         }
-
+        CableManager.currentCable = null;
+        appendingFromBegin = false;
+        appendingFromEnd = false;
+        movingNode = null;
+        backupNode = null;
     }
 
     public boolean hoveringMouse(CameraController cameraController) {
