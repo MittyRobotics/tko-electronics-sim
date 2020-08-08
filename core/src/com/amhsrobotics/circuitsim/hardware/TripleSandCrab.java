@@ -166,19 +166,19 @@ public class TripleSandCrab extends Hardware {
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
-                conn1 = "Cable";
+                conn1 = "Cable " + cable.getID();
                 conn1c = cable;
                 endOfWire1 = true;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
-                conn2 = "Cable";
+                conn2 = "Cable " + cable.getID();
                 conn2c = cable;
                 endOfWire2 = true;
             } else if(port == 3) {
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), false);
-                conn3 = "Cable";
+                conn3 = "Cable " + cable.getID();
                 conn3c = cable;
                 endOfWire3 = true;
             }
@@ -188,19 +188,19 @@ public class TripleSandCrab extends Hardware {
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
-                conn1 = "Cable";
+                conn1 = "Cable " + cable.getID();
                 conn1c = cable;
                 endOfWire1 = false;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
-                conn2 = "Cable";
+                conn2 = "Cable " + cable.getID();
                 conn2c = cable;
                 endOfWire2 = false;
             } else if(port == 3) {
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), true);
-                conn3 = "Cable";
+                conn3 = "Cable " + cable.getID();
                 conn3c = cable;
                 endOfWire3 = true;
             }

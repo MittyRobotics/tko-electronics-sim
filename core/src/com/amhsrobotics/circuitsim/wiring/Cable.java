@@ -45,6 +45,8 @@ public class Cable implements Disposable {
 
     private boolean disableEnd, disableBegin;
 
+    private int ID;
+
     private float limit;
 
 
@@ -57,21 +59,26 @@ public class Cable implements Disposable {
         populateProperties();
     }
 
-    public Cable(Vector2 startPoint) {
+    public Cable(Vector2 startPoint, int count) {
         voltage = 0;
         gauge = DeviceUtil.GAUGES[0];
         coordinates = new ArrayList<>();
         this.color = DeviceUtil.COLORS.get("Green");
+        this.ID = count;
 
         coordinates.add(startPoint);
 
         populateProperties();
     }
 
+    public int getID() {
+        return ID;
+    }
+
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         if(CircuitGUIManager.propertiesBox.isVisible()) {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Cable", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+            CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
             CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
             CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
@@ -213,6 +220,9 @@ public class Cable implements Disposable {
 
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
+
+                CableManager.wireHoveringWire(camera, this);
+
                 if(hardware != null) {
                     processHardwareClick(hardware);
                 } else {
@@ -407,6 +417,13 @@ public class Cable implements Disposable {
 
     public void setAppendingFromBegin(boolean appendingFromBegin) {
         this.appendingFromBegin = appendingFromBegin;
+    }
+
+    public void mergeCable(Cable cable2, boolean begin) {
+        ArrayList<Vector2> l = cable2.getCoordinates();
+        for(int i = 0; i < l.size(); ++i) {
+            this.addCoordinates(l.get(i), begin);
+        }
     }
 
     public boolean hoveringMouse(CameraController cameraController) {
