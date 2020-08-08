@@ -144,7 +144,6 @@ public class CircuitScreen implements Screen {
         HardwareManager.update(renderer, batch, camera);
         manager.update(delta);
 
-//        HardwareManager.movingObject = false;
     }
 
     private void handleWago(int type) {

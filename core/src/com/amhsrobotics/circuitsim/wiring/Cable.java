@@ -437,27 +437,14 @@ public class Cable implements Disposable {
 
     public void mergeCable(Cable cable2, boolean begin, boolean cable1begin) {
         ArrayList<Vector2> l = cable2.getCoordinates();
-        /*Gdx.app.log("", begin + " " + cable1begin);
-        Gdx.app.log("", this.connection1 + " " + this.connection2);
-        Gdx.app.log("", cable2.connection1 + " " + cable2.connection2);*/
         if(!cable1begin) {
             for(int i = l.size() - 1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
-            /*if(begin) {
-                this.connection2 = cable2.connection2;
-            } else {
-                this.connection1 = cable2.connection2;
-            }*/
         } else {
             for(int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
-            /*if(begin) {
-                this.connection2 = cable2.connection1;
-            } else {
-                this.connection1 = cable2.connection1;
-            }*/
         }
         CableManager.currentCable = null;
         appendingFromBegin = false;
