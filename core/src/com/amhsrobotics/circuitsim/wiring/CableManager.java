@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import java.util.Iterator;
+
 public class CableManager {
 
     public static Cable currentCable = null;
@@ -17,8 +19,9 @@ public class CableManager {
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
     public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
-        for(Cable c : cables) {
-            c.update(renderer, cam);
+        Iterator<Cable> iterator = cables.iterator();
+        while(iterator.hasNext()) {
+            iterator.next().update(renderer, cam);
         }
     }
 
@@ -33,13 +36,13 @@ public class CableManager {
 
 
     public static Tuple<Cable, Integer> wireHoveringWire(ClippedCameraController camera, Cable cable) {
-        for (Cable c : cables) {
-            if (c.getID() != cable.getID()) {
-                int ans = c.hoveringOnEndpoint(camera);
+        for (int x = 0; x < cables.size; x++) {
+            if (cables.get(x).getID() != cable.getID()) {
+                int ans = cables.get(x).hoveringOnEndpoint(camera);
                 if (ans == 1) {
-                    return new Tuple<>(c, 1);
+                    return new Tuple<>(cables.get(x), 1);
                 } else if (ans == 2) {
-                    return new Tuple<>(c, 2);
+                    return new Tuple<>(cables.get(x), 2);
                 }
             }
         }
