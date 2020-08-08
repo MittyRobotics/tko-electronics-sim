@@ -79,7 +79,7 @@ public class Cable implements Disposable {
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         if(CircuitGUIManager.propertiesBox.isVisible()) {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
             CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
             CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
@@ -313,7 +313,7 @@ public class Cable implements Disposable {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200)) {
             if(CableManager.wireHoveringWire(camera, this) != null) {
                 Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1);
+                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
             }
             if(hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
@@ -424,11 +424,18 @@ public class Cable implements Disposable {
         this.appendingFromBegin = appendingFromBegin;
     }
 
-    public void mergeCable(Cable cable2, boolean begin) {
+    public void mergeCable(Cable cable2, boolean begin, boolean cable1begin) {
         ArrayList<Vector2> l = cable2.getCoordinates();
-        for(int i = 0; i < l.size(); ++i) {
-            this.addCoordinates(l.get(i), begin);
+        if(!cable1begin) {
+            for(int i = l.size() - 1; i >= 0; i--) {
+                this.addCoordinates(l.get(i), begin);
+            }
+        } else {
+            for(int i = 0; i < l.size(); ++i) {
+                this.addCoordinates(l.get(i), begin);
+            }
         }
+
     }
 
     public boolean hoveringMouse(CameraController cameraController) {

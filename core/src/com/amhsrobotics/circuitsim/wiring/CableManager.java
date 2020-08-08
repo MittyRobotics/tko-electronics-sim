@@ -49,8 +49,8 @@ public class CableManager {
         return null;
     }
 
-    public static void mergeCables(Cable cable1, Cable cable2, boolean cable2begin) {
-        cable2.mergeCable(cable1, cable2begin);
+    public static void mergeCables(Cable cable1, Cable cable2, boolean cable2begin, boolean cable1begin) {
+        cable2.mergeCable(cable1, cable2begin, cable1begin);
         deleteCable(cable1);
     }
 
