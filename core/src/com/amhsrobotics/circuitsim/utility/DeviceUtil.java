@@ -18,7 +18,7 @@ public class DeviceUtil {
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
     }};
 
-    public static final int[] GAUGES = IntStream.iterate(10, n -> n + 2).limit(11).toArray();
+    public static final int[] GAUGES = {22, 18, 12, 4};
 
     private static int curID = 0;
 

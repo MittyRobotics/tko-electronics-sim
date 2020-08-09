@@ -40,7 +40,6 @@ public class CableManager {
         for (int x = 0; x < cables.size; x++) {
             if (cables.get(x).getID() != cable.getID()) {
                 int ans = cables.get(x).hoveringOnEndpoint(camera);
-                Gdx.app.log(""+cables.get(x).getID(), ""+ans);
                 if (ans == 1) {
                     merging = true;
                     return new Tuple<>(cables.get(x), 1);
