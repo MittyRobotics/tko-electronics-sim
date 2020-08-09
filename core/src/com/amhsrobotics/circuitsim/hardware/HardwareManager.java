@@ -29,25 +29,25 @@ public class HardwareManager {
             if(h instanceof DoubleSandCrab) {
                 if(((DoubleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
-                        put(h, 1);
+                        put(h, 0);
                     }};
                 } else if(((DoubleSandCrab) h).getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
-                        put(h, 2);
+                        put(h, 1);
                     }};
                 }
             } else if (h instanceof TripleSandCrab) {
                 if(((TripleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
-                        put(h, 1);
+                        put(h, 0);
                     }};
                 } else if(((TripleSandCrab) h).getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
-                        put(h, 2);
+                        put(h, 1);
                     }};
                 } else if(((TripleSandCrab) h).getConnector3().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
-                        put(h, 3);
+                        put(h, 2);
                     }};
                 }
             }

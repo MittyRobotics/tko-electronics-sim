@@ -319,16 +319,16 @@ public class Cable implements Disposable {
         if(clist.get(0) instanceof DoubleSandCrab) {
             DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
             if(appendingFromEnd) {
-                crab.attachWireS(this, hardware.get(clist.get(0))-1, true);
+                crab.attachWireS(this, hardware.get(clist.get(0)), true);
             } else if(appendingFromBegin) {
-                crab.attachWireS(this, hardware.get(clist.get(0))-1, false);
+                crab.attachWireS(this, hardware.get(clist.get(0)), false);
             }
         } else if(clist.get(0) instanceof TripleSandCrab) {
             TripleSandCrab crab = (TripleSandCrab) clist.get(0);
             if(appendingFromEnd) {
-                crab.attachWire(this, hardware.get(clist.get(0))-1, true);
+                crab.attachWireS(this, hardware.get(clist.get(0)), true);
             } else if(appendingFromBegin) {
-                crab.attachWire(this, hardware.get(clist.get(0))-1, false);
+                crab.attachWireS(this, hardware.get(clist.get(0)), false);
             }
         }
     }
