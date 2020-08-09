@@ -17,22 +17,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class TripleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2, connector3;
-    private String conn1, conn2, conn3;
-    private Cable conn1c, conn2c, conn3c;
     private boolean endOfWire1, endOfWire2, endOfWire3;
 
-    private HashMap<Cable, Hardware> connections;
     boolean canMove;
 
     public TripleSandCrab(Vector2 position) {
         super(position);
 
-        connections = new HashMap<>();
+        connections = new ArrayList<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
         connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
@@ -44,12 +41,9 @@ public class TripleSandCrab extends Hardware {
         connector2.setCenter(position.x, position.y - 20);
         connector3.setCenter(position.x + 80, position.y - 20);
 
-        conn1 = "None";
-        conn2 = "None";
-        conn3 = "None";
-        conn1c = null;
-        conn2c = null;
-        conn3c = null;
+        connNum = 3;
+
+        initConnections();
 
         canMove = false;
     }
@@ -89,17 +83,17 @@ public class TripleSandCrab extends Hardware {
                     SnapGrid.calculateSnap(vec);
                 }
                 setPosition(vec.x, vec.y);
-                if(conn1c != null) {
-                    conn1c.editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), endOfWire1, false);
-                    conn1c.editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), endOfWire1, true);
+                if(connections.get(0) != null) {
+                    connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), endOfWire1, false);
+                    connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), endOfWire1, true);
                 }
-                if(conn2c != null) {
-                    conn2c.editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), endOfWire2, false);
-                    conn2c.editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), endOfWire2, true);
+                if(connections.get(1) != null) {
+                    connections.get(1).editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), endOfWire2, false);
+                    connections.get(1).editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), endOfWire2, true);
                 }
-                if(conn3c != null) {
-                    conn3c.editCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), endOfWire3, false);
-                    conn3c.editCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), endOfWire3, true);
+                if(connections.get(2) != null) {
+                    connections.get(2).editCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), endOfWire3, false);
+                    connections.get(2).editCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), endOfWire3, true);
                 }
             } else if (Gdx.input.isTouched()) {
                 if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
@@ -139,23 +133,20 @@ public class TripleSandCrab extends Hardware {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
         CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(conn1, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(0) == null ? "None" : "Cable " + connections.get(0).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(conn2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(1) == null ? "None" : "Cable " + connections.get(1).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 3", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(conn3, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(2) == null ? "None" : "Cable " + connections.get(2).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
     }
 
     public void clearConnection(Cable cable) {
-        if(cable == conn1c) {
-            conn1c = null;
-            conn1 = "None";
-        } else if(cable == conn2c) {
-            conn2c = null;
-            conn2 = "None";
-        } else if(cable == conn3c) {
-            conn3c = null;
-            conn3 = "None";
+        if(cable == connections.get(0)) {
+            connections.set(0, null);
+        } else if(cable == connections.get(1)) {
+            connections.set(1, null);
+        } else if(cable == connections.get(2)) {
+            connections.set(2, null);
         }
     }
 
@@ -166,20 +157,17 @@ public class TripleSandCrab extends Hardware {
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
-                conn1 = "Cable " + cable.getID();
-                conn1c = cable;
+                connections.set(0, cable);
                 endOfWire1 = true;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
-                conn2 = "Cable " + cable.getID();
-                conn2c = cable;
+                connections.set(1, cable);
                 endOfWire2 = true;
             } else if(port == 3) {
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), false);
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), false);
-                conn3 = "Cable " + cable.getID();
-                conn3c = cable;
+                connections.set(2, cable);
                 endOfWire3 = true;
             }
 
@@ -188,20 +176,17 @@ public class TripleSandCrab extends Hardware {
             if(port == 1) {
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
-                conn1 = "Cable " + cable.getID();
-                conn1c = cable;
+                connections.set(0, cable);
                 endOfWire1 = false;
             } else if(port == 2) {
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
-                conn2 = "Cable " + cable.getID();
-                conn2c = cable;
+                connections.set(1, cable);
                 endOfWire2 = false;
             } else if(port == 3) {
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() - 20), true);
                 cable.addCoordinates(new Vector2(getConnector3().getX() + getConnector3().getWidth() / 2, getConnector3().getY() + 20), true);
-                conn3 = "Cable " + cable.getID();
-                conn3c = cable;
+                connections.set(2, cable);
                 endOfWire3 = true;
             }
 
