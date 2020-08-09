@@ -48,6 +48,16 @@ public class Hardware {
 
     }
 
+    public int getConnectionPosition(Cable cable) {
+        for(int i = 0; i < connections.size(); ++i) {
+            if(connections.get(i) == cable) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
     public int getHardwareID() {
         return hardwareID;
     }
