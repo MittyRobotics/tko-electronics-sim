@@ -319,16 +319,16 @@ public class Cable implements Disposable {
         if(clist.get(0) instanceof DoubleSandCrab) {
             DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
             if(appendingFromEnd) {
-                crab.attachWire(this, hardware.get(clist.get(0)), true);
+                crab.attachWireS(this, hardware.get(clist.get(0))-1, true);
             } else if(appendingFromBegin) {
-                crab.attachWire(this, hardware.get(clist.get(0)), false);
+                crab.attachWireS(this, hardware.get(clist.get(0))-1, false);
             }
         } else if(clist.get(0) instanceof TripleSandCrab) {
             TripleSandCrab crab = (TripleSandCrab) clist.get(0);
             if(appendingFromEnd) {
-                crab.attachWire(this, hardware.get(clist.get(0)), true);
+                crab.attachWire(this, hardware.get(clist.get(0))-1, true);
             } else if(appendingFromBegin) {
-                crab.attachWire(this, hardware.get(clist.get(0)), false);
+                crab.attachWire(this, hardware.get(clist.get(0))-1, false);
             }
         }
     }
@@ -453,21 +453,39 @@ public class Cable implements Disposable {
             for(int i = 1; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
+
+            //hardware
             if(begin) {
-                this.connection1 = cable2.getConnection2();
+                if(cable2.getConnection2() != null) {
+                    int temp = cable2.getConnection2().getConnectionPosition(cable2);
+                    cable2.getConnection2().attachWire(this, temp, false);
+                }
             } else {
-                this.connection1 = cable2.getConnection1();
+                if(cable2.getConnection2() != null) {
+                    int temp = cable2.getConnection2().getConnectionPosition(cable2);
+                    cable2.getConnection2().attachWire(this, temp, true);
+                }
             }
         } else {
-            for(int i = l.size()-2; i >= 0; i--) {
+            for(int i = l.size()-1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
+
+            //hardware
             if(begin) {
-                this.connection2 = cable2.getConnection2();
+                if(cable2.getConnection1() != null) {
+                    int temp = cable2.getConnection1().getConnectionPosition(cable2);
+                    cable2.getConnection1().attachWire(this, temp, false);
+                }
             } else {
-                this.connection2 = cable2.getConnection1();
+                if(cable2.getConnection1() != null) {
+                    int temp = cable2.getConnection1().getConnectionPosition(cable2);
+                    cable2.getConnection1().attachWire(this, temp, true);
+                }
             }
         }
+
+        Gdx.app.log("", this.connection1 + " " + this.connection2);
 
         CableManager.currentCable = null;
         appendingFromBegin = false;

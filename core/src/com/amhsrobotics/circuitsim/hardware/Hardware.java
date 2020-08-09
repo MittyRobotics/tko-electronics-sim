@@ -14,6 +14,7 @@ public class Hardware {
     private Vector2 position;
     private int hardwareID;
     public ArrayList<Cable> connections;
+    public ArrayList<Boolean> ends;
     public int connNum;
 
     public Hardware(Vector2 pos) {
@@ -26,9 +27,19 @@ public class Hardware {
         batch.setProjectionMatrix(camera.getCamera().combined);
     }
 
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+
+    }
+
     public void initConnections() {
         for(int i = 0; i < connNum; ++i) {
             connections.add(null);
+        }
+    }
+
+    public void initEnds() {
+        for(int i = 0; i < connNum; ++i) {
+            ends.add(false);
         }
     }
 
