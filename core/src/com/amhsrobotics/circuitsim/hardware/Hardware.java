@@ -27,7 +27,7 @@ public class Hardware {
         batch.setProjectionMatrix(camera.getCamera().combined);
     }
 
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
 
     }
 

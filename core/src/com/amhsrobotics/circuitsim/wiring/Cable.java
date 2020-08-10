@@ -338,9 +338,9 @@ public class Cable implements Disposable {
         if(clist.get(0) instanceof DoubleSandCrab) {
             DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
             if(appendingFromEnd) {
-                crab.attachWireS(this, hardware.get(clist.get(0)), true);
+                crab.attachWire(this, hardware.get(clist.get(0)), true);
             } else if(appendingFromBegin) {
-                crab.attachWireS(this, hardware.get(clist.get(0)), false);
+                crab.attachWire(this, hardware.get(clist.get(0)), false);
             }
         } else if(clist.get(0) instanceof TripleSandCrab) {
 
@@ -497,7 +497,7 @@ public class Cable implements Disposable {
             // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
             Hardware temp = cable2.getConnection2();
             if(temp != null) {
-                temp.attachWire(this, temp.getConnectionPosition(cable2), !begin);
+                temp.reattachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
 
         } else {
@@ -509,7 +509,7 @@ public class Cable implements Disposable {
             // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
             Hardware temp = cable2.getConnection1();
             if(temp != null) {
-                temp.attachWire(this, temp.getConnectionPosition(cable2), !begin);
+                temp.reattachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
 
         }

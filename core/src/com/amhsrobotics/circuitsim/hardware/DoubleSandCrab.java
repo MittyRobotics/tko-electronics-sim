@@ -163,7 +163,7 @@ public class DoubleSandCrab extends Hardware {
         }
     }
 
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);
         if(endOfWire) {
@@ -174,7 +174,7 @@ public class DoubleSandCrab extends Hardware {
     }
 
 
-    public void attachWireS(Cable cable, int port, boolean endOfWire) {
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);
 

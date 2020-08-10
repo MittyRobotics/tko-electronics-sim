@@ -178,7 +178,7 @@ public class TripleSandCrab extends Hardware {
     }
 
 
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
         //REATTACH WIRE FOR MEGING
         connections.set(port, cable);
         ends.set(port, endOfWire);
