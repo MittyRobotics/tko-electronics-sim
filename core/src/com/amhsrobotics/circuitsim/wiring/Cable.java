@@ -1,10 +1,9 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.DoubleSandCrab;
+import com.amhsrobotics.circuitsim.hardware.SandCrab;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
-import com.amhsrobotics.circuitsim.hardware.TripleSandCrab;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
@@ -337,19 +336,8 @@ public class Cable implements Disposable {
 
             // DOUBLE SAND CRAB
 
-            if (clist.get(0) instanceof DoubleSandCrab) {
-                DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
-                if (appendingFromEnd) {
-                    crab.firstClickAttach(this, hardware.get(clist.get(0)), true);
-                } else if (appendingFromBegin) {
-                    crab.firstClickAttach(this, hardware.get(clist.get(0)), false);
-                }
-            } else if (clist.get(0) instanceof TripleSandCrab) {
-
-
-                // TRIPLE SAND CRAB
-
-                TripleSandCrab crab = (TripleSandCrab) clist.get(0);
+            if (clist.get(0) instanceof SandCrab) {
+                SandCrab crab = (SandCrab) clist.get(0);
                 if (appendingFromEnd) {
                     crab.firstClickAttach(this, hardware.get(clist.get(0)), true);
                 } else if (appendingFromBegin) {
@@ -361,19 +349,8 @@ public class Cable implements Disposable {
 
             // DOUBLE SAND CRAB
 
-            if (clist.get(0) instanceof DoubleSandCrab) {
-                DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
-                if (appendingFromEnd) {
-                    crab.attachWire(this, hardware.get(clist.get(0)), true);
-                } else if (appendingFromBegin) {
-                    crab.attachWire(this, hardware.get(clist.get(0)), false);
-                }
-            } else if (clist.get(0) instanceof TripleSandCrab) {
-
-
-                // TRIPLE SAND CRAB
-
-                TripleSandCrab crab = (TripleSandCrab) clist.get(0);
+            if (clist.get(0) instanceof SandCrab) {
+                SandCrab crab = (SandCrab) clist.get(0);
                 if (appendingFromEnd) {
                     crab.attachWire(this, hardware.get(clist.get(0)), true);
                 } else if (appendingFromBegin) {

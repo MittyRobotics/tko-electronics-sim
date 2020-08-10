@@ -29,51 +29,30 @@ public class HardwareManager {
         //GET IF WIRE IS CLICKED ON HARDWARE
 
         for(Hardware h : hardwares) {
-            if(h instanceof DoubleSandCrab) {
+            if(h instanceof SandCrab) {
 
-                //DOUBLE SAND CRAB
-
-                if(((DoubleSandCrab) h).getConnector(0).getBoundingRectangle().contains(vec.x, vec.y)) {
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, 0);
-                    }};
-                } else if(((DoubleSandCrab) h).getConnector(1).getBoundingRectangle().contains(vec.x, vec.y)) {
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, 1);
-                    }};
-                }
-            } else if (h instanceof TripleSandCrab) {
-
-                //TRIPLE SAND CRAB
-
-                if(((TripleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, 0);
-                    }};
-                } else if(((TripleSandCrab) h).getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, 1);
-                    }};
-                } else if(((TripleSandCrab) h).getConnector3().getBoundingRectangle().contains(vec.x, vec.y)) {
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, 2);
-                    }};
+                for(int x = 0; x < ((SandCrab) h).getTotalConnectors(); x++) {
+                    if(((SandCrab) h).getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
+                        int finalX = x;
+                        return new HashMap<Hardware, Integer>() {{
+                            put(h, finalX);
+                        }};
+                    }
                 }
             }
-
         }
         return null;
     }
 
     public static void removeCableFromHardware(Cable cable, Hardware hardware) {
-        if(hardware instanceof DoubleSandCrab) {
-            ((DoubleSandCrab) hardware).clearConnection(cable);
+        if(hardware instanceof SandCrab) {
+            ((SandCrab) hardware).clearConnection(cable);
         }
     }
 
-    public static void addDoubleSandCrab(float startX, float startY) {
+    public static void addSandCrab(float startX, float startY, String type) {
         CircuitGUIManager.propertiesBox.show();
-        DoubleSandCrab temp = new DoubleSandCrab(new Vector2(startX, startY));
+        SandCrab temp = new SandCrab(new Vector2(startX, startY), type);
         currentHardware = temp;
         CableManager.currentCable = null;
 
@@ -81,20 +60,7 @@ public class HardwareManager {
     }
 
 
-    public static void removeSandCrab(DoubleSandCrab crab) {
+    public static void removeSandCrab(SandCrab crab) {
         hardwares.removeValue(crab, true);
-    }
-
-    public static void removeSandCrab(TripleSandCrab crab) {
-        hardwares.removeValue(crab, true);
-    }
-
-    public static void addTripleSandCrab(float x, float y) {
-        CircuitGUIManager.propertiesBox.show();
-        TripleSandCrab temp = new TripleSandCrab(new Vector2(x, y));
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
     }
 }
