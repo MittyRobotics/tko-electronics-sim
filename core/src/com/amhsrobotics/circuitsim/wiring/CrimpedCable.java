@@ -38,6 +38,8 @@ public class CrimpedCable extends Cable {
         }
         disableBegin = connection1 != null;
         disableEnd = true;
+        appendingFromBegin = false;
+        appendingFromEnd = false;
         // ---------------------------------------------------------------------
 
 
