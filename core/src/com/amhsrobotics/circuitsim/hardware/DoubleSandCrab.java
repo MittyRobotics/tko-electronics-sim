@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -66,6 +67,10 @@ public class DoubleSandCrab extends Hardware {
         initEnds();
 
         canMove = false;
+
+//        CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
+//        c.addCoordinates(new Vector2(200, 200), false);
+//        attachWire(c, 1, true);
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {

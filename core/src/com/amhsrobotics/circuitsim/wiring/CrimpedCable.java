@@ -19,8 +19,8 @@ import java.util.HashMap;
 
 public class CrimpedCable extends Cable {
 
-    public CrimpedCable(Vector2 startPoint, int count) {
-        super(startPoint, count);
+    public CrimpedCable(Vector2 startPoint, int id) {
+        super(startPoint, id);
         disableEnd = true;
     }
 

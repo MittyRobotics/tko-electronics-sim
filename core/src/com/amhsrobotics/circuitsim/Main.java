@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim;
 
+import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
@@ -18,7 +19,7 @@ public class Main extends Game {
 
 		game = this;
 
-		setScreen(new MenuScreen(game));
+		setScreen(new CircuitScreen(game));
 	}
 
 	@Override
