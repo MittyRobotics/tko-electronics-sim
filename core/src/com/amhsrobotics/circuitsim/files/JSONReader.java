@@ -23,7 +23,7 @@ public class JSONReader {
         return currentConfig.get(str);
     }
 
-    public static Object getCurrentConfig() {
+    public static JSONObject getCurrentConfig() {
         return currentConfig;
     }
 }

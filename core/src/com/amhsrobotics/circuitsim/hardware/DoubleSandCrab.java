@@ -17,12 +17,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
 public class DoubleSandCrab extends Hardware {
 
     private Sprite bottom, connector1, connector2;
+    JSONArray pin1, pin2;
 
     boolean canMove;
 
@@ -30,6 +33,11 @@ public class DoubleSandCrab extends Hardware {
         super(position);
 
         JSONReader.loadConfig("scripts/DoubleSandCrab.json");
+        JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
+        pin1 = (JSONArray) ((JSONObject) pins.get(0)).get("position");
+        pin2 = (JSONArray) ((JSONObject) pins.get(1)).get("position");
+
+//        JSONReader.getCurrentConfig().get
 
         // CONNECTIONS & IF END OF EACH CABLE
         connections = new ArrayList<>();
@@ -40,8 +48,8 @@ public class DoubleSandCrab extends Hardware {
         connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
 
         bottom.setCenter(position.x, position.y);
-        connector1.setCenter(position.x - 30, position.y - 20);
-        connector2.setCenter(position.x + 30, position.y - 20);
+        connector1.setCenter(position.x + (Long) pin1.get(0), position.y + (Long) pin1.get(1));
+        connector2.setCenter(position.x + (Long) pin2.get(0), position.y + (Long) pin2.get(1));
 
         connNum = 2;
 
@@ -55,8 +63,8 @@ public class DoubleSandCrab extends Hardware {
         super.update(batch, renderer, camera);
 
         bottom.setCenter(getPosition().x, getPosition().y);
-        connector1.setCenter(getPosition().x - 30, getPosition().y - 20);
-        connector2.setCenter(getPosition().x + 30, getPosition().y - 20);
+        connector1.setCenter(getPosition().x + (Long) pin1.get(0), getPosition().y + (Long) pin1.get(1));
+        connector2.setCenter(getPosition().x + (Long) pin2.get(0), getPosition().y + (Long) pin2.get(1));
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
