@@ -142,10 +142,12 @@ public class DoubleSandCrab extends Hardware {
     @Override
     public void delete() {
         for(Cable cable : connections) {
-            if(ends.get(connections.indexOf(cable))) {
-                cable.setConnection2(null);
-            } else {
-                cable.setConnection1(null);
+            if(cable != null) {
+                if(ends.get(connections.indexOf(cable))) {
+                    cable.setConnection2(null);
+                } else {
+                    cable.setConnection1(null);
+                }
             }
         }
         HardwareManager.removeSandCrab(this);
