@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class DeviceUtil {
 
     public static final LinkedHashMap<String, Color> COLORS = new LinkedHashMap<String, Color>() {{
+        //WIRE COLORS
         put("Green", new Color(0/255f, 150/255f, 0/255f, 1));
         put("Yellow", new Color(255/255f, 255/255f, 0/255f, 1));
         put("Red", new Color(200/255f, 0/255f, 0/255f, 1));
@@ -18,6 +18,7 @@ public class DeviceUtil {
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
     }};
 
+    //WIRE GAUGES
     public static final int[] GAUGES = {22, 18, 12, 4};
 
     private static int curID = 0;

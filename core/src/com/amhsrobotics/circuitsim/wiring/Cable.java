@@ -78,53 +78,51 @@ public class Cable implements Disposable {
 
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
-        if(CircuitGUIManager.propertiesBox.isVisible()) {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-            CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
-            CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
+        CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
 
-            CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
-            CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
+        CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
 
-            cb.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
-                    for(String str : keys) {
-                        if(str.contentEquals(cb.getText())) {
-                            if(keys.indexOf(str) == keys.size() - 1) {
-                                cb.setText(keys.get(0));
-                                color = DeviceUtil.COLORS.get(keys.get(0));
-                            } else {
-                                cb.setText(keys.get(keys.indexOf(str) + 1));
-                                color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
-                            }
-                            break;
+        cb.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
+                for(String str : keys) {
+                    if(str.contentEquals(cb.getText())) {
+                        if(keys.indexOf(str) == keys.size() - 1) {
+                            cb.setText(keys.get(0));
+                            color = DeviceUtil.COLORS.get(keys.get(0));
+                        } else {
+                            cb.setText(keys.get(keys.indexOf(str) + 1));
+                            color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
                         }
+                        break;
                     }
                 }
-            });
-            ga.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                    for(int gau : gauges) {
-                        if(gau == gauge) {
-                            if(gauges.indexOf(gau) == gauges.size() - 1) {
-                                gauge = gauges.get(0);
-                                ga.setText(gauge + "");
-                            } else {
-                                gauge = gauges.get(gauges.indexOf(gau) + 1);
-                                ga.setText(gauge + "");
-                            }
-                            break;
+            }
+        });
+        ga.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
+                for(int gau : gauges) {
+                    if(gau == gauge) {
+                        if(gauges.indexOf(gau) == gauges.size() - 1) {
+                            gauge = gauges.get(0);
+                            ga.setText(gauge + "");
+                        } else {
+                            gauge = gauges.get(gauges.indexOf(gau) + 1);
+                            ga.setText(gauge + "");
                         }
+                        break;
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
     public void setColor(Color color) {
@@ -132,6 +130,8 @@ public class Cable implements Disposable {
     }
 
     public void addCoordinates(Vector2 point, boolean begin) {
+        // ADD TO ENDS OF CABLE
+        // ---------------------------------------------------------------------
         if(begin) {
             this.coordinates.add(0, point);
         } else {
@@ -140,6 +140,8 @@ public class Cable implements Disposable {
     }
 
     public void editCoordinates(Vector2 point, boolean endOfWire, boolean second) {
+        // UPDATE COORDINATES FOR HARDWARE
+        // ---------------------------------------------------------------------
         if(endOfWire) {
             if(second) {
                 this.coordinates.set(this.coordinates.size() - 2, point);
@@ -172,6 +174,8 @@ public class Cable implements Disposable {
         disableEnd = connection2 != null;
         // ---------------------------------------------------------------------
 
+
+
         // DRAW CABLE
         // ---------------------------------------------------------------------
         renderer.setColor(color);
@@ -197,6 +201,8 @@ public class Cable implements Disposable {
         renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit);
         // ---------------------------------------------------------------------
 
+
+
         // CABLE SELECTED MECHANICS
         // ---------------------------------------------------------------------
 
@@ -204,6 +210,7 @@ public class Cable implements Disposable {
 
         if(CableManager.currentCable == this) {
 
+            // GET X AND Y OF MOUSE
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);
             Vector2 vec2 = new Vector2(vec.x, vec.y);
@@ -212,6 +219,7 @@ public class Cable implements Disposable {
                 SnapGrid.calculateSnap(vec2);
             }
 
+            // RENDER POSSIBLE IF MERGING
             if(CableManager.merging) {
                 if(appendingFromBegin) {
                     renderer.setColor(color);
@@ -226,12 +234,14 @@ public class Cable implements Disposable {
                 }
             }
 
+            // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
             if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
 
             } else {
 
+                // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                     CableManager.currentCable = null;
                     appendingFromBegin = false;
@@ -244,12 +254,15 @@ public class Cable implements Disposable {
                     CircuitGUIManager.propertiesBox.hideAndClear();
                 }
 
+                // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !CableManager.merging) {
                     HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
                     if (hardware != null) {
+                        // HARDWARE
                         processHardwareClick(hardware);
                     } else {
+                        // ADD NEW POINT
                         if (appendingFromEnd && !disableEnd) {
                             addCoordinates(new Vector2(vec2.x, vec2.y), false);
                         } else if (appendingFromBegin && !disableBegin) {
@@ -264,6 +277,7 @@ public class Cable implements Disposable {
 
                 }
 
+                // DELETE
                 if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
                     CableManager.deleteCable(this);
                     CableManager.currentCable = null;
@@ -274,6 +288,7 @@ public class Cable implements Disposable {
                     connection1 = null;
                 }
 
+                // DRAW NODES IF SELECTED
                 drawNodes(renderer, camera, Color.SALMON);
 
                 if (appendingFromEnd && !disableEnd) {
@@ -316,6 +331,10 @@ public class Cable implements Disposable {
 
     private void processHardwareClick(HashMap<Hardware, Integer> hardware) {
         ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());
+
+
+        // DOUBLE SAND CRAB
+
         if(clist.get(0) instanceof DoubleSandCrab) {
             DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
             if(appendingFromEnd) {
@@ -324,6 +343,10 @@ public class Cable implements Disposable {
                 crab.attachWireS(this, hardware.get(clist.get(0)), false);
             }
         } else if(clist.get(0) instanceof TripleSandCrab) {
+
+
+            // TRIPLE SAND CRAB
+
             TripleSandCrab crab = (TripleSandCrab) clist.get(0);
             if(appendingFromEnd) {
                 crab.attachWireS(this, hardware.get(clist.get(0)), true);
@@ -335,6 +358,9 @@ public class Cable implements Disposable {
 
     private void checkForClick(ClippedCameraController camera) {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) && !CableManager.merging) {
+
+            // CLICKED ON END
+
             if (hoveringOnEndpoint(camera) == 1) {
                 appendingFromBegin = true;
                 appendingFromEnd = false;
@@ -344,11 +370,17 @@ public class Cable implements Disposable {
                 appendingFromBegin = false;
                 HardwareManager.currentHardware = null;
             } else if (hoveringOnNode(camera) != null && movingNode == null && !nodeChanged) {
+
+                // MOVE NODE
+
                 movingNode = hoveringOnNode(camera);
                 backupNode = new Vector2(hoveringOnNode(camera));
             }
 
             if(CableManager.currentCable != this) {
+
+                //SELECT THIS CABLE
+
                 CableManager.currentCable = this;
                 CircuitGUIManager.propertiesBox.show();
                 HardwareManager.currentHardware = null;
@@ -361,6 +393,8 @@ public class Cable implements Disposable {
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         camera.getCamera().unproject(vec);
 
+        //RETURN NODE THAT MOUSE IS HOVERING ON
+
         for(Vector2 coord : coordinates) {
             if(coordinates.indexOf(coord) != 0 && coordinates.indexOf(coord) != coordinates.size() - 1) {
                 if(new Circle(coord.x, coord.y, limit).contains(vec.x, vec.y)) {
@@ -372,13 +406,14 @@ public class Cable implements Disposable {
     }
 
     private void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
-
         if(color.length > 0) {
             renderer.setColor(color[0]);
         }
         for(Vector2 coords : coordinates) {
+            // DRAW POINTS
             renderer.circle(coords.x, coords.y, limit);
         }
+        //DRAW IF HOVERING ON ENDPOINTS
         if(hoveringOnEndpoint(cam) == 1) {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
@@ -386,6 +421,7 @@ public class Cable implements Disposable {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit+3f);
         } else if(hoveringOnNode(cam) != null) {
+            //DRAW IF HOVERING ON OTHER NODE
             if(movingNode == null) {
                 renderer.setColor(hoverColor);
                 renderer.circle(hoveringOnNode(cam).x, hoveringOnNode(cam).y, limit);
@@ -394,6 +430,7 @@ public class Cable implements Disposable {
     }
 
     public int hoveringOnEndpoint(CameraController cameraController) {
+        // CHECK IF HOVERING ON ENDPOINT
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         cameraController.getCamera().unproject(vec);
 
@@ -445,47 +482,40 @@ public class Cable implements Disposable {
     }
 
     public void mergeCable(Cable cable2, boolean begin, boolean cable1begin) {
+
+        // MERGE TWO CABLES
+
+
         ArrayList<Vector2> l = cable2.getCoordinates();
-        Gdx.app.log("", begin + " " + cable1begin);
-        Gdx.app.log("", this.connection1 + " " + this.connection2);
-        Gdx.app.log("", cable2.connection1 + " " + cable2.connection2);
+
         if(cable1begin) {
+            // AGGREGATE COORDINATES
             for(int i = 1; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
 
-            //hardware
-            if(begin) {
-                if(cable2.getConnection2() != null) {
-                    int temp = cable2.getConnection2().getConnectionPosition(cable2);
-                    cable2.getConnection2().attachWire(this, temp, false);
-                }
-            } else {
-                if(cable2.getConnection2() != null) {
-                    int temp = cable2.getConnection2().getConnectionPosition(cable2);
-                    cable2.getConnection2().attachWire(this, temp, true);
-                }
+            // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
+            Hardware temp = cable2.getConnection2();
+            if(temp != null) {
+                temp.attachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
+
         } else {
+            // AGGREGATE COORDINATES
             for(int i = l.size()-1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
 
-            //hardware
-            if(begin) {
-                if(cable2.getConnection1() != null) {
-                    int temp = cable2.getConnection1().getConnectionPosition(cable2);
-                    cable2.getConnection1().attachWire(this, temp, false);
-                }
-            } else {
-                if(cable2.getConnection1() != null) {
-                    int temp = cable2.getConnection1().getConnectionPosition(cable2);
-                    cable2.getConnection1().attachWire(this, temp, true);
-                }
+            // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
+            Hardware temp = cable2.getConnection1();
+            if(temp != null) {
+                temp.attachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
+
         }
 
-        Gdx.app.log("", this.connection1 + " " + this.connection2);
+
+        // DESELECT & RESET
 
         CableManager.currentCable = null;
         appendingFromBegin = false;
@@ -504,25 +534,34 @@ public class Cable implements Disposable {
             return true;
         }
 
+
+        // CHECK IF HOVERING ON CABLE
+
+
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             x1 = coordinates.get(i).x;
             x2 = coordinates.get(i + 1).x;
             y1 = coordinates.get(i).y;
             y2 = coordinates.get(i + 1).y;
 
+            //VERTICAL LINES
+
             if(x1 == x2 && x > x1-limit && x < x1+limit && ((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
                 return true;
             }
+
+            //HORIZONTAL LINES
 
             if(y1 == y2 && y > y1-limit && y < y1+limit && ((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))) {
                 return true;
             }
 
+            //SIDEWAYS LINES
             if(((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))&&((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
 
                 a = -1 * ((y2 - y1) / (x2 - x1));
 
-                if ((float) Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit) {
+                if (Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit) {
                     return true;
                 }
             }

@@ -28,7 +28,7 @@ public class DoubleSandCrab extends Hardware {
     public DoubleSandCrab(Vector2 position) {
         super(position);
 
-
+        // CONNECTIONS & IF END OF EACH CABLE
         connections = new ArrayList<>();
         ends = new ArrayList<>();
 
@@ -57,8 +57,16 @@ public class DoubleSandCrab extends Hardware {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
+
+        //HOVERING MECHANICS
+        //---------------------------------------------------
+
         if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
+
+            //HOVERING
             drawHover(renderer);
+
+            //SELECTING
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HardwareManager.currentHardware = this;
                 CableManager.currentCable = null;
@@ -68,19 +76,29 @@ public class DoubleSandCrab extends Hardware {
 
         }
 
+
+        //SELECTED MECHANICS
+        //---------------------------------------------------
+
         if(HardwareManager.currentHardware == this) {
             drawHover(renderer);
 
+            //UNSELECT
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 CircuitGUIManager.propertiesBox.hideAndClear();
                 HardwareManager.currentHardware = null;
             }
 
+            //MOVING
             if(Gdx.input.isTouched() && canMove) {
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     SnapGrid.calculateSnap(vec);
                 }
+
+                //SET OWN POSITION
                 setPosition(vec.x, vec.y);
+
+                //MOVE CABLES
                 if(connections.get(0) != null) {
                     connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), ends.get(0), false);
                     connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), ends.get(0), true);
@@ -90,12 +108,18 @@ public class DoubleSandCrab extends Hardware {
                     connections.get(1).editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), ends.get(1), true);
                 }
             } else if (Gdx.input.isTouched()) {
+
+                //BEING DRAGGED: ALLOW MOVE
+
                 if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
                     canMove = true;
                 }
                 HardwareManager.movingObject = true;
 
             } else {
+
+                //STOP MOVING
+
                 if(HardwareManager.movingObject) {
                     canMove = false;
                     HardwareManager.movingObject = false;

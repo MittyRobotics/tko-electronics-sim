@@ -25,8 +25,14 @@ public class HardwareManager {
     }
 
     public static HashMap<Hardware, Integer> wireHoveringHardware(Vector2 vec) {
+
+        //GET IF WIRE IS CLICKED ON HARDWARE
+
         for(Hardware h : hardwares) {
             if(h instanceof DoubleSandCrab) {
+
+                //DOUBLE SAND CRAB
+
                 if(((DoubleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
                         put(h, 0);
@@ -37,6 +43,9 @@ public class HardwareManager {
                     }};
                 }
             } else if (h instanceof TripleSandCrab) {
+
+                //TRIPLE SAND CRAB
+
                 if(((TripleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
                         put(h, 0);

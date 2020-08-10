@@ -37,6 +37,7 @@ public class CableManager {
 
 
     public static Tuple<Cable, Integer> wireHoveringWire(ClippedCameraController camera, Cable cable) {
+        // CHECK FOR MERGING WIRES
         for (int x = 0; x < cables.size; x++) {
             if (cables.get(x).getID() != cable.getID()) {
                 int ans = cables.get(x).hoveringOnEndpoint(camera);
@@ -53,6 +54,7 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
+        //MERGE TWO CABLES
         cable1.mergeCable(cable2, cable2begin, cable1begin);
         deleteCable(cable2);
         merging = false;
