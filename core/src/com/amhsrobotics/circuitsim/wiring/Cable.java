@@ -44,7 +44,7 @@ public class Cable implements Disposable {
     private boolean nodeChanged = false;
     private Vector2 movingNode, backupNode;
 
-    private boolean disableEnd, disableBegin;
+    private boolean disableEnd, disableBegin, canMove;
 
     private int ID;
 
@@ -57,7 +57,7 @@ public class Cable implements Disposable {
         this.coordinates = coordinates;
         this.color = DeviceUtil.COLORS.get("Green");
 
-        populateProperties();
+        //populateProperties();
     }
 
     public Cable(Vector2 startPoint, int count) {
@@ -66,10 +66,11 @@ public class Cable implements Disposable {
         coordinates = new ArrayList<>();
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
+        canMove = false;
 
         coordinates.add(startPoint);
 
-        populateProperties();
+        //populateProperties();
     }
 
     public int getID() {
@@ -248,7 +249,7 @@ public class Cable implements Disposable {
                         movingNode = null;
                         backupNode = null;
                     }
-                    CircuitGUIManager.propertiesBox.hideAndClear();
+                    CircuitGUIManager.propertiesBox.hide();
                 }
 
                 // CLICK
@@ -615,6 +616,14 @@ public class Cable implements Disposable {
             }
         }
         return false;
+    }
+
+    public void moveEntireCable(float x, float y) {
+        for(int i = 0; i < coordinates.size(); i++) {
+            if((connection1 == null || (i != 0 && i != 1)) && (connection2 == null || (i != coordinates.size()-1 && i != coordinates.size()-2))) {
+                coordinates.set(i, new Vector2(coordinates.get(i).x+x, coordinates.get(i).y + y));
+            }
+        }
     }
 
     public void removeCoordinates() {

@@ -82,17 +82,17 @@ public class PropertiesBox {
 
     public void show() {
         container.setPosition(Gdx.graphics.getWidth() - 410, Gdx.graphics.getHeight() - 210);
-        Tools.slideIn(container, "top", 1f, Interpolation.exp10, 200);
+        Tools.slideIn(container, "top", 0.8f, Interpolation.exp10, 200);
         visible = true;
     }
 
     public void hide() {
-        Tools.slideOut(container, "top", 1f, Interpolation.exp10, 200);
+        Tools.slideOut(container, "top", 0.8f, Interpolation.exp10, 200);
         visible = false;
     }
 
     public void hideAndClear() {
-        Tools.slideOut(container, "top", 1f, Interpolation.exp10, 200, new Runnable() {
+        Tools.slideOut(container, "top", 0.8f, Interpolation.exp10, 200, new Runnable() {
             @Override
             public void run() {
                 visible = false;

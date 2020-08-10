@@ -90,7 +90,7 @@ public class TripleSandCrab extends Hardware {
 
             //UNSELECT
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                CircuitGUIManager.propertiesBox.hideAndClear();
+                CircuitGUIManager.propertiesBox.hide();
                 HardwareManager.currentHardware = null;
             }
 
