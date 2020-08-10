@@ -206,8 +206,6 @@ public class Cable implements Disposable {
         // CABLE SELECTED MECHANICS
         // ---------------------------------------------------------------------
 
-
-
         if(CableManager.currentCable == this) {
 
             // GET X AND Y OF MOUSE
@@ -450,7 +448,12 @@ public class Cable implements Disposable {
     }
 
     public void setConnection1(Hardware connection1) {
-        this.connection1 = connection1;
+        if(connection1 == null) {
+            disableBegin = false;
+            this.connection1 = null;
+        } else {
+            this.connection1 = connection1;
+        }
     }
 
     public Hardware getConnection2() {
@@ -458,7 +461,12 @@ public class Cable implements Disposable {
     }
 
     public void setConnection2(Hardware connection2) {
-        this.connection2 = connection2;
+        if(connection2 == null) {
+            disableEnd = false;
+            this.connection2 = null;
+        } else {
+            this.connection2 = connection2;
+        }
     }
 
     public float getVoltage() {

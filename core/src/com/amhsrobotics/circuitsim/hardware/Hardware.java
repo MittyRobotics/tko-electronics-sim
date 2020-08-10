@@ -9,7 +9,7 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
 
-public class Hardware {
+public abstract class Hardware {
 
     private Vector2 position;
     private int hardwareID;
@@ -27,9 +27,7 @@ public class Hardware {
         batch.setProjectionMatrix(camera.getCamera().combined);
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-
-    }
+    public void reattachWire(Cable cable, int port, boolean endOfWire) { }
 
     public void initConnections() {
         for(int i = 0; i < connNum; ++i) {
@@ -47,17 +45,13 @@ public class Hardware {
         return position;
     }
 
-    public void delete() {
-
-    }
+    public void delete() { }
 
     public void setPosition(float x, float y) {
         position.set(x, y);
     }
 
-    public void clearConnection(Cable cable) {
-
-    }
+    public void clearConnection(Cable cable) { }
 
     public int getConnectionPosition(Cable cable) {
         for(int i = 0; i < connections.size(); ++i) {
