@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
+import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -16,7 +17,7 @@ public abstract class Hardware {
     public ArrayList<Cable> connections;
     public ArrayList<Boolean> ends;
     public int connNum;
-    public String type;
+    public HardwareType type;
 
     public Hardware(Vector2 pos) {
         this.position = pos;

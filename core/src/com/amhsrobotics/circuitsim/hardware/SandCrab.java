@@ -32,12 +32,12 @@ public class SandCrab extends Hardware {
 
     boolean canMove;
 
-    public SandCrab(Vector2 position, String type) {
+    public SandCrab(Vector2 position, HardwareType type) {
         super(position);
 
         this.type = type;
 
-        if(type.equals("double")) {
+        if(type == HardwareType.DOUBLESANDCRAB) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
         } else {
@@ -53,8 +53,6 @@ public class SandCrab extends Hardware {
         for(int x = 0; x < pins.size(); x++) {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
         }
-
-        Gdx.app.log(connNum + "", "");
 
         bottom.setCenter(position.x, position.y);
 
@@ -110,6 +108,7 @@ public class SandCrab extends Hardware {
                 CableManager.currentCable = null;
 
                 populateProperties();
+                CircuitGUIManager.propertiesBox.show();
             }
 
         }

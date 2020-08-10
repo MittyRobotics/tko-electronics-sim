@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.hardware.SandCrab;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.*;
@@ -127,18 +128,18 @@ public class CircuitScreen implements Screen {
                     drawPlacing(vec2.x, vec2.y);
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
-                    if(currentPlacingHardware != null && currentPlacingHardware.type.equals("double")) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.DOUBLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), "double");
+                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(1);
                 } else if (Constants.placing_object == ObjectType.WAGO3) {
-                    if(currentPlacingHardware != null && currentPlacingHardware.type.equals("triple")) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), "triple");
+                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(2);
@@ -166,9 +167,9 @@ public class CircuitScreen implements Screen {
 
             HardwareManager.currentHardware = null;
             if(type == 1) {
-                HardwareManager.addSandCrab(vec2.x, vec2.y, "double");
+                HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
             } else if(type == 2) {
-                HardwareManager.addSandCrab(vec2.x, vec2.y, "triple");
+                HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.TRIPLESANDCRAB);
             }
             Constants.placing_object = null;
 
