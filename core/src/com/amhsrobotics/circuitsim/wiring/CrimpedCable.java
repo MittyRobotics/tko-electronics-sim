@@ -1,28 +1,19 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.Tuple;
-import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -131,17 +122,6 @@ public class CrimpedCable extends Cable {
                         }
                     }
 
-                }
-
-                // DELETE
-                if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
-                    CableManager.deleteCable(this);
-                    CableManager.currentCable = null;
-                    CircuitGUIManager.propertiesBox.hide();
-                    HardwareManager.removeCableFromHardware(this, connection1);
-                    HardwareManager.removeCableFromHardware(this, connection2);
-                    connection2 = null;
-                    connection1 = null;
                 }
 
                 // DRAW NODES IF SELECTED
