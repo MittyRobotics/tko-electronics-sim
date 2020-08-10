@@ -41,20 +41,16 @@ public class DoubleSandCrab extends Hardware {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
         }
         for(int x = 0; x < pins.size(); x++) {
-            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
+            pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
         }
 
-        // CONNECTIONS & IF END OF EACH CABLE
         connections = new ArrayList<>();
         ends = new ArrayList<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-//        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-//        connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
 
         bottom.setCenter(position.x, position.y);
-//        connector1.setCenter(position.x + (Long) pinDefs.get(0).get(0), position.y + (Long) pinDefs.get(0).get(1));
-//        connector2.setCenter(position.x + (Long) pinDefs.get(1).get(0), position.y + (Long) pinDefs.get(1).get(1));
+
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
@@ -83,8 +79,6 @@ public class DoubleSandCrab extends Hardware {
         for(Sprite temp : connectors) {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
         }
-//        connector1.setCenter(getPosition().x + (Long) pinDefs.get(0).get(0), getPosition().y + (Long) pinDefs.get(0).get(1));
-//        connector2.setCenter(getPosition().x + (Long) pinDefs.get(1).get(0), getPosition().y + (Long) pinDefs.get(1).get(1));
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
