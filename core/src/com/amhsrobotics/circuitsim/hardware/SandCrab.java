@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
-public class DoubleSandCrab extends Hardware {
+public class SandCrab extends Hardware {
 
     private Sprite bottom;
     ArrayList<JSONArray> pinDefs = new ArrayList<>();
@@ -32,10 +32,17 @@ public class DoubleSandCrab extends Hardware {
 
     boolean canMove;
 
-    public DoubleSandCrab(Vector2 position) {
+    public SandCrab(Vector2 position, String type) {
         super(position);
 
-        JSONReader.loadConfig("scripts/DoubleSandCrab.json");
+        if(type.equals("double")) {
+            JSONReader.loadConfig("scripts/DoubleSandCrab.json");
+            bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
+        } else {
+            JSONReader.loadConfig("scripts/TripleSandCrab.json");
+            bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
+        }
+
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
@@ -45,7 +52,8 @@ public class DoubleSandCrab extends Hardware {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
         }
 
-        bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
+        Gdx.app.log(connNum + "", "");
+
         bottom.setCenter(position.x, position.y);
 
 
@@ -69,8 +77,8 @@ public class DoubleSandCrab extends Hardware {
         canMove = false;
 
 //        CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
-//        c.addCoordinates(new Vector2(200, 200), false);
-//        attachWire(c, 1, true);
+//        CableManager.addCable(c);
+//        attachCrimpedCable(c, 1);
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -167,8 +175,6 @@ public class DoubleSandCrab extends Hardware {
 
         batch.begin();
         bottom.draw(batch);
-//        connector1.draw(batch);
-//        connector2.draw(batch);
         for(Sprite conn : connectors) {
             conn.draw(batch);
         }
@@ -194,10 +200,10 @@ public class DoubleSandCrab extends Hardware {
     private void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(0) == null ? "None" : "Cable " + connections.get(0).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(1) == null ? "None" : "Cable " + connections.get(1).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        for(int x = 0; x < connectors.size(); x++) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : "Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        }
     }
 
     public void clearConnection(Cable cable) {
@@ -257,8 +263,24 @@ public class DoubleSandCrab extends Hardware {
 
     }
 
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
+
+        cable.removeCoordinates();
+
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
+
+        CableManager.currentCable = null;
+    }
+
     public Sprite getConnector(int conn) {
         return connectors.get(conn);
+    }
+
+    public int getTotalConnectors() {
+        return connNum;
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
