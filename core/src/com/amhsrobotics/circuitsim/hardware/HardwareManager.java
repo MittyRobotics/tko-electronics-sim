@@ -33,11 +33,11 @@ public class HardwareManager {
 
                 //DOUBLE SAND CRAB
 
-                if(((DoubleSandCrab) h).getConnector1().getBoundingRectangle().contains(vec.x, vec.y)) {
+                if(((DoubleSandCrab) h).getConnector(0).getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
                         put(h, 0);
                     }};
-                } else if(((DoubleSandCrab) h).getConnector2().getBoundingRectangle().contains(vec.x, vec.y)) {
+                } else if(((DoubleSandCrab) h).getConnector(1).getBoundingRectangle().contains(vec.x, vec.y)) {
                     return new HashMap<Hardware, Integer>() {{
                         put(h, 1);
                     }};

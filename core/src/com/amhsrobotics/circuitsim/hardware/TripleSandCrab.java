@@ -31,9 +31,6 @@ public class TripleSandCrab extends Hardware {
 
         JSONReader.loadConfig("scripts/DoubleSandCrab.json");
 
-        //CONNECTIONS & IF END OF EACH CABLE
-        connections = new ArrayList<>();
-        ends = new ArrayList<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
         connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));

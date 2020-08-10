@@ -20,6 +20,9 @@ public abstract class Hardware {
     public Hardware(Vector2 pos) {
         this.position = pos;
         this.hardwareID = DeviceUtil.getNewHardwareID();
+
+        connections = new ArrayList<>();
+        ends = new ArrayList<>();
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {

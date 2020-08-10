@@ -44,11 +44,7 @@ public class DoubleSandCrab extends Hardware {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
         }
 
-        connections = new ArrayList<>();
-        ends = new ArrayList<>();
-
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-
         bottom.setCenter(position.x, position.y);
 
 
@@ -147,18 +143,21 @@ public class DoubleSandCrab extends Hardware {
                 //SET OWN POSITION
                 setPosition(vec.x, vec.y);
 
+
                 //MOVE CABLES
-                if(connections.get(0) != null) {
-                    connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), ends.get(0), false);
-                    connections.get(0).editCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), ends.get(0), true);
-                }
-                if(connections.get(1) != null) {
-                    connections.get(1).editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), ends.get(1), false);
-                    connections.get(1).editCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), ends.get(1), true);
+
+                for(JSONArray arr : pinDefs) {
+                    int index = pinDefs.indexOf(arr);
+                    if(connections.get(index) != null) {
+                        connections.get(index).editCoordinates(
+                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
+                                ends.get(index), false);
+                        connections.get(index).editCoordinates(
+                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() - 20),
+                                ends.get(index), true);
+                    }
                 }
             }
-
-
         }
 
         batch.begin();
@@ -221,28 +220,15 @@ public class DoubleSandCrab extends Hardware {
 
         if(endOfWire) {
             cable.setConnection2(this);
-            if(port == 0) {
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), false);
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
-            } else if(port == 1) {
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), false);
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
-            }
-
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), false);
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), false);
         } else {
             cable.setConnection1(this);
-            if(port == 0) {
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), true);
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
-            } else if(port == 1) {
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), true);
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
-            }
-
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
         }
 
         CableManager.currentCable = null;
-
     }
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
@@ -253,22 +239,12 @@ public class DoubleSandCrab extends Hardware {
 
         if(endOfWire) {
             cable.setConnection2(this);
-            if(port == 0) {
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), false);
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), false);
-            } else if(port == 1) {
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), false);
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), false);
-            }
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), false);
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), false);
         } else {
             cable.setConnection1(this);
-            if(port == 0) {
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() - 20), true);
-                cable.addCoordinates(new Vector2(getConnector1().getX() + getConnector1().getWidth() / 2, getConnector1().getY() + 20), true);
-            } else if(port == 1) {
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() - 20), true);
-                cable.addCoordinates(new Vector2(getConnector2().getX() + getConnector2().getWidth() / 2, getConnector2().getY() + 20), true);
-            }
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
         }
 
         cable.setAppendingFromEnd(false);
@@ -276,12 +252,8 @@ public class DoubleSandCrab extends Hardware {
 
     }
 
-    public Sprite getConnector1() {
-        return connectors.get(0);
-    }
-
-    public Sprite getConnector2() {
-        return connectors.get(1);
+    public Sprite getConnector(int conn) {
+        return connectors.get(conn);
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
