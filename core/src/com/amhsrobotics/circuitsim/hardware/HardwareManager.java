@@ -53,6 +53,7 @@ public class HardwareManager {
     public static void addSandCrab(float startX, float startY, String type) {
         CircuitGUIManager.propertiesBox.show();
         SandCrab temp = new SandCrab(new Vector2(startX, startY), type);
+        temp.addCrimpedCable();
         currentHardware = temp;
         CableManager.currentCable = null;
 

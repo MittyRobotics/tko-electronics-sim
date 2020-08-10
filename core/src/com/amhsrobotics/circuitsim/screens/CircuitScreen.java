@@ -127,7 +127,7 @@ public class CircuitScreen implements Screen {
                     drawPlacing(vec2.x, vec2.y);
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
-                    if(currentPlacingHardware != null) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type.equals("double")) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), "double");
@@ -135,7 +135,7 @@ public class CircuitScreen implements Screen {
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(1);
                 } else if (Constants.placing_object == ObjectType.WAGO3) {
-                    if(currentPlacingHardware != null) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type.equals("triple")) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), "triple");

@@ -16,6 +16,7 @@ public abstract class Hardware {
     public ArrayList<Cable> connections;
     public ArrayList<Boolean> ends;
     public int connNum;
+    public String type;
 
     public Hardware(Vector2 pos) {
         this.position = pos;

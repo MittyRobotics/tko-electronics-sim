@@ -35,6 +35,8 @@ public class SandCrab extends Hardware {
     public SandCrab(Vector2 position, String type) {
         super(position);
 
+        this.type = type;
+
         if(type.equals("double")) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
@@ -75,7 +77,9 @@ public class SandCrab extends Hardware {
         initEnds();
 
         canMove = false;
+    }
 
+    public void addCrimpedCable() {
         CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
         CableManager.addCable(c);
         attachCrimpedCable(c, 1);
