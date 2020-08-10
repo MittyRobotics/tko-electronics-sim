@@ -66,6 +66,8 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "me.rohanbansal.ricochet:ricochet:1.9.5-SNAPSHOT"
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+        // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+        compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
     }
 }

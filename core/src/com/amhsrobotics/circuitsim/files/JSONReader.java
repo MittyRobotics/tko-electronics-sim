@@ -1,23 +1,29 @@
 package com.amhsrobotics.circuitsim.files;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.FileReader;
 
 public class JSONReader {
 
-    private static JsonReader reader = new JsonReader();
-    private static JsonValue currentConfig;
+    private static JSONParser reader = new JSONParser();
+    private static JSONObject currentConfig;
 
     public static void loadConfig(String path) {
-        currentConfig = reader.parse(Gdx.files.internal(path));
+        try {
+            currentConfig = (JSONObject) reader.parse(new FileReader(Gdx.files.internal(path).file()));
+        } catch (Exception e) {
+            Gdx.app.exit();
+        }
     }
 
-    public static String readString(String str) {
-        return currentConfig.getString(str);
+    public static Object readString(String str) {
+        return currentConfig.get(str);
     }
 
-    public static JsonValue getCurrentConfig() {
+    public static Object getCurrentConfig() {
         return currentConfig;
     }
 }
