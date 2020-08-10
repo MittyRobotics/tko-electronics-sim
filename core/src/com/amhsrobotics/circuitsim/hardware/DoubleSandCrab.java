@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
+import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
@@ -27,6 +28,8 @@ public class DoubleSandCrab extends Hardware {
 
     public DoubleSandCrab(Vector2 position) {
         super(position);
+
+        JSONReader.loadConfig("scripts/DoubleSandCrab.json");
 
         // CONNECTIONS & IF END OF EACH CABLE
         connections = new ArrayList<>();
@@ -141,6 +144,15 @@ public class DoubleSandCrab extends Hardware {
 
     @Override
     public void delete() {
+        for(Cable cable : connections) {
+            if(cable != null) {
+                if(ends.get(connections.indexOf(cable))) {
+                    cable.setConnection2(null);
+                } else {
+                    cable.setConnection1(null);
+                }
+            }
+        }
         HardwareManager.removeSandCrab(this);
         HardwareManager.currentHardware = null;
         CircuitGUIManager.propertiesBox.hide();
