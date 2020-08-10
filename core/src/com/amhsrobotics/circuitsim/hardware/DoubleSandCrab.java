@@ -24,8 +24,10 @@ import java.util.ArrayList;
 
 public class DoubleSandCrab extends Hardware {
 
-    private Sprite bottom, connector1, connector2;
-    JSONArray pin1, pin2;
+    private Sprite bottom;
+    ArrayList<JSONArray> pinDefs = new ArrayList<>();
+    ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
+    ArrayList<Sprite> connectors = new ArrayList<>();
 
     boolean canMove;
 
@@ -33,25 +35,40 @@ public class DoubleSandCrab extends Hardware {
         super(position);
 
         JSONReader.loadConfig("scripts/DoubleSandCrab.json");
+        connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
-        pin1 = (JSONArray) ((JSONObject) pins.get(0)).get("position");
-        pin2 = (JSONArray) ((JSONObject) pins.get(1)).get("position");
-
-//        JSONReader.getCurrentConfig().get
+        for(int x = 0; x < pins.size(); x++) {
+            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
+        }
+        for(int x = 0; x < pins.size(); x++) {
+            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
+        }
 
         // CONNECTIONS & IF END OF EACH CABLE
         connections = new ArrayList<>();
         ends = new ArrayList<>();
 
         bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-        connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+//        connector1 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+//        connector2 = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
 
         bottom.setCenter(position.x, position.y);
-        connector1.setCenter(position.x + (Long) pin1.get(0), position.y + (Long) pin1.get(1));
-        connector2.setCenter(position.x + (Long) pin2.get(0), position.y + (Long) pin2.get(1));
+//        connector1.setCenter(position.x + (Long) pinDefs.get(0).get(0), position.y + (Long) pinDefs.get(0).get(1));
+//        connector2.setCenter(position.x + (Long) pinDefs.get(1).get(0), position.y + (Long) pinDefs.get(1).get(1));
 
-        connNum = 2;
+        for(JSONArray arr : pinDefs) {
+            Sprite temp;
+            if(connectors.size() == connNum) {
+                break;
+            }
+            if(connectors.size() == 0) {
+                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+            } else {
+                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+            }
+            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+            connectors.add(temp);
+        }
 
         initConnections();
         initEnds();
@@ -63,8 +80,11 @@ public class DoubleSandCrab extends Hardware {
         super.update(batch, renderer, camera);
 
         bottom.setCenter(getPosition().x, getPosition().y);
-        connector1.setCenter(getPosition().x + (Long) pin1.get(0), getPosition().y + (Long) pin1.get(1));
-        connector2.setCenter(getPosition().x + (Long) pin2.get(0), getPosition().y + (Long) pin2.get(1));
+        for(Sprite temp : connectors) {
+            temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
+        }
+//        connector1.setCenter(getPosition().x + (Long) pinDefs.get(0).get(0), getPosition().y + (Long) pinDefs.get(0).get(1));
+//        connector2.setCenter(getPosition().x + (Long) pinDefs.get(1).get(0), getPosition().y + (Long) pinDefs.get(1).get(1));
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
@@ -145,8 +165,11 @@ public class DoubleSandCrab extends Hardware {
 
         batch.begin();
         bottom.draw(batch);
-        connector1.draw(batch);
-        connector2.draw(batch);
+//        connector1.draw(batch);
+//        connector2.draw(batch);
+        for(Sprite conn : connectors) {
+            conn.draw(batch);
+        }
         batch.end();
     }
 
@@ -256,11 +279,11 @@ public class DoubleSandCrab extends Hardware {
     }
 
     public Sprite getConnector1() {
-        return connector1;
+        return connectors.get(0);
     }
 
     public Sprite getConnector2() {
-        return connector2;
+        return connectors.get(1);
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
