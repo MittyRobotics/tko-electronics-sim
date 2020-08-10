@@ -108,18 +108,6 @@ public class CrimpedCable extends Cable {
                     if (hardware != null) {
                         // HARDWARE
                         processHardwareClick(hardware);
-                    } else {
-                        // ADD NEW POINT
-                        if (appendingFromEnd && !disableEnd) {
-                            addCoordinates(new Vector2(vec2.x, vec2.y), false);
-                        } else if (appendingFromBegin && !disableBegin) {
-                            addCoordinates(new Vector2(vec2.x, vec2.y), true);
-                        } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                            coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
-                            movingNode = null;
-                            backupNode = null;
-                            nodeChanged = true;
-                        }
                     }
 
                 }
@@ -127,19 +115,7 @@ public class CrimpedCable extends Cable {
                 // DRAW NODES IF SELECTED
                 drawNodes(renderer, camera, Color.SALMON);
 
-                if (appendingFromEnd && !disableEnd) {
-                    // draw potential cable wire
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
-                    renderer.setColor(Color.SALMON);
-                    renderer.circle(vec2.x, vec2.y, limit);
-                } else if (appendingFromBegin && !disableBegin){
-                    // draw potential cable wire
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
-                    renderer.setColor(Color.SALMON);
-                    renderer.circle(vec2.x, vec2.y, limit);
-                } else if (movingNode != null) {
+                if (movingNode != null) {
                     movingNode.set(vec2.x, vec2.y);
                     if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
                         coordinates.remove(movingNode);

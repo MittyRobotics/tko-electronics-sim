@@ -68,9 +68,9 @@ public class DoubleSandCrab extends Hardware {
 
         canMove = false;
 
-//        CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
-//        c.addCoordinates(new Vector2(200, 200), false);
-//        attachWire(c, 1, true);
+        CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
+        CableManager.addCable(c);
+        attachCrimpedCable(c, 1);
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -216,6 +216,18 @@ public class DoubleSandCrab extends Hardware {
         } else {
             cable.setConnection1(this);
         }
+    }
+
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
+
+        cable.removeCoordinates();
+
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
+
+        CableManager.currentCable = null;
     }
 
 

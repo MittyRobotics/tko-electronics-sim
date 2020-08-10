@@ -60,6 +60,7 @@ public class CableManager {
         cable1.mergeCable(cable2, cable2begin, cable1begin);
         deleteCable(cable2);
         merging = false;
+        currentCable = null;
     }
 
     public static Cable getCableByID(int ID) {
