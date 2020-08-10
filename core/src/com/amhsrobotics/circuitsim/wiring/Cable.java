@@ -238,7 +238,6 @@ public class Cable implements Disposable {
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
             if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
-
             } else {
 
                 // UNSELECT
@@ -329,30 +328,60 @@ public class Cable implements Disposable {
         renderer.end();
     }
 
+
     private void processHardwareClick(HashMap<Hardware, Integer> hardware) {
         ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());
 
+        // FIRST CLICK
 
-        // DOUBLE SAND CRAB
+        if(coordinates.size() == 1) {
 
-        if(clist.get(0) instanceof DoubleSandCrab) {
-            DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
-            if(appendingFromEnd) {
-                crab.attachWire(this, hardware.get(clist.get(0)), true);
-            } else if(appendingFromBegin) {
-                crab.attachWire(this, hardware.get(clist.get(0)), false);
+            // DOUBLE SAND CRAB
+
+            if (clist.get(0) instanceof DoubleSandCrab) {
+                DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
+                if (appendingFromEnd) {
+                    crab.firstClickAttach(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    crab.firstClickAttach(this, hardware.get(clist.get(0)), false);
+                }
+            } else if (clist.get(0) instanceof TripleSandCrab) {
+
+
+                // TRIPLE SAND CRAB
+
+                TripleSandCrab crab = (TripleSandCrab) clist.get(0);
+                if (appendingFromEnd) {
+                    crab.firstClickAttach(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    crab.firstClickAttach(this, hardware.get(clist.get(0)), false);
+                }
             }
-        } else if(clist.get(0) instanceof TripleSandCrab) {
+
+        } else {
+
+            // DOUBLE SAND CRAB
+
+            if (clist.get(0) instanceof DoubleSandCrab) {
+                DoubleSandCrab crab = (DoubleSandCrab) clist.get(0);
+                if (appendingFromEnd) {
+                    crab.attachWire(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    crab.attachWire(this, hardware.get(clist.get(0)), false);
+                }
+            } else if (clist.get(0) instanceof TripleSandCrab) {
 
 
-            // TRIPLE SAND CRAB
+                // TRIPLE SAND CRAB
 
-            TripleSandCrab crab = (TripleSandCrab) clist.get(0);
-            if(appendingFromEnd) {
-                crab.attachWireS(this, hardware.get(clist.get(0)), true);
-            } else if(appendingFromBegin) {
-                crab.attachWireS(this, hardware.get(clist.get(0)), false);
+                TripleSandCrab crab = (TripleSandCrab) clist.get(0);
+                if (appendingFromEnd) {
+                    crab.attachWire(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    crab.attachWire(this, hardware.get(clist.get(0)), false);
+                }
             }
+
         }
     }
 
@@ -445,6 +474,17 @@ public class Cable implements Disposable {
         return 0;
     }
 
+    public int pointIsOnEndpoint(float x, float y) {
+        Vector2 c2 = coordinates.get(coordinates.size() - 1);
+        Vector2 c = coordinates.get(0);
+        if(new Circle(c2.x, c2.y, limit).contains(x, y)) {
+            return 2;
+        } else if(new Circle(c.x, c.y, limit).contains(x, y)) {
+            return 1;
+        }
+        return 0;
+    }
+
     public Hardware getConnection1() {
         return connection1;
     }
@@ -490,7 +530,7 @@ public class Cable implements Disposable {
 
         if(cable1begin) {
             // AGGREGATE COORDINATES
-            for(int i = 1; i < l.size(); i++) {
+            for(int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
 
@@ -567,6 +607,10 @@ public class Cable implements Disposable {
             }
         }
         return false;
+    }
+
+    public void removeCoordinates() {
+        coordinates.clear();
     }
 
     @Override

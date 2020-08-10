@@ -38,15 +38,17 @@ public class CableManager {
 
     public static Tuple<Cable, Integer> wireHoveringWire(ClippedCameraController camera, Cable cable) {
         // CHECK FOR MERGING WIRES
-        for (int x = 0; x < cables.size; x++) {
-            if (cables.get(x).getID() != cable.getID()) {
-                int ans = cables.get(x).hoveringOnEndpoint(camera);
-                if (ans == 1) {
-                    merging = true;
-                    return new Tuple<>(cables.get(x), 1);
-                } else if (ans == 2) {
-                    merging = true;
-                    return new Tuple<>(cables.get(x), 2);
+        if(cable.getCoordinates().size() > 1) {
+            for (int x = 0; x < cables.size; x++) {
+                if (cables.get(x).getID() != cable.getID()) {
+                    int ans = cables.get(x).hoveringOnEndpoint(camera);
+                    if (ans == 1) {
+                        merging = true;
+                        return new Tuple<>(cables.get(x), 1);
+                    } else if (ans == 2) {
+                        merging = true;
+                        return new Tuple<>(cables.get(x), 2);
+                    }
                 }
             }
         }
@@ -70,13 +72,23 @@ public class CableManager {
     }
 
     public static void addCable(float startX, float startY) {
-        CircuitGUIManager.propertiesBox.show();
-        Cable temp = new Cable(new Vector2(startX, startY), id);
-        id++;
-        currentCable = temp;
+        boolean good = true;
+        Iterator<Cable> iterator = cables.iterator();
+        while(iterator.hasNext()) {
+            if (iterator.next().pointIsOnEndpoint(startX, startY) != 0) {
+                good = false;
+                break;
+            }
+        }
+        if(good) {
+            CircuitGUIManager.propertiesBox.show();
+            Cable temp = new Cable(new Vector2(startX, startY), id);
+            id++;
+            currentCable = temp;
 
-        temp.setAppendingFromEnd(true);
-        cables.add(temp);
+            temp.setAppendingFromEnd(true);
+            cables.add(temp);
+        }
     }
 
     public static void deleteCable(Cable cable) {
