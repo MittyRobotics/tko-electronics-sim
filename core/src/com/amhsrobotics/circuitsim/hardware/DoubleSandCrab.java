@@ -91,7 +91,7 @@ public class DoubleSandCrab extends Hardware {
             if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HardwareManager.currentHardware = this;
                 CableManager.currentCable = null;
-                CircuitGUIManager.propertiesBox.show();
+
                 populateProperties();
             }
 

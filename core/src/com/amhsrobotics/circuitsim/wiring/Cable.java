@@ -32,23 +32,23 @@ import java.util.stream.Collectors;
 
 public class Cable implements Disposable {
 
-    private float voltage;
-    private float gauge;
-    private Color color;
-    private Color hoverColor = Color.WHITE;
-    private ArrayList<Vector2> coordinates;
-    private Hardware connection1, connection2;
-    private float x1, x2, y1, y2, a;
+    public float voltage;
+    public float gauge;
+    public Color color;
+    public Color hoverColor = Color.WHITE;
+    public ArrayList<Vector2> coordinates;
+    public Hardware connection1, connection2;
+    public float x1, x2, y1, y2, a;
 
-    private boolean appendingFromEnd, appendingFromBegin;
-    private boolean nodeChanged = false;
-    private Vector2 movingNode, backupNode;
+    public boolean appendingFromEnd, appendingFromBegin;
+    public boolean nodeChanged = false;
+    public Vector2 movingNode, backupNode;
 
-    private boolean disableEnd, disableBegin, canMove;
+    public boolean disableEnd, disableBegin, canMove;
 
-    private int ID;
+    public int ID;
 
-    private float limit;
+    public float limit;
 
 
     public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates) {
@@ -328,7 +328,7 @@ public class Cable implements Disposable {
     }
 
 
-    private void processHardwareClick(HashMap<Hardware, Integer> hardware) {
+    protected void processHardwareClick(HashMap<Hardware, Integer> hardware) {
         ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());
 
         // FIRST CLICK
@@ -384,7 +384,7 @@ public class Cable implements Disposable {
         }
     }
 
-    private void checkForClick(ClippedCameraController camera) {
+    protected void checkForClick(ClippedCameraController camera) {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) && !CableManager.merging) {
 
             // CLICKED ON END
@@ -433,7 +433,7 @@ public class Cable implements Disposable {
         return null;
     }
 
-    private void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
+    protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
         if(color.length > 0) {
             renderer.setColor(color[0]);
         }
