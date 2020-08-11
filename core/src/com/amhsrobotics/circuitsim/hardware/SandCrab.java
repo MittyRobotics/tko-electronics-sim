@@ -33,11 +33,13 @@ public class SandCrab extends Hardware {
 
     boolean canMove, addCrimped;
 
-    public SandCrab(Vector2 position, HardwareType type, boolean addCrimped) {
+    public SandCrab(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position);
 
         this.type = type;
-        this.addCrimped = addCrimped;
+        if(addCrimped.length > 0) {
+            this.addCrimped = addCrimped[0];
+        }
 
         if(type == HardwareType.DOUBLESANDCRAB) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
