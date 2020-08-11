@@ -47,15 +47,12 @@ public class HardwareManager {
         //GET IF WIRE IS CLICKED ON HARDWARE
 
         for(Hardware h : hardwares) {
-            if(h instanceof SandCrab) {
-
-                for(int x = 0; x < ((SandCrab) h).getTotalConnectors(); x++) {
-                    if(((SandCrab) h).getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
-                        int finalX = x;
-                        return new HashMap<Hardware, Integer>() {{
-                            put(h, finalX);
-                        }};
-                    }
+            for(int x = 0; x < h.getTotalConnectors(); x++) {
+                if(h.getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
+                    int finalX = x;
+                    return new HashMap<Hardware, Integer>() {{
+                        put(h, finalX);
+                    }};
                 }
             }
         }
