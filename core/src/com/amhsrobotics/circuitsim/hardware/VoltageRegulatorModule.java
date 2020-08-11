@@ -109,6 +109,7 @@ public class VoltageRegulatorModule extends Hardware {
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
     }
 
+    @Override
     public void attachCrimpedCable(Cable cable, int port) {
         connections.set(port, cable);
 
