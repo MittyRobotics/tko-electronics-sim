@@ -3,10 +3,7 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.Hardware;
-import com.amhsrobotics.circuitsim.hardware.HardwareType;
-import com.amhsrobotics.circuitsim.hardware.SandCrab;
-import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.*;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -143,6 +140,14 @@ public class CircuitScreen implements Screen {
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(2);
+                } else if (Constants.placing_object == ObjectType.PDP) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PDP) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP, false);
+                    }
+                    currentPlacingHardware.update(batch, renderer, camera);
+                    handlePDP();
                 }
             }
 
@@ -152,6 +157,23 @@ public class CircuitScreen implements Screen {
         HardwareManager.update(renderer, batch, camera);
         manager.update(delta);
 
+    }
+
+    private void handlePDP() {
+
+        CableManager.currentCable = null;
+
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            HardwareManager.currentHardware = null;
+            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
+            Constants.placing_object = null;
+        }
     }
 
     private void handleWago(int type) {

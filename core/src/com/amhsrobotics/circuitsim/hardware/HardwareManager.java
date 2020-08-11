@@ -57,6 +57,15 @@ public class HardwareManager {
         hardwares.add(temp);
     }
 
+    public static void addPDP(float startX, float startY, HardwareType type) {
+        CircuitGUIManager.propertiesBox.show();
+        PowerDistributionPanel temp = new PowerDistributionPanel(new Vector2(startX, startY), type, false);
+        currentHardware = temp;
+        CableManager.currentCable = null;
+
+        hardwares.add(temp);
+    }
+
 
     public static void removeHardware(Hardware ha) {
         hardwares.removeValue(ha, true);
