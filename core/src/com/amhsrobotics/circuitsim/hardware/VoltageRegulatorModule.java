@@ -6,25 +6,16 @@ import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
 
 public class VoltageRegulatorModule extends Hardware {
 
-    ArrayList<JSONArray> pinDefs = new ArrayList<>();
-    ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
-    ArrayList<Sprite> connectors = new ArrayList<>();
-
-    boolean canMove, addCrimped;
 
     public VoltageRegulatorModule(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position);
@@ -34,12 +25,11 @@ public class VoltageRegulatorModule extends Hardware {
             this.addCrimped = addCrimped[0];
         }
 
-        name = "VRM";
-
         JSONReader.loadConfig("scripts/VRM.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+        name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
@@ -126,11 +116,4 @@ public class VoltageRegulatorModule extends Hardware {
         return connectors.get(conn);
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(Color.WHITE);
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
-        renderer.end();
-    }
 }

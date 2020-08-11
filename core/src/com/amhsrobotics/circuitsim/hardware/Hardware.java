@@ -113,10 +113,9 @@ public abstract class Hardware {
 
         } else {
 
-            if(HardwareManager.movingObject) {
-                canMove = false;
-                HardwareManager.movingObject = false;
-            }
+            canMove = false;
+            HardwareManager.movingObject = false;
+
         }
 
         //SELECTED MECHANICS
@@ -137,9 +136,9 @@ public abstract class Hardware {
 
                 //MOVE CABLES
 
-                for(JSONArray arr : pinDefs) {
+                for (JSONArray arr : pinDefs) {
                     int index = pinDefs.indexOf(arr);
-                    if(connections.get(index) != null) {
+                    if (connections.get(index) != null) {
                         connections.get(index).editCoordinates(
                                 new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
                                 ends.get(index), false);
@@ -148,6 +147,7 @@ public abstract class Hardware {
                                 ends.get(index), true);
                     }
                 }
+
             }
         }
 

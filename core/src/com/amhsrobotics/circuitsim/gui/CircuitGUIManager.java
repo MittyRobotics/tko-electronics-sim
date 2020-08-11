@@ -119,6 +119,11 @@ public class CircuitGUIManager {
         TextButton vrm = new TextButton("VRM", tStyle);
         sandcrab3.addListener(new TextTooltip("Voltage Regulation Module", ttStyle));
         table.add(vrm).width(120);
+        table.row();
+        TextButton rbr = new TextButton("roboRIO", tStyle);
+        sandcrab3.addListener(new TextTooltip("roboRIO Advanced Robotics Controller", ttStyle));
+        table.add(rbr).width(120);
+
 
         container.add(scroll).expand().fill();
 
@@ -158,6 +163,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.VRM;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        rbr.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.ROBORIO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
