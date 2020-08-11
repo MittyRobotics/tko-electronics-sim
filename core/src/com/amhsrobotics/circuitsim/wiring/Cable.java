@@ -157,6 +157,94 @@ public class Cable implements Disposable {
 
     }
 
+    public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        renderer.setProjectionMatrix(camera.getCamera().combined);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        // DRAW CABLE
+        // ---------------------------------------------------------------------
+        renderer.setColor(color);
+        for(int i = 0; i < coordinates.size() - 1; ++i) {
+            if(CableManager.currentCable != null) {
+                if(CableManager.currentCable == this) {
+                    // draw cable selected
+                    renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                    renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit*2+3f);
+                }
+            }
+            if(hoveringMouse(camera)) {
+                // draw hovering on cable
+                renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit*2+3f);
+            }
+            // draw actual cable
+            renderer.setColor(color);
+            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*100);
+
+            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
+        }
+        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit);
+        // ---------------------------------------------------------------------
+
+
+        // CABLE SELECTED MECHANICS
+        // ---------------------------------------------------------------------
+
+        if(CableManager.currentCable == this) {
+
+            // GET X AND Y OF MOUSE
+            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.getCamera().unproject(vec);
+            Vector2 vec2 = new Vector2(vec.x, vec.y);
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            // RENDER POSSIBLE IF MERGING
+            if(CableManager.merging) {
+                if(appendingFromBegin) {
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                } else {
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                }
+            }
+
+            if(!CableManager.merging) {
+
+                // DRAW NODES IF SELECTED
+                drawNodes(renderer, camera, Color.SALMON);
+
+                if (appendingFromEnd && !disableEnd) {
+                    // draw potential cable wire
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                } else if (appendingFromBegin && !disableBegin){
+                    // draw potential cable wire
+                    renderer.setColor(color);
+                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), (1/gauge)*100);
+                    renderer.setColor(Color.SALMON);
+                    renderer.circle(vec2.x, vec2.y, limit);
+                }
+            }
+
+        }
+
+        if(hoveringMouse(camera)) {
+            drawNodes(renderer, camera, Color.SALMON);
+        }
+
+        renderer.end();
+    }
+
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
         limit = ((1/gauge)*100 + 3f)/2;

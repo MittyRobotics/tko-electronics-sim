@@ -79,6 +79,12 @@ public abstract class Hardware {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
         }
 
+        for(Cable c : connections) {
+            if(c != null) {
+                c.render(renderer, camera);
+            }
+        }
+
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
         if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
