@@ -226,7 +226,6 @@ public class SandCrab extends Hardware {
         }
     }
 
-
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);

@@ -107,7 +107,7 @@ public abstract class Hardware {
         return hardwareID;
     }
 
-    public void firstClickAttach(Cable cable, Integer integer, boolean b) {};
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {};
 
-    public void attachWire(Cable cable, Integer integer, boolean b) {};
+    public void attachWire(Cable cable, int port, boolean endOfWire) {};
 }
