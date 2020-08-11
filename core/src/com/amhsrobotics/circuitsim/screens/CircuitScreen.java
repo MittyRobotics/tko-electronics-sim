@@ -171,7 +171,7 @@ public class CircuitScreen implements Screen {
             }
 
             HardwareManager.currentHardware = null;
-            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
+            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
             Constants.placing_object = null;
         }
     }
