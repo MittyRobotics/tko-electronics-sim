@@ -54,7 +54,6 @@ public class PowerDistributionPanel extends Hardware {
         initEnds();
     }
 
-
     @Override
     public void populateProperties() {
         super.populateProperties();
