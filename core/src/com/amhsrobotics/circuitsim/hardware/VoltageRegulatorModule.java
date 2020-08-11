@@ -2,18 +2,13 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -25,7 +20,6 @@ import java.util.ArrayList;
 
 public class VoltageRegulatorModule extends Hardware {
 
-    private Sprite bottom;
     ArrayList<JSONArray> pinDefs = new ArrayList<>();
     ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     ArrayList<Sprite> connectors = new ArrayList<>();
@@ -41,7 +35,7 @@ public class VoltageRegulatorModule extends Hardware {
         }
 
         JSONReader.loadConfig("scripts/VRM.json");
-        bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
@@ -52,7 +46,7 @@ public class VoltageRegulatorModule extends Hardware {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
         }
 
-        bottom.setCenter(position.x, position.y);
+        base.setCenter(position.x, position.y);
 
 
         /*for(JSONArray arr : pinDefs) {
@@ -133,7 +127,7 @@ public class VoltageRegulatorModule extends Hardware {
         renderer.setColor(Color.WHITE);
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (bottom.getWidth() / 2), getPosition().y - (bottom.getHeight() / 2), bottom.getWidth()-1, bottom.getHeight(), 15);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
         renderer.end();
     }
 }
