@@ -111,6 +111,9 @@ public class CircuitGUIManager {
         TextButton sandcrab3 = new TextButton("3-Way Wago", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
         table.add(sandcrab3).width(120);
+        TextButton pdp = new TextButton("PDP", tStyle);
+        sandcrab3.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
+        table.add(pdp).width(120);
 
         container.add(scroll).expand().fill();
 
@@ -134,6 +137,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.WAGO3;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        pdp.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.PDP;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
