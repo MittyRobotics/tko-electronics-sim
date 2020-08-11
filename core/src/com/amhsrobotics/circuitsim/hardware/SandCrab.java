@@ -3,7 +3,6 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
