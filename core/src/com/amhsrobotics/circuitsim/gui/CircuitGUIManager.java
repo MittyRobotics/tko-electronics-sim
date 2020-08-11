@@ -115,6 +115,10 @@ public class CircuitGUIManager {
         TextButton pdp = new TextButton("PDP", tStyle);
         sandcrab3.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
         table.add(pdp).width(120);
+        table.row();
+        TextButton vrm = new TextButton("VRM", tStyle);
+        sandcrab3.addListener(new TextTooltip("Voltage Regulation Module", ttStyle));
+        table.add(vrm).width(120);
 
         container.add(scroll).expand().fill();
 
@@ -146,6 +150,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.PDP;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        vrm.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.VRM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }

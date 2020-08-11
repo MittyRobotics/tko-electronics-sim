@@ -1,0 +1,15 @@
+{
+  "name": "VRM",
+  "totalPins": 18,
+  "totalSprites": 19,
+  "pins": [
+    {
+      "position": [-30, -20],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [30, -20],
+      "dimensions": [50, 130]
+    }
+  ]
+}

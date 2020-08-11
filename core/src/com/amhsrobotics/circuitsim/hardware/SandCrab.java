@@ -99,7 +99,6 @@ public class SandCrab extends Hardware {
         }
     }
 
-
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);
@@ -110,15 +109,10 @@ public class SandCrab extends Hardware {
     }
 
     private void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        if(endOfWire) {
-            cable.setConnection2(this);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), false);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), false);
-        } else {
-            cable.setConnection1(this);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
-        }
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
+
+        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
     }
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {

@@ -177,8 +177,6 @@ public abstract class Hardware {
         return connectors.get(conn);
     }
 
-    public void attachCrimpedCable(Cable cable, int port) {}
-
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
@@ -227,7 +225,17 @@ public abstract class Hardware {
     }
 
 
+    public void attachCrimpedCable(Cable cable, int port) {}
+
+    public int getTotalConnectors() {
+        return connNum;
+    }
+
     public int getHardwareID() {
         return hardwareID;
     }
+
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {};
+
+    public void attachWire(Cable cable, int port, boolean endOfWire) {};
 }
