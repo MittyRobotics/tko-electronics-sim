@@ -246,16 +246,8 @@ public abstract class Hardware {
     }
 
     public void attachCrimpedCable(Cable cable, int port) {
-        connections.set(port, cable);
-
-        cable.removeCoordinates();
-
-        cable.setConnection1(this);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
-
-        CableManager.currentCable = null;
     }
+
     public int getTotalConnectors() {
         return connNum;
     }
