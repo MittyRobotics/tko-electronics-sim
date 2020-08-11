@@ -44,12 +44,9 @@ public class SandCrab extends Hardware {
         if(type == HardwareType.DOUBLESANDCRAB) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-            crimpedPorts.add(1);
         } else {
             JSONReader.loadConfig("scripts/TripleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
-            crimpedPorts.add(1);
-            crimpedPorts.add(2);
         }
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
@@ -226,15 +223,6 @@ public class SandCrab extends Hardware {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
-    }
-
-    public void clearConnection(Cable cable) {
-        for(int i = 0; i < connNum; i++) {
-            if(cable == connections.get(i)) {
-                connections.set(i, null);
-            }
-        }
-
     }
 
     public void reattachWire(Cable cable, int port, boolean endOfWire) {
