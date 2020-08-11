@@ -111,6 +111,7 @@ public class CircuitGUIManager {
         TextButton sandcrab3 = new TextButton("3-Way Wago", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
         table.add(sandcrab3).width(120);
+        table.row();
         TextButton pdp = new TextButton("PDP", tStyle);
         sandcrab3.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
         table.add(pdp).width(120);
