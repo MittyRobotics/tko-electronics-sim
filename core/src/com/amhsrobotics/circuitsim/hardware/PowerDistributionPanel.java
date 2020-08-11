@@ -23,7 +23,7 @@ import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 
-public class PowerDistributionPanel extends Hardware{
+public class PowerDistributionPanel extends Hardware {
 
     private Sprite bottom;
     ArrayList<JSONArray> pinDefs = new ArrayList<>();
