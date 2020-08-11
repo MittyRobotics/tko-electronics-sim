@@ -148,6 +148,14 @@ public class CircuitScreen implements Screen {
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handlePDP();
+                } else if (Constants.placing_object == ObjectType.VRM) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.VRM) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM, false);
+                    }
+                    currentPlacingHardware.update(batch, renderer, camera);
+                    handleVRM();
                 }
             }
 
@@ -171,7 +179,24 @@ public class CircuitScreen implements Screen {
             }
 
             HardwareManager.currentHardware = null;
-            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
+            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
+            Constants.placing_object = null;
+        }
+    }
+
+    private void handleVRM() {
+
+        CableManager.currentCable = null;
+
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            HardwareManager.currentHardware = null;
+            HardwareManager.addVRM(vec2.x, vec2.y, HardwareType.VRM);
             Constants.placing_object = null;
         }
     }

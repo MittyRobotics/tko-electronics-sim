@@ -334,28 +334,18 @@ public class Cable implements Disposable {
 
         if(coordinates.size() == 1) {
 
-            // DOUBLE SAND CRAB
-
-            if (clist.get(0) instanceof SandCrab) {
-                SandCrab crab = (SandCrab) clist.get(0);
-                if (appendingFromEnd) {
-                    crab.firstClickAttach(this, hardware.get(clist.get(0)), true);
-                } else if (appendingFromBegin) {
-                    crab.firstClickAttach(this, hardware.get(clist.get(0)), false);
-                }
+            if (appendingFromEnd) {
+                clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), true);
+            } else if (appendingFromBegin) {
+                clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
 
         } else {
 
-            // DOUBLE SAND CRAB
-
-            if (clist.get(0) instanceof SandCrab) {
-                SandCrab crab = (SandCrab) clist.get(0);
-                if (appendingFromEnd) {
-                    crab.attachWire(this, hardware.get(clist.get(0)), true);
-                } else if (appendingFromBegin) {
-                    crab.attachWire(this, hardware.get(clist.get(0)), false);
-                }
+            if (appendingFromEnd) {
+                clist.get(0).attachWire(this, hardware.get(clist.get(0)), true);
+            } else if (appendingFromBegin) {
+                clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
             }
 
         }

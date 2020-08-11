@@ -195,7 +195,7 @@ public class VoltageRegulatorModule extends Hardware {
                 }
             }
         }
-        HardwareManager.removeSandCrab(this);
+        HardwareManager.removeHardware(this);
         HardwareManager.currentHardware = null;
         CircuitGUIManager.propertiesBox.hide();
     }
