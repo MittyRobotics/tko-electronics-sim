@@ -182,14 +182,14 @@ public class Cable implements Disposable {
             if(CableManager.currentCable != null) {
                 if(CableManager.currentCable == this) {
                     // draw cable selected
-                    renderer.setColor(new Color(217/255f, 233/255f, 217/255f, 1));
-                    renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*140);
+                    renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                    renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit*2+3f);
                 }
             }
             if(hoveringMouse(camera)) {
                 // draw hovering on cable
-                renderer.setColor(new Color(217 / 255f, 233 / 255f, 217 / 255f, 1));
-                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*140);
+                renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit*2+3f);
             }
             // draw actual cable
             renderer.setColor(color);
@@ -545,8 +545,10 @@ public class Cable implements Disposable {
         float x = vec.x;
         float y = vec.y;
 
-        if(hoveringOnEndpoint(cameraController) != 0) {
-            return true;
+        for(Vector2 coord : coordinates) {
+            if(new Circle(coord.x, coord.y, limit).contains(vec.x, vec.y)) {
+                return true;
+            }
         }
 
 

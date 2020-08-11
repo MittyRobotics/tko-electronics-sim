@@ -49,7 +49,9 @@ public class HardwareManager {
     }
 
     public static void removeCableFromHardware(Cable cable, Hardware hardware) {
-        hardware.clearConnection(cable);
+        if(hardware != null) {
+            hardware.clearConnection(cable);
+        }
     }
 
     public static void addSandCrab(float startX, float startY, HardwareType type) {
