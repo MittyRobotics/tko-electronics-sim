@@ -135,6 +135,22 @@ public class CircuitGUIManager {
         TextButton spk = new TextButton("SPARK MAX", tStyle);
         spk.addListener(new TextTooltip("SPARK MAX Motor Controller", ttStyle));
         table.add(spk).width(120);
+        table.row();
+        TextButton neo = new TextButton("NEO", tStyle);
+        neo.addListener(new TextTooltip("NEO Brushless Motor", ttStyle));
+        table.add(neo).width(120);
+        table.row();
+        TextButton brk = new TextButton("Breaker", tStyle);
+        brk.addListener(new TextTooltip("Main Circuit Breaker", ttStyle));
+        table.add(brk).width(120);
+        table.row();
+        TextButton m775 = new TextButton("775", tStyle);
+        m775.addListener(new TextTooltip("775 RedLine Motor", ttStyle));
+        table.add(m775).width(120);
+        table.row();
+        TextButton fcn = new TextButton("Falcon", tStyle);
+        fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor", ttStyle));
+        table.add(fcn).width(120);
 
 
         container.add(scroll).expand().fill();
@@ -207,6 +223,38 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.SPARK;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        neo.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.NEO;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        m775.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.MOTOR775;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        fcn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.FALCON;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        brk.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.BREAKER;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }

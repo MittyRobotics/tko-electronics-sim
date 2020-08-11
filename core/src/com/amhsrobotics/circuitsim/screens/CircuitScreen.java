@@ -190,6 +190,38 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
                     }
                     handleHardware(HardwareType.SPARK);
+                } else if (Constants.placing_object == ObjectType.NEO) {
+                    currentPlacingHardwareType = HardwareType.NEO;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.NEO) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y), HardwareType.NEO);
+                    }
+                    handleHardware(HardwareType.NEO);
+                } else if (Constants.placing_object == ObjectType.MOTOR775) {
+                    currentPlacingHardwareType = HardwareType.MOTOR775;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.MOTOR775) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y), HardwareType.MOTOR775);
+                    }
+                    handleHardware(HardwareType.MOTOR775);
+                } else if (Constants.placing_object == ObjectType.BREAKER) {
+                    currentPlacingHardwareType = HardwareType.BREAKER;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BREAKER) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y), HardwareType.BREAKER);
+                    }
+                    handleHardware(HardwareType.BREAKER);
+                } else if (Constants.placing_object == ObjectType.FALCON) {
+                    currentPlacingHardwareType = HardwareType.FALCON;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.FALCON) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
+                    }
+                    handleHardware(HardwareType.FALCON);
                 }
             } else {
                 currentPlacingHardware = null;

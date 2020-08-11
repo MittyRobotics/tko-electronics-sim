@@ -97,6 +97,18 @@ public class HardwareManager {
             case SPARK:
                 temp = new Spark(new Vector2(startX, startY), type, false);
                 break;
+            case FALCON:
+                temp = new Falcon(new Vector2(startX, startY), type, false);
+                break;
+            case MOTOR775:
+                temp = new Motor775(new Vector2(startX, startY), type, false);
+                break;
+            case NEO:
+                temp = new NEO(new Vector2(startX, startY), type, false);
+                break;
+            case BREAKER:
+                temp = new Breaker(new Vector2(startX, startY), type, false);
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, false);
                 break;
