@@ -1,0 +1,15 @@
+{
+  "name": "PCM",
+  "totalPins": 2,
+  "totalSprites": 3,
+  "pins": [
+    {
+      "position": [-30, -20],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [30, -20],
+      "dimensions": [50, 130]
+    }
+  ]
+}

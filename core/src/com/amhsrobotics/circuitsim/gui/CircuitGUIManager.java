@@ -127,6 +127,10 @@ public class CircuitGUIManager {
         TextButton tln = new TextButton("Talon", tStyle);
         tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller", ttStyle));
         table.add(tln).width(120);
+        table.row();
+        TextButton pcm = new TextButton("PCM", tStyle);
+        pcm.addListener(new TextTooltip("Pneumatics Control Module", ttStyle));
+        table.add(pcm).width(120);
 
 
         container.add(scroll).expand().fill();
@@ -183,6 +187,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.TALON;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        pcm.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.PCM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }

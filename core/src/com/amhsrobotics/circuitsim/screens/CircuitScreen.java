@@ -174,6 +174,14 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
                     }
                     handleTalon();
+                } else if (Constants.placing_object == ObjectType.PCM) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
+                    }
+                    currentPlacingHardware.update(batch, renderer, camera);
+                    handlePCM();
                 }
             }
 
@@ -207,6 +215,23 @@ public class CircuitScreen implements Screen {
 
             HardwareManager.currentHardware = null;
             HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
+            Constants.placing_object = null;
+        }
+    }
+
+    private void handlePCM() {
+
+        CableManager.currentCable = null;
+
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            HardwareManager.currentHardware = null;
+            HardwareManager.addPCM(vec2.x, vec2.y, HardwareType.PCM);
             Constants.placing_object = null;
         }
     }
