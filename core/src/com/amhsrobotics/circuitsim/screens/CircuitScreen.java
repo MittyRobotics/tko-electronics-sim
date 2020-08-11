@@ -191,6 +191,8 @@ public class CircuitScreen implements Screen {
                     }
                     handleHardware(HardwareType.SPARK);
                 }
+            } else {
+                currentPlacingHardware = null;
             }
 
         }
