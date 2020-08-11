@@ -216,6 +216,35 @@ public abstract class Hardware {
         return -1;
     }
 
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+
+        attachWireLib(cable, port, endOfWire);
+
+        CableManager.currentCable = null;
+    }
+
+    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
+
+        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
+    }
+
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+
+        cable.removeCoordinates();
+
+        attachWireLib(cable, port, endOfWire);
+
+        cable.setAppendingFromEnd(false);
+        cable.setAppendingFromBegin(false);
+
+    }
+
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(Color.WHITE);
 
@@ -224,9 +253,17 @@ public abstract class Hardware {
         renderer.end();
     }
 
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
 
-    public void attachCrimpedCable(Cable cable, int port) {}
+        cable.removeCoordinates();
 
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
+
+        CableManager.currentCable = null;
+    }
     public int getTotalConnectors() {
         return connNum;
     }
@@ -234,8 +271,4 @@ public abstract class Hardware {
     public int getHardwareID() {
         return hardwareID;
     }
-
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {};
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {};
 }
