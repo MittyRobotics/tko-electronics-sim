@@ -164,6 +164,14 @@ public class CircuitScreen implements Screen {
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleRoboRio();
+                } else if (Constants.placing_object == ObjectType.TALON) {
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TALON) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
+                    }
+                    currentPlacingHardware.update(batch, renderer, camera);
+                    handleTalon();
                 }
             }
 
@@ -171,6 +179,7 @@ public class CircuitScreen implements Screen {
 
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
+
         manager.update(delta);
 
     }
@@ -244,6 +253,22 @@ public class CircuitScreen implements Screen {
 
             HardwareManager.currentHardware = null;
             HardwareManager.addRoboRio(vec2.x, vec2.y, HardwareType.ROBORIO);
+            Constants.placing_object = null;
+        }
+    }
+
+    private void handleTalon() {
+        CableManager.currentCable = null;
+
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            HardwareManager.currentHardware = null;
+            HardwareManager.addTalon(vec2.x, vec2.y, HardwareType.TALON);
             Constants.placing_object = null;
         }
     }

@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,21 +16,15 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class SandCrab extends Hardware {
+public class Talon extends Hardware {
 
-
-    public SandCrab(Vector2 position, HardwareType type, boolean... addCrimped) {
+    public Talon(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, addCrimped);
 
         this.type = type;
 
-        if(type == HardwareType.DOUBLESANDCRAB) {
-            JSONReader.loadConfig("scripts/DoubleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
-        } else {
-            JSONReader.loadConfig("scripts/TripleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
-        }
+        JSONReader.loadConfig("scripts/Talon.json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Talon.png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
@@ -43,40 +38,23 @@ public class SandCrab extends Hardware {
 
         base.setCenter(position.x, position.y);
 
-        for(JSONArray arr : pinDefs) {
-            Sprite temp;
-            if(connectors.size() == connNum) {
-                break;
-            }
-            if(connectors.size() == 0) {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-            } else {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-            }
-            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-            connectors.add(temp);
-        }
+//        for(JSONArray arr : pinDefs) {
+//            Sprite temp;
+//            if(connectors.size() == connNum) {
+//                break;
+//            }
+//            if(connectors.size() == 0) {
+//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+//            } else {
+//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+//            }
+//            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+//            connectors.add(temp);
+//        }
 
         initConnections();
         initEnds();
     }
-
-    @Override
-    public void delete() {
-        for(Cable cable : connections) {
-            if(cable != null) {
-                if(ends.get(connections.indexOf(cable))) {
-                    cable.setConnection2(null);
-                } else {
-                    cable.setConnection1(null);
-                }
-            }
-        }
-        HardwareManager.removeHardware(this);
-        HardwareManager.currentHardware = null;
-        CircuitGUIManager.propertiesBox.hide();
-    }
-
 
     @Override
     public void populateProperties() {
@@ -85,6 +63,19 @@ public class SandCrab extends Hardware {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
+    }
+
+    @Override
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
+
+        cable.removeCoordinates();
+
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
+
+        CableManager.currentCable = null;
     }
 
     @Override
@@ -99,7 +90,7 @@ public class SandCrab extends Hardware {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+11, 15);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 5);
         renderer.end();
     }
 }
