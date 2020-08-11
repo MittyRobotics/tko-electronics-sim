@@ -5,6 +5,8 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -85,6 +87,21 @@ public abstract class Hardware {
         return -1;
     }
 
+    public void checkCrimpedCables() {
+        for(int i : crimpedPorts) {
+            if(connections.get(i) == null) {
+                CrimpedCable c = new CrimpedCable();
+                CableManager.addCable(c);
+                attachCrimpedCable(c, i);
+            }
+        }
+    }
+
+    public void attachCrimpedCable(Cable cable, int port) {}
+
+    public int getTotalConnectors() {
+        return connNum;
+    }
 
     public int getHardwareID() {
         return hardwareID;

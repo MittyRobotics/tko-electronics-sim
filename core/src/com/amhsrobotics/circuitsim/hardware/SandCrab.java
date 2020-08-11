@@ -190,16 +190,6 @@ public class SandCrab extends Hardware {
         batch.end();
     }
 
-    public void checkCrimpedCables() {
-        for(int i : crimpedPorts) {
-            if(connections.get(i) == null) {
-                CrimpedCable c = new CrimpedCable();
-                CableManager.addCable(c);
-                attachCrimpedCable(c, i);
-            }
-        }
-    }
-
     @Override
     public void delete() {
         for(Cable cable : connections) {
@@ -247,15 +237,10 @@ public class SandCrab extends Hardware {
     }
 
     private void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        if(endOfWire) {
-            cable.setConnection2(this);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), false);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), false);
-        } else {
-            cable.setConnection1(this);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
-        }
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
+
+        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
     }
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
@@ -285,10 +270,6 @@ public class SandCrab extends Hardware {
 
     public Sprite getConnector(int conn) {
         return connectors.get(conn);
-    }
-
-    public int getTotalConnectors() {
-        return connNum;
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
