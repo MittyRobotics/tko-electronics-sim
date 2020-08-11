@@ -216,43 +216,11 @@ public class SandCrab extends Hardware {
         }
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-        if(endOfWire) {
-            cable.setConnection2(this);
-        } else {
-            cable.setConnection1(this);
-        }
-    }
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        attachWireLib(cable, port, endOfWire);
-
-        CableManager.currentCable = null;
-    }
-
-    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
 
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
-
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        cable.removeCoordinates();
-
-        attachWireLib(cable, port, endOfWire);
-
-        cable.setAppendingFromEnd(false);
-        cable.setAppendingFromBegin(false);
-
     }
 
     public void attachCrimpedCable(Cable cable, int port) {

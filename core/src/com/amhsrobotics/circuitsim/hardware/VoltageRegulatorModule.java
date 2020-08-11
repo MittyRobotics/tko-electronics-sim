@@ -79,111 +79,6 @@ public class VoltageRegulatorModule extends Hardware {
         canMove = false;
     }
 
-    public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        super.update(batch, renderer, camera);
-
-        bottom.setCenter(getPosition().x, getPosition().y);
-        for(Sprite temp : connectors) {
-            temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
-        }
-
-        Vector2 vec = Tools.mouseScreenToWorld(camera);
-
-
-        //HOVERING MECHANICS
-        //---------------------------------------------------
-
-        if(bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
-
-            //HOVERING
-            drawHover(renderer);
-
-            //SELECTING
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                HardwareManager.currentHardware = this;
-                CableManager.currentCable = null;
-
-                populateProperties();
-                CircuitGUIManager.propertiesBox.show();
-            }
-
-        }
-
-
-        //SELECTED MECHANICS
-        //---------------------------------------------------
-
-        if(HardwareManager.currentHardware == this) {
-            drawHover(renderer);
-
-            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
-                this.delete();
-            }
-
-            //UNSELECT
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                CircuitGUIManager.propertiesBox.hide();
-                HardwareManager.currentHardware = null;
-            }
-
-
-            //MOVING
-            if (Gdx.input.isTouched()) {
-
-                //BEING DRAGGED: ALLOW MOVE
-
-                if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && bottom.getBoundingRectangle().contains(vec.x, vec.y)) {
-                    canMove = true;
-                }
-                HardwareManager.movingObject = true;
-
-            } else {
-
-                //STOP MOVING
-
-                if(HardwareManager.movingObject) {
-                    canMove = false;
-                    HardwareManager.movingObject = false;
-                }
-            }
-
-            if(Gdx.input.isTouched() && canMove) {
-                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    SnapGrid.calculateSnap(vec);
-                }
-
-                //SET OWN POSITION
-                setPosition(vec.x, vec.y);
-
-
-                //MOVE CABLES
-
-                for(JSONArray arr : pinDefs) {
-                    int index = pinDefs.indexOf(arr);
-                    if(connections.get(index) != null) {
-                        connections.get(index).editCoordinates(
-                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
-                                ends.get(index), false);
-                        connections.get(index).editCoordinates(
-                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() - 20),
-                                ends.get(index), true);
-                    }
-                }
-            }
-        }
-
-        if(this.addCrimped) {
-            checkCrimpedCables();
-        }
-
-        batch.begin();
-        bottom.draw(batch);
-        for(Sprite conn : connectors) {
-            conn.draw(batch);
-        }
-        batch.end();
-    }
-
     @Override
     public void delete() {
         for(Cable cable : connections) {
@@ -204,50 +99,18 @@ public class VoltageRegulatorModule extends Hardware {
     @Override
     public void populateProperties() {
         super.populateProperties();
-        for(int x = 0; x < connectors.size(); x++) {
+        for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-        if(endOfWire) {
-            cable.setConnection2(this);
-        } else {
-            cable.setConnection1(this);
-        }
-    }
 
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        attachWireLib(cable, port, endOfWire);
-
-        CableManager.currentCable = null;
-    }
-
-    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
 
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
-
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        cable.removeCoordinates();
-
-        attachWireLib(cable, port, endOfWire);
-
-        cable.setAppendingFromEnd(false);
-        cable.setAppendingFromBegin(false);
-
     }
 
     public void attachCrimpedCable(Cable cable, int port) {

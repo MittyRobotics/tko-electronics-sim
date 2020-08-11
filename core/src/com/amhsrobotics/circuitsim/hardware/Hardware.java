@@ -53,8 +53,6 @@ public abstract class Hardware {
         CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) { }
-
     public void initConnections() {
         for(int i = 0; i < connNum; ++i) {
             connections.add(null);
@@ -103,11 +101,42 @@ public abstract class Hardware {
         return connNum;
     }
 
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+        if(endOfWire) {
+            cable.setConnection2(this);
+        } else {
+            cable.setConnection1(this);
+        }
+    }
+
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+
+        attachWireLib(cable, port, endOfWire);
+
+        CableManager.currentCable = null;
+    }
+
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {};
+
     public int getHardwareID() {
         return hardwareID;
     }
 
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {};
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
 
-    public void attachWire(Cable cable, int port, boolean endOfWire) {};
+        cable.removeCoordinates();
+
+        attachWireLib(cable, port, endOfWire);
+
+        cable.setAppendingFromEnd(false);
+        cable.setAppendingFromBegin(false);
+
+    }
+
 }
