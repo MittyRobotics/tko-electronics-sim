@@ -67,68 +67,46 @@ public class HardwareManager {
         }
     }
 
-    public static void addSandCrab(float startX, float startY, HardwareType type) {
+    public static void addHardware(float startX, float startY, HardwareType type) {
         CircuitGUIManager.propertiesBox.show();
-        SandCrab temp = new SandCrab(new Vector2(startX, startY), type, false);
+
+        Hardware temp;
+
+        switch(type) {
+            case PDP:
+                temp = new PowerDistributionPanel(new Vector2(startX, startY), type, false);
+                break;
+            case VRM:
+                temp = new VoltageRegulatorModule(new Vector2(startX, startY), type, false);
+                break;
+            case PCM:
+                temp = new PneumaticsControlModule(new Vector2(startX, startY), type, false);
+                break;
+            case DOUBLESANDCRAB:
+                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                break;
+            case TRIPLESANDCRAB:
+                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                break;
+            case ROBORIO:
+                temp = new RoboRio(new Vector2(startX, startY), type, false);
+                break;
+            case TALON:
+                temp = new Talon(new Vector2(startX, startY), type, false);
+                break;
+            case SPARK:
+                temp = new Spark(new Vector2(startX, startY), type, false);
+                break;
+            default:
+                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                break;
+        }
+
         currentHardware = temp;
         CableManager.currentCable = null;
-
         hardwares.add(temp);
     }
 
-    public static void addPDP(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        PowerDistributionPanel temp = new PowerDistributionPanel(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
-
-    public static void addPCM(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        PneumaticsControlModule temp = new PneumaticsControlModule(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
-
-    public static void addVRM(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        VoltageRegulatorModule temp = new VoltageRegulatorModule(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
-
-    public static void addRoboRio(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        RoboRio temp = new RoboRio(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
-
-    public static void addTalon(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        Talon temp = new Talon(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
-
-    public static void addSpark(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-        Spark temp = new Spark(new Vector2(startX, startY), type, false);
-        currentHardware = temp;
-        CableManager.currentCable = null;
-
-        hardwares.add(temp);
-    }
 
 
     public static void removeHardware(Hardware ha) {

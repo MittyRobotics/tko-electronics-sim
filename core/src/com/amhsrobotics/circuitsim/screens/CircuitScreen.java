@@ -223,32 +223,8 @@ public class CircuitScreen implements Screen {
             HardwareManager.currentHardware = null;
             Constants.placing_object = null;
 
-            switch(type) {
-                case PDP:
-                    HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
-                    break;
-                case VRM:
-                    HardwareManager.addVRM(vec2.x, vec2.y, HardwareType.VRM);
-                    break;
-                case PCM:
-                    HardwareManager.addPCM(vec2.x, vec2.y, HardwareType.PCM);
-                    break;
-                case DOUBLESANDCRAB:
-                    HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
-                    break;
-                case TRIPLESANDCRAB:
-                    HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.TRIPLESANDCRAB);
-                    break;
-                case ROBORIO:
-                    HardwareManager.addRoboRio(vec2.x, vec2.y, HardwareType.ROBORIO);
-                    break;
-                case TALON:
-                    HardwareManager.addTalon(vec2.x, vec2.y, HardwareType.TALON);
-                    break;
-                case SPARK:
-                    HardwareManager.addSpark(vec2.x, vec2.y, HardwareType.SPARK);
-                    break;
-            }
+            HardwareManager.addHardware(vec2.x, vec2.y, type);
+
         }
     }
 
