@@ -25,12 +25,11 @@ public class VoltageRegulatorModule extends Hardware {
             this.addCrimped = addCrimped[0];
         }
 
-        name = "VRM";
-
         JSONReader.loadConfig("scripts/VRM.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+        name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));

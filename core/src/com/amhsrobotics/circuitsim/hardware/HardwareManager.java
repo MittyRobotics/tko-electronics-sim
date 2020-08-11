@@ -79,6 +79,14 @@ public class HardwareManager {
         hardwares.add(temp);
     }
 
+    public static void addRoboRio(float startX, float startY, HardwareType type) {
+        CircuitGUIManager.propertiesBox.show();
+        RoboRio temp = new RoboRio(new Vector2(startX, startY), type, false);
+        currentHardware = temp;
+        CableManager.currentCable = null;
+
+        hardwares.add(temp);
+    }
 
 
     public static void removeHardware(Hardware ha) {
