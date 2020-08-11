@@ -34,6 +34,15 @@ public abstract class Hardware {
         batch.setProjectionMatrix(camera.getCamera().combined);
     }
 
+    public void clearConnection(Cable cable) {
+        for(int i = 0; i < connNum; i++) {
+            if(cable == connections.get(i)) {
+                connections.set(i, null);
+            }
+        }
+
+    }
+
     public void reattachWire(Cable cable, int port, boolean endOfWire) { }
 
     public void initConnections() {
@@ -58,7 +67,6 @@ public abstract class Hardware {
         position.set(x, y);
     }
 
-    public void clearConnection(Cable cable) { }
 
     public int getConnectionPosition(Cable cable) {
         for(int i = 0; i < connections.size(); ++i) {

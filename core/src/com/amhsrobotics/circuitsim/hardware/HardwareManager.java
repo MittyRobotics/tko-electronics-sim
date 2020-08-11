@@ -45,9 +45,7 @@ public class HardwareManager {
     }
 
     public static void removeCableFromHardware(Cable cable, Hardware hardware) {
-        if(hardware instanceof SandCrab) {
-            ((SandCrab) hardware).clearConnection(cable);
-        }
+        hardware.clearConnection(cable);
     }
 
     public static void addSandCrab(float startX, float startY, HardwareType type) {
