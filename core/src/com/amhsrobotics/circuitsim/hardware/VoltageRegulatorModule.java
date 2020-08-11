@@ -125,11 +125,4 @@ public class VoltageRegulatorModule extends Hardware {
         return connectors.get(conn);
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(Color.WHITE);
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
-        renderer.end();
-    }
 }
