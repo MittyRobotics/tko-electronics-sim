@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class CableManager {
 
     public static Cable currentCable = null;
-    private static int id = 1;
+    public static int id = 1;
     public static boolean merging = false;
 
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
@@ -38,9 +38,9 @@ public class CableManager {
 
     public static Tuple<Cable, Integer> wireHoveringWire(ClippedCameraController camera, Cable cable) {
         // CHECK FOR MERGING WIRES
-        if(cable.getCoordinates().size() > 1) {
+        if (cable.getCoordinates().size() > 1) {
             for (int x = 0; x < cables.size; x++) {
-                if (cables.get(x).getID() != cable.getID()) {
+                if (cables.get(x).getID() != cable.getID() && !(cable instanceof CrimpedCable)) {
                     int ans = cables.get(x).hoveringOnEndpoint(camera);
                     if (ans == 1) {
                         merging = true;
