@@ -2,18 +2,14 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -87,30 +83,5 @@ public class SandCrab extends Hardware {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
-    }
-
-    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
-
-        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
-
-
-    @Override
-    public void attachCrimpedCable(Cable cable, int port) {
-        connections.set(port, cable);
-
-        cable.removeCoordinates();
-
-        cable.setConnection1(this);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
-
-        CableManager.currentCable = null;
-    }
-
-    public int getTotalConnectors() {
-        return connNum;
     }
 }

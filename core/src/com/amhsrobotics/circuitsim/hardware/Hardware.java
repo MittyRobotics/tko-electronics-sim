@@ -214,31 +214,6 @@ public abstract class Hardware {
         return -1;
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(Color.WHITE);
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
-        renderer.end();
-    }
-
-
-    public void attachCrimpedCable(Cable cable, int port) {}
-
-    public int getTotalConnectors() {
-        return connNum;
-    }
-
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-        if(endOfWire) {
-            cable.setConnection2(this);
-        } else {
-            cable.setConnection1(this);
-        }
-    }
-
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);
@@ -248,10 +223,11 @@ public abstract class Hardware {
         CableManager.currentCable = null;
     }
 
-    public void attachWireLib(Cable cable, int port, boolean endOfWire) {};
+    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
 
-    public int getHardwareID() {
-        return hardwareID;
+        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
     }
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
@@ -267,4 +243,40 @@ public abstract class Hardware {
 
     }
 
+    public void drawHover(ModifiedShapeRenderer renderer) {
+        renderer.setColor(Color.WHITE);
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
+        renderer.end();
+    }
+
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
+
+        cable.removeCoordinates();
+
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
+
+        CableManager.currentCable = null;
+    }
+    public int getTotalConnectors() {
+        return connNum;
+    }
+
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+        if(endOfWire) {
+            cable.setConnection2(this);
+        } else {
+            cable.setConnection1(this);
+        }
+    }
+
+    public int getHardwareID() {
+        return hardwareID;
+    }
 }
