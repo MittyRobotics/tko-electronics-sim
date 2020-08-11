@@ -47,12 +47,14 @@ public class HardwareManager {
         //GET IF WIRE IS CLICKED ON HARDWARE
 
         for(Hardware h : hardwares) {
-            for(int x = 0; x < h.getTotalConnectors(); x++) {
-                if(h.getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
-                    int finalX = x;
-                    return new HashMap<Hardware, Integer>() {{
-                        put(h, finalX);
-                    }};
+            if(h.getTotalConnectors() != 0) {
+                for(int x = 0; x < h.getTotalConnectors(); x++) {
+                    if(h.getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
+                        int finalX = x;
+                        return new HashMap<Hardware, Integer>() {{
+                            put(h, finalX);
+                        }};
+                    }
                 }
             }
         }
