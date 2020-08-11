@@ -122,6 +122,7 @@ public abstract class Hardware {
         //---------------------------------------------------
 
         if(HardwareManager.currentHardware == this) {
+            HardwareManager.moveToFront(this);
             drawHover(renderer);
 
 

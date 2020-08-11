@@ -33,6 +33,7 @@ public class CircuitScreen implements Screen {
 
     private Cable currentPlacingCable;
     private Hardware currentPlacingHardware;
+    private HardwareType currentPlacingHardwareType;
 
     private CircuitGUIManager manager;
 
@@ -98,13 +99,14 @@ public class CircuitScreen implements Screen {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            SnapGrid.calculateSnap(vec2);
+        }
+
         if(Constants.placing_object != null) {
 
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
 
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -125,52 +127,52 @@ public class CircuitScreen implements Screen {
                     drawPlacing(vec2.x, vec2.y);
                     handleCable();
                 } else if (Constants.placing_object == ObjectType.WAGO2) {
+                    currentPlacingHardwareType = HardwareType.DOUBLESANDCRAB;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.DOUBLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(1);
                 } else if (Constants.placing_object == ObjectType.WAGO3) {
+                    currentPlacingHardwareType = HardwareType.TRIPLESANDCRAB;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(2);
                 } else if (Constants.placing_object == ObjectType.PDP) {
+                    currentPlacingHardwareType = HardwareType.PDP;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PDP) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handlePDP();
                 } else if (Constants.placing_object == ObjectType.VRM) {
+                    currentPlacingHardwareType = HardwareType.VRM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.VRM) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handleVRM();
                 } else if (Constants.placing_object == ObjectType.ROBORIO) {
+                    currentPlacingHardwareType = HardwareType.ROBORIO;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.ROBORIO) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handleRoboRio();
                 } else if (Constants.placing_object == ObjectType.TALON) {
+                    currentPlacingHardwareType = HardwareType.TALON;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TALON) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handleTalon();
                 }
             }
@@ -179,6 +181,14 @@ public class CircuitScreen implements Screen {
 
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
+
+        if(Constants.placing_object != null) {
+            if (Constants.placing_object == ObjectType.WIRE) {
+                drawPlacing(vec2.x, vec2.y);
+            } else if (currentPlacingHardware != null && currentPlacingHardware.type == currentPlacingHardwareType) {
+                currentPlacingHardware.update(batch, renderer, camera);
+            }
+        }
 
         manager.update(delta);
 
