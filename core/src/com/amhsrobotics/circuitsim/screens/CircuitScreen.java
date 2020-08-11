@@ -175,12 +175,12 @@ public class CircuitScreen implements Screen {
                     }
                     handleTalon();
                 } else if (Constants.placing_object == ObjectType.PCM) {
+                    currentPlacingHardwareType = HardwareType.PCM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                     }
-                    currentPlacingHardware.update(batch, renderer, camera);
                     handlePCM();
                 }
             }
