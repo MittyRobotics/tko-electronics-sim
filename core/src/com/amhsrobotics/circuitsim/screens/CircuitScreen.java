@@ -179,9 +179,17 @@ public class CircuitScreen implements Screen {
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
-                        currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
+                        currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                     }
                     handleHardware(HardwareType.PCM);
+                } else if (Constants.placing_object == ObjectType.SPARK) {
+                    currentPlacingHardwareType = HardwareType.SPARK;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.SPARK) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
+                    }
+                    handleHardware(HardwareType.SPARK);
                 }
             }
 
@@ -236,6 +244,9 @@ public class CircuitScreen implements Screen {
                     break;
                 case TALON:
                     HardwareManager.addTalon(vec2.x, vec2.y, HardwareType.TALON);
+                    break;
+                case SPARK:
+                    HardwareManager.addSpark(vec2.x, vec2.y, HardwareType.SPARK);
                     break;
             }
         }

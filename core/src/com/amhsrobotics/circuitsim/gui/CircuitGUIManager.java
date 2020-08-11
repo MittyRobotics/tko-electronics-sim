@@ -131,6 +131,10 @@ public class CircuitGUIManager {
         TextButton pcm = new TextButton("PCM", tStyle);
         pcm.addListener(new TextTooltip("Pneumatics Control Module", ttStyle));
         table.add(pcm).width(120);
+        table.row();
+        TextButton spk = new TextButton("SPARK MAX", tStyle);
+        spk.addListener(new TextTooltip("SPARK MAX Motor Controller", ttStyle));
+        table.add(spk).width(120);
 
 
         container.add(scroll).expand().fill();
@@ -195,6 +199,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.PCM;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        spk.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.SPARK;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }

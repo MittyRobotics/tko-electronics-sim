@@ -121,6 +121,15 @@ public class HardwareManager {
         hardwares.add(temp);
     }
 
+    public static void addSpark(float startX, float startY, HardwareType type) {
+        CircuitGUIManager.propertiesBox.show();
+        Spark temp = new Spark(new Vector2(startX, startY), type, false);
+        currentHardware = temp;
+        CableManager.currentCable = null;
+
+        hardwares.add(temp);
+    }
+
 
     public static void removeHardware(Hardware ha) {
         hardwares.removeValue(ha, true);
