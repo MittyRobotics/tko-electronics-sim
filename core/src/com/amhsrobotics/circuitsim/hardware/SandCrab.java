@@ -201,7 +201,7 @@ public class SandCrab extends Hardware {
                 }
             }
         }
-        HardwareManager.removeSandCrab(this);
+        HardwareManager.removeHardware(this);
         HardwareManager.currentHardware = null;
         CircuitGUIManager.propertiesBox.hide();
     }
