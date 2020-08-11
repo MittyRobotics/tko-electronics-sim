@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.hardware;
 
-import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
@@ -223,12 +222,7 @@ public abstract class Hardware {
         CableManager.currentCable = null;
     }
 
-    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
-
-        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {}
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);

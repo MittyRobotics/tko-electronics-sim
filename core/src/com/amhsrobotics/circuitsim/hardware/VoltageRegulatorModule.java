@@ -34,6 +34,8 @@ public class VoltageRegulatorModule extends Hardware {
             this.addCrimped = addCrimped[0];
         }
 
+        name = "VRM";
+
         JSONReader.loadConfig("scripts/VRM.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
 
