@@ -3,7 +3,6 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -50,6 +49,7 @@ public class SandCrab extends Hardware {
         }
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+        name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
@@ -216,9 +216,10 @@ public class SandCrab extends Hardware {
         CircuitGUIManager.propertiesBox.hide();
     }
 
-    private void populateProperties() {
-        CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+
+    @Override
+    public void populateProperties() {
+        super.populateProperties();
         for(int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);

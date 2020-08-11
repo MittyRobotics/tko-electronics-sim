@@ -1,11 +1,13 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.ObjectType;
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public abstract class Hardware {
     public ArrayList<Integer> crimpedPorts;
     public int connNum;
     public HardwareType type;
+    public String name;
 
     public Hardware(Vector2 pos) {
         this.position = pos;
@@ -41,6 +44,11 @@ public abstract class Hardware {
             }
         }
 
+    }
+
+    public void populateProperties() {
+        CircuitGUIManager.propertiesBox.clearTable();
+        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
     }
 
     public void reattachWire(Cable cable, int port, boolean endOfWire) { }
