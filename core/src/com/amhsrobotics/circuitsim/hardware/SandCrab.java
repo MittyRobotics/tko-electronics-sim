@@ -84,15 +84,4 @@ public class SandCrab extends Hardware {
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
     }
-
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-        if(endOfWire) {
-            cable.setConnection2(this);
-        } else {
-            cable.setConnection1(this);
-        }
-    }
-
 }

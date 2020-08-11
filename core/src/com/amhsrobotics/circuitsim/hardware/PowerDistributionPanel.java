@@ -2,26 +2,17 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
 
 public class PowerDistributionPanel extends Hardware {
 
@@ -64,7 +55,6 @@ public class PowerDistributionPanel extends Hardware {
     }
 
 
-
     @Override
     public void populateProperties() {
         super.populateProperties();
@@ -74,27 +64,7 @@ public class PowerDistributionPanel extends Hardware {
         }
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-        if(endOfWire) {
-            cable.setConnection2(this);
-        } else {
-            cable.setConnection1(this);
-        }
-    }
-
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        attachWireLib(cable, port, endOfWire);
-
-        CableManager.currentCable = null;
-    }
-
-    private void attachWireLib(Cable cable, int port, boolean endOfWire) {
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         if(endOfWire) {
             cable.setConnection2(this);
             cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), false);
@@ -106,16 +76,24 @@ public class PowerDistributionPanel extends Hardware {
         }
     }
 
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
+    public void attachCrimpedCable(Cable cable, int port) {
         connections.set(port, cable);
-        ends.set(port, endOfWire);
 
         cable.removeCoordinates();
 
-        attachWireLib(cable, port, endOfWire);
+        cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
 
-        cable.setAppendingFromEnd(false);
-        cable.setAppendingFromBegin(false);
-
+        CableManager.currentCable = null;
     }
+
+    public Sprite getConnector(int conn) {
+        return connectors.get(conn);
+    }
+
+    public int getTotalConnectors() {
+        return connNum;
+    }
+
 }

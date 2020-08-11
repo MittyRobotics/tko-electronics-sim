@@ -1,8 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.Hardware;
-import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
@@ -21,7 +19,6 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +43,7 @@ public class CrimpedCable extends Cable {
             nodeChanged = false;
         }
         disableBegin = connection1 != null;
-        disableEnd = false;
+        disableEnd = true;
         appendingFromBegin = false;
         appendingFromEnd = false;
         // ---------------------------------------------------------------------

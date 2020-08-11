@@ -182,8 +182,6 @@ public abstract class Hardware {
         CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
     }
 
-    public void reattachWire(Cable cable, int port, boolean endOfWire) { }
-
     public void initConnections() {
         for(int i = 0; i < connNum; ++i) {
             connections.add(null);
@@ -266,6 +264,16 @@ public abstract class Hardware {
     }
     public int getTotalConnectors() {
         return connNum;
+    }
+
+    public void reattachWire(Cable cable, int port, boolean endOfWire) {
+        connections.set(port, cable);
+        ends.set(port, endOfWire);
+        if(endOfWire) {
+            cable.setConnection2(this);
+        } else {
+            cable.setConnection1(this);
+        }
     }
 
     public int getHardwareID() {
