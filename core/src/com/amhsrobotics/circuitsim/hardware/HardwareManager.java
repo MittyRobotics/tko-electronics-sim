@@ -24,6 +24,10 @@ public class HardwareManager {
         }
     }
 
+    public static DelayedRemovalArray<Hardware> getHardware() {
+        return hardwares;
+    }
+
     public static HashMap<Hardware, Integer> wireHoveringHardware(Vector2 vec) {
 
         //GET IF WIRE IS CLICKED ON HARDWARE
