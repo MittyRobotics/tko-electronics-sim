@@ -131,7 +131,7 @@ public class CircuitScreen implements Screen {
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.DOUBLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
+                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB, false);
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(1);
@@ -139,7 +139,7 @@ public class CircuitScreen implements Screen {
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
                     } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
+                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB, false);
                     }
                     currentPlacingHardware.update(batch, renderer, camera);
                     handleWago(2);

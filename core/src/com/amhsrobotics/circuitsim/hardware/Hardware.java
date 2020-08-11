@@ -16,6 +16,7 @@ public abstract class Hardware {
     private int hardwareID;
     public ArrayList<Cable> connections;
     public ArrayList<Boolean> ends;
+    public ArrayList<Integer> crimpedPorts;
     public int connNum;
     public HardwareType type;
 
@@ -25,6 +26,7 @@ public abstract class Hardware {
 
         connections = new ArrayList<>();
         ends = new ArrayList<>();
+        crimpedPorts = new ArrayList<>();
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {

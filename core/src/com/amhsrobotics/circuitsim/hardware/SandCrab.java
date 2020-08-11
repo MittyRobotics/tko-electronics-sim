@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.SnapGrid;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -30,19 +31,23 @@ public class SandCrab extends Hardware {
     ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     ArrayList<Sprite> connectors = new ArrayList<>();
 
-    boolean canMove;
+    boolean canMove, addCrimped;
 
-    public SandCrab(Vector2 position, HardwareType type) {
+    public SandCrab(Vector2 position, HardwareType type, boolean addCrimped) {
         super(position);
 
         this.type = type;
+        this.addCrimped = addCrimped;
 
         if(type == HardwareType.DOUBLESANDCRAB) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
+            crimpedPorts.add(1);
         } else {
             JSONReader.loadConfig("scripts/TripleSandCrab.json");
             bottom = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
+            crimpedPorts.add(1);
+            crimpedPorts.add(2);
         }
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
@@ -74,13 +79,11 @@ public class SandCrab extends Hardware {
         initConnections();
         initEnds();
 
-        canMove = false;
-    }
+        if(this.addCrimped) {
+            checkCrimpedCables();
+        }
 
-    public void addCrimpedCable() {
-        CrimpedCable c = new CrimpedCable(new Vector2(500, 500), -1);
-        CableManager.addCable(c);
-        attachCrimpedCable(c, 1);
+        canMove = false;
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -176,12 +179,26 @@ public class SandCrab extends Hardware {
             }
         }
 
+        if(this.addCrimped) {
+            checkCrimpedCables();
+        }
+
         batch.begin();
         bottom.draw(batch);
         for(Sprite conn : connectors) {
             conn.draw(batch);
         }
         batch.end();
+    }
+
+    public void checkCrimpedCables() {
+        for(int i : crimpedPorts) {
+            if(connections.get(i) == null) {
+                CrimpedCable c = new CrimpedCable();
+                CableManager.addCable(c);
+                attachCrimpedCable(c, i);
+            }
+        }
     }
 
     @Override
@@ -205,16 +222,17 @@ public class SandCrab extends Hardware {
         CircuitGUIManager.propertiesBox.addElement(new Label("Sandcrab", CircuitGUIManager.propertiesBox.LABEL), true, 2);
         for(int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : "Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
     }
 
     public void clearConnection(Cable cable) {
-        if(cable == connections.get(0)) {
-            connections.set(0, null);
-        } else if(cable == connections.get(1)) {
-            connections.set(1, null);
+        for(int i = 0; i < connNum; i++) {
+            if(cable == connections.get(i)) {
+                connections.set(i, null);
+            }
         }
+
     }
 
     public void reattachWire(Cable cable, int port, boolean endOfWire) {
