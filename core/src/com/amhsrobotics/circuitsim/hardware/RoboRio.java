@@ -6,10 +6,13 @@ import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -113,5 +116,13 @@ public class RoboRio extends Hardware {
 
     public Sprite getConnector(int conn) {
         return connectors.get(conn);
+    }
+
+    public void drawHover(ModifiedShapeRenderer renderer) {
+        renderer.setColor(Color.LIME);
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-5, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+10, 25);
+        renderer.end();
     }
 }
