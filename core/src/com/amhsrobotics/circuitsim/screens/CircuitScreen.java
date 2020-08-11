@@ -133,7 +133,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
                     }
-                    handleWago(1);
+                    handleHardware(HardwareType.DOUBLESANDCRAB);
                 } else if (Constants.placing_object == ObjectType.WAGO3) {
                     currentPlacingHardwareType = HardwareType.TRIPLESANDCRAB;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
@@ -141,7 +141,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                     }
-                    handleWago(2);
+                    handleHardware(HardwareType.TRIPLESANDCRAB);
                 } else if (Constants.placing_object == ObjectType.PDP) {
                     currentPlacingHardwareType = HardwareType.PDP;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PDP) {
@@ -149,7 +149,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
                     }
-                    handlePDP();
+                    handleHardware(HardwareType.PDP);
                 } else if (Constants.placing_object == ObjectType.VRM) {
                     currentPlacingHardwareType = HardwareType.VRM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.VRM) {
@@ -157,7 +157,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
                     }
-                    handleVRM();
+                    handleHardware(HardwareType.VRM);
                 } else if (Constants.placing_object == ObjectType.ROBORIO) {
                     currentPlacingHardwareType = HardwareType.ROBORIO;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.ROBORIO) {
@@ -165,7 +165,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
                     }
-                    handleRoboRio();
+                    handleHardware(HardwareType.ROBORIO);
                 } else if (Constants.placing_object == ObjectType.TALON) {
                     currentPlacingHardwareType = HardwareType.TALON;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TALON) {
@@ -173,7 +173,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
                     }
-                    handleTalon();
+                    handleHardware(HardwareType.TALON);
                 } else if (Constants.placing_object == ObjectType.PCM) {
                     currentPlacingHardwareType = HardwareType.PCM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
@@ -181,7 +181,7 @@ public class CircuitScreen implements Screen {
                     } else {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                     }
-                    handlePCM();
+                    handleHardware(HardwareType.PCM);
                 }
             }
 
@@ -202,8 +202,7 @@ public class CircuitScreen implements Screen {
 
     }
 
-    private void handlePDP() {
-
+    private void handleHardware(HardwareType type) {
         CableManager.currentCable = null;
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
@@ -214,97 +213,31 @@ public class CircuitScreen implements Screen {
             }
 
             HardwareManager.currentHardware = null;
-            HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
-            Constants.placing_object = null;
-        }
-    }
-
-    private void handlePCM() {
-
-        CableManager.currentCable = null;
-
-        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            HardwareManager.currentHardware = null;
-            HardwareManager.addPCM(vec2.x, vec2.y, HardwareType.PCM);
-            Constants.placing_object = null;
-        }
-    }
-
-    private void handleVRM() {
-
-        CableManager.currentCable = null;
-
-        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            HardwareManager.currentHardware = null;
-            HardwareManager.addVRM(vec2.x, vec2.y, HardwareType.VRM);
-            Constants.placing_object = null;
-        }
-    }
-
-    private void handleWago(int type) {
-
-        CableManager.currentCable = null;
-
-        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            HardwareManager.currentHardware = null;
-            if(type == 1) {
-                HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
-            } else if(type == 2) {
-                HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.TRIPLESANDCRAB);
-            }
             Constants.placing_object = null;
 
-        }
-
-    }
-
-    private void handleRoboRio() {
-        CableManager.currentCable = null;
-
-        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
+            switch(type) {
+                case PDP:
+                    HardwareManager.addPDP(vec2.x, vec2.y, HardwareType.PDP);
+                    break;
+                case VRM:
+                    HardwareManager.addVRM(vec2.x, vec2.y, HardwareType.VRM);
+                    break;
+                case PCM:
+                    HardwareManager.addPCM(vec2.x, vec2.y, HardwareType.PCM);
+                    break;
+                case DOUBLESANDCRAB:
+                    HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.DOUBLESANDCRAB);
+                    break;
+                case TRIPLESANDCRAB:
+                    HardwareManager.addSandCrab(vec2.x, vec2.y, HardwareType.TRIPLESANDCRAB);
+                    break;
+                case ROBORIO:
+                    HardwareManager.addRoboRio(vec2.x, vec2.y, HardwareType.ROBORIO);
+                    break;
+                case TALON:
+                    HardwareManager.addTalon(vec2.x, vec2.y, HardwareType.TALON);
+                    break;
             }
-
-            HardwareManager.currentHardware = null;
-            HardwareManager.addRoboRio(vec2.x, vec2.y, HardwareType.ROBORIO);
-            Constants.placing_object = null;
-        }
-    }
-
-    private void handleTalon() {
-        CableManager.currentCable = null;
-
-        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            HardwareManager.currentHardware = null;
-            HardwareManager.addTalon(vec2.x, vec2.y, HardwareType.TALON);
-            Constants.placing_object = null;
         }
     }
 
