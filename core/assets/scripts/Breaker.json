@@ -5,11 +5,11 @@
   "pins": [
     {
       "position": [85, 175],
-      "dimensions": [50, 130]
+      "dimensions": [30, 30]
     },
     {
       "position": [-85, -178],
-      "dimensions": [50, 130]
+      "dimensions": [30, 30]
     }
   ]
 }
