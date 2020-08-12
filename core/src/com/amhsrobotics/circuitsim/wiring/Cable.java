@@ -106,7 +106,7 @@ public class Cable implements Disposable {
             public void changed(ChangeEvent event, Actor actor) {
                 List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
                 if(connection1 != null || connection2 != null) {
-                    Rumble.rumble(3f, 0.4f);
+                    CircuitGUIManager.error.activate("Cannot modify gauge while wire attached");
                 } else {
                     for(int gau : gauges) {
                         if(gau == gauge) {

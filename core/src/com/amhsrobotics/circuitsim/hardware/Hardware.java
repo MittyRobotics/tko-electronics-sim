@@ -229,7 +229,7 @@ public abstract class Hardware {
 
             CableManager.currentCable = null;
         } else {
-            CircuitGUIManager.error.activate("Wrong gauge: must be gauge " + portTypes.get(port));
+            CircuitGUIManager.error.activate("Wrong gauge - must be gauge: " + portTypes.get(port));
         }
     }
 
@@ -249,7 +249,7 @@ public abstract class Hardware {
             cable.setAppendingFromEnd(false);
             cable.setAppendingFromBegin(false);
         } else {
-            CircuitGUIManager.error.activate("Wrong gauge: must be gauge " + portTypes.get(port));
+            CircuitGUIManager.error.activate("Wrong gauge - must be gauge: " + portTypes.get(port));
         }
     }
 
