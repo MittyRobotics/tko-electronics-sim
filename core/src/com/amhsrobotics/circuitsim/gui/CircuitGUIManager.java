@@ -33,7 +33,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn;
+    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -105,14 +105,16 @@ public class CircuitGUIManager {
 //            label.setWrap(true);
 //            table.add(label).width(Gdx.graphics.getWidth());
 //        }
-        reg_cable = new TextButton("Regular Cable", tStyle);
-        reg_cable.addListener(new TextTooltip("A regular hardware to hardware wire", ttStyle));
+        reg_cable = new TextButton("Cable", tStyle);
+        reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
         //table.add(reg_cable).width(120);
         sandcrab = new TextButton("2-Way Wago", tStyle);
         sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
         //table.add(sandcrab).width(120);
         sandcrab3 = new TextButton("3-Way Wago", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
+        battery = new TextButton("Battery", tStyle);
+        battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
         //table.add(sandcrab3).width(120);
         pdp = new TextButton("PDP", tStyle);
         pdp.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
@@ -248,6 +250,14 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = ObjectType.BREAKER;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+            }
+        });
+        battery.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = ObjectType.BATTERY;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -534,6 +544,8 @@ public class CircuitGUIManager {
                 table.row();
                 table.add(sandcrab3).width(120);
                 table.row();
+                table.add(battery).width(120);
+                table.row();
                 table.add(brk).width(120);
             }
 
@@ -578,6 +590,8 @@ public class CircuitGUIManager {
             table.add(sandcrab).width(120);
             table.row();
             table.add(sandcrab3).width(120);
+            table.row();
+            table.add(battery).width(120);
             table.row();
             table.add(brk).width(120);
             table.row();

@@ -109,6 +109,9 @@ public class HardwareManager {
             case BREAKER:
                 temp = new Breaker(new Vector2(startX, startY), type, false);
                 break;
+            case BATTERY:
+                temp = new Battery(new Vector2(startX, startY), type, false);
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, false);
                 break;

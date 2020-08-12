@@ -222,6 +222,14 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
                     }
                     handleHardware(HardwareType.FALCON);
+                } else if (Constants.placing_object == ObjectType.BATTERY) {
+                    currentPlacingHardwareType = HardwareType.BATTERY;
+                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BATTERY) {
+                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                    } else {
+                        currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y), HardwareType.BATTERY);
+                    }
+                    handleHardware(HardwareType.BATTERY);
                 }
             } else {
                 currentPlacingHardware = null;
