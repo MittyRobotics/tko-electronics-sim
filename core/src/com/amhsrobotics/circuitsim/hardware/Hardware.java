@@ -222,7 +222,18 @@ public abstract class Hardware {
     }
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {
-        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+        if (connections.get(port) != null) {
+            Rumble.rumble(3f, 0.4f);
+            CircuitGUIManager.error.clearTable();
+            CircuitGUIManager.error.addElement(new Label("Port already occupied by Cable " + connections.get(port).getID(), CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.show();
+
+            Timer timer = new Timer(3000, arg0 -> {
+                CircuitGUIManager.error.hide();
+            });
+            timer.setRepeats(false);
+            timer.start();
+        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
@@ -245,7 +256,18 @@ public abstract class Hardware {
 
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
-        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+        if (connections.get(port) != null) {
+            Rumble.rumble(3f, 0.4f);
+            CircuitGUIManager.error.clearTable();
+            CircuitGUIManager.error.addElement(new Label("Port already occupied by Cable " + connections.get(port).getID(), CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.show();
+
+            Timer timer = new Timer(3000, arg0 -> {
+                CircuitGUIManager.error.hide();
+            });
+            timer.setRepeats(false);
+            timer.start();
+        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
