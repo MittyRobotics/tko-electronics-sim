@@ -230,7 +230,6 @@ public class CircuitScreen implements Screen {
 
         }
 
-
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
 
