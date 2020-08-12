@@ -68,6 +68,8 @@ public class PowerDistributionPanel extends Hardware {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
         } else if (port >= 28 && port <= 35) {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+        } else if (port == 36 || port == 37) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 50, getConnector(port).getY() + getConnector(port).getHeight() / 2);
         } else {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 50);
         }

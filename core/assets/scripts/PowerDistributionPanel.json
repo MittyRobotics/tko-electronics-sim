@@ -1,7 +1,7 @@
 {
   "name": "PDP",
-  "totalPins": 42,
-  "totalSprites": 43,
+  "totalPins": 44,
+  "totalSprites": 45,
   "pins": [
     {
       "type": "18",
@@ -221,6 +221,18 @@
     {
       "type": "12",
       "position": [479, -467],
+      "dimensions": [25, 25]
+    },
+
+
+    {
+      "type": "4",
+      "position": [775, -82],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "4",
+      "position": [775, -300],
       "dimensions": [25, 25]
     }
   ]
