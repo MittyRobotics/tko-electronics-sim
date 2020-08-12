@@ -3,10 +3,7 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tuple;
+import com.amhsrobotics.circuitsim.utility.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -108,18 +105,23 @@ public class Cable implements Disposable {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                for(int gau : gauges) {
-                    if(gau == gauge) {
-                        if(gauges.indexOf(gau) == gauges.size() - 1) {
-                            gauge = gauges.get(0);
-                            ga.setText(gauge + "");
-                        } else {
-                            gauge = gauges.get(gauges.indexOf(gau) + 1);
-                            ga.setText(gauge + "");
+                if(connection1 != null || connection2 != null) {
+                    Rumble.rumble(3f, 0.4f);
+                } else {
+                    for(int gau : gauges) {
+                        if(gau == gauge) {
+                            if(gauges.indexOf(gau) == gauges.size() - 1) {
+                                gauge = gauges.get(0);
+                                ga.setText(gauge + "");
+                            } else {
+                                gauge = gauges.get(gauges.indexOf(gau) + 1);
+                                ga.setText(gauge + "");
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
+
             }
         });
     }
