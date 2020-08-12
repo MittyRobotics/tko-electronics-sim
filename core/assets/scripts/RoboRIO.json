@@ -5,161 +5,161 @@
   "pins": [
     {
       "position": [-260, 413],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-260, 390],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
     {
       "position": [-419, 362],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-419, 340],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
     {
       "position": [-425, 266],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
     {
       "position": [-430, 189],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, 112],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, 61],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, 10],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -42],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -93],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -145],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -195],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -245],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -298],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-430, -349],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
     {
       "position": [-335, -429],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
     {
       "position": [-182, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-133, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-81, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [-31, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [38, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [88, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [139, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [190, -421],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
 
     {
       "position": [295, 391],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
 
 
     {
       "position": [432, 121],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, 69],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, 17],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -32],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -82],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -133],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -185],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -235],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -287],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     },
     {
       "position": [432, -337],
-      "dimensions": [50, 130]
+      "dimensions": [15, 15]
     }
   ]
 }
