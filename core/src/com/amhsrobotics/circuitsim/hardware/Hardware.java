@@ -232,10 +232,10 @@ public abstract class Hardware {
         } else {
             Rumble.rumble(3f, 0.4f);
             CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Wrong Gauge", CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.addElement(new Label("Wrong gauge: must be gauge " + portTypes.get(port), CircuitGUIManager.error.LABEL_SMALL), true, 2);
             CircuitGUIManager.error.show();
 
-            Timer timer = new Timer(2000, arg0 -> {
+            Timer timer = new Timer(3000, arg0 -> {
                 CircuitGUIManager.error.hide();
             });
             timer.setRepeats(false);
@@ -258,10 +258,10 @@ public abstract class Hardware {
         } else {
             Rumble.rumble(2.5f, 0.2f);
             CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Wrong Gauge", CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.addElement(new Label("Wrong gauge: must be gauge " + portTypes.get(port), CircuitGUIManager.error.LABEL_SMALL), true, 2);
             CircuitGUIManager.error.show();
 
-            Timer timer = new Timer(2000, arg0 -> {
+            Timer timer = new Timer(3000, arg0 -> {
                 CircuitGUIManager.error.hide();
             });
             timer.setRepeats(false);

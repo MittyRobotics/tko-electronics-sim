@@ -41,7 +41,7 @@ public class ErrorMessage {
         LABEL.fontColor = Color.BLACK;
 
         LABEL_SMALL.font = Constants.FONT_SMALL;
-        LABEL_SMALL.fontColor = Color.BLACK;
+        LABEL_SMALL.fontColor = Color.RED;
 
         TOOLTIP.background = Constants.SKIN.getDrawable("button_01");
         TOOLTIP.wrapWidth = 150;
