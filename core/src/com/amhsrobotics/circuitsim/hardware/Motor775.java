@@ -46,6 +46,7 @@ public class Motor775 extends Hardware {
             }
             temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
             connectors.add(temp);
         }
 
@@ -62,26 +63,10 @@ public class Motor775 extends Hardware {
         }
     }
 
-    @Override
-    public void attachCrimpedCable(Cable cable, int port) {
-        connections.set(port, cable);
-
-        cable.removeCoordinates();
-
-        cable.setConnection1(this);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
-
-        CableManager.currentCable = null;
+    public Vector2 calculate(int port) {
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
     }
 
-    @Override
-    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
-
-        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));

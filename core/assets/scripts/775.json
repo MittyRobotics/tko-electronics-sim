@@ -4,12 +4,12 @@
   "totalSprites": 3,
   "pins": [
     {
-      "position": [-96, -237],
-      "dimensions": [50, 130]
+      "position": [-98, -237],
+      "dimensions": [10, 10]
     },
     {
-      "position": [96, -237],
-      "dimensions": [50, 130]
+      "position": [98, -237],
+      "dimensions": [10, 10]
     }
   ]
 }

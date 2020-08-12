@@ -54,6 +54,8 @@ public class SandCrab extends Hardware {
                 temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
             }
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
+
             connectors.add(temp);
         }
 
