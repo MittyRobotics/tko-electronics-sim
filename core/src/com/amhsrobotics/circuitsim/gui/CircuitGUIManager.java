@@ -41,6 +41,9 @@ public class CircuitGUIManager {
 
     public boolean helpMenuShown, optionsMenuShown = false;
 
+    private boolean filterChanged = false;
+    private boolean addAll = true;
+
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
 
@@ -262,9 +265,9 @@ public class CircuitGUIManager {
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
         scrollFilters.setScrollingDisabled(true,false);
         table2.pad(5).defaults().expandX().space(6);
-        fil1 = new TextButton("Wires", t2Style);
+        fil1 = new TextButton("Wires", tStyle);
         table2.add(fil1).width(70);
-        filtersMap.put(fil1, true);
+        filtersMap.put(fil1, false);
         fil2 = new TextButton("Control", tStyle);
         table2.add(fil2).width(70);
         filtersMap.put(fil2, false);
@@ -288,6 +291,7 @@ public class CircuitGUIManager {
                     filtersMap.put(fil1, true);
                     fil1.setStyle(t2Style);
                 }
+                filterChanged = true;
             }
         });
         fil2.addListener(new ChangeListener() {
@@ -300,6 +304,7 @@ public class CircuitGUIManager {
                     filtersMap.put(fil2, true);
                     fil2.setStyle(t2Style);
                 }
+                filterChanged = true;
             }
         });
         fil3.addListener(new ChangeListener() {
@@ -312,6 +317,7 @@ public class CircuitGUIManager {
                     filtersMap.put(fil3, true);
                     fil3.setStyle(t2Style);
                 }
+                filterChanged = true;
             }
         });
         fil4.addListener(new ChangeListener() {
@@ -324,6 +330,7 @@ public class CircuitGUIManager {
                     filtersMap.put(fil4, true);
                     fil4.setStyle(t2Style);
                 }
+                filterChanged = true;
             }
         });
 
@@ -516,9 +523,55 @@ public class CircuitGUIManager {
             }
         }
 
-        table.clear();
-        if(filtersMap.get(fil1)){
-            //Wiring
+        if(filterChanged) {
+            table.clearChildren();
+            if(filtersMap.get(fil1)){
+                //Wiring
+                table.row();
+                table.add(reg_cable).width(120);
+                table.row();
+                table.add(sandcrab).width(120);
+                table.row();
+                table.add(sandcrab3).width(120);
+                table.row();
+                table.add(brk).width(120);
+            }
+
+            if(filtersMap.get(fil2)){
+                //Control
+                table.row();
+                table.add(rbr).width(120);
+                table.row();
+                table.add(pdp).width(120);
+                table.row();
+                table.add(vrm).width(120);
+            }
+
+            if(filtersMap.get(fil3)){
+                //Motors
+                table.row();
+                table.add(tln).width(120);
+                table.row();
+                table.add(spk).width(120);
+                table.row();
+                table.add(m775).width(120);
+                table.row();
+                table.add(neo).width(120);
+                table.row();
+                table.add(fcn).width(120);
+            }
+
+            if(filtersMap.get(fil4)){
+                //Pneumatics
+                table.row();
+                table.add(pcm).width(120);
+            }
+        }
+
+        if(addAll) {
+            addAll = false;
+            table.clear();
+
             table.row();
             table.add(reg_cable).width(120);
             table.row();
@@ -527,20 +580,12 @@ public class CircuitGUIManager {
             table.add(sandcrab3).width(120);
             table.row();
             table.add(brk).width(120);
-        }
-
-        if(filtersMap.get(fil2)){
-            //Control
             table.row();
             table.add(rbr).width(120);
             table.row();
             table.add(pdp).width(120);
             table.row();
             table.add(vrm).width(120);
-        }
-
-        if(filtersMap.get(fil3)){
-            //Motors
             table.row();
             table.add(tln).width(120);
             table.row();
@@ -551,14 +596,17 @@ public class CircuitGUIManager {
             table.add(neo).width(120);
             table.row();
             table.add(fcn).width(120);
-        }
-
-        if(filtersMap.get(fil4)){
-            //Pneumatics
             table.row();
             table.add(pcm).width(120);
         }
 
+        if(!filtersMap.containsValue(true) && filterChanged) {
+            addAll = true;
+        }
+
+        if(filterChanged) {
+            filterChanged = false;
+        }
 
         stage.act(delta);
         stage.draw();
