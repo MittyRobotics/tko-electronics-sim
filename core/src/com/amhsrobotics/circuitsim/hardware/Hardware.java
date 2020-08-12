@@ -142,12 +142,13 @@ public abstract class Hardware {
                 for (JSONArray arr : pinDefs) {
                     int index = pinDefs.indexOf(arr);
                     if (connections.get(index) != null) {
-                        connections.get(index).editCoordinates(
+                        editWire(connections.get(index), index, ends.get(index));
+                        /*connections.get(index).editCoordinates(
                                 new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
                                 ends.get(index), false);
                         connections.get(index).editCoordinates(
                                 new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() - 20),
-                                ends.get(index), true);
+                                ends.get(index), true);*/
                     }
                 }
 
@@ -174,6 +175,8 @@ public abstract class Hardware {
         }
         batch.end();
     }
+
+    public void editWire(Cable cable, int port, boolean endOfWire) {}
 
     public void clearConnection(Cable cable) {
         for(int i = 0; i < connNum; i++) {

@@ -230,8 +230,14 @@ public class CircuitScreen implements Screen {
 
         }
 
+
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
+
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.render(renderer, camera);
+        }
+
 
         if(Constants.placing_object != null) {
             if (Constants.placing_object == ObjectType.WIRE) {

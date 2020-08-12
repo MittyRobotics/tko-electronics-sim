@@ -80,6 +80,11 @@ public class SandCrab extends Hardware {
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
     }
 
+    public void editWire(Cable cable, int port, boolean endOfWire) {
+        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), endOfWire, false);
+        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() -20), endOfWire, true);
+    }
+
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 

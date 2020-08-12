@@ -74,18 +74,21 @@ public class NEO extends Hardware {
         cable.removeCoordinates();
 
         cable.setConnection1(this);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), true);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), true);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), true);
 
         CableManager.currentCable = null;
     }
 
     @Override
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), !endOfWire);
 
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
+    }
+
+    public void editWire(Cable cable, int port, boolean endOfWire) {
+        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
