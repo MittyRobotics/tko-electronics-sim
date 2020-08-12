@@ -25,10 +25,10 @@ public class SandCrab extends Hardware {
 
         if(type == HardwareType.DOUBLESANDCRAB) {
             JSONReader.loadConfig("scripts/DoubleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white.png")));
+            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago2.png")));
         } else {
             JSONReader.loadConfig("scripts/TripleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_white_2.png")));
+            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago3.png")));
         }
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
@@ -48,13 +48,15 @@ public class SandCrab extends Hardware {
             if(connectors.size() == connNum) {
                 break;
             }
-            if(connectors.size() == 0) {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-            } else {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-            }
+//            if(connectors.size() == 0) {
+//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+//            } else {
+//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+//            }
+            temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago_orange.png")));
+
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
+//            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
 
             connectors.add(temp);
         }
