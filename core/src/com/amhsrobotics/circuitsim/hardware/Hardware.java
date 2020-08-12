@@ -220,6 +220,32 @@ public abstract class Hardware {
         CableManager.currentCable = null;
     }
 
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+            connections.set(port, cable);
+            ends.set(port, endOfWire);
+
+            attachWireLib(cable, port, endOfWire);
+
+            CableManager.currentCable = null;
+        }
+    }
+
+
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
+        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+            connections.set(port, cable);
+            ends.set(port, endOfWire);
+
+            cable.removeCoordinates();
+
+            attachWireLib(cable, port, endOfWire);
+
+            cable.setAppendingFromEnd(false);
+            cable.setAppendingFromBegin(false);
+        }
+    }
+
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         cable.addCoordinates(calculate(port), !endOfWire);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
@@ -293,29 +319,6 @@ public abstract class Hardware {
             }
         }
         return -1;
-    }
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        attachWireLib(cable, port, endOfWire);
-
-        CableManager.currentCable = null;
-    }
-
-
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        cable.removeCoordinates();
-
-        attachWireLib(cable, port, endOfWire);
-
-        cable.setAppendingFromEnd(false);
-        cable.setAppendingFromBegin(false);
-
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {

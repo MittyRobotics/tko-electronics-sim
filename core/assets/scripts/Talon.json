@@ -4,22 +4,22 @@
   "totalSprites": 5,
   "pins": [
     {
-      "type": "sensor",
+      "type": "22",
       "position": [-64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "sensor",
+      "type": "22",
       "position": [64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "sensor",
+      "type": "22",
       "position": [-59, -238],
       "dimensions": [25, 25]
     },
     {
-      "type": "sensor",
+      "type": "22",
       "position": [58, -238],
       "dimensions": [25, 25]
     }

@@ -4,12 +4,12 @@
   "totalSprites": 3,
   "pins": [
     {
-      "type": "motor",
+      "type": "12",
       "position": [-98, -237],
       "dimensions": [10, 10]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [98, -237],
       "dimensions": [10, 10]
     }

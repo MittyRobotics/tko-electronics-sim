@@ -4,222 +4,222 @@
   "totalSprites": 43,
   "pins": [
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, 102],
       "dimensions": [7, 7]
     },
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, 61],
       "dimensions": [7, 7]
     },
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, 20],
       "dimensions": [7, 7]
     },
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, -21],
       "dimensions": [7, 7]
     },
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, -61],
       "dimensions": [7, 7]
     },
     {
-      "type": "vrmpcm",
+      "type": "18",
       "position": [-714, -102],
       "dimensions": [7, 7]
     },
 
 
     {
-      "type": "can",
+      "type": "22",
       "position": [626, 321],
       "dimensions": [7, 7]
     },
     {
-      "type": "can",
+      "type": "22",
       "position": [655, 321],
       "dimensions": [7, 7]
     },
     {
-      "type": "can",
+      "type": "22",
       "position": [685, 321],
       "dimensions": [7, 7]
     },
     {
-      "type": "can",
+      "type": "22",
       "position": [713, 321],
       "dimensions": [7, 7]
     },
 
 
     {
-      "type": "motor",
+      "type": "12",
       "position": [-624, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-561, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-499, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-434, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-372, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-312, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-249, -453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-187, -453],
       "dimensions": [15, 15]
     },
 
 
     {
-      "type": "motor",
+      "type": "12",
       "position": [-624, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-561, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-499, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-434, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-372, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-312, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-249, 453],
       "dimensions": [15, 15]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-187, 453],
       "dimensions": [15, 15]
     },
 
 
     {
-      "type": "motor",
+      "type": "12",
       "position": [-98, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-16, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [64, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [148, 467],
       "dimensions":[25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [232, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [313, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [397, 467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [479, 467],
       "dimensions": [25, 25]
     },
 
 
     {
-      "type": "motor",
+      "type": "12",
       "position": [-98, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-16, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [64, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [148, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [232, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [313, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [397, -467],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [479, -467],
       "dimensions": [25, 25]
     }

@@ -4,27 +4,27 @@
   "totalSprites": 6,
   "pins": [
     {
-      "type": "motor",
+      "type": "12",
       "position": [-51, 240],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-1, 240],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [49, 240],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [-30, -240],
       "dimensions": [25, 25]
     },
     {
-      "type": "motor",
+      "type": "12",
       "position": [29, -240],
       "dimensions": [25, 25]
     }

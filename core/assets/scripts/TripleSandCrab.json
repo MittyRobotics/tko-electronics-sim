@@ -4,17 +4,17 @@
   "totalSprites": 4,
   "pins": [
     {
-      "type": "can",
+      "type": "22",
       "position": [-77, -20],
       "dimensions": [50, 130]
     },
     {
-      "type": "can",
+      "type": "22",
       "position": [0, -20],
       "dimensions": [50, 130]
     },
     {
-      "type": "can",
+      "type": "22",
       "position": [77, -20],
       "dimensions": [50, 130]
     }
