@@ -39,19 +39,20 @@ public class NEO extends Hardware {
 
         base.setCenter(position.x, position.y);
 
-//        for(JSONArray arr : pinDefs) {
-//            Sprite temp;
-//            if(connectors.size() == connNum) {
-//                break;
-//            }
-//            if(connectors.size() == 0) {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-//            } else {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-//            }
-//            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-//            connectors.add(temp);
-//        }
+        for(JSONArray arr : pinDefs) {
+            Sprite temp;
+            if(connectors.size() == connNum) {
+                break;
+            }
+            if(connectors.size() == 0) {
+                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
+            } else {
+                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
+            }
+            temp.setCenter(position.x + (Long) arr.get(0)/2f, position.y + (Long) arr.get(1)/2f);
+            temp.setSize((Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(0)/2f,(Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(1)/2f);
+            connectors.add(temp);
+        }
 
         initConnections();
         initEnds();
