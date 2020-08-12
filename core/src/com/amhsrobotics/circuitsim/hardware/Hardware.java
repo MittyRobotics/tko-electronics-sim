@@ -239,7 +239,8 @@ public abstract class Hardware {
         if (connections.get(port) != null) {
             CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
 
-        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+        } else {
+            cable.setGauge(Integer.parseInt(portTypes.get(port)));
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
@@ -249,8 +250,6 @@ public abstract class Hardware {
 
             cable.setAppendingFromEnd(false);
             cable.setAppendingFromBegin(false);
-        } else {
-            CircuitGUIManager.error.activate("Wrong gauge - must be gauge: " + portTypes.get(port));
         }
     }
 

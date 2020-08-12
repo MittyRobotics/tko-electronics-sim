@@ -518,6 +518,10 @@ public class Cable implements Disposable {
         }
     }
 
+    public void setGauge(float gauge) {
+        this.gauge = gauge;
+    }
+
     public int hoveringOnEndpoint(CameraController cameraController) {
         // CHECK IF HOVERING ON ENDPOINT
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
