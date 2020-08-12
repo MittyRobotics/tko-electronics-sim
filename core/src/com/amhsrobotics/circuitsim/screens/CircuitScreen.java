@@ -96,6 +96,10 @@ public class CircuitScreen implements Screen {
         camera.update();
         camera.calculateBounds();
 
+        if (Rumble.getRumbleTimeLeft() > 0){
+            Rumble.tick(Gdx.graphics.getDeltaTime());
+            camera.getCamera().translate(Rumble.getPos());
+        }
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
         SnapGrid.renderGrid(renderer, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);

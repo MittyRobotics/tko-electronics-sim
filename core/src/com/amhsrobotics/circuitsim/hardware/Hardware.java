@@ -1,10 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
@@ -220,6 +217,36 @@ public abstract class Hardware {
         CableManager.currentCable = null;
     }
 
+    public void attachWire(Cable cable, int port, boolean endOfWire) {
+        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+            connections.set(port, cable);
+            ends.set(port, endOfWire);
+
+            attachWireLib(cable, port, endOfWire);
+
+            CableManager.currentCable = null;
+        } else {
+            Rumble.rumble(3f, 0.4f);
+        }
+    }
+
+
+    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
+        if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+            connections.set(port, cable);
+            ends.set(port, endOfWire);
+
+            cable.removeCoordinates();
+
+            attachWireLib(cable, port, endOfWire);
+
+            cable.setAppendingFromEnd(false);
+            cable.setAppendingFromBegin(false);
+        } else {
+            Rumble.rumble(2.5f, 0.2f);
+        }
+    }
+
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         cable.addCoordinates(calculate(port), !endOfWire);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
@@ -293,29 +320,6 @@ public abstract class Hardware {
             }
         }
         return -1;
-    }
-
-    public void attachWire(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        attachWireLib(cable, port, endOfWire);
-
-        CableManager.currentCable = null;
-    }
-
-
-    public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
-        connections.set(port, cable);
-        ends.set(port, endOfWire);
-
-        cable.removeCoordinates();
-
-        attachWireLib(cable, port, endOfWire);
-
-        cable.setAppendingFromEnd(false);
-        cable.setAppendingFromBegin(false);
-
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
