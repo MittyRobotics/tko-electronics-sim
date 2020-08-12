@@ -26,13 +26,16 @@ import java.util.HashMap;
 
 public class CircuitGUIManager {
 
-    private ModifiedStage stage;
+    private final ModifiedStage stage;
 
-    private TextButton back, help, options;
-    public static Table container;
+    private final TextButton back, help, options;
+    public static Table container, table;
     private Window helpMenu, optionsMenu;
+    private final TextButton.TextButtonStyle tStyle, t2Style;
+    private final TextButton fil1, fil2, fil3, fil4;
+    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn;
 
-    private HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
+    private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
     private TextField gridSizingX, gridSizingY, gridSpacing;
 
@@ -43,12 +46,12 @@ public class CircuitGUIManager {
 
         propertiesBox = new PropertiesBox(stage);
 
-        final TextButton.TextButtonStyle tStyle = new TextButton.TextButtonStyle();
+        tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;
         tStyle.up = Constants.SKIN.getDrawable("button_03");
         tStyle.down = Constants.SKIN.getDrawable("button_02");
 
-        final TextButton.TextButtonStyle t2Style = new TextButton.TextButtonStyle();
+        t2Style = new TextButton.TextButtonStyle();
         t2Style.font = Constants.FONT_SMALL;
         t2Style.up = Constants.SKIN_ALTERNATE.getDrawable("button_03");
         t2Style.down = Constants.SKIN_ALTERNATE.getDrawable("button_02");
@@ -61,7 +64,7 @@ public class CircuitGUIManager {
         l2Style.font = Constants.FONT_SMALL;
         l2Style.fontColor = Color.BLACK;
 
-        final TextTooltip.TextTooltipStyle ttStyle = new TextTooltip.TextTooltipStyle();
+        TextTooltip.TextTooltipStyle ttStyle = new TextTooltip.TextTooltipStyle();
         ttStyle.background = Constants.SKIN.getDrawable("button_01");
         ttStyle.wrapWidth = 150;
         ttStyle.label = lStyle;
@@ -87,7 +90,7 @@ public class CircuitGUIManager {
         container.setHeight(Gdx.graphics.getHeight() - 150);
         stage.addActor(container);
 
-        Table table = new Table();
+        table = new Table();
         ScrollPane scroll = new ScrollPane(table, sStyle);
         scroll.setScrollingDisabled(true,false);
         table.pad(10).defaults().expandX().space(4);
@@ -99,58 +102,45 @@ public class CircuitGUIManager {
 //            label.setWrap(true);
 //            table.add(label).width(Gdx.graphics.getWidth());
 //        }
-        table.row();
-        TextButton reg_cable = new TextButton("Regular Cable", tStyle);
+        reg_cable = new TextButton("Regular Cable", tStyle);
         reg_cable.addListener(new TextTooltip("A regular hardware to hardware wire", ttStyle));
-        table.add(reg_cable).width(120);
-        table.row();
-        TextButton sandcrab = new TextButton("2-Way Wago", tStyle);
+        //table.add(reg_cable).width(120);
+        sandcrab = new TextButton("2-Way Wago", tStyle);
         sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
-        table.add(sandcrab).width(120);
-        table.row();
-        TextButton sandcrab3 = new TextButton("3-Way Wago", tStyle);
+        //table.add(sandcrab).width(120);
+        sandcrab3 = new TextButton("3-Way Wago", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
-        table.add(sandcrab3).width(120);
-        table.row();
-        TextButton pdp = new TextButton("PDP", tStyle);
+        //table.add(sandcrab3).width(120);
+        pdp = new TextButton("PDP", tStyle);
         pdp.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
-        table.add(pdp).width(120);
-        table.row();
-        TextButton vrm = new TextButton("VRM", tStyle);
+        //table.add(pdp).width(120);
+        vrm = new TextButton("VRM", tStyle);
         vrm.addListener(new TextTooltip("Voltage Regulation Module", ttStyle));
-        table.add(vrm).width(120);
-        table.row();
-        TextButton rbr = new TextButton("roboRIO", tStyle);
+        //table.add(vrm).width(120);
+        rbr = new TextButton("roboRIO", tStyle);
         rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller", ttStyle));
-        table.add(rbr).width(120);
-        table.row();
-        TextButton tln = new TextButton("Talon", tStyle);
+        //table.add(rbr).width(120);
+        tln = new TextButton("Talon", tStyle);
         tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller", ttStyle));
-        table.add(tln).width(120);
-        table.row();
-        TextButton pcm = new TextButton("PCM", tStyle);
+        //table.add(tln).width(120);
+        pcm = new TextButton("PCM", tStyle);
         pcm.addListener(new TextTooltip("Pneumatics Control Module", ttStyle));
-        table.add(pcm).width(120);
-        table.row();
-        TextButton spk = new TextButton("SPARK MAX", tStyle);
+        //table.add(pcm).width(120);
+        spk = new TextButton("SPARK MAX", tStyle);
         spk.addListener(new TextTooltip("SPARK MAX Motor Controller", ttStyle));
-        table.add(spk).width(120);
-        table.row();
-        TextButton neo = new TextButton("NEO", tStyle);
+        //table.add(spk).width(120);
+        neo = new TextButton("NEO", tStyle);
         neo.addListener(new TextTooltip("NEO Brushless Motor", ttStyle));
-        table.add(neo).width(120);
-        table.row();
-        TextButton brk = new TextButton("Breaker", tStyle);
+        //table.add(neo).width(120);
+        brk = new TextButton("Breaker", tStyle);
         brk.addListener(new TextTooltip("Main Circuit Breaker", ttStyle));
-        table.add(brk).width(120);
-        table.row();
-        TextButton m775 = new TextButton("775", tStyle);
+        //table.add(brk).width(120);
+        m775 = new TextButton("775", tStyle);
         m775.addListener(new TextTooltip("775 RedLine Motor", ttStyle));
-        table.add(m775).width(120);
-        table.row();
-        TextButton fcn = new TextButton("Falcon", tStyle);
+        //table.add(m775).width(120);
+        fcn = new TextButton("Falcon", tStyle);
         fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor", ttStyle));
-        table.add(fcn).width(120);
+        //table.add(fcn).width(120);
 
 
         container.add(scroll).expand().fill();
@@ -272,19 +262,18 @@ public class CircuitGUIManager {
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
         scrollFilters.setScrollingDisabled(true,false);
         table2.pad(5).defaults().expandX().space(6);
-        final TextButton fil1 = new TextButton("Elec.", tStyle);
-        fil1.addListener(new TextTooltip("Electronics", ttStyle));
+        fil1 = new TextButton("Wires", t2Style);
         table2.add(fil1).width(70);
-        filtersMap.put(fil1, false);
-        final TextButton fil2 = new TextButton("Pneum.", tStyle);
-        fil2.addListener(new TextTooltip("Pneumatics", ttStyle));
+        filtersMap.put(fil1, true);
+        fil2 = new TextButton("Control", tStyle);
         table2.add(fil2).width(70);
         filtersMap.put(fil2, false);
         table2.row();
-        final TextButton fil3 = new TextButton("Wires", tStyle);
+        fil3 = new TextButton("Motors", tStyle);
         table2.add(fil3).width(70);
         filtersMap.put(fil3, false);
-        final TextButton fil4 = new TextButton("Other", tStyle);
+        fil4 = new TextButton("Pneum.", tStyle);
+        fil4.addListener(new TextTooltip("Pneumatics", ttStyle));
         table2.add(fil4).width(70);
         filtersMap.put(fil4, false);
         filters.add(scrollFilters).expand().fill();
@@ -294,10 +283,10 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 if(filtersMap.get(fil1)) {
                     filtersMap.put(fil1, false);
-                    fil1.setStyle(t2Style);
+                    fil1.setStyle(tStyle);
                 } else {
                     filtersMap.put(fil1, true);
-                    fil1.setStyle(tStyle);
+                    fil1.setStyle(t2Style);
                 }
             }
         });
@@ -306,10 +295,10 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 if(filtersMap.get(fil2)) {
                     filtersMap.put(fil2, false);
-                    fil2.setStyle(t2Style);
+                    fil2.setStyle(tStyle);
                 } else {
                     filtersMap.put(fil2, true);
-                    fil2.setStyle(tStyle);
+                    fil2.setStyle(t2Style);
                 }
             }
         });
@@ -318,10 +307,10 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 if(filtersMap.get(fil3)) {
                     filtersMap.put(fil3, false);
-                    fil3.setStyle(t2Style);
+                    fil3.setStyle(tStyle);
                 } else {
                     filtersMap.put(fil3, true);
-                    fil3.setStyle(tStyle);
+                    fil3.setStyle(t2Style);
                 }
             }
         });
@@ -330,10 +319,10 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 if(filtersMap.get(fil4)) {
                     filtersMap.put(fil4, false);
-                    fil4.setStyle(t2Style);
+                    fil4.setStyle(tStyle);
                 } else {
                     filtersMap.put(fil4, true);
-                    fil4.setStyle(tStyle);
+                    fil4.setStyle(t2Style);
                 }
             }
         });
@@ -526,6 +515,50 @@ public class CircuitGUIManager {
                 showOptionsMenu();
             }
         }
+
+        table.clear();
+        if(filtersMap.get(fil1)){
+            //Wiring
+            table.row();
+            table.add(reg_cable).width(120);
+            table.row();
+            table.add(sandcrab).width(120);
+            table.row();
+            table.add(sandcrab3).width(120);
+            table.row();
+            table.add(brk).width(120);
+        }
+
+        if(filtersMap.get(fil2)){
+            //Control
+            table.row();
+            table.add(rbr).width(120);
+            table.row();
+            table.add(pdp).width(120);
+            table.row();
+            table.add(vrm).width(120);
+        }
+
+        if(filtersMap.get(fil3)){
+            //Motors
+            table.row();
+            table.add(tln).width(120);
+            table.row();
+            table.add(spk).width(120);
+            table.row();
+            table.add(m775).width(120);
+            table.row();
+            table.add(neo).width(120);
+            table.row();
+            table.add(fcn).width(120);
+        }
+
+        if(filtersMap.get(fil4)){
+            //Pneumatics
+            table.row();
+            table.add(pcm).width(120);
+        }
+
 
         stage.act(delta);
         stage.draw();
