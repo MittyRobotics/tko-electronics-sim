@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.Tuple;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,6 +17,8 @@ public class CableManager {
     public static int id = 1;
     public static boolean merging = false;
 
+    private static DelayedRemovalArray<Cable> temp;
+
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
     public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
@@ -28,6 +31,19 @@ public class CableManager {
     public static void addCable(Cable cable) {
         cable.setAppendingFromEnd(true);
         cables.add(cable);
+    }
+
+    public static void moveToFront(Cable cable) {
+        temp = new DelayedRemovalArray<>();
+        for(int i = 0; i < cables.size; i++) {
+            if(cables.get(i).getID() != cable.getID()) {
+                temp.add(cables.get(i));
+            }
+        }
+
+        temp.add(cable);
+        cables = temp;
+
     }
 
     public static DelayedRemovalArray<Cable> getCables() {
