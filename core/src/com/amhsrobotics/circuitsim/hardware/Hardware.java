@@ -278,7 +278,7 @@ public abstract class Hardware {
             cable.setAppendingFromEnd(false);
             cable.setAppendingFromBegin(false);
         } else {
-            Rumble.rumble(2.5f, 0.2f);
+            Rumble.rumble(3f, 0.4f);
             CircuitGUIManager.error.clearTable();
             CircuitGUIManager.error.addElement(new Label("Wrong gauge: must be gauge " + portTypes.get(port), CircuitGUIManager.error.LABEL_SMALL), true, 2);
             CircuitGUIManager.error.show();
