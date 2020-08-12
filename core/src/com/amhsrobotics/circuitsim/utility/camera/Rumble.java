@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.utility;
+package com.amhsrobotics.circuitsim.utility.camera;
 
 import com.badlogic.gdx.math.Vector3;
 

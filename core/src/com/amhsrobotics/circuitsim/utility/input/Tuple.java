@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.utility;
+package com.amhsrobotics.circuitsim.utility.input;
 
 public class Tuple<X, Y> {
 

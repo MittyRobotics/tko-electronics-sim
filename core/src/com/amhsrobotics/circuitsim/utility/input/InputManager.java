@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.utility;
+package com.amhsrobotics.circuitsim.utility.input;
 
 import com.badlogic.gdx.InputProcessor;
 

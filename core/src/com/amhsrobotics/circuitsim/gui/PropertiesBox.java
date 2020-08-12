@@ -1,7 +1,7 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

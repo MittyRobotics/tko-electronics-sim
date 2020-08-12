@@ -1,4 +1,4 @@
-package com.amhsrobotics.circuitsim.utility;
+package com.amhsrobotics.circuitsim.utility.scene;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.badlogic.gdx.graphics.Color;

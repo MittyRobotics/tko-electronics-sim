@@ -1,17 +1,13 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.ModifiedStage;
-import com.amhsrobotics.circuitsim.utility.Rumble;
+import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 
 import javax.swing.*;
 
@@ -36,7 +32,7 @@ public class ErrorMessage {
 
         table = new Table();
         table.setBackground(Constants.SKIN.getDrawable("textbox_01"));
-        table.add(label);
+        table.add(label).pad(5);
         table.pack();
 
         table.setPosition((float) Gdx.graphics.getWidth() / 2 - table.getWidth() / 2, -100);
