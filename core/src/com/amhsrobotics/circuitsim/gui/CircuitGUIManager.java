@@ -40,6 +40,7 @@ public class CircuitGUIManager {
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
+    public static ErrorMessage error;
     private TextField gridSizingX, gridSizingY, gridSpacing;
 
     public boolean helpMenuShown, optionsMenuShown = false;
@@ -51,6 +52,7 @@ public class CircuitGUIManager {
         this.stage = stage;
 
         propertiesBox = new PropertiesBox(stage);
+        error = new ErrorMessage(stage);
 
         tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;

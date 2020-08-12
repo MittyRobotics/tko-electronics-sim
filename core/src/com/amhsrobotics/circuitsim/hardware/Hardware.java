@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.gui.ErrorMessage;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -17,6 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public abstract class Hardware {
@@ -227,6 +231,15 @@ public abstract class Hardware {
             CableManager.currentCable = null;
         } else {
             Rumble.rumble(3f, 0.4f);
+            CircuitGUIManager.error.clearTable();
+            CircuitGUIManager.error.addElement(new Label("Wrong Gauge", CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.show();
+
+            Timer timer = new Timer(2000, arg0 -> {
+                CircuitGUIManager.error.hide();
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
@@ -244,6 +257,16 @@ public abstract class Hardware {
             cable.setAppendingFromBegin(false);
         } else {
             Rumble.rumble(2.5f, 0.2f);
+            CircuitGUIManager.error.clearTable();
+            CircuitGUIManager.error.addElement(new Label("Wrong Gauge", CircuitGUIManager.error.LABEL_SMALL), true, 2);
+            CircuitGUIManager.error.show();
+
+            Timer timer = new Timer(2000, arg0 -> {
+                CircuitGUIManager.error.hide();
+            });
+            timer.setRepeats(false);
+            timer.start();
+
         }
     }
 
