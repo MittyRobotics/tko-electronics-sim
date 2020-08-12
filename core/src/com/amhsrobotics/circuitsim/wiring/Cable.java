@@ -295,6 +295,8 @@ public class Cable implements Disposable {
 
         if(CableManager.currentCable == this) {
 
+            CableManager.moveToFront(this);
+
             // GET X AND Y OF MOUSE
             Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.getCamera().unproject(vec);

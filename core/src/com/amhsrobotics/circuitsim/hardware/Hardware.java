@@ -11,6 +11,7 @@ import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -85,7 +86,18 @@ public abstract class Hardware {
 
             drawHover(renderer);
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            boolean good = true;
+
+            for(Cable c : connections) {
+                if(c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
+                    good = false;
+                    CableManager.currentCable = c;
+                    HardwareManager.currentHardware = null;
+                    break;
+                }
+            }
+
+            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && good) {
                 HardwareManager.currentHardware = this;
                 CableManager.currentCable = null;
 
@@ -189,6 +201,17 @@ public abstract class Hardware {
 
     public Sprite getConnector(int conn) {
         return connectors.get(conn);
+    }
+
+    public void renderConnectors(Batch batch) {
+        batch.begin();
+        for(Sprite s : connectors) {
+            if(s != null) {
+                s.draw(batch);
+            }
+        }
+        batch.end();
+
     }
 
     public void populateProperties() {
