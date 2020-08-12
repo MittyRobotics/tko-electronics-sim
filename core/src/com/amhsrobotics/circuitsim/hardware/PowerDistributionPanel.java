@@ -39,19 +39,15 @@ public class PowerDistributionPanel extends Hardware {
 
         base.setCenter(position.x, position.y);
 
-//        for(JSONArray arr : pinDefs) {
-//            Sprite temp;
-//            if(connectors.size() == connNum) {
-//                break;
-//            }
-//            if(connectors.size() == 0) {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-//            } else {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-//            }
-//            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-//            connectors.add(temp);
-//        }
+        for(JSONArray arr : pinDefs) {
+            Sprite temp;
+            if(connectors.size() == connNum) {
+                break;
+            }
+            temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
+            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+            connectors.add(temp);
+        }
 
         initConnections();
         initEnds();

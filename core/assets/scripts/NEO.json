@@ -1,14 +1,22 @@
 {
   "name": "NEO Motor",
-  "totalPins": 2,
-  "totalSprites": 3,
+  "totalPins": 4,
+  "totalSprites": 5,
   "pins": [
     {
-      "position": [-30, -20],
+      "position": [-30, 28],
       "dimensions": [50, 130]
     },
     {
-      "position": [30, -20],
+      "position": [-9, 28],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [12, 28],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [33, 28],
       "dimensions": [50, 130]
     }
   ]

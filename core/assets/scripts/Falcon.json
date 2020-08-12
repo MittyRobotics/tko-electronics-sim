@@ -1,14 +1,30 @@
 {
   "name": "Falcon Motor",
-  "totalPins": 2,
-  "totalSprites": 3,
+  "totalPins": 6,
+  "totalSprites": 7,
   "pins": [
     {
-      "position": [-30, -20],
+      "position": [-10, -135],
+      "dimensions": [8, -135]
+    },
+    {
+      "position": [10, -135],
       "dimensions": [50, 130]
     },
     {
-      "position": [30, -20],
+      "position": [-11, -151],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [-5, -151],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [1, -151],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [7, -151],
       "dimensions": [50, 130]
     }
   ]

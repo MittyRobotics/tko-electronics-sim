@@ -1,14 +1,26 @@
 {
   "name": "SPARK MAX",
-  "totalPins": 4,
-  "totalSprites": 5,
+  "totalPins": 5,
+  "totalSprites": 6,
   "pins": [
     {
-      "position": [-30, -20],
+      "position": [-51, 215],
       "dimensions": [50, 130]
     },
     {
-      "position": [30, -20],
+      "position": [0, 215],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [51, 215],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [-30, -227],
+      "dimensions": [50, 130]
+    },
+    {
+      "position": [30, -227],
       "dimensions": [50, 130]
     }
   ]
