@@ -1,7 +1,9 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
@@ -16,15 +18,15 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Falcon extends Hardware {
+public class NEO extends Hardware {
 
-    public Falcon(Vector2 position, HardwareType type, boolean... addCrimped) {
+    public NEO(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, addCrimped);
 
         this.type = type;
 
-        JSONReader.loadConfig("scripts/Falcon.json");
-        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Falcon.png")));
+        JSONReader.loadConfig("scripts/NEO.json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/NEO.png")));
 //        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
@@ -63,15 +65,8 @@ public class Falcon extends Hardware {
         }
     }
 
-
     public Vector2 calculate(int port) {
-        if(port == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
-        } else if (port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
-        } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
-        }
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
     }
 
 

@@ -1,9 +1,11 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -16,16 +18,20 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+public class RoboRio extends Hardware {
 
-public class PowerDistributionPanel extends Hardware {
-
-    public PowerDistributionPanel(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, addCrimped);
+    public RoboRio(Vector2 position, HardwareType type, boolean... addCrimped) {
+        super(position);
 
         this.type = type;
+        if(addCrimped.length > 0) {
+            this.addCrimped = addCrimped[0];
+        }
 
-        JSONReader.loadConfig("scripts/PowerDistributionPanel.json");
-        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/PDP.png")));
+
+        JSONReader.loadConfig("scripts/RoboRIO.json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/roborio.png")));
+//        base.setSize(base.getWidth()*2f, base.getHeight()*2f);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
@@ -38,6 +44,7 @@ public class PowerDistributionPanel extends Hardware {
         }
 
         base.setCenter(position.x, position.y);
+
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
@@ -52,32 +59,52 @@ public class PowerDistributionPanel extends Hardware {
 
         initConnections();
         initEnds();
+
+        if(this.addCrimped) {
+            checkCrimpedCables();
+        }
+
+        canMove = false;
     }
+
+    @Override
+    public void delete() {
+        for(Cable cable : connections) {
+            if(cable != null) {
+                if(ends.get(connections.indexOf(cable))) {
+                    cable.setConnection2(null);
+                } else {
+                    cable.setConnection1(null);
+                }
+            }
+        }
+        HardwareManager.removeHardware(this);
+        HardwareManager.currentHardware = null;
+        CircuitGUIManager.propertiesBox.hide();
+    }
+
 
     @Override
     public void populateProperties() {
         super.populateProperties();
-        for(int x = 0; x < connectors.size(); x++) {
+        for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         }
     }
 
+
     public Vector2 calculate(int port) {
-        if(port >= 0 && port <= 5) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 50, getConnector(port).getY() + getConnector(port).getHeight()/2);
-        } else if (port >= 6 && port <= 10) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
-        } else if (port >= 11 && port <= 18) {
-                return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 50);
-        } else if (port >= 19 && port <= 26) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
-        } else if (port >= 27 && port <= 34) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
-        } else if (port >= 28 && port <= 35) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+        if(port == 0) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 20);
+        } else if (port == 1) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
+        } else if(port >= 2 && port <= 15) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
+        } else if(port >= 16 && port <= 24) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 50);
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
         }
     }
 
@@ -85,7 +112,7 @@ public class PowerDistributionPanel extends Hardware {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+12, base.getHeight()+13, 35);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-5, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+10, 35);
         renderer.end();
     }
 }

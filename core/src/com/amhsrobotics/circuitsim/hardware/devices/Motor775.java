@@ -1,7 +1,9 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
@@ -16,15 +18,15 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Spark extends Hardware {
+public class Motor775 extends Hardware {
 
-    public Spark(Vector2 position, HardwareType type, boolean... addCrimped) {
+    public Motor775(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, addCrimped);
 
         this.type = type;
 
-        JSONReader.loadConfig("scripts/Spark.json");
-        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Spark.png")));
+        JSONReader.loadConfig("scripts/775.json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/775.png")));
 //        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
@@ -64,12 +66,9 @@ public class Spark extends Hardware {
     }
 
     public Vector2 calculate(int port) {
-        if(port < 3) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 40);
-        } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 40);
-        }
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
     }
+
 
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
