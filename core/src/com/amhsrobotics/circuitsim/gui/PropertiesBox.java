@@ -6,7 +6,10 @@ import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 public class PropertiesBox {
@@ -57,6 +60,16 @@ public class PropertiesBox {
         table = new Table();
         scroll = new ScrollPane(table, sStyle);
         scroll.setScrollingDisabled(true,false);
+        scroll.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setScrollFocus(scroll);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setScrollFocus(null);
+            }
+        });
         table.pad(10).defaults().expandX().space(6);
         container.add(scroll).expand().fill();
 

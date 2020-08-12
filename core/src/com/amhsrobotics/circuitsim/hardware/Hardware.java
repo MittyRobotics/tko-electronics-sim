@@ -108,10 +108,6 @@ public abstract class Hardware {
 
         }
 
-        if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
-            this.delete();
-        }
-
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             CircuitGUIManager.propertiesBox.hide();
             HardwareManager.currentHardware = null;
@@ -139,6 +135,10 @@ public abstract class Hardware {
         if(HardwareManager.currentHardware == this) {
             HardwareManager.moveToFront(this);
             drawHover(renderer);
+
+            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
+                this.delete();
+            }
 
 
             if(Gdx.input.isTouched() && canMove) {

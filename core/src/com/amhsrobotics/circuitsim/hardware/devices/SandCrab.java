@@ -99,7 +99,7 @@ public class SandCrab extends Hardware {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+11, 15);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+11, 5);
         renderer.end();
     }
 }

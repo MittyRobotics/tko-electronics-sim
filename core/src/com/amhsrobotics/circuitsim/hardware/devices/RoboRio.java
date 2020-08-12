@@ -111,7 +111,7 @@ public class RoboRio extends Hardware {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-5, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+10, 35);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-5, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+10, 45);
         renderer.end();
     }
 }
