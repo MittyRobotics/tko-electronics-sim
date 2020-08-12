@@ -138,7 +138,6 @@ public class CircuitScreen implements Screen {
                 Constants.placing_object = null;
             }
 
-
             if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
 
                 if (Constants.placing_object == HardwareType.WIRE) {
