@@ -205,6 +205,9 @@ public abstract class Hardware {
         return null;
     }
 
+    public String getName() {
+        return name;
+    }
 
     public void attachCrimpedCable(Cable cable, int port) {
         connections.set(port, cable);
@@ -281,6 +284,20 @@ public abstract class Hardware {
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        for (int x = 0; x < connectors.size(); x++) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            if(connections.get(x) == null) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else if(connections.get(x) instanceof CrimpedCable) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("Crimped", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else {
+                if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
+                    CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                } else {
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                }
+            }
+        }
     }
 
     public void initConnections() {

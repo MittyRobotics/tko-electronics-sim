@@ -422,6 +422,16 @@ public class Cable implements Disposable {
         renderer.end();
     }
 
+    public Hardware getHardwareAtOtherEnd(Hardware hardware) {
+        if(hardware == connection1) {
+            return connection2;
+        } else if(hardware == connection2) {
+            return connection1;
+        } else {
+            return null;
+        }
+    }
+
 
     protected void processHardwareClick(HashMap<Hardware, Integer> hardware) {
         ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());

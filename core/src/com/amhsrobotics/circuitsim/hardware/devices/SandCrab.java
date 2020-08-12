@@ -71,17 +71,6 @@ public class SandCrab extends Hardware {
         return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
     }
 
-
-
-    @Override
-    public void populateProperties() {
-        super.populateProperties();
-        for(int x = 0; x < connectors.size(); x++) {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x) == null ? "None" : (connections.get(x) instanceof CrimpedCable ? "Crimped" : "Cable " + connections.get(x).getID()), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-    }
-
     @Override
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
