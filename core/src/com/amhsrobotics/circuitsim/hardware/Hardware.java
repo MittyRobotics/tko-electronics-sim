@@ -115,7 +115,9 @@ public abstract class Hardware {
             if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && base.getBoundingRectangle().contains(vec.x, vec.y)) {
                 canMove = true;
             }
-            HardwareManager.movingObject = true;
+            if(HardwareManager.currentHardware == this) {
+                HardwareManager.movingObject = true;
+            }
 
         } else {
 
