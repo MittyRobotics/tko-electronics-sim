@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim;
 
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +18,7 @@ public class Constants {
     public static final Skin SKIN = new Skin(ATLAS);
     public static final Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
-    public static ObjectType placing_object = null;
+    public static HardwareType placing_object = null;
 
     public static Vector2 WORLD_DIM = new Vector2(5000, 5000);
     public static int GRID_SIZE = 40;

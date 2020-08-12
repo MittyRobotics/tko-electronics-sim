@@ -27,7 +27,6 @@ public class Spark extends Hardware {
 
         JSONReader.loadConfig("scripts/Spark.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Spark.png")));
-//        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

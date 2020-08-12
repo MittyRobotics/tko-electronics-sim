@@ -31,7 +31,6 @@ public class RoboRio extends Hardware {
 
         JSONReader.loadConfig("scripts/RoboRIO.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/roborio.png")));
-//        base.setSize(base.getWidth()*2f, base.getHeight()*2f);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

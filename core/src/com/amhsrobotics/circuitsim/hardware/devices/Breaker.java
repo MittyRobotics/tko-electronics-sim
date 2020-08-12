@@ -27,7 +27,6 @@ public class Breaker extends Hardware {
 
         JSONReader.loadConfig("scripts/Breaker.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Breaker.png")));
-//        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

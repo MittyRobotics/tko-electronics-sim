@@ -1,17 +1,17 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.*;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
-import com.amhsrobotics.circuitsim.utility.*;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.input.InputManager;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
-import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -141,10 +141,10 @@ public class CircuitScreen implements Screen {
 
             if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
 
-                if (Constants.placing_object == ObjectType.WIRE) {
+                if (Constants.placing_object == HardwareType.WIRE) {
                     drawPlacing(vec2.x, vec2.y);
                     handleCable();
-                } else if (Constants.placing_object == ObjectType.WAGO2) {
+                } else if (Constants.placing_object == HardwareType.DOUBLESANDCRAB) {
                     currentPlacingHardwareType = HardwareType.DOUBLESANDCRAB;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.DOUBLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -152,7 +152,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
                     }
                     handleHardware(HardwareType.DOUBLESANDCRAB);
-                } else if (Constants.placing_object == ObjectType.WAGO3) {
+                } else if (Constants.placing_object == HardwareType.TRIPLESANDCRAB) {
                     currentPlacingHardwareType = HardwareType.TRIPLESANDCRAB;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -160,7 +160,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                     }
                     handleHardware(HardwareType.TRIPLESANDCRAB);
-                } else if (Constants.placing_object == ObjectType.PDP) {
+                } else if (Constants.placing_object == HardwareType.PDP) {
                     currentPlacingHardwareType = HardwareType.PDP;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PDP) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -168,7 +168,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
                     }
                     handleHardware(HardwareType.PDP);
-                } else if (Constants.placing_object == ObjectType.VRM) {
+                } else if (Constants.placing_object == HardwareType.VRM) {
                     currentPlacingHardwareType = HardwareType.VRM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.VRM) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -176,7 +176,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
                     }
                     handleHardware(HardwareType.VRM);
-                } else if (Constants.placing_object == ObjectType.ROBORIO) {
+                } else if (Constants.placing_object == HardwareType.ROBORIO) {
                     currentPlacingHardwareType = HardwareType.ROBORIO;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.ROBORIO) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -184,7 +184,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
                     }
                     handleHardware(HardwareType.ROBORIO);
-                } else if (Constants.placing_object == ObjectType.TALON) {
+                } else if (Constants.placing_object == HardwareType.TALON) {
                     currentPlacingHardwareType = HardwareType.TALON;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TALON) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -192,7 +192,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
                     }
                     handleHardware(HardwareType.TALON);
-                } else if (Constants.placing_object == ObjectType.PCM) {
+                } else if (Constants.placing_object == HardwareType.PCM) {
                     currentPlacingHardwareType = HardwareType.PCM;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -200,7 +200,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                     }
                     handleHardware(HardwareType.PCM);
-                } else if (Constants.placing_object == ObjectType.SPARK) {
+                } else if (Constants.placing_object == HardwareType.SPARK) {
                     currentPlacingHardwareType = HardwareType.SPARK;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.SPARK) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -208,7 +208,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
                     }
                     handleHardware(HardwareType.SPARK);
-                } else if (Constants.placing_object == ObjectType.NEO) {
+                } else if (Constants.placing_object == HardwareType.NEO) {
                     currentPlacingHardwareType = HardwareType.NEO;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.NEO) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -216,7 +216,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y), HardwareType.NEO);
                     }
                     handleHardware(HardwareType.NEO);
-                } else if (Constants.placing_object == ObjectType.MOTOR775) {
+                } else if (Constants.placing_object == HardwareType.MOTOR775) {
                     currentPlacingHardwareType = HardwareType.MOTOR775;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.MOTOR775) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -224,7 +224,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y), HardwareType.MOTOR775);
                     }
                     handleHardware(HardwareType.MOTOR775);
-                } else if (Constants.placing_object == ObjectType.BREAKER) {
+                } else if (Constants.placing_object == HardwareType.BREAKER) {
                     currentPlacingHardwareType = HardwareType.BREAKER;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BREAKER) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -232,7 +232,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y), HardwareType.BREAKER);
                     }
                     handleHardware(HardwareType.BREAKER);
-                } else if (Constants.placing_object == ObjectType.FALCON) {
+                } else if (Constants.placing_object == HardwareType.FALCON) {
                     currentPlacingHardwareType = HardwareType.FALCON;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.FALCON) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -240,7 +240,7 @@ public class CircuitScreen implements Screen {
                         currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
                     }
                     handleHardware(HardwareType.FALCON);
-                } else if (Constants.placing_object == ObjectType.BATTERY) {
+                } else if (Constants.placing_object == HardwareType.BATTERY) {
                     currentPlacingHardwareType = HardwareType.BATTERY;
                     if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BATTERY) {
                         currentPlacingHardware.setPosition(vec2.x, vec2.y);
@@ -270,7 +270,7 @@ public class CircuitScreen implements Screen {
 
 
         if(Constants.placing_object != null) {
-            if (Constants.placing_object == ObjectType.WIRE) {
+            if (Constants.placing_object == HardwareType.WIRE) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == currentPlacingHardwareType) {
                 currentPlacingHardware.update(batch, renderer, camera);

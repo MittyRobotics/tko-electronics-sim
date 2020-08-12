@@ -1,8 +1,8 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
@@ -167,7 +167,7 @@ public class CircuitGUIManager {
         reg_cable.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.WIRE;
+                Constants.placing_object = HardwareType.WIRE;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -175,7 +175,7 @@ public class CircuitGUIManager {
         sandcrab.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.WAGO2;
+                Constants.placing_object = HardwareType.DOUBLESANDCRAB;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -183,7 +183,7 @@ public class CircuitGUIManager {
         sandcrab3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.WAGO3;
+                Constants.placing_object = HardwareType.TRIPLESANDCRAB;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -191,7 +191,7 @@ public class CircuitGUIManager {
         pdp.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.PDP;
+                Constants.placing_object = HardwareType.PDP;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -199,7 +199,7 @@ public class CircuitGUIManager {
         vrm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.VRM;
+                Constants.placing_object = HardwareType.VRM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -207,7 +207,7 @@ public class CircuitGUIManager {
         rbr.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.ROBORIO;
+                Constants.placing_object = HardwareType.ROBORIO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -215,7 +215,7 @@ public class CircuitGUIManager {
         tln.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.TALON;
+                Constants.placing_object = HardwareType.TALON;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -223,7 +223,7 @@ public class CircuitGUIManager {
         pcm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.PCM;
+                Constants.placing_object = HardwareType.PCM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -231,7 +231,7 @@ public class CircuitGUIManager {
         spk.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.SPARK;
+                Constants.placing_object = HardwareType.SPARK;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -239,7 +239,7 @@ public class CircuitGUIManager {
         neo.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.NEO;
+                Constants.placing_object = HardwareType.NEO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -247,7 +247,7 @@ public class CircuitGUIManager {
         m775.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.MOTOR775;
+                Constants.placing_object = HardwareType.MOTOR775;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -255,7 +255,7 @@ public class CircuitGUIManager {
         fcn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.FALCON;
+                Constants.placing_object = HardwareType.FALCON;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -263,7 +263,7 @@ public class CircuitGUIManager {
         brk.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.BREAKER;
+                Constants.placing_object = HardwareType.BREAKER;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }
@@ -271,7 +271,7 @@ public class CircuitGUIManager {
         battery.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = ObjectType.BATTERY;
+                Constants.placing_object = HardwareType.BATTERY;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
             }

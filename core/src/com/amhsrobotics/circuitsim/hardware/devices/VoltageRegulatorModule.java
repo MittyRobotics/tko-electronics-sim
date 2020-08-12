@@ -32,7 +32,6 @@ public class VoltageRegulatorModule extends Hardware {
 
         JSONReader.loadConfig("scripts/VoltageRegulatorModule.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/VRM.png")));
-//        base.setSize(base.getWidth()/3, base.getHeight()/3);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

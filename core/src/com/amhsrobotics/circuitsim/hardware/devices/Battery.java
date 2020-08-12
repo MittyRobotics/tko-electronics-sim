@@ -27,7 +27,6 @@ public class Battery extends Hardware {
 
         JSONReader.loadConfig("scripts/Battery.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Battery.png")));
-//        base.setSize(base.getWidth()/3, base.getHeight()/3);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

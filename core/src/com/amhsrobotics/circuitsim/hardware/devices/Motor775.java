@@ -27,7 +27,6 @@ public class Motor775 extends Hardware {
 
         JSONReader.loadConfig("scripts/775.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/775.png")));
-//        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
