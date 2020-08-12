@@ -4,58 +4,72 @@
   "totalSprites": 28,
   "pins": [
     {
+      "type": "vrmpcm",
       "position": [-135, 43],
       "dimensions": [5,5]
     },
     {
+      "type": "vrmpcm",
       "position": [-135, 26],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-106, 104],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-89, 104],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-52, 104],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-69, 104],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-106, -103],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-89, -103],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-69, -103],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-52, -103],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-14, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [4, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-14, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [22, 90],
       "dimensions": [5, 5]
     },
@@ -64,50 +78,62 @@
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [58, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [77, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [94, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [113, 90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [-14, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [4, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [22, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [40, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [58, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [77, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [94, -90],
       "dimensions": [5, 5]
     },
     {
+      "type": "vrmpcm",
       "position": [113, -90],
       "dimensions": [5, 5]
     }

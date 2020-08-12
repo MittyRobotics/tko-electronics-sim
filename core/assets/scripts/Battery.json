@@ -1,0 +1,17 @@
+{
+  "name": "Battery",
+  "totalPins": 2,
+  "totalSprites": 3,
+  "pins": [
+    {
+      "type": "battery",
+      "position": [-245, 270],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "battery",
+      "position": [245, 270],
+      "dimensions": [25, 25]
+    }
+  ]
+}

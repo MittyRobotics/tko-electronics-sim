@@ -66,17 +66,7 @@ public class Battery extends Hardware {
     }
 
     public Vector2 calculate(int port) {
-        if (port == 0 || port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight() / 2);
-        } else if (port >= 2 && port <= 5) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 20);
-        } else if (port >= 6 && port <= 9) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 20);
-        } else if (port >= 10 && port <= 17) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 20);
-        } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 20);
-        }
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {

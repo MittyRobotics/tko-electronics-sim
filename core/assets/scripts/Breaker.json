@@ -4,10 +4,12 @@
   "totalSprites": 3,
   "pins": [
     {
+      "type": "battery",
       "position": [85, 175],
       "dimensions": [50, 130]
     },
     {
+      "type": "battery",
       "position": [-85, -178],
       "dimensions": [50, 130]
     }
