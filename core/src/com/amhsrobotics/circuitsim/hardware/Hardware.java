@@ -110,7 +110,7 @@ public abstract class Hardware {
 
         for(Sprite s : connectors) {
             if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
-                CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
+                CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
             }
         }
 

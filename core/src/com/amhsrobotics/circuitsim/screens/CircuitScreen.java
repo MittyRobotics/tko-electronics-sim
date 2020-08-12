@@ -43,7 +43,6 @@ public class CircuitScreen implements Screen {
     private static GlyphLayout layout = new GlyphLayout();
 
     private Hardware currentPlacingHardware;
-    private HardwareType currentPlacingHardwareType;
 
     private CircuitGUIManager manager;
 
@@ -128,10 +127,10 @@ public class CircuitScreen implements Screen {
 
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
-            HUDrenderer.rectLine(0, 0, 0, Gdx.graphics.getHeight(), 4);
-            HUDrenderer.rectLine(0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 4);
-            HUDrenderer.rectLine(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0, 4);
-            HUDrenderer.rectLine(0, 0, Gdx.graphics.getWidth(), 0, 4);
+            HUDrenderer.rectLine(0, 0, 0, Gdx.graphics.getHeight(), 6);
+            HUDrenderer.rectLine(0, Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 6);
+            HUDrenderer.rectLine(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Gdx.graphics.getWidth(), 0, 6);
+            HUDrenderer.rectLine(0, 0, Gdx.graphics.getWidth(), 0, 6);
             HUDrenderer.end();
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -139,118 +138,46 @@ public class CircuitScreen implements Screen {
             }
 
 
-            if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+
+            if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
+                currentPlacingHardware.setPosition(vec2.x, vec2.y);
+            } else {
 
                 if (Constants.placing_object == HardwareType.WIRE) {
                     drawPlacing(vec2.x, vec2.y);
-                    handleCable();
                 } else if (Constants.placing_object == HardwareType.DOUBLESANDCRAB) {
-                    currentPlacingHardwareType = HardwareType.DOUBLESANDCRAB;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.DOUBLESANDCRAB) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
-                    }
-                    handleHardware(HardwareType.DOUBLESANDCRAB);
+                    currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
                 } else if (Constants.placing_object == HardwareType.TRIPLESANDCRAB) {
-                    currentPlacingHardwareType = HardwareType.TRIPLESANDCRAB;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TRIPLESANDCRAB) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
-                    }
-                    handleHardware(HardwareType.TRIPLESANDCRAB);
+                    currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                 } else if (Constants.placing_object == HardwareType.PDP) {
-                    currentPlacingHardwareType = HardwareType.PDP;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PDP) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
-                    }
-                    handleHardware(HardwareType.PDP);
+                    currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
                 } else if (Constants.placing_object == HardwareType.VRM) {
-                    currentPlacingHardwareType = HardwareType.VRM;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.VRM) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
-                    }
-                    handleHardware(HardwareType.VRM);
+                    currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
                 } else if (Constants.placing_object == HardwareType.ROBORIO) {
-                    currentPlacingHardwareType = HardwareType.ROBORIO;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.ROBORIO) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
-                    }
-                    handleHardware(HardwareType.ROBORIO);
+                    currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
                 } else if (Constants.placing_object == HardwareType.TALON) {
-                    currentPlacingHardwareType = HardwareType.TALON;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.TALON) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
-                    }
-                    handleHardware(HardwareType.TALON);
+                    currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
                 } else if (Constants.placing_object == HardwareType.PCM) {
-                    currentPlacingHardwareType = HardwareType.PCM;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.PCM) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
-                    }
-                    handleHardware(HardwareType.PCM);
+                    currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                 } else if (Constants.placing_object == HardwareType.SPARK) {
-                    currentPlacingHardwareType = HardwareType.SPARK;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.SPARK) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
-                    }
-                    handleHardware(HardwareType.SPARK);
+                    currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
                 } else if (Constants.placing_object == HardwareType.NEO) {
-                    currentPlacingHardwareType = HardwareType.NEO;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.NEO) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y), HardwareType.NEO);
-                    }
-                    handleHardware(HardwareType.NEO);
+                    currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y), HardwareType.NEO);
                 } else if (Constants.placing_object == HardwareType.MOTOR775) {
-                    currentPlacingHardwareType = HardwareType.MOTOR775;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.MOTOR775) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y), HardwareType.MOTOR775);
-                    }
-                    handleHardware(HardwareType.MOTOR775);
+                    currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y), HardwareType.MOTOR775);
                 } else if (Constants.placing_object == HardwareType.BREAKER) {
-                    currentPlacingHardwareType = HardwareType.BREAKER;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BREAKER) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y), HardwareType.BREAKER);
-                    }
-                    handleHardware(HardwareType.BREAKER);
+                    currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y), HardwareType.BREAKER);
                 } else if (Constants.placing_object == HardwareType.FALCON) {
-                    currentPlacingHardwareType = HardwareType.FALCON;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.FALCON) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
-                    }
-                    handleHardware(HardwareType.FALCON);
+                    currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
                 } else if (Constants.placing_object == HardwareType.BATTERY) {
-                    currentPlacingHardwareType = HardwareType.BATTERY;
-                    if(currentPlacingHardware != null && currentPlacingHardware.type == HardwareType.BATTERY) {
-                        currentPlacingHardware.setPosition(vec2.x, vec2.y);
-                    } else {
-                        currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y), HardwareType.BATTERY);
-                    }
-                    handleHardware(HardwareType.BATTERY);
+                    currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y), HardwareType.BATTERY);
                 }
+            }
+
+            if (Constants.placing_object != HardwareType.WIRE) {
+                handleHardware(Constants.placing_object);
             } else {
-                currentPlacingHardware = null;
+                handleCable();
             }
 
         }
@@ -272,7 +199,7 @@ public class CircuitScreen implements Screen {
         if(Constants.placing_object != null) {
             if (Constants.placing_object == HardwareType.WIRE) {
                 drawPlacing(vec2.x, vec2.y);
-            } else if (currentPlacingHardware != null && currentPlacingHardware.type == currentPlacingHardwareType) {
+            } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.update(batch, renderer, camera);
             }
         }
@@ -293,7 +220,7 @@ public class CircuitScreen implements Screen {
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
             if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
