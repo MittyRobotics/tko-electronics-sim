@@ -36,6 +36,7 @@ public abstract class Hardware {
     public ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     public ArrayList<Sprite> connectors = new ArrayList<>();
     public ArrayList<JSONArray> pinDefs = new ArrayList<>();
+    public ArrayList<String> portTypes = new ArrayList<>();
 
     public Sprite base;
     public boolean canMove;

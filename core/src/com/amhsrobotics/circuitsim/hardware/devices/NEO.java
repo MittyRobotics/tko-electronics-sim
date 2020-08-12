@@ -34,9 +34,8 @@ public class NEO extends Hardware {
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
-        }
-        for(int x = 0; x < pins.size(); x++) {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
+            portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
         }
 
         base.setCenter(position.x, position.y);
