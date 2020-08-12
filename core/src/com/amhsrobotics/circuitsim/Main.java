@@ -19,7 +19,7 @@ public class Main extends Game {
 
 		game = this;
 
-		setScreen(new CircuitScreen(game));
+		setScreen(new MenuScreen(game));
 	}
 
 	@Override
