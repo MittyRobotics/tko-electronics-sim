@@ -30,7 +30,7 @@ public class ErrorMessage {
         this.stage = stage;
 
         LABEL_SMALL.font = Constants.FONT_SMALL;
-        LABEL_SMALL.fontColor = new Color(234/255f, 95/255f, 58/255f, 1);
+        LABEL_SMALL.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
 
         label = new Label("", LABEL_SMALL);
 
