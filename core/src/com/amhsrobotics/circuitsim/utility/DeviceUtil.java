@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.utility;
 
 import com.badlogic.gdx.graphics.Color;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -16,6 +17,13 @@ public class DeviceUtil {
         put("Black", new Color(15/255f, 14/255f, 14/255f, 1));
         put("White", new Color(243/255f, 237/255f, 236/255f, 1));
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
+    }};
+
+    public static final HashMap<String, String> GAUGETODEVICE = new HashMap<String, String>() {{
+        put("22", "CAN / Sensor");
+        put("12", "Motor");
+        put("4", "Power");
+        put("18", "VRM / PCM");
     }};
 
     //WIRE GAUGES

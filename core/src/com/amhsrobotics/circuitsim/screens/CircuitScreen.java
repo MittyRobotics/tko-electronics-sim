@@ -15,6 +15,8 @@ import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -35,13 +37,19 @@ public class CircuitScreen implements Screen {
     private final ModifiedShapeRenderer renderer;
     private final ModifiedShapeRenderer HUDrenderer;
     private ClippedCameraController camera;
+    private static BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40);
+    private static String drawString = "";
+    private static Vector2 drawLoc = new Vector2();
+    private static GlyphLayout layout = new GlyphLayout();
 
-
-    private Cable currentPlacingCable;
     private Hardware currentPlacingHardware;
     private HardwareType currentPlacingHardwareType;
 
     private CircuitGUIManager manager;
+
+    static {
+        hoverFont.setColor(Color.SALMON);
+    }
 
 
     public CircuitScreen(final Game game) {
@@ -271,6 +279,13 @@ public class CircuitScreen implements Screen {
 
         manager.update(delta);
 
+        batch.setProjectionMatrix(camera.getCamera().combined);
+        batch.begin();
+        if(!drawString.equals("")) {
+            hoverFont.draw(batch, drawString, drawLoc.x + (-layout.width) / 2, drawLoc.y + 60);
+        }
+        batch.end();
+        drawString = "";
     }
 
     private void handleHardware(HardwareType type) {
@@ -297,6 +312,12 @@ public class CircuitScreen implements Screen {
         renderer.setColor(Color.RED);
         renderer.circle(x, y, 5);
         renderer.end();
+    }
+
+    public static void setHoverDraw(Vector2 loc, String string) {
+        drawString = string;
+        drawLoc = loc;
+        layout.setText(hoverFont, string);
     }
 
 

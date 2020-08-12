@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
@@ -107,6 +108,12 @@ public abstract class Hardware {
 
         }
 
+        for(Sprite s : connectors) {
+            if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
+                CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
+            }
+        }
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             CircuitGUIManager.propertiesBox.hide();
             HardwareManager.currentHardware = null;
@@ -148,19 +155,12 @@ public abstract class Hardware {
                 //SET OWN POSITION
                 setPosition(vec.x, vec.y);
 
-
                 //MOVE CABLES
 
                 for (JSONArray arr : pinDefs) {
                     int index = pinDefs.indexOf(arr);
                     if (connections.get(index) != null) {
                         editWire(connections.get(index), index, ends.get(index));
-                        /*connections.get(index).editCoordinates(
-                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
-                                ends.get(index), false);
-                        connections.get(index).editCoordinates(
-                                new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() - 20),
-                                ends.get(index), true);*/
                     }
                 }
 
