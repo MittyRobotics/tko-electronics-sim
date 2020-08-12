@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.Rumble;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,106 +13,60 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
+import javax.swing.*;
+
 public class ErrorMessage {
 
     private ModifiedStage stage;
-    private Table container;
-    private Table table;
-    public final TextButton.TextButtonStyle TBUTTON = new TextButton.TextButtonStyle();;
-    public final TextButton.TextButtonStyle TBUTTON_ALT = new TextButton.TextButtonStyle();
-    public final Label.LabelStyle LABEL = new Label.LabelStyle();
+
+
     public final Label.LabelStyle LABEL_SMALL = new Label.LabelStyle();
-    public final TextTooltip.TextTooltipStyle TOOLTIP = new TextTooltip.TextTooltipStyle();
-    private ScrollPane scroll;
+    private Label label;
+    private Table table;
 
     private boolean visible;
 
     public ErrorMessage(ModifiedStage stage) {
         this.stage = stage;
 
-        TBUTTON.font = Constants.FONT_SMALL;
-        TBUTTON.up = Constants.SKIN.getDrawable("button_03");
-        TBUTTON.down = Constants.SKIN.getDrawable("button_02");
-
-        TBUTTON_ALT.font = Constants.FONT_SMALL;
-        TBUTTON_ALT.up = Constants.SKIN_ALTERNATE.getDrawable("button_03");
-        TBUTTON_ALT.down = Constants.SKIN_ALTERNATE.getDrawable("button_02");
-
-        LABEL.font = Constants.FONT_MEDIUM;
-        LABEL.fontColor = Color.BLACK;
-
         LABEL_SMALL.font = Constants.FONT_SMALL;
-        LABEL_SMALL.fontColor = Color.RED;
+        LABEL_SMALL.fontColor = new Color(234/255f, 95/255f, 58/255f, 1);
 
-        TOOLTIP.background = Constants.SKIN.getDrawable("button_01");
-        TOOLTIP.wrapWidth = 150;
-        TOOLTIP.label = LABEL_SMALL;
-
-        ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
-        sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
-
-        container = new Table();
-        container.setBackground(Constants.SKIN.getDrawable("textbox_01"));
-        container.setWidth(400);
-        container.setHeight(50);
-        container.setPosition(500, -200);
-        stage.addActor(container);
+        label = new Label("", LABEL_SMALL);
 
         table = new Table();
-        scroll = new ScrollPane(table, sStyle);
-        scroll.setScrollingDisabled(true,false);
-        scroll.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                stage.setScrollFocus(scroll);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                stage.setScrollFocus(null);
-            }
-        });
-        container.add(scroll).expand().fill();
-
-    }
-
-    public void addElement(Widget widget, boolean newRow, int colspan) {
-        if(widget instanceof Label) {
-            ((Label) widget).setAlignment(Align.center);
-        }
-        if(newRow) table.row();
-        table.add(widget).width(70).colspan(colspan);
-    }
-
-    public void addElement(WidgetGroup widget, boolean newRow, int colspan) {
-        if(newRow) table.row();
-        table.add(widget).width(70).colspan(colspan);
-    }
-
-    public void clearTable() {
-        table.clearChildren();
+        table.setBackground(Constants.SKIN.getDrawable("textbox_01"));
+        table.add(label);
         table.pack();
+
+        table.setPosition((float) Gdx.graphics.getWidth() / 2 - table.getWidth() / 2, -100);
+
+        stage.addActor(table);
+    }
+
+    public void activate(String text) {
+        label.setText(text);
+        table.setWidth(label.getWidth());
+        table.pack();
+        show();
+
+        Rumble.rumble(3f, 0.4f);
+        Timer timer = new Timer(3000, arg0 -> {
+            hide();
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public void show() {
-        container.setPosition(Gdx.graphics.getWidth() - 1000, 0);
-        Tools.slideIn(container, "down", 0.8f, Interpolation.exp10, 200);
+        table.setPosition((float) Gdx.graphics.getWidth() / 2 - table.getWidth() / 2 - 100, 10);
+        Tools.slideIn(table, "down", 0.8f, Interpolation.exp10, 200);
         visible = true;
     }
 
     public void hide() {
-        Tools.slideOut(container, "down", 0.8f, Interpolation.exp10, 200);
+        Tools.slideOut(table, "down", 0.8f, Interpolation.exp10, 200);
         visible = false;
-    }
-
-    public void hideAndClear() {
-        Tools.slideOut(container, "down", 0.8f, Interpolation.exp10, 200, new Runnable() {
-            @Override
-            public void run() {
-                visible = false;
-                table.clearChildren();
-                table.pack();
-            }
-        });
     }
 
 }

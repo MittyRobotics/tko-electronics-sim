@@ -1,7 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.gui.ErrorMessage;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -19,8 +18,6 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public abstract class Hardware {
@@ -223,16 +220,7 @@ public abstract class Hardware {
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            Rumble.rumble(3f, 0.4f);
-            CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Port already occupied by Cable " + connections.get(port).getID(), CircuitGUIManager.error.LABEL_SMALL), true, 2);
-            CircuitGUIManager.error.show();
-
-            Timer timer = new Timer(3000, arg0 -> {
-                CircuitGUIManager.error.hide();
-            });
-            timer.setRepeats(false);
-            timer.start();
+            CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
         } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
@@ -241,32 +229,15 @@ public abstract class Hardware {
 
             CableManager.currentCable = null;
         } else {
-            Rumble.rumble(3f, 0.4f);
-            CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Wrong gauge: must be gauge " + portTypes.get(port), CircuitGUIManager.error.LABEL_SMALL), true, 2);
-            CircuitGUIManager.error.show();
-
-            Timer timer = new Timer(3000, arg0 -> {
-                CircuitGUIManager.error.hide();
-            });
-            timer.setRepeats(false);
-            timer.start();
+            CircuitGUIManager.error.activate("Wrong gauge: must be gauge " + portTypes.get(port));
         }
     }
 
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            Rumble.rumble(3f, 0.4f);
-            CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Port already occupied by Cable " + connections.get(port).getID(), CircuitGUIManager.error.LABEL_SMALL), true, 2);
-            CircuitGUIManager.error.show();
+            CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
 
-            Timer timer = new Timer(3000, arg0 -> {
-                CircuitGUIManager.error.hide();
-            });
-            timer.setRepeats(false);
-            timer.start();
         } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
@@ -278,17 +249,7 @@ public abstract class Hardware {
             cable.setAppendingFromEnd(false);
             cable.setAppendingFromBegin(false);
         } else {
-            Rumble.rumble(3f, 0.4f);
-            CircuitGUIManager.error.clearTable();
-            CircuitGUIManager.error.addElement(new Label("Wrong gauge: must be gauge " + portTypes.get(port), CircuitGUIManager.error.LABEL_SMALL), true, 2);
-            CircuitGUIManager.error.show();
-
-            Timer timer = new Timer(3000, arg0 -> {
-                CircuitGUIManager.error.hide();
-            });
-            timer.setRepeats(false);
-            timer.start();
-
+            CircuitGUIManager.error.activate("Wrong gauge: must be gauge " + portTypes.get(port));
         }
     }
 
