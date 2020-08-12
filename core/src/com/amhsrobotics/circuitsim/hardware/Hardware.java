@@ -1,10 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.amhsrobotics.circuitsim.utility.SnapGrid;
-import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
@@ -228,6 +225,8 @@ public abstract class Hardware {
             attachWireLib(cable, port, endOfWire);
 
             CableManager.currentCable = null;
+        } else {
+            Rumble.rumble(3f, 0.4f);
         }
     }
 
@@ -243,6 +242,8 @@ public abstract class Hardware {
 
             cable.setAppendingFromEnd(false);
             cable.setAppendingFromBegin(false);
+        } else {
+            Rumble.rumble(2.5f, 0.2f);
         }
     }
 
