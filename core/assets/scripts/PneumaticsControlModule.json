@@ -5,111 +5,111 @@
   "pins": [
     {
       "position": [-135, 43],
-      "dimensions": [50, 130]
+      "dimensions": [5,5]
     },
     {
       "position": [-135, 26],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-106, 104],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-89, 104],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-52, 104],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-69, 104],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-106, -103],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-89, -103],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-69, -103],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-52, -103],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-14, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [4, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-14, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [22, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [40, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [58, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [77, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [94, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [113, 90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [-14, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [4, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [22, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [40, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [58, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [77, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [94, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     },
     {
       "position": [113, -90],
-      "dimensions": [50, 130]
+      "dimensions": [5, 5]
     }
   ]
 }

@@ -4,24 +4,24 @@
   "totalSprites": 6,
   "pins": [
     {
-      "position": [-51, 215],
-      "dimensions": [50, 130]
+      "position": [-51, 240],
+      "dimensions": [25, 25]
     },
     {
-      "position": [0, 215],
-      "dimensions": [50, 130]
+      "position": [-1, 240],
+      "dimensions": [25, 25]
     },
     {
-      "position": [51, 215],
-      "dimensions": [50, 130]
+      "position": [49, 240],
+      "dimensions": [25, 25]
     },
     {
-      "position": [-30, -227],
-      "dimensions": [50, 130]
+      "position": [-30, -240],
+      "dimensions": [25, 25]
     },
     {
-      "position": [30, -227],
-      "dimensions": [50, 130]
+      "position": [29, -240],
+      "dimensions": [25, 25]
     }
   ]
 }
