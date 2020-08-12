@@ -1,7 +1,9 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;

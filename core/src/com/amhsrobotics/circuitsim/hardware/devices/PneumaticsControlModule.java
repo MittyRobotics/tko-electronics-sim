@@ -1,7 +1,9 @@
-package com.amhsrobotics.circuitsim.hardware;
+package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
@@ -16,16 +18,16 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class Breaker extends Hardware {
+public class PneumaticsControlModule extends Hardware {
 
-    public Breaker(Vector2 position, HardwareType type, boolean... addCrimped) {
+    public PneumaticsControlModule(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, addCrimped);
 
         this.type = type;
 
-        JSONReader.loadConfig("scripts/Breaker.json");
-        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Breaker.png")));
-//        base.setSize(base.getWidth()/2, base.getHeight()/2);
+        JSONReader.loadConfig("scripts/PneumaticsControlModule.json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/PCM.png")));
+//        base.setSize(base.getWidth()/3, base.getHeight()/3);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
@@ -64,14 +66,24 @@ public class Breaker extends Hardware {
     }
 
     public Vector2 calculate(int port) {
-        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + (port == 0 ? 20 : -20));
+        if (port == 0 || port == 1) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+        } else if (port >= 2 && port <= 5) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 20);
+        } else if (port >= 6 && port <= 9) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 20);
+        } else if (port >= 10 && port <= 17) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 20);
+        } else {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 20);
+        }
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 35);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 25);
         renderer.end();
     }
 }

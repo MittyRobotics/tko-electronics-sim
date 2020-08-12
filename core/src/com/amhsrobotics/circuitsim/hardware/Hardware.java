@@ -35,11 +35,11 @@ public abstract class Hardware {
 
     public ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     public ArrayList<Sprite> connectors = new ArrayList<>();
-    ArrayList<JSONArray> pinDefs = new ArrayList<>();
+    public ArrayList<JSONArray> pinDefs = new ArrayList<>();
 
     public Sprite base;
-    boolean canMove;
-    boolean addCrimped;
+    public boolean canMove;
+    public boolean addCrimped;
 
     public Hardware(Vector2 pos, boolean... addCrimped) {
         this.position = pos;

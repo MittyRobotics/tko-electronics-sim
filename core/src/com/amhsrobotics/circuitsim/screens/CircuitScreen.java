@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.ObjectType;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.*;
+import com.amhsrobotics.circuitsim.hardware.devices.*;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
