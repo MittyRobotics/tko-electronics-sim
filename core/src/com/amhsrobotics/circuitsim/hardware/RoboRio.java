@@ -29,7 +29,7 @@ public class RoboRio extends Hardware {
 
         JSONReader.loadConfig("scripts/RoboRIO.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/roborio.png")));
-        base.setSize(base.getWidth()*2f, base.getHeight()*2f);
+//        base.setSize(base.getWidth()*2f, base.getHeight()*2f);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
@@ -44,19 +44,15 @@ public class RoboRio extends Hardware {
         base.setCenter(position.x, position.y);
 
 
-        /*for(JSONArray arr : pinDefs) {
+        for(JSONArray arr : pinDefs) {
             Sprite temp;
             if(connectors.size() == connNum) {
                 break;
             }
-            if(connectors.size() == 0) {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-            } else {
-                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-            }
+            temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
             connectors.add(temp);
-        }*/
+        }
 
         initConnections();
         initEnds();
