@@ -61,21 +61,6 @@ public class SandCrab extends Hardware {
         initEnds();
     }
 
-    @Override
-    public void delete() {
-        for(Cable cable : connections) {
-            if(cable != null) {
-                if(ends.get(connections.indexOf(cable))) {
-                    cable.setConnection2(null);
-                } else {
-                    cable.setConnection1(null);
-                }
-            }
-        }
-        HardwareManager.removeHardware(this);
-        HardwareManager.currentHardware = null;
-        CircuitGUIManager.propertiesBox.hide();
-    }
 
 
     @Override

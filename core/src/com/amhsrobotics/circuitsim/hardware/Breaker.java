@@ -25,6 +25,7 @@ public class Breaker extends Hardware {
 
         JSONReader.loadConfig("scripts/Breaker.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Breaker.png")));
+        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
@@ -90,7 +91,7 @@ public class Breaker extends Hardware {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 5);
+        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 35);
         renderer.end();
     }
 }

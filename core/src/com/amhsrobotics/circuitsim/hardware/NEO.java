@@ -25,6 +25,7 @@ public class NEO extends Hardware {
 
         JSONReader.loadConfig("scripts/NEO.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/NEO.png")));
+        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

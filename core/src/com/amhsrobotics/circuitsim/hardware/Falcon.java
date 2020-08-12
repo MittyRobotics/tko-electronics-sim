@@ -25,6 +25,7 @@ public class Falcon extends Hardware {
 
         JSONReader.loadConfig("scripts/Falcon.json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Falcon.png")));
+        base.setSize(base.getWidth()/2, base.getHeight()/2);
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));

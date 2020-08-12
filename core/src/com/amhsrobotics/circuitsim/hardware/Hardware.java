@@ -204,7 +204,20 @@ public abstract class Hardware {
         return position;
     }
 
-    public void delete() { }
+    public void delete() {
+        for(Cable cable : connections) {
+            if(cable != null) {
+                if(ends.get(connections.indexOf(cable))) {
+                    cable.setConnection2(null);
+                } else {
+                    cable.setConnection1(null);
+                }
+            }
+        }
+        HardwareManager.removeHardware(this);
+        HardwareManager.currentHardware = null;
+        CircuitGUIManager.propertiesBox.hide();
+    }
 
     public void setPosition(float x, float y) {
         position.set(x, y);
