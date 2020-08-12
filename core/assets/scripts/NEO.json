@@ -4,20 +4,20 @@
   "totalSprites": 5,
   "pins": [
     {
-      "position": [-30, 28],
-      "dimensions": [50, 130]
+      "position": [-29, 28],
+      "dimensions": [20, 20]
     },
     {
       "position": [-9, 28],
-      "dimensions": [50, 130]
+      "dimensions": [20, 20]
     },
     {
       "position": [12, 28],
-      "dimensions": [50, 130]
+      "dimensions": [20, 20]
     },
     {
-      "position": [33, 28],
-      "dimensions": [50, 130]
+      "position": [34, 28],
+      "dimensions": [20, 20]
     }
   ]
 }
