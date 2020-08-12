@@ -188,8 +188,6 @@ public abstract class Hardware {
         batch.end();
     }
 
-    public void editWire(Cable cable, int port, boolean endOfWire) {}
-
     public void clearConnection(Cable cable) {
         for(int i = 0; i < connNum; i++) {
             if(cable == connections.get(i)) {
@@ -201,6 +199,38 @@ public abstract class Hardware {
 
     public Sprite getConnector(int conn) {
         return connectors.get(conn);
+    }
+
+    public Vector2 calculate(int port) {
+        return null;
+    }
+
+
+    public void attachCrimpedCable(Cable cable, int port) {
+        connections.set(port, cable);
+
+        cable.removeCoordinates();
+
+        cable.setConnection1(this);
+
+        cable.addCoordinates(calculate(port), true);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), true);
+
+        CableManager.currentCable = null;
+    }
+
+    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
+        cable.addCoordinates(calculate(port), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
+
+        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
+        CableManager.currentCable = null;
+    }
+
+
+    public void editWire(Cable cable, int port, boolean endOfWire) {
+        cable.editCoordinates(calculate(port), endOfWire,true);
+        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
     }
 
     public void renderConnectors(Batch batch) {
@@ -273,7 +303,6 @@ public abstract class Hardware {
         CableManager.currentCable = null;
     }
 
-    public void attachWireLib(Cable cable, int port, boolean endOfWire) {}
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
@@ -296,8 +325,6 @@ public abstract class Hardware {
         renderer.end();
     }
 
-    public void attachCrimpedCable(Cable cable, int port) {
-    }
 
     public int getTotalConnectors() {
         return connNum;

@@ -62,6 +62,11 @@ public class SandCrab extends Hardware {
     }
 
 
+    public Vector2 calculate(int port) {
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
+    }
+
+
 
     @Override
     public void populateProperties() {
