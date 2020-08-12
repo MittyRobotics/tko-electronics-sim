@@ -79,12 +79,6 @@ public abstract class Hardware {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
         }
 
-        for(Cable c : connections) {
-            if(c != null) {
-                c.render(renderer, camera);
-            }
-        }
-
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
         if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
@@ -148,12 +142,13 @@ public abstract class Hardware {
                 for (JSONArray arr : pinDefs) {
                     int index = pinDefs.indexOf(arr);
                     if (connections.get(index) != null) {
-                        connections.get(index).editCoordinates(
+                        editWire(connections.get(index), index, ends.get(index));
+                        /*connections.get(index).editCoordinates(
                                 new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() + 20),
                                 ends.get(index), false);
                         connections.get(index).editCoordinates(
                                 new Vector2(getConnector(index).getX() + getConnector(index).getWidth() / 2, getConnector(index).getY() - 20),
-                                ends.get(index), true);
+                                ends.get(index), true);*/
                     }
                 }
 
@@ -166,11 +161,22 @@ public abstract class Hardware {
 
         batch.begin();
         base.draw(batch);
+        batch.end();
+
+        for(Cable c : connections) {
+            if(c != null) {
+                c.render(renderer, camera);
+            }
+        }
+
+        batch.begin();
         for(Sprite conn : connectors) {
             conn.draw(batch);
         }
         batch.end();
     }
+
+    public void editWire(Cable cable, int port, boolean endOfWire) {}
 
     public void clearConnection(Cable cable) {
         for(int i = 0; i < connNum; i++) {
