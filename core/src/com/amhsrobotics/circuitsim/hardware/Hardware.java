@@ -122,11 +122,8 @@ public abstract class Hardware {
 
             drawHover(renderer);
 
-            boolean good = true;
-
             for(Cable c : connections) {
                 if(c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
-                    good = false;
                     CableManager.currentCable = c;
                     HardwareManager.currentHardware = null;
                     break;
@@ -282,7 +279,8 @@ public abstract class Hardware {
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
             CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
-
+        } else if(portTypes.get(port).equals("13") && cable.getGauge() != 13) {
+            CircuitGUIManager.error.activate("Port requires ethernet cable");
         } else {
             cable.setGauge(Integer.parseInt(portTypes.get(port)));
             connections.set(port, cable);
