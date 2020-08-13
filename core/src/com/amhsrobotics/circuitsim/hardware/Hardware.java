@@ -59,6 +59,9 @@ public abstract class Hardware {
         if(this.addCrimped) {
             checkCrimpedCables();
         }
+
+        populateProperties();
+        CircuitGUIManager.propertiesBox.show();
     }
 
     public void checkCrimpedCables() {
