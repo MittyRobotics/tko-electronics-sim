@@ -140,7 +140,7 @@ public class CircuitScreen implements Screen {
 
             if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.setPosition(vec2.x, vec2.y);
-            } else if (currentPlacingHardware != null) {
+            } else {
                 if (Constants.placing_object == HardwareType.WIRE) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if (Constants.placing_object == HardwareType.DOUBLESANDCRAB) {
