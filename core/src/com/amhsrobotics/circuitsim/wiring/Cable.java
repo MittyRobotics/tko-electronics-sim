@@ -331,7 +331,7 @@ public class Cable implements Disposable {
 
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
             } else {
 
@@ -352,7 +352,7 @@ public class Cable implements Disposable {
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+                    if((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
                         HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
                         if (hardware != null) {
@@ -484,7 +484,7 @@ public class Cable implements Disposable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) && !CableManager.merging) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) && !CableManager.merging) {
 
             // CLICKED ON END
 

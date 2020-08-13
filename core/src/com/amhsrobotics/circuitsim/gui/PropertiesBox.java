@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Align;
 public class PropertiesBox {
 
     private ModifiedStage stage;
-    private Table container;
+    public Table container;
     private Table table;
     public final TextButton.TextButtonStyle TBUTTON = new TextButton.TextButtonStyle();;
     public final TextButton.TextButtonStyle TBUTTON_ALT = new TextButton.TextButtonStyle();
@@ -100,7 +100,7 @@ public class PropertiesBox {
 
     public void show() {
         if(!CircuitGUIManager.isPanelShown()) {
-            container.setPosition(Gdx.graphics.getWidth() - 220, Gdx.graphics.getHeight() - 210);
+            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         } else {
             container.setPosition(Gdx.graphics.getWidth() - 410, Gdx.graphics.getHeight() - 210);
         }

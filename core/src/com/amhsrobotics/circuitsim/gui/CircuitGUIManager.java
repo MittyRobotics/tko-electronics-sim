@@ -559,14 +559,18 @@ public class CircuitGUIManager {
 
     private void hidePanel() {
 //        Tools.slideOut(container, "right", 1f, Interpolation.exp10, 300);
+        //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
+        Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
         panelShown = false;
     }
 
     private void showPanel() {
         container.setPosition(Gdx.graphics.getWidth() - 200, 0);
+        propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
         filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
+        Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
         panelShown = true;
     }
 
