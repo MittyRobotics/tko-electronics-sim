@@ -331,7 +331,7 @@ public class Cable implements Disposable {
 
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
             } else {
 
@@ -351,7 +351,7 @@ public class Cable implements Disposable {
                 }
 
                 // CLICK
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !CableManager.merging) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
                         HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
@@ -380,6 +380,8 @@ public class Cable implements Disposable {
                             backupNode = null;
                             nodeChanged = true;
                         }
+                        CircuitGUIManager.propertiesBox.hideAndClear();
+                        CableManager.currentCable = null;
                     }
 
                 }
@@ -387,6 +389,11 @@ public class Cable implements Disposable {
                 // DELETE
                 if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
                     if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
+                        if(appendingFromBegin && coordinates.size() > 1) {
+                            coordinates.remove(0);
+                        } else if (appendingFromEnd && coordinates.size() > 1) {
+                            coordinates.remove(coordinates.size()-1);
+                        }
                         appendingFromBegin = false;
                         appendingFromEnd = false;
                     } else {
