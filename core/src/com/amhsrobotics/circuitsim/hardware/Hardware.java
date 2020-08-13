@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
@@ -14,6 +15,7 @@ import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +24,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -46,8 +49,9 @@ public abstract class Hardware {
     public boolean canMove;
     public boolean addCrimped;
 
-    public Hardware(Vector2 pos, boolean... addCrimped) {
+    public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
+        this.type = type;
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
         connections = new ArrayList<>();
@@ -68,6 +72,25 @@ public abstract class Hardware {
             populateProperties();
             CircuitGUIManager.propertiesBox.show();
         }
+
+        loadThis();
+    }
+
+    public void loadThis() {
+        Gdx.app.log("scripts/" + type.toString().toLowerCase() + ".json", "");
+        JSONReader.loadConfig("scripts/" + type.toString().toLowerCase() + ".json");
+        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/" + type.toString().toLowerCase() + ".png")));
+
+        connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+        name = (String) (JSONReader.getCurrentConfig().get("name"));
+        JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
+        for(int x = 0; x < pins.size(); x++) {
+            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
+            pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
+            portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
+        }
+
+        base.setCenter(position.x, position.y);
     }
 
     public void checkCrimpedCables() {

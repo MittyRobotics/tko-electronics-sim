@@ -18,44 +18,18 @@ public class SandCrab extends Hardware {
 
 
     public SandCrab(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, addCrimped);
+        super(position, type, addCrimped);
 
         this.type = type;
-
-        if(type == HardwareType.DOUBLESANDCRAB) {
-            JSONReader.loadConfig("scripts/DoubleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago2.png")));
-        } else {
-            JSONReader.loadConfig("scripts/TripleSandCrab.json");
-            base = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago3.png")));
-        }
-
-        connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
-        name = (String) (JSONReader.getCurrentConfig().get("name"));
-        JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
-        for(int x = 0; x < pins.size(); x++) {
-            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
-            pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
-            portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
-        }
-
-        base.setCenter(position.x, position.y);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
             if(connectors.size() == connNum) {
                 break;
             }
-//            if(connectors.size() == 0) {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange_2.png")));
-//            } else {
-//                temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_orange.png")));
-//            }
-            temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/wago_orange.png")));
 
+            temp = new Sprite(new Texture(Gdx.files.internal("img/hardware/sandcrab_connector.png")));
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-//            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
-
             connectors.add(temp);
         }
 
