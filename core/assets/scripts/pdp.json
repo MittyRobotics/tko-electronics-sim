@@ -2,6 +2,7 @@
   "name": "PDP",
   "totalPins": 44,
   "totalLeds": 2,
+
   "totalSprites": 45,
   "pins": [
     {

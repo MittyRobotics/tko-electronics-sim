@@ -3,6 +3,7 @@
   "totalPins": 5,
   "totalLeds": 2,
   "totalSprites": 6,
+  "crimped": [0, 1, 2, 3, 4],
   "pins": [
     {
       "type": "12",
