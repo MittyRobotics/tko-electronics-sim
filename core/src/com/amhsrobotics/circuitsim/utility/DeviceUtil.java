@@ -24,7 +24,7 @@ public class DeviceUtil {
         put("12", "Motor");
         put("4", "Power");
         put("18", "VRM / PCM");
-        put("13", "Ethernet");
+        put("9", "Ethernet");
     }};
 
     //WIRE GAUGES

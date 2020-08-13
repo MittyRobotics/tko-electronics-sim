@@ -54,7 +54,7 @@ public class CableManager {
         // CHECK FOR MERGING WIRES
         if (cable.getCoordinates().size() > 1) {
             for (int x = 0; x < cables.size; x++) {
-                if (cables.get(x).getID() != cable.getID() && !(cable instanceof CrimpedCable)) {
+                if (cables.get(x).getID() != cable.getID() && !(cable instanceof CrimpedCable) && cable.getID() != 9 && cables.get(x).getID() != 9) {
                     int ans = cables.get(x).hoveringOnEndpoint(camera);
                     if (ans == 1) {
                         merging = true;
