@@ -77,7 +77,6 @@ public abstract class Hardware {
     }
 
     public void loadThis() {
-        Gdx.app.log("scripts/" + type.toString().toLowerCase() + ".json", "");
         JSONReader.loadConfig("scripts/" + type.toString().toLowerCase() + ".json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/" + type.toString().toLowerCase() + ".png")));
 

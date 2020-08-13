@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
@@ -30,7 +31,7 @@ public class CircuitGUIManager {
 
     private final ModifiedStage stage;
 
-    private final TextButton back, help, options, hidePanel;
+    private final TextButton back, help, options, hidePanel, save;
     public static Table container, table, table2, filters;
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
@@ -397,12 +398,14 @@ public class CircuitGUIManager {
 
         back = new TextButton("Quit", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
-        hidePanel = new TextButton("Toggle Panel", tStyle);
-        hidePanel.setPosition(260, Gdx.graphics.getHeight() - 70);
+        save = new TextButton("Save", tStyle);
+        save.setPosition(100, Gdx.graphics.getHeight() - 70);
         help = new TextButton("Help", tStyle);
-        help.setPosition(100, Gdx.graphics.getHeight() - 70);
+        help.setPosition(180, Gdx.graphics.getHeight() - 70);
         options = new TextButton("Options", tStyle);
-        options.setPosition(180, Gdx.graphics.getHeight() - 70);
+        options.setPosition(260, Gdx.graphics.getHeight() - 70);
+        hidePanel = new TextButton("Toggle Panel", tStyle);
+        hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
@@ -411,7 +414,7 @@ public class CircuitGUIManager {
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
-                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.15f, hidePanel, options, help);
+                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.1f, hidePanel, options, help, save);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -451,15 +454,22 @@ public class CircuitGUIManager {
                 }
             }
         });
+        save.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                FileManager.save();
+            }
+        });
+
 
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildOptionsMenu(wStyle, lStyle, l2Style, textFieldStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
-        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, help, options, hidePanel);
+        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, save, help, options, hidePanel);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel);
+        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel, save);
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
