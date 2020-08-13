@@ -20,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -48,6 +49,9 @@ public abstract class Hardware {
     public Sprite base;
     public boolean canMove;
     public boolean addCrimped;
+    public boolean facingUp = true;
+
+    private float prevBaseRotation = 0;
 
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
@@ -74,6 +78,7 @@ public abstract class Hardware {
         }
 
         loadThis();
+        prevBaseRotation = base.getRotation();
     }
 
     public void loadThis() {
@@ -112,8 +117,12 @@ public abstract class Hardware {
         batch.setProjectionMatrix(camera.getCamera().combined);
 
         base.setCenter(getPosition().x, getPosition().y);
+
         for(Sprite temp : connectors) {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
+            Vector2 pos = new Vector2(temp.getX(), temp.getY());
+            pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
+            temp.setPosition(pos.x, pos.y);
         }
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
@@ -355,6 +364,10 @@ public abstract class Hardware {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Rectangle getSpriteBox() {
+        return base.getBoundingRectangle();
     }
 
     public void delete() {

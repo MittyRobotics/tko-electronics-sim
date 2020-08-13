@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
-import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 public class SandCrab extends Hardware {
 

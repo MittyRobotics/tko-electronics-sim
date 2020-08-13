@@ -1,38 +1,27 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
-import com.amhsrobotics.circuitsim.files.JSONReader;
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
+import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 public class Flippable extends Hardware  {
 
     public Flippable(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
-
-        this.type = type;
-
-        JSONReader.loadConfig("scripts/Falcon.json");
-        base = new Sprite(new Texture(Gdx.files.internal("img/hardware/Falcon.png")));
-
-        connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
-        name = (String) (JSONReader.getCurrentConfig().get("name"));
-        JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
-        for(int x = 0; x < pins.size(); x++) {
-            pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
-            pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
-            portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
-        }
-
-        base.setCenter(position.x, position.y);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
@@ -49,13 +38,48 @@ public class Flippable extends Hardware  {
         initEnds();
     }
 
-    public Vector2 calculate(int port) {
-        if(port == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
-        } else if (port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
-        } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
+    @Override
+    public void populateProperties() {
+
+        CircuitGUIManager.propertiesBox.clearTable();
+
+        TextButton flip = new TextButton("Rotate", CircuitGUIManager.propertiesBox.TBUTTON);
+
+        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(flip, true, 2);
+        for (int x = 0; x < connectors.size(); x++) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            if(connections.get(x) == null) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else if(connections.get(x) instanceof CrimpedCable) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("Crimped", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else if(connections.get(x) instanceof EthernetCable) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else {
+                if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
+                    CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                } else {
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                }
+            }
+        }
+
+        flip.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                rotateThis();
+            }
+        });
+    }
+
+    private void rotateThis() {
+        base.rotate(90);
+
+        for (JSONArray arr : pinDefs) {
+            int index = pinDefs.indexOf(arr);
+            if (connections.get(index) != null) {
+                editWire(connections.get(index), index, ends.get(index));
+            }
         }
     }
 
@@ -64,7 +88,7 @@ public class Flippable extends Hardware  {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 5);
+        renderer.roundedRect(getSpriteBox().x - 7, getSpriteBox().y - 7, getSpriteBox().getWidth() + 14, getSpriteBox().getHeight() + 14, 5);
         renderer.end();
     }
 }

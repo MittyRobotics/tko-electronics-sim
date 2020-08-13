@@ -11,11 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
-public class Motor775 extends Hardware {
+public class Motor775 extends Flippable {
 
     public Motor775(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
-
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
@@ -36,12 +35,4 @@ public class Motor775 extends Hardware {
         return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
     }
 
-
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 5);
-        renderer.end();
-    }
 }
