@@ -1,7 +1,7 @@
 {
   "name": "roboRIO",
-  "totalPins": 36,
-  "totalSprites": 37,
+  "totalPins": 37,
+  "totalSprites": 38,
   "pins": [
     {
       "position": [-260, 413],
@@ -196,6 +196,12 @@
       "position": [432, -337],
       "dimensions": [15, 15],
       "type": "22"
+    },
+
+    {
+      "position": [151, 379],
+      "dimensions": [16, 16],
+      "type": "13"
     }
   ]
 }
