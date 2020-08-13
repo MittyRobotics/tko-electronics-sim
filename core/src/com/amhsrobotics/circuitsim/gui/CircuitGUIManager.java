@@ -175,7 +175,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.WIRE;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         sandcrab.addListener(new ChangeListener() {
@@ -184,7 +184,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.DOUBLESANDCRAB;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         sandcrab3.addListener(new ChangeListener() {
@@ -193,7 +193,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.TRIPLESANDCRAB;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         pdp.addListener(new ChangeListener() {
@@ -202,7 +202,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.PDP;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         vrm.addListener(new ChangeListener() {
@@ -211,7 +211,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.VRM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         rbr.addListener(new ChangeListener() {
@@ -220,7 +220,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.ROBORIO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         tln.addListener(new ChangeListener() {
@@ -229,7 +229,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.TALON;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         pcm.addListener(new ChangeListener() {
@@ -238,7 +238,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.PCM;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         spk.addListener(new ChangeListener() {
@@ -247,7 +247,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.SPARK;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         neo.addListener(new ChangeListener() {
@@ -264,7 +264,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.MOTOR775;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         fcn.addListener(new ChangeListener() {
@@ -273,7 +273,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.FALCON;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         brk.addListener(new ChangeListener() {
@@ -282,7 +282,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.BREAKER;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         battery.addListener(new ChangeListener() {
@@ -291,7 +291,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.BATTERY;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         rad.addListener(new ChangeListener() {
@@ -300,7 +300,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.RADIO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
         eth.addListener(new ChangeListener() {
@@ -309,7 +309,7 @@ public class CircuitGUIManager {
                 Constants.placing_object = HardwareType.ETHERNET;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
-//                propertiesBox.hide();
+                propertiesBox.hide();
             }
         });
 
