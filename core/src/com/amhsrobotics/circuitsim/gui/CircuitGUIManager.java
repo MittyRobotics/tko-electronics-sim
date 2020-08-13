@@ -564,7 +564,7 @@ public class CircuitGUIManager {
         //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
         if(propertiesBox.isVisible()) {
-            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5In, -210, 0.2f, propertiesBox.container);
         }
         panelShown = false;
     }
