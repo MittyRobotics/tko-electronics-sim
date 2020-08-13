@@ -5,10 +5,8 @@ import com.badlogic.gdx.math.Vector3;
 import java.util.Random;
 
 public class Rumble {
-    private static float time = 0;
-    private static float currentTime = 0;
-    private static float power = 0;
-    private static float currentPower = 0;
+
+    private static float time = 0, currentTime = 0, power = 0, currentPower = 0;
     private static Random random;
     private static Vector3 pos = new Vector3();
 
