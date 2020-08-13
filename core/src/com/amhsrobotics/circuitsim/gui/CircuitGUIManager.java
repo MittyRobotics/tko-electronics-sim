@@ -712,8 +712,6 @@ public class CircuitGUIManager {
             table.add(fcn).width(120);
             table.row();
             table.add(pcm).width(120);
-            table.row();
-            table.add(rad).width(120);
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {
