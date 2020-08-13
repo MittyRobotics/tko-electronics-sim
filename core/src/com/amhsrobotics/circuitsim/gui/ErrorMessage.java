@@ -1,13 +1,14 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
-import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.camera.Rumble;
+import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import javax.swing.*;
 

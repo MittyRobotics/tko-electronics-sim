@@ -21,7 +21,7 @@ public class Constants {
     public static HardwareType placing_object = null;
 
     public static Vector2 WORLD_DIM = new Vector2(8000, 8000);
-    public static int GRID_SIZE = 40;
+    public static int GRID_SIZE = 60;
 
     public static void disposeAll() {
         FONT.dispose();

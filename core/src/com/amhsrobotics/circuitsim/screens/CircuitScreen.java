@@ -61,7 +61,7 @@ public class CircuitScreen implements Screen {
         camera = new ClippedCameraController(true);
         camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
         camera.attachCameraSequence(new ArrayList<CameraAction>() {{
-            add(Actions.zoomCameraTo(2f, 1f, Interpolation.exp10));
+            add(Actions.zoomCameraTo(3f, 1f, Interpolation.exp10));
         }});
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);

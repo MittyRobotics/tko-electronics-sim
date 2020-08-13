@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.hardware;
 
-import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
