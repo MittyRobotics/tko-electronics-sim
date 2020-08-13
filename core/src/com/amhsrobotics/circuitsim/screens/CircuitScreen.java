@@ -72,8 +72,8 @@ public class CircuitScreen implements Screen {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 if(Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null && HardwareManager.currentHardware == null) {
-                    float x = Gdx.input.getDeltaX();
-                    float y = Gdx.input.getDeltaY();
+                    float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
+                    float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
 
                     camera.getCamera().translate(-x, y);
                 }

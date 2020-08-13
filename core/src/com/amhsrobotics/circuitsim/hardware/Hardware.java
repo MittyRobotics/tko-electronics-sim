@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
+import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
@@ -61,8 +62,12 @@ public abstract class Hardware {
             checkCrimpedCables();
         }
 
-        populateProperties();
-        CircuitGUIManager.propertiesBox.show();
+        if(Constants.placing_object == null) {
+            populateProperties();
+            CircuitGUIManager.propertiesBox.show();
+        } else {
+            CircuitGUIManager.propertiesBox.hide();
+        }
     }
 
     public void checkCrimpedCables() {
@@ -109,8 +114,12 @@ public abstract class Hardware {
                 HardwareManager.currentHardware = this;
                 CableManager.currentCable = null;
 
-                populateProperties();
-                CircuitGUIManager.propertiesBox.show();
+                if(Constants.placing_object == null) {
+                    populateProperties();
+                    CircuitGUIManager.propertiesBox.show();
+                } else {
+                    CircuitGUIManager.propertiesBox.hide();
+                }
             }
 
         }
@@ -121,18 +130,17 @@ public abstract class Hardware {
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            CircuitGUIManager.propertiesBox.hide();
-            HardwareManager.currentHardware = null;
-        }
-
         if (Gdx.input.isTouched()) {
 
-            if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0 && base.getBoundingRectangle().contains(vec.x, vec.y)) {
-                canMove = true;
-            }
-            if(HardwareManager.currentHardware == this) {
-                HardwareManager.movingObject = true;
+            if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
+                HardwareManager.currentHardware = this;
+
+                if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0) {
+                    HardwareManager.movingObject = true;
+                    canMove = true;
+                }
+            } else {
+                HardwareManager.currentHardware = null;
             }
 
         } else {
@@ -149,24 +157,31 @@ public abstract class Hardware {
             HardwareManager.moveToFront(this);
             drawHover(renderer);
 
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                HardwareManager.currentHardware = null;
+                CircuitGUIManager.propertiesBox.hide();
+            }
+
             if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
                 this.delete();
             }
 
             if(Gdx.input.isTouched() && canMove) {
-                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    SnapGrid.calculateSnap(vec);
-                }
+                if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
+                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                        SnapGrid.calculateSnap(vec);
+                    }
 
-                //SET OWN POSITION
-                setPosition(vec.x, vec.y);
+                    //SET OWN POSITION
+                    setPosition(vec.x, vec.y);
 
-                //MOVE CABLES
+                    //MOVE CABLES
 
-                for (JSONArray arr : pinDefs) {
-                    int index = pinDefs.indexOf(arr);
-                    if (connections.get(index) != null) {
-                        editWire(connections.get(index), index, ends.get(index));
+                    for (JSONArray arr : pinDefs) {
+                        int index = pinDefs.indexOf(arr);
+                        if (connections.get(index) != null) {
+                            editWire(connections.get(index), index, ends.get(index));
+                        }
                     }
                 }
 
