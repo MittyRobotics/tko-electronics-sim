@@ -35,7 +35,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery;
+    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -161,7 +161,8 @@ public class CircuitGUIManager {
         fcn = new TextButton("Falcon", tStyle);
         fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor", ttStyle));
         //table.add(fcn).width(120);
-
+        rad = new TextButton("Radio", tStyle);
+        rad.addListener(new TextTooltip("Radio", ttStyle));
 
         container.add(scroll).expand().fill();
 
@@ -285,6 +286,15 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.BATTERY;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+                propertiesBox.hide();
+            }
+        });
+        rad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.RADIO;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
@@ -643,6 +653,8 @@ public class CircuitGUIManager {
                 table.add(pdp).width(120);
                 table.row();
                 table.add(vrm).width(120);
+                table.row();
+                table.add(rad).width(120);
             }
 
             if(filtersMap.get(fil3)){
