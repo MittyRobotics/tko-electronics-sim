@@ -130,7 +130,7 @@ public abstract class Hardware {
                 }
             } else {
                 HardwareManager.currentHardware = null;
-                CircuitGUIManager.propertiesBox.hide();
+//                CircuitGUIManager.propertiesBox.hide();
             }
 
         } else {
