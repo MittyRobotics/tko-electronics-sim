@@ -92,8 +92,10 @@ public abstract class Hardware {
 
         JSONArray temp = (JSONArray) JSONReader.getCurrentConfig().get("crimped");
 
-        for(int i = 0; i < temp.size(); ++i) {
-            crimpedPorts.add(((Long) temp.get(i)).intValue());
+        if(temp != null) {
+            for (Object o : temp) {
+                crimpedPorts.add(((Long) o).intValue());
+            }
         }
 
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
