@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.*;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
@@ -49,14 +50,14 @@ public class Cable implements Disposable {
     public float limit;
 
 
-    public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates) {
+    /*public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates) {
         this.voltage = voltage;
         this.gauge = gauge;
         this.coordinates = coordinates;
         this.color = DeviceUtil.COLORS.get("Green");
 
         //populateProperties();
-    }
+    }*/
 
     public Cable(Vector2 startPoint, int count) {
         voltage = 0;
@@ -68,7 +69,7 @@ public class Cable implements Disposable {
 
         coordinates.add(startPoint);
 
-        //populateProperties();
+        populateProperties();
     }
 
     public int getID() {
@@ -188,7 +189,9 @@ public class Cable implements Disposable {
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
         }
-        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit);
+        renderer.setColor(Color.SALMON);
+        renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
+        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit+3f);
         // ---------------------------------------------------------------------
 
 
@@ -219,10 +222,7 @@ public class Cable implements Disposable {
                     renderer.setColor(Color.SALMON);
                     renderer.circle(vec2.x, vec2.y, limit);
                 }
-            }
-
-            if(!CableManager.merging) {
-
+            } else {
                 // DRAW NODES IF SELECTED
                 drawNodes(renderer, camera, Color.SALMON);
 

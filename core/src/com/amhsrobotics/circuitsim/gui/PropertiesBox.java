@@ -26,6 +26,8 @@ public class PropertiesBox {
 
     private boolean visible;
 
+    public boolean hovering;
+
     public PropertiesBox(ModifiedStage stage) {
         this.stage = stage;
 
@@ -64,16 +66,19 @@ public class PropertiesBox {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scroll);
+                hovering = true;
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
+                hovering = false;
             }
         });
         table.pad(10).defaults().expandX().space(6);
         container.add(scroll).expand().fill();
 
     }
+
 
     public void addElement(Widget widget, boolean newRow, int colspan) {
         if(widget instanceof Label) {
