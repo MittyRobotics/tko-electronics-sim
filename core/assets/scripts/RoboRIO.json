@@ -203,5 +203,43 @@
       "dimensions": [16, 16],
       "type": "13"
     }
+  ],
+  "leds": [
+    {
+      "color": "white",
+      "type": "power",
+      "position": [468, 385],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "white",
+      "type": "status",
+      "position": [468, 352],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "white",
+      "type": "radio",
+      "position": [468, 300],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "white",
+      "type": "comm",
+      "position": [468, 268],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "white",
+      "type": "mode",
+      "position": [468, 233],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "white",
+      "type": "rsl",
+      "position": [468, 183],
+      "dimensions": [5, 5]
+    }
   ]
 }

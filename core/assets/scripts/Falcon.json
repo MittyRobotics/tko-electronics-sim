@@ -33,5 +33,13 @@
       "position": [8, -152],
       "dimensions": [8, 8]
     }
+  ],
+  "leds": [
+    {
+      "color": "green",
+      "type": "motor-indicator",
+      "position": [55, -188],
+      "dimensions": [8, 8]
+    }
   ]
 }

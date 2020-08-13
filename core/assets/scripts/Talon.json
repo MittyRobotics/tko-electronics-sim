@@ -23,5 +23,19 @@
       "position": [58, -238],
       "dimensions": [25, 25]
     }
+  ],
+  "leds": [
+    {
+      "color": "green",
+      "type": "sensor-indicator",
+      "position": [90, -1],
+      "dimensions": [8, 8]
+    },
+    {
+      "color": "green",
+      "type": "sensor-indicator",
+      "position": [90, -1],
+      "dimensions": [8, 8]
+    }
   ]
 }

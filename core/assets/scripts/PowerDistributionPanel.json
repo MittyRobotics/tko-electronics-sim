@@ -235,5 +235,19 @@
       "position": [775, -300],
       "dimensions": [25, 25]
     }
+  ],
+  "leds": [
+    {
+      "color": "white",
+      "type": "stat",
+      "position": [607, 151],
+      "dimensions": [8, 8]
+    },
+    {
+      "color": "white",
+      "type": "comm",
+      "position": [707, 151],
+      "dimensions": [8, 8]
+    }
   ]
 }

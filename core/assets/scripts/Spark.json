@@ -28,5 +28,19 @@
       "position": [29, -240],
       "dimensions": [25, 25]
     }
+  ],
+  "leds": [
+    {
+      "color": "blue",
+      "type": "sensor-indicator",
+      "position": [-56, -96],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "red",
+      "type": "sensor-indicator",
+      "position": [41, -96],
+      "dimensions": [8, 8]
+    }
   ]
 }

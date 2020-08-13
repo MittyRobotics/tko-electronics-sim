@@ -470,13 +470,11 @@ public class Cable implements Disposable {
         // FIRST CLICK
 
         if(coordinates.size() == 1) {
-
             if (appendingFromEnd) {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), true);
             } else if (appendingFromBegin) {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
-
         } else {
 
             if (appendingFromEnd) {
