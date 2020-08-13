@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware.devices;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
@@ -81,12 +82,6 @@ public class Flippable extends Hardware  {
 
         cur = (cur+1)%4;
 
-        for (JSONArray arr : pinDefs) {
-            int index = pinDefs.indexOf(arr);
-            if (connections.get(index) != null) {
-                editWire(connections.get(index), index, ends.get(index));
-            }
-        }
     }
 
     public Vector2 calculateDirection(int dir, int port) {

@@ -125,6 +125,16 @@ public abstract class Hardware {
             temp.setPosition(pos.x, pos.y);
         }
 
+
+        //MOVE CABLES
+
+        for (JSONArray arr : pinDefs) {
+            int index = pinDefs.indexOf(arr);
+            if (connections.get(index) != null) {
+                editWire(connections.get(index), index, ends.get(index));
+            }
+        }
+
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
         if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
@@ -200,15 +210,6 @@ public abstract class Hardware {
 
                     //SET OWN POSITION
                     setPosition(vec.x, vec.y);
-
-                    //MOVE CABLES
-
-                    for (JSONArray arr : pinDefs) {
-                        int index = pinDefs.indexOf(arr);
-                        if (connections.get(index) != null) {
-                            editWire(connections.get(index), index, ends.get(index));
-                        }
-                    }
                 }
 
             }
