@@ -44,9 +44,9 @@ public class Talon extends Flippable {
 
     public Vector2 calculate(int port) {
         if(port < 2) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 40);
+            return calculateDirection(2+cur, port);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 40);
+            return calculateDirection(cur, port);
         }
     }
 
