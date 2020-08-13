@@ -48,7 +48,6 @@ public class VoltageRegulatorModule extends Hardware {
         }
         HardwareManager.removeHardware(this);
         HardwareManager.currentHardware = null;
-        CircuitGUIManager.propertiesBox.hide();
     }
 
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {

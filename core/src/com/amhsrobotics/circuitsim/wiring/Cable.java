@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Disposable;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -345,9 +346,17 @@ public class Cable implements Disposable {
                         } else {
                             // ADD NEW POINT
                             if (appendingFromEnd && !disableEnd) {
-                                addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                                if(!CircuitGUIManager.propertiesBox.hovering) {
+                                    addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                                } else {
+                                    appendingFromEnd = false;
+                                }
                             } else if (appendingFromBegin && !disableBegin) {
-                                addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                                if(!CircuitGUIManager.propertiesBox.hovering) {
+                                    addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                                } else {
+                                    appendingFromBegin = false;
+                                }
                             } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
                                 coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
                                 movingNode = null;
@@ -358,8 +367,14 @@ public class Cable implements Disposable {
                                 appendingFromBegin = false;
                                 movingNode = null;
                                 backupNode = null;
-                                CableManager.currentCable = null;
-                                CircuitGUIManager.propertiesBox.hide();
+                                Timer timer = new Timer((int)Gdx.graphics.getDeltaTime()+3, arg0 -> {
+                                    if(!CircuitGUIManager.propertiesBox.hovering && CableManager.currentCable == this) {
+                                        CircuitGUIManager.propertiesBox.hide();
+                                        CableManager.currentCable = null;
+                                    }
+                                });
+                                timer.setRepeats(false);
+                                timer.start();
                             }
                         }
                     } else {
@@ -503,9 +518,9 @@ public class Cable implements Disposable {
                 //SELECT THIS CABLE
 
                 CableManager.currentCable = this;
+                populateProperties();
                 CircuitGUIManager.propertiesBox.show();
                 HardwareManager.currentHardware = null;
-                populateProperties();
             }
         }
     }

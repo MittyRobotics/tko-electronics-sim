@@ -70,8 +70,6 @@ public class HardwareManager {
     }
 
     public static Hardware addHardware(float startX, float startY, HardwareType type) {
-        CircuitGUIManager.propertiesBox.show();
-
         Hardware temp;
 
         switch(type) {
