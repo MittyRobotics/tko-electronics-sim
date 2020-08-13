@@ -1,8 +1,8 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
