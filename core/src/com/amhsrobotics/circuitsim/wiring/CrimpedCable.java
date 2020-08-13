@@ -80,6 +80,8 @@ public class CrimpedCable extends Cable {
 
         if(CableManager.currentCable == this) {
 
+            CableManager.moveToFront(this);
+
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
