@@ -17,6 +17,7 @@ public class EthernetCable extends Cable {
     public EthernetCable(Vector2 startPoint, int count) {
         super(startPoint, count);
         gauge = 9;
+        color = DeviceUtil.COLORS.get("White");
     }
 
     public void populateProperties() {
