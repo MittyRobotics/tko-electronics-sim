@@ -645,7 +645,7 @@ public class CircuitGUIManager {
                 table.add(brk).width(120);
             }
 
-            if(filtersMap.get(fil2)){
+            if(filtersMap.get(fil2)) {
                 //Control
                 table.row();
                 table.add(rbr).width(120);
@@ -657,7 +657,7 @@ public class CircuitGUIManager {
                 table.add(rad).width(120);
             }
 
-            if(filtersMap.get(fil3)){
+            if(filtersMap.get(fil3)) {
                 //Motors
                 table.row();
                 table.add(tln).width(120);
@@ -710,6 +710,8 @@ public class CircuitGUIManager {
             table.add(fcn).width(120);
             table.row();
             table.add(pcm).width(120);
+            table.row();
+            table.add(rad).width(120);
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {

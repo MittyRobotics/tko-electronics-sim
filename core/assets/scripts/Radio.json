@@ -1,16 +1,21 @@
 {
   "name": "Radio",
-  "totalPins": 2,
-  "totalSprites": 3,
+  "totalPins": 3,
+  "totalSprites": 4,
   "pins": [
     {
       "type": "4",
-      "position": [-245, 270],
+      "position": [-56, -147],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "100",
+      "position": [-26, -147],
       "dimensions": [25, 25]
     },
     {
-      "type": "4",
-      "position": [245, 270],
+      "type": "100",
+      "position": [16, -147],
       "dimensions": [25, 25]
     }
   ]
