@@ -62,7 +62,7 @@ public class CircuitScreen implements Screen {
         camera = new ClippedCameraController(true);
         camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
         camera.attachCameraSequence(new ArrayList<CameraAction>() {{
-            add(Actions.zoomCameraTo(2f, 1f, Interpolation.exp10));
+            add(Actions.zoomCameraTo(3f, 1f, Interpolation.exp10));
         }});
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
@@ -89,8 +89,8 @@ public class CircuitScreen implements Screen {
                     camera.getCamera().translate(amount > 0 ? 45f : -45f, 0);
                 } else {
                     camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
-                    if(camera.getCamera().zoom > 3.55) {
-                        camera.getCamera().zoom = 3.55f;
+                    if(camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
+                        camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
                     } else if(camera.getCamera().zoom < 0.2) {
                         camera.getCamera().zoom = 0.2f;
                     }
