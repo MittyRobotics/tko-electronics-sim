@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -78,9 +79,14 @@ public class Flippable extends Hardware  {
 
     private void rotateThis() {
         base.rotate(90);
-
         cur = (cur+1)%4;
+    }
 
+    @Override
+    public void processFlip() {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            rotateThis();
+        }
     }
 
     public Vector2 calculateDirection(int dir, int port) {

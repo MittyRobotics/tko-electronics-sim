@@ -498,6 +498,9 @@ public class CircuitGUIManager {
         helpTable.row();
         helpTable.add(new Label("CTRL + LSHIFT + .", l2Style)).width(155).align(Align.center);
         helpTable.add(new Label("Options Menu", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("Selec. Device + R", l2Style)).width(155).align(Align.center);
+        helpTable.add(new Label("Rotate Device", lStyle)).width(180).align(Align.center);
 
         helpMenu.row();
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
