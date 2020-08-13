@@ -76,7 +76,6 @@ public class RoboRio extends Hardware {
         }
         HardwareManager.removeHardware(this);
         HardwareManager.currentHardware = null;
-        CircuitGUIManager.propertiesBox.hide();
     }
 
     public Vector2 calculate(int port) {

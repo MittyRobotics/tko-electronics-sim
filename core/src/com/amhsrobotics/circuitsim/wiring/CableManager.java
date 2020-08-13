@@ -96,7 +96,6 @@ public class CableManager {
             }
         }
         if(good) {
-            CircuitGUIManager.propertiesBox.show();
             Cable temp = new Cable(new Vector2(startX, startY), id);
             id++;
             currentCable = temp;
@@ -116,7 +115,6 @@ public class CableManager {
             }
         }
         if(good) {
-            CircuitGUIManager.propertiesBox.show();
             EthernetCable temp = new EthernetCable(new Vector2(startX, startY), id);
             id++;
             currentCable = temp;

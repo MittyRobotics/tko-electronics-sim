@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public abstract class Hardware {
@@ -63,8 +64,8 @@ public abstract class Hardware {
             checkCrimpedCables();
         }
 
-        populateProperties();
         if(Constants.placing_object == null) {
+            populateProperties();
             CircuitGUIManager.propertiesBox.show();
         }
     }
@@ -124,13 +125,19 @@ public abstract class Hardware {
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
 
-                if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0) {
+                if(Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) {
                     HardwareManager.movingObject = true;
                     canMove = true;
                 }
             } else {
-                HardwareManager.currentHardware = null;
-//                CircuitGUIManager.propertiesBox.hide();
+                Timer timer = new Timer((int)Gdx.graphics.getDeltaTime()+3, arg0 -> {
+                    if(!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == this) {
+                        CircuitGUIManager.propertiesBox.hide();
+                        HardwareManager.currentHardware = null;
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
             }
 
         } else {
