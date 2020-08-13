@@ -2,6 +2,7 @@
   "name": "TripleSandCrab",
   "totalPins": 3,
   "totalLeds": 0,
+  "crimped": [],
   "totalSprites": 4,
   "pins": [
     {
