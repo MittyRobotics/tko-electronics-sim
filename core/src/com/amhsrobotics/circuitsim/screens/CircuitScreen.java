@@ -255,10 +255,7 @@ public class CircuitScreen implements Screen {
     private void handleCable() {
         HardwareManager.currentHardware = null;
 
-        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.getCamera().unproject(vec);
-        Vector2 vec2 = new Vector2(vec.x, vec.y);
-
+        Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
             if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {

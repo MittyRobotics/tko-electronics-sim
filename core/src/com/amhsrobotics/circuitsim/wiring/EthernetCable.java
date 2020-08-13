@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
@@ -138,10 +139,7 @@ public class EthernetCable extends Cable {
 
             CableManager.moveToFront(this);
 
-            // GET X AND Y OF MOUSE
-            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.getCamera().unproject(vec);
-            Vector2 vec2 = new Vector2(vec.x, vec.y);
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);

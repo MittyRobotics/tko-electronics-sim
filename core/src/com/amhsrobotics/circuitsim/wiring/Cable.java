@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
@@ -200,10 +201,7 @@ public class Cable implements Disposable {
 
         if(CableManager.currentCable == this) {
 
-            // GET X AND Y OF MOUSE
-            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.getCamera().unproject(vec);
-            Vector2 vec2 = new Vector2(vec.x, vec.y);
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
@@ -303,10 +301,7 @@ public class Cable implements Disposable {
 
             CableManager.moveToFront(this);
 
-            // GET X AND Y OF MOUSE
-            Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.getCamera().unproject(vec);
-            Vector2 vec2 = new Vector2(vec.x, vec.y);
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
@@ -527,8 +522,8 @@ public class Cable implements Disposable {
     }
 
     private Vector2 hoveringOnNode(ClippedCameraController camera) {
-        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        camera.getCamera().unproject(vec);
+        Vector2 vec = Tools.mouseScreenToWorld(camera);
+
 
         //RETURN NODE THAT MOUSE IS HOVERING ON
 
@@ -576,8 +571,8 @@ public class Cable implements Disposable {
 
     public int hoveringOnEndpoint(CameraController cameraController) {
         // CHECK IF HOVERING ON ENDPOINT
-        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        cameraController.getCamera().unproject(vec);
+        Vector2 vec = Tools.mouseScreenToWorld(cameraController);
+
 
         Vector2 c2 = coordinates.get(coordinates.size() - 1);
         Vector2 c = coordinates.get(0);
@@ -691,8 +686,8 @@ public class Cable implements Disposable {
     }
 
     public boolean hoveringMouse(CameraController cameraController) {
-        Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        cameraController.getCamera().unproject(vec);
+
+        Vector2 vec = Tools.mouseScreenToWorld(cameraController);
         float x = vec.x;
         float y = vec.y;
 

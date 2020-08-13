@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import me.rohanbansal.ricochet.camera.CameraController;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -28,7 +29,7 @@ public class Tools {
         return fnt;
     }
 
-    public static Vector2 mouseScreenToWorld(ClippedCameraController cam) {
+    public static Vector2 mouseScreenToWorld(CameraController cam) {
         Vector3 vec = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         cam.getCamera().unproject(vec);
         return new Vector2(vec.x, vec.y);
