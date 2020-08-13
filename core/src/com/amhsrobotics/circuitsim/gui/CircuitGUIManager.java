@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -543,15 +544,16 @@ public class CircuitGUIManager {
             }
             if(Float.parseFloat(gridSizingX.getText()) > 15000) {
                 error.activate("Maximum X of 15000");
-            } else if (Float.parseFloat(gridSizingX.getText()) < 200) {
-                error.activate("Minimum X of 200");
-            } else if (Float.parseFloat(gridSizingY.getText()) < 200) {
-                error.activate("Minimum Y of 200");
+            } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
+                error.activate("Minimum X of 2000");
+            } else if (Float.parseFloat(gridSizingY.getText()) < 2000) {
+                error.activate("Minimum Y of 2000");
             } else if(Float.parseFloat(gridSizingY.getText()) > 15000) {
                 error.activate("Maximum Y of 15000");
             } else {
                 Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
             }
+
         } catch (Exception e) {
             error.activate("Invalid input");
         }
@@ -561,16 +563,20 @@ public class CircuitGUIManager {
 //        Tools.slideOut(container, "right", 1f, Interpolation.exp10, 300);
         //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
-        Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+        if(propertiesBox.isVisible()) {
+            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+        }
         panelShown = false;
     }
 
     private void showPanel() {
         container.setPosition(Gdx.graphics.getWidth() - 200, 0);
-        propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
         filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
-        Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+        if(propertiesBox.isVisible()) {
+            propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
+            Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+        }
         panelShown = true;
     }
 
