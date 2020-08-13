@@ -157,6 +157,8 @@ public class Cable implements Disposable {
     }
 
     public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        limit = ((1/gauge)*100)/2;
+
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
@@ -571,6 +573,7 @@ public class Cable implements Disposable {
 
     public void setGauge(float gauge) {
         this.gauge = gauge;
+        limit = ((1/gauge)*100)/2;
     }
 
     public int hoveringOnEndpoint(CameraController cameraController) {

@@ -68,9 +68,9 @@ public abstract class Hardware {
             this.addCrimped = addCrimped[0];
         }
 
-        if(this.addCrimped) {
+        /*if(this.addCrimped) {
             checkCrimpedCables();
-        }
+        }*/
 
         if(Constants.placing_object == null) {
             populateProperties();

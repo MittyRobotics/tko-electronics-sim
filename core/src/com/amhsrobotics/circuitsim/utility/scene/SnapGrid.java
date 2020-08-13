@@ -10,14 +10,14 @@ public class SnapGrid {
 
     public static void renderGrid(ModifiedShapeRenderer renderer, Color color, Vector2 dimensions, int gap, int startSpace) {
         renderer.setColor(color);
-        renderer.begin(ShapeRenderer.ShapeType.Line);
         for(int i = startSpace; i < dimensions.x; i += gap) {
+            renderer.begin(ShapeRenderer.ShapeType.Line);
             for (int j = startSpace; j < dimensions.y; j += gap) {
                 renderer.line(i, 0, i, dimensions.y);
                 renderer.line(0, j, dimensions.x, j);
             }
+            renderer.end();
         }
-        renderer.end();
     }
 
     public static void calculateSnap(Vector2 position) {
