@@ -26,7 +26,8 @@ public class EthernetCable extends Cable {
     public EthernetCable(Vector2 startPoint, int count) {
         super(startPoint, count);
         gauge = 9;
-        color = DeviceUtil.COLORS.get("White");
+        color = DeviceUtil.COLORS.get("Orange");
+        populateProperties();
     }
 
     public void populateProperties() {
@@ -74,7 +75,7 @@ public class EthernetCable extends Cable {
             renderer.setColor(color[0]);
         }
         for(Vector2 coords : coordinates) {
-            renderer.rect(coords.x - 10, coords.y - 10, 20, 20);
+            renderer.circle(coords.x, coords.y, limit+3f);
         }
         processNodes(renderer, cam);
     }
@@ -201,6 +202,13 @@ public class EthernetCable extends Cable {
                                 movingNode = null;
                                 backupNode = null;
                                 nodeChanged = true;
+                            } else {
+                                appendingFromEnd = false;
+                                appendingFromBegin = false;
+                                movingNode = null;
+                                backupNode = null;
+                                CableManager.currentCable = null;
+                                CircuitGUIManager.propertiesBox.hide();
                             }
                         }
                     } else {

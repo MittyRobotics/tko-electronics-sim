@@ -17,6 +17,7 @@ public class DeviceUtil {
         put("Black", new Color(15/255f, 14/255f, 14/255f, 1));
         put("White", new Color(243/255f, 237/255f, 236/255f, 1));
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
+        put("Orange", new Color(255/255f, 130/255f, 0/255f, 1));
     }};
 
     public static final HashMap<String, String> GAUGETODEVICE = new HashMap<String, String>() {{

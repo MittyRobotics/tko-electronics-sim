@@ -367,6 +367,13 @@ public class Cable implements Disposable {
                                 movingNode = null;
                                 backupNode = null;
                                 nodeChanged = true;
+                            } else {
+                                appendingFromEnd = false;
+                                appendingFromBegin = false;
+                                movingNode = null;
+                                backupNode = null;
+                                CableManager.currentCable = null;
+                                CircuitGUIManager.propertiesBox.hide();
                             }
                         }
                     } else {
@@ -378,7 +385,7 @@ public class Cable implements Disposable {
                             backupNode = null;
                             nodeChanged = true;
                         }
-                        CircuitGUIManager.propertiesBox.hideAndClear();
+                        CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
                     }
 
