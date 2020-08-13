@@ -291,8 +291,7 @@ public class Cable implements Disposable {
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
         }
         renderer.setColor(Color.SALMON);
-        renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
-        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit+3f);
+        drawEndpoints(renderer);
         // ---------------------------------------------------------------------
 
 
@@ -447,6 +446,11 @@ public class Cable implements Disposable {
         renderer.end();
     }
 
+    public void drawEndpoints(ShapeRenderer renderer) {
+        renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
+        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit+3f);
+    }
+
     public Hardware getHardwareAtOtherEnd(Hardware hardware) {
         if(hardware == connection1) {
             return connection2;
@@ -539,6 +543,10 @@ public class Cable implements Disposable {
             // DRAW POINTS
             renderer.circle(coords.x, coords.y, limit+3f);
         }
+        processNodes(renderer, cam);
+    }
+
+    public void processNodes(ShapeRenderer renderer, ClippedCameraController cam) {
         //DRAW IF HOVERING ON ENDPOINTS
         if(hoveringOnEndpoint(cam) == 1) {
             renderer.setColor(hoverColor);

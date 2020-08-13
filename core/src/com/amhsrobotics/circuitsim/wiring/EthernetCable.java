@@ -2,6 +2,9 @@ package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -45,6 +48,22 @@ public class EthernetCable extends Cable {
                 }
             }
         });
+    }
 
+    @Override
+    public void drawEndpoints(ShapeRenderer renderer) {
+        renderer.rect(coordinates.get(0).x - 10, coordinates.get(0).y - 10, 20, 20);
+        renderer.rect(coordinates.get(coordinates.size() - 1).x - 10, coordinates.get(coordinates.size() - 1).y - 10, 20, 20);
+    }
+
+    @Override
+    protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
+        if(color.length > 0) {
+            renderer.setColor(color[0]);
+        }
+        for(Vector2 coords : coordinates) {
+            renderer.rect(coords.x - 10, coords.y - 10, 20, 20);
+        }
+        processNodes(renderer, cam);
     }
 }
