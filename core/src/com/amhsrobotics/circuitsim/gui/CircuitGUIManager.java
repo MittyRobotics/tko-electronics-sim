@@ -4,10 +4,9 @@ import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
-import com.amhsrobotics.circuitsim.utility.Tools;
-import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -536,20 +535,20 @@ public class CircuitGUIManager {
 
         try {
             if(Integer.parseInt(gridSpacing.getText()) < 10) {
-                error.activate("Minimum spacing of 10");
+                error.activate("Minimum spacing of 10 required");
             } else if (Integer.parseInt(gridSpacing.getText()) > 100) {
-                error.activate("Maximum spacing of 100");
+                error.activate("Maximum spacing of 100 required");
             } else {
                 Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
             }
             if(Float.parseFloat(gridSizingX.getText()) > 15000) {
-                error.activate("Maximum X of 15000");
+                error.activate("Maximum X of 15000 required");
             } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
-                error.activate("Minimum X of 2000");
+                error.activate("Minimum X of 2000 required");
             } else if (Float.parseFloat(gridSizingY.getText()) < 2000) {
-                error.activate("Minimum Y of 2000");
+                error.activate("Minimum Y of 2000 required");
             } else if(Float.parseFloat(gridSizingY.getText()) > 15000) {
-                error.activate("Maximum Y of 15000");
+                error.activate("Maximum Y of 15000 required");
             } else {
                 Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
             }
@@ -564,7 +563,7 @@ public class CircuitGUIManager {
         //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
         if(propertiesBox.isVisible()) {
-            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
+            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5In, -210, 0.2f, propertiesBox.container);
         }
         panelShown = false;
     }

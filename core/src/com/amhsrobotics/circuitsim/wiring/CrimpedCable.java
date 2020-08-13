@@ -1,10 +1,10 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
+import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
+import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;

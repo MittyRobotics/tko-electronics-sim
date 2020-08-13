@@ -2,7 +2,8 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
-import com.amhsrobotics.circuitsim.utility.*;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -116,7 +117,6 @@ public abstract class Hardware {
 
         for(Sprite s : connectors) {
             if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
-                Gdx.app.log(connectors.indexOf(s) + "", "");
                 CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
             }
         }

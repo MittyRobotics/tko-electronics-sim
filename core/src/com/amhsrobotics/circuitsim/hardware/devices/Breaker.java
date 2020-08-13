@@ -50,7 +50,7 @@ public class Breaker extends Hardware {
     }
 
     public Vector2 calculate(int port) {
-        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + (port == 0 ? 20 : -20));
+        return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + (port == 0 ? 60 : -60));
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {

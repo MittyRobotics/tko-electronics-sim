@@ -122,8 +122,8 @@ public class HardwareManager {
         if(type == HardwareType.PDP) {
             Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY), HardwareType.BREAKER);
             hardwares.add(breaker);
-            Cable c = new Cable(new Vector2(startX + temp.getDim().x - 300, startY + 250), CableManager.id);
-            Cable c2 = new Cable(new Vector2(startX + temp.getDim().x - 300, startY - 250), CableManager.id+1);
+            Cable c = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY + 250), CableManager.id);
+            Cable c2 = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY - 225), CableManager.id+1);
             CableManager.id += 2;
             c.setGauge(4);
             c.setColor(DeviceUtil.COLORS.get("Red"));
