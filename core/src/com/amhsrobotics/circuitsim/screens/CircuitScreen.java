@@ -153,7 +153,7 @@ public class CircuitScreen implements Screen {
                 } else if (Constants.placing_object == HardwareType.ROBORIO) {
                     currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
                 } else if (Constants.placing_object == HardwareType.TALON) {
-                    currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON);
+                    currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON, false);
                 } else if (Constants.placing_object == HardwareType.PCM) {
                     currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
                 } else if (Constants.placing_object == HardwareType.SPARK) {

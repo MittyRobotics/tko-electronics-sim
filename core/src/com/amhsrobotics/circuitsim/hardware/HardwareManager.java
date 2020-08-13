@@ -90,7 +90,7 @@ public class HardwareManager {
                 temp = new RoboRio(new Vector2(startX, startY), type, false);
                 break;
             case TALON:
-                temp = new Talon(new Vector2(startX, startY), type, false);
+                temp = new Talon(new Vector2(startX, startY), type, true);
                 break;
             case SPARK:
                 temp = new Spark(new Vector2(startX, startY), type, false);

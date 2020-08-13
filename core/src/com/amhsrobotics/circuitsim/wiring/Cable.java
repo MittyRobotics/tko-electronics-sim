@@ -359,7 +359,9 @@ public class Cable implements Disposable {
                                     appendingFromBegin = false;
                                 }
                             } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                                coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                                if(coordinates.contains(movingNode)) {
+                                    coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                                }
                                 movingNode = null;
                                 backupNode = null;
                                 nodeChanged = true;

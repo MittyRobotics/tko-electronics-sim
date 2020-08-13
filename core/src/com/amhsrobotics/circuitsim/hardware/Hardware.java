@@ -26,6 +26,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -88,6 +89,12 @@ public abstract class Hardware {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
             portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
+        }
+
+        JSONArray temp = (JSONArray) JSONReader.getCurrentConfig().get("crimped");
+
+        for(int i = 0; i < temp.size(); ++i) {
+            crimpedPorts.add(((Long) temp.get(i)).intValue());
         }
 
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");

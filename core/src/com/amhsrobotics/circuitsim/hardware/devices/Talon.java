@@ -16,8 +16,6 @@ public class Talon extends Flippable {
     public Talon(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
-
-
         for(JSONArray arr : pinDefs) {
             Sprite temp;
             if(connectors.size() == connNum) {
@@ -32,11 +30,6 @@ public class Talon extends Flippable {
         initConnections();
         initEnds();
 
-        for(int x = 0; x < connectors.size(); x++) {
-            Cable c1 = new Cable(new Vector2(connectors.get(0).getX() + connectors.get(0).getWidth() / 2, connectors.get(0).getY() + (x < 2 ? 30 : -30)), DeviceUtil.getNewHardwareID());
-            CableManager.addCable(c1);
-            attachCrimpedCable(c1, x);
-        }
     }
 
     public Vector2 calculate(int port) {
