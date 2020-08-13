@@ -25,9 +25,10 @@ import java.util.stream.Collectors;
 
 public class CrimpedCable extends Cable {
 
-    public CrimpedCable() {
+    public CrimpedCable(int gauge) {
         super(new Vector2(0, 0), -1);
         disableEnd = true;
+        this.gauge = gauge;
     }
 
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
@@ -133,10 +134,6 @@ public class CrimpedCable extends Cable {
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
 
-        CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
-        CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
-
         cb.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -149,24 +146,6 @@ public class CrimpedCable extends Cable {
                         } else {
                             cb.setText(keys.get(keys.indexOf(str) + 1));
                             color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
-                        }
-                        break;
-                    }
-                }
-            }
-        });
-        ga.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                for(int gau : gauges) {
-                    if(gau == gauge) {
-                        if(gauges.indexOf(gau) == gauges.size() - 1) {
-                            gauge = gauges.get(0);
-                            ga.setText(gauge + "");
-                        } else {
-                            gauge = gauges.get(gauges.indexOf(gau) + 1);
-                            ga.setText(gauge + "");
                         }
                         break;
                     }

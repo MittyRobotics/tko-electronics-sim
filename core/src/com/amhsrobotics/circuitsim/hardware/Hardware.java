@@ -10,6 +10,7 @@ import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
+import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -62,8 +63,8 @@ public abstract class Hardware {
             checkCrimpedCables();
         }
 
+        populateProperties();
         if(Constants.placing_object == null) {
-            populateProperties();
             CircuitGUIManager.propertiesBox.show();
         }
     }
@@ -71,7 +72,7 @@ public abstract class Hardware {
     public void checkCrimpedCables() {
         for(int i : crimpedPorts) {
             if(connections.get(i) == null) {
-                CrimpedCable c = new CrimpedCable();
+                CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)));
                 CableManager.addCable(c);
                 attachCrimpedCable(c, i);
             }
@@ -299,6 +300,8 @@ public abstract class Hardware {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else if(connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            } else if(connections.get(x) instanceof EthernetCable) {
+                CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else {
                 if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
                     CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
