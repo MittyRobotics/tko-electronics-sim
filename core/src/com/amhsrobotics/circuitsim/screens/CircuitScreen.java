@@ -141,7 +141,7 @@ public class CircuitScreen implements Screen {
             if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.setPosition(vec2.x, vec2.y);
             } else {
-                if (Constants.placing_object == HardwareType.WIRE) {
+                if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if (Constants.placing_object == HardwareType.DOUBLESANDCRAB) {
                     currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
@@ -174,7 +174,7 @@ public class CircuitScreen implements Screen {
                 }
             }
 
-            if (Constants.placing_object != HardwareType.WIRE) {
+            if (Constants.placing_object != HardwareType.WIRE && Constants.placing_object != HardwareType.ETHERNET) {
                 handleHardware(Constants.placing_object);
             } else {
                 handleCable();
@@ -201,7 +201,7 @@ public class CircuitScreen implements Screen {
 
 
         if(Constants.placing_object != null) {
-            if (Constants.placing_object == HardwareType.WIRE) {
+            if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.update(batch, renderer, camera);
@@ -266,7 +266,11 @@ public class CircuitScreen implements Screen {
             }
 
             CableManager.currentCable = null;
-            CableManager.addCable(vec2.x, vec2.y);
+            if(Constants.placing_object == HardwareType.ETHERNET) {
+                CableManager.addEthernet(vec2.x, vec2.y);
+            } else {
+                CableManager.addCable(vec2.x, vec2.y);
+            }
             Constants.placing_object = null;
 
         }

@@ -35,7 +35,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad;
+    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -163,6 +163,9 @@ public class CircuitGUIManager {
         //table.add(fcn).width(120);
         rad = new TextButton("Radio", tStyle);
         rad.addListener(new TextTooltip("Radio", ttStyle));
+
+        eth = new TextButton("Ethernet", tStyle);
+        eth.addListener(new TextTooltip("Ethernet cable", ttStyle));
 
         container.add(scroll).expand().fill();
 
@@ -295,6 +298,15 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.RADIO;
+                CableManager.currentCable = null;
+                HardwareManager.currentHardware = null;
+                propertiesBox.hide();
+            }
+        });
+        eth.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.ETHERNET;
                 CableManager.currentCable = null;
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
@@ -643,6 +655,8 @@ public class CircuitGUIManager {
                 table.add(battery).width(120);
                 table.row();
                 table.add(brk).width(120);
+                table.row();
+                table.add(eth).width(120);
             }
 
             if(filtersMap.get(fil2)) {
@@ -692,6 +706,8 @@ public class CircuitGUIManager {
             table.add(battery).width(120);
             table.row();
             table.add(brk).width(120);
+            table.row();
+            table.add(eth).width(120);
             table.row();
             table.add(rbr).width(120);
             table.row();
