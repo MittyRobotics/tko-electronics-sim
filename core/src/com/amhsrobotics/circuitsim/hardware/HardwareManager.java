@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -68,7 +69,7 @@ public class HardwareManager {
         }
     }
 
-    public static void addHardware(float startX, float startY, HardwareType type) {
+    public static Hardware addHardware(float startX, float startY, HardwareType type) {
         CircuitGUIManager.propertiesBox.show();
 
         Hardware temp;
@@ -118,9 +119,27 @@ public class HardwareManager {
                 break;
         }
 
+        if(type == HardwareType.PDP) {
+            Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY), HardwareType.BREAKER);
+            hardwares.add(breaker);
+            Cable c = new Cable(new Vector2(startX + temp.getDim().x - 300, startY + 250), DeviceUtil.getNewHardwareID());
+            Cable c2 = new Cable(new Vector2(startX + temp.getDim().x - 300, startY - 250), DeviceUtil.getNewHardwareID());
+            c.setGauge(4);
+            c2.setGauge(4);
+            CableManager.addCable(c);
+            CableManager.addCable(c2);
+            breaker.attachWire(c, 0, true);
+            breaker.attachWire(c2, 1, true);
+            temp.attachWire(c, 42, false);
+            temp.attachWire(c2, 43, false);
+
+        }
+
         currentHardware = temp;
         CableManager.currentCable = null;
         hardwares.add(temp);
+
+        return temp;
     }
 
 
