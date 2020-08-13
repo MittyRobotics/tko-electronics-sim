@@ -131,7 +131,6 @@ public abstract class Hardware {
             temp.setPosition(pos.x, pos.y);
         }
 
-
         //MOVE CABLES
 
         for (JSONArray arr : pinDefs) {
@@ -240,7 +239,11 @@ public abstract class Hardware {
             conn.draw(batch);
         }
         batch.end();
+
+        processFlip();
     }
+
+    public void processFlip() {}
 
     public void clearConnection(Cable cable) {
         for(int i = 0; i < connNum; i++) {

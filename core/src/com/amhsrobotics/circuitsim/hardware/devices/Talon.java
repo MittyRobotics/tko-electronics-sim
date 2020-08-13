@@ -16,8 +16,6 @@ public class Talon extends Flippable {
     public Talon(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
-
-
         for(JSONArray arr : pinDefs) {
             Sprite temp;
             if(connectors.size() == connNum) {
