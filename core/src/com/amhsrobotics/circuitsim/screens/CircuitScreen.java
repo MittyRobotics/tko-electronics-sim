@@ -138,8 +138,6 @@ public class CircuitScreen implements Screen {
             }
 
 
-
-
             if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.setPosition(vec2.x, vec2.y);
             } else {
@@ -182,10 +180,14 @@ public class CircuitScreen implements Screen {
 
         }
 
+
         CableManager.update(renderer, batch, camera);
         HardwareManager.update(renderer, batch, camera);
 
         if(CableManager.currentCable != null) {
+            if(!CircuitGUIManager.propertiesBox.isVisible()) {
+                CircuitGUIManager.propertiesBox.show();
+            }
             CableManager.currentCable.render(renderer, camera);
             if(CableManager.currentCable.connection1 != null) {
                 CableManager.currentCable.connection1.renderConnectors(batch);
@@ -256,7 +258,7 @@ public class CircuitScreen implements Screen {
         Vector2 vec2 = new Vector2(vec.x, vec.y);
 
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
             if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
