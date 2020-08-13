@@ -102,7 +102,7 @@ public class PropertiesBox {
         if(!CircuitGUIManager.isPanelShown()) {
             container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         } else {
-            container.setPosition(Gdx.graphics.getWidth() - 410, Gdx.graphics.getHeight() - 210);
+            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
         }
         Tools.slideIn(container, "top", 0.8f, Interpolation.exp10, 200);
         visible = true;

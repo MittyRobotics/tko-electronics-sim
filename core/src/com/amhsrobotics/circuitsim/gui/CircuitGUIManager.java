@@ -95,8 +95,8 @@ public class CircuitGUIManager {
         container = new Table();
         container.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         container.setWidth(200);
-        container.setPosition(Gdx.graphics.getWidth() - 200, 0);
-        container.setHeight(Gdx.graphics.getHeight() - 150);
+        container.setPosition(Gdx.graphics.getWidth() - 210, 10);
+        container.setHeight(Gdx.graphics.getHeight() - 160);
         stage.addActor(container);
 
         table = new Table();
@@ -316,9 +316,9 @@ public class CircuitGUIManager {
 
         filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
-        filters.setWidth(180);
+        filters.setWidth(200);
         filters.setHeight(130);
-        filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
+        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
         stage.addActor(filters);
 
 
@@ -610,20 +610,14 @@ public class CircuitGUIManager {
 //        Tools.slideOut(container, "right", 1f, Interpolation.exp10, 300);
         //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
-        if(propertiesBox.isVisible()) {
-            Tools.sequenceSlideOut("right", 1f, Interpolation.exp5In, -210, 0.2f, propertiesBox.container);
-        }
+        propertiesBox.hide();
         panelShown = false;
     }
 
     private void showPanel() {
-        container.setPosition(Gdx.graphics.getWidth() - 200, 0);
-        filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
+        container.setPosition(Gdx.graphics.getWidth() - 210, 10);
+        filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
-        if(propertiesBox.isVisible()) {
-            propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
-            Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, -210, 0.2f, propertiesBox.container);
-        }
         panelShown = true;
     }
 
