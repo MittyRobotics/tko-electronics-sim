@@ -285,7 +285,6 @@ public abstract class Hardware {
         }
     }
 
-
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
             CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());

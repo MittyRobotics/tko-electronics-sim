@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
-import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
