@@ -34,9 +34,9 @@ public class Spark extends Flippable {
 
     public Vector2 calculate(int port) {
         if(port < 3) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 40);
+            return calculateDirection(cur+2, port);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 40);
+            return calculateDirection(cur, port);
         }
     }
 }

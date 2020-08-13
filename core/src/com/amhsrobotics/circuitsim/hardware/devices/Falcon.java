@@ -34,11 +34,11 @@ public class Falcon extends Flippable {
 
     public Vector2 calculate(int port) {
         if(port == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return calculateDirection(3+cur, port);
         } else if (port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 20, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return calculateDirection(1+cur, port);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 20);
+            return calculateDirection(cur, port);
         }
     }
 
