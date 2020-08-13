@@ -50,15 +50,6 @@ public class Cable implements Disposable {
     public float limit;
 
 
-    /*public Cable(float voltage, float gauge, ArrayList<Vector2> coordinates) {
-        this.voltage = voltage;
-        this.gauge = gauge;
-        this.coordinates = coordinates;
-        this.color = DeviceUtil.COLORS.get("Green");
-
-        //populateProperties();
-    }*/
-
     public Cable(Vector2 startPoint, int count) {
         voltage = 0;
         gauge = DeviceUtil.GAUGES[0];
@@ -368,7 +359,7 @@ public class Cable implements Disposable {
                                 movingNode = null;
                                 backupNode = null;
                                 CableManager.currentCable = null;
-//                                CircuitGUIManager.propertiesBox.hide();
+                                CircuitGUIManager.propertiesBox.hide();
                             }
                         }
                     } else {
@@ -380,7 +371,7 @@ public class Cable implements Disposable {
                             backupNode = null;
                             nodeChanged = true;
                         }
-//                        CircuitGUIManager.propertiesBox.hide();
+                        CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
                     }
 
