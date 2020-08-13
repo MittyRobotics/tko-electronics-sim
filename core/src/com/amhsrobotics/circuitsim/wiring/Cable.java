@@ -70,6 +70,7 @@ public class Cable implements Disposable {
         coordinates.add(startPoint);
 
         populateProperties();
+        CircuitGUIManager.propertiesBox.show();
     }
 
     public int getID() {
@@ -336,31 +337,44 @@ public class Cable implements Disposable {
 
                 // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                    CableManager.currentCable = null;
-                    appendingFromBegin = false;
-                    appendingFromEnd = false;
-                    if (movingNode != null) {
+                    if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
+                        appendingFromBegin = false;
+                        appendingFromEnd = false;
+                    } else if (movingNode != null) {
                         coordinates.set(coordinates.indexOf(movingNode), backupNode);
                         movingNode = null;
                         backupNode = null;
+                    } else {
+                        CableManager.currentCable = null;
+                        CircuitGUIManager.propertiesBox.hide();
                     }
-                    CircuitGUIManager.propertiesBox.hide();
                 }
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !CableManager.merging) {
-                    HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
+                    if(Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+                        HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
-                    if (hardware != null) {
-                        // HARDWARE
-                        processHardwareClick(hardware);
+                        if (hardware != null) {
+                            // HARDWARE
+                            processHardwareClick(hardware);
+                        } else {
+                            // ADD NEW POINT
+                            if (appendingFromEnd && !disableEnd) {
+                                addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                            } else if (appendingFromBegin && !disableBegin) {
+                                addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                            } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                                coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                                movingNode = null;
+                                backupNode = null;
+                                nodeChanged = true;
+                            }
+                        }
                     } else {
-                        // ADD NEW POINT
-                        if (appendingFromEnd && !disableEnd) {
-                            addCoordinates(new Vector2(vec2.x, vec2.y), false);
-                        } else if (appendingFromBegin && !disableBegin) {
-                            addCoordinates(new Vector2(vec2.x, vec2.y), true);
-                        } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                        appendingFromEnd = false;
+                        appendingFromBegin = false;
+                        if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
                             coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
                             movingNode = null;
                             backupNode = null;
@@ -372,13 +386,18 @@ public class Cable implements Disposable {
 
                 // DELETE
                 if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
-                    CableManager.deleteCable(this);
-                    CableManager.currentCable = null;
-                    CircuitGUIManager.propertiesBox.hide();
-                    HardwareManager.removeCableFromHardware(this, connection1);
-                    HardwareManager.removeCableFromHardware(this, connection2);
-                    connection2 = null;
-                    connection1 = null;
+                    if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
+                        appendingFromBegin = false;
+                        appendingFromEnd = false;
+                    } else {
+                        CableManager.deleteCable(this);
+                        CableManager.currentCable = null;
+                        CircuitGUIManager.propertiesBox.hide();
+                        HardwareManager.removeCableFromHardware(this, connection1);
+                        HardwareManager.removeCableFromHardware(this, connection2);
+                        connection2 = null;
+                        connection1 = null;
+                    }
                 }
 
                 // DRAW NODES IF SELECTED
