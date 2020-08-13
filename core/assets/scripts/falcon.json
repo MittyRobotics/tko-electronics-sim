@@ -1,6 +1,7 @@
 {
   "name": "Falcon Motor",
   "totalPins": 6,
+  "totalLeds": 1,
   "totalSprites": 7,
   "pins": [
     {

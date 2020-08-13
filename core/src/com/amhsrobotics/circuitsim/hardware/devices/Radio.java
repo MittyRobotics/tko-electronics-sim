@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

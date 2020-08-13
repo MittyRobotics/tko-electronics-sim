@@ -1,6 +1,7 @@
 {
   "name": "roboRIO",
   "totalPins": 37,
+  "totalLeds": 6,
   "totalSprites": 38,
   "pins": [
     {

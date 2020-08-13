@@ -1,6 +1,7 @@
 {
   "name": "Radio",
   "totalPins": 3,
+  "totalLeds": 4,
   "totalSprites": 4,
   "pins": [
     {

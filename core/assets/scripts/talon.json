@@ -1,6 +1,7 @@
 {
   "name": "Talon",
   "totalPins": 4,
+  "totalLeds": 2,
   "totalSprites": 5,
   "pins": [
     {

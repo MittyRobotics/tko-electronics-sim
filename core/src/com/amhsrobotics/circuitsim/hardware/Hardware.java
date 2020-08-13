@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.parts.LED;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
@@ -37,7 +38,7 @@ public abstract class Hardware {
     public ArrayList<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
-    public int connNum;
+    public int connNum, ledNum;
     public HardwareType type;
     public String name;
 
@@ -45,13 +46,11 @@ public abstract class Hardware {
     public ArrayList<Sprite> connectors = new ArrayList<>();
     public ArrayList<JSONArray> pinDefs = new ArrayList<>();
     public ArrayList<String> portTypes = new ArrayList<>();
+    public ArrayList<LED> LEDs = new ArrayList<>();
 
     public Sprite base;
     public boolean canMove;
     public boolean addCrimped;
-    public boolean facingUp = true;
-
-    private float prevBaseRotation = 0;
 
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
@@ -68,17 +67,12 @@ public abstract class Hardware {
             this.addCrimped = addCrimped[0];
         }
 
-        /*if(this.addCrimped) {
-            checkCrimpedCables();
-        }*/
-
         if(Constants.placing_object == null) {
             populateProperties();
             CircuitGUIManager.propertiesBox.show();
         }
 
         loadThis();
-        prevBaseRotation = base.getRotation();
     }
 
     public void loadThis() {
@@ -87,12 +81,24 @@ public abstract class Hardware {
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/" + type.toString().toLowerCase() + ".png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+        ledNum = ((Long) JSONReader.getCurrentConfig().get("totalLeds")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
             portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
+        }
+
+        JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
+        if(ledNum > 0) {
+            for(int x = 0; x < lights.size(); x++) {
+                LEDs.add(new LED(
+                        (JSONArray) ((JSONObject) lights.get(x)).get("position"),
+                        (String) ((JSONObject) lights.get(x)).get("type"),
+                        (String) ((JSONObject) lights.get(x)).get("color")
+                ));
+            }
         }
 
         base.setCenter(position.x, position.y);

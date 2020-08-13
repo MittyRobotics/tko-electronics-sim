@@ -1,6 +1,7 @@
 {
   "name": "DoubleSandCrab",
   "totalPins": 2,
+  "totalLeds": 0,
   "totalSprites": 3,
   "pins": [
     {

@@ -1,6 +1,7 @@
 {
   "name": "NEO Motor",
   "totalPins": 4,
+  "totalLeds": 0,
   "totalSprites": 5,
   "pins": [
     {

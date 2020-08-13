@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.wiring.Cable;

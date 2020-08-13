@@ -1,6 +1,7 @@
 {
   "name": "PCM",
   "totalPins": 27,
+  "totalLeds": 2,
   "totalSprites": 28,
   "pins": [
     {

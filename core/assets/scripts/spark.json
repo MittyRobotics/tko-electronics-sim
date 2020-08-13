@@ -1,6 +1,7 @@
 {
   "name": "SPARK MAX",
   "totalPins": 5,
+  "totalLeds": 2,
   "totalSprites": 6,
   "pins": [
     {
