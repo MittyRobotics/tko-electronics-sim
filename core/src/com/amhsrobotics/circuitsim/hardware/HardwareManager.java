@@ -125,7 +125,9 @@ public class HardwareManager {
             Cable c = new Cable(new Vector2(startX + temp.getDim().x - 300, startY + 250), DeviceUtil.getNewHardwareID());
             Cable c2 = new Cable(new Vector2(startX + temp.getDim().x - 300, startY - 250), DeviceUtil.getNewHardwareID());
             c.setGauge(4);
+            c.setColor(DeviceUtil.COLORS.get("Red"));
             c2.setGauge(4);
+            c2.setColor(DeviceUtil.COLORS.get("Black"));
             CableManager.addCable(c);
             CableManager.addCable(c2);
             breaker.attachWire(c, 0, true);
