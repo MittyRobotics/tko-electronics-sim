@@ -3,6 +3,9 @@ package com.amhsrobotics.circuitsim.hardware.devices;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -47,6 +50,12 @@ public class Talon extends Hardware {
 
         initConnections();
         initEnds();
+
+        for(int x = 0; x < connectors.size(); x++) {
+            Cable c1 = new Cable(new Vector2(connectors.get(0).getX() + connectors.get(0).getWidth() / 2, connectors.get(0).getY() + (x < 2 ? 30 : -30)), DeviceUtil.getNewHardwareID());
+            CableManager.addCable(c1);
+            attachCrimpedCable(c1, x);
+        }
     }
 
     public Vector2 calculate(int port) {
