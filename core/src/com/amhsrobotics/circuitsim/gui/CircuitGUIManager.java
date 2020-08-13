@@ -699,6 +699,8 @@ public class CircuitGUIManager {
             table.row();
             table.add(vrm).width(120);
             table.row();
+            table.add(rad).width(120);
+            table.row();
             table.add(tln).width(120);
             table.row();
             table.add(spk).width(120);
@@ -710,6 +712,7 @@ public class CircuitGUIManager {
             table.add(fcn).width(120);
             table.row();
             table.add(pcm).width(120);
+
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {

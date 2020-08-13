@@ -56,7 +56,7 @@ public class PropertiesBox {
         container.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         container.setWidth(200);
         container.setHeight(200);
-        container.setPosition(-400, -400);
+        container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight());
         stage.addActor(container);
 
         table = new Table();
