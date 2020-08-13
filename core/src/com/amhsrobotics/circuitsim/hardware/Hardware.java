@@ -65,8 +65,6 @@ public abstract class Hardware {
         if(Constants.placing_object == null) {
             populateProperties();
             CircuitGUIManager.propertiesBox.show();
-        } else {
-            CircuitGUIManager.propertiesBox.hide();
         }
     }
 
@@ -110,18 +108,6 @@ public abstract class Hardware {
                 }
             }
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && good) {
-                HardwareManager.currentHardware = this;
-                CableManager.currentCable = null;
-
-                if(Constants.placing_object == null) {
-                    populateProperties();
-                    CircuitGUIManager.propertiesBox.show();
-                } else {
-                    CircuitGUIManager.propertiesBox.hide();
-                }
-            }
-
         }
 
         for(Sprite s : connectors) {
@@ -134,6 +120,8 @@ public abstract class Hardware {
 
             if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
                 HardwareManager.currentHardware = this;
+                populateProperties();
+                CircuitGUIManager.propertiesBox.show();
 
                 if(Gdx.input.getDeltaX() != 0 && Gdx.input.getDeltaY() != 0) {
                     HardwareManager.movingObject = true;
