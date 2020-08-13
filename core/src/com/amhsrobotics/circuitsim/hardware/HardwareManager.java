@@ -114,6 +114,9 @@ public class HardwareManager {
             case BATTERY:
                 temp = new Battery(new Vector2(startX, startY), type, false);
                 break;
+            case RADIO:
+                temp = new Radio(new Vector2(startX, startY), type);
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, false);
                 break;

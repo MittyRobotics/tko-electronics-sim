@@ -169,6 +169,8 @@ public class CircuitScreen implements Screen {
                     currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
                 } else if (Constants.placing_object == HardwareType.BATTERY) {
                     currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y), HardwareType.BATTERY);
+                } else if (Constants.placing_object == HardwareType.RADIO) {
+                    currentPlacingHardware = new Radio(new Vector2(vec2.x, vec2.y), HardwareType.RADIO);
                 }
             }
 
