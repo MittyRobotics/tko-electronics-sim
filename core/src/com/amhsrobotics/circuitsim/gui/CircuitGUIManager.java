@@ -30,8 +30,8 @@ public class CircuitGUIManager {
 
     private final ModifiedStage stage;
 
-    private final TextButton back, help, options;
-    public static Table container, table;
+    private final TextButton back, help, options, hidePanel;
+    public static Table container, table, table2, filters;
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
@@ -42,7 +42,8 @@ public class CircuitGUIManager {
     public static ErrorMessage error;
     private TextField gridSizingX, gridSizingY, gridSpacing;
 
-    public boolean helpMenuShown, optionsMenuShown = false;
+    public boolean helpMenuShown, optionsMenuShown;
+    public static boolean panelShown = true;
 
     private boolean filterChanged = false;
     private boolean addAll = true;
@@ -277,7 +278,7 @@ public class CircuitGUIManager {
             }
         });
 
-        final Table filters = new Table();
+        filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         filters.setWidth(180);
         filters.setHeight(130);
@@ -285,7 +286,7 @@ public class CircuitGUIManager {
         stage.addActor(filters);
 
 
-        Table table2 = new Table();
+        table2 = new Table();
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
         scrollFilters.setScrollingDisabled(true,false);
         table2.pad(5).defaults().expandX().space(6);
@@ -361,6 +362,8 @@ public class CircuitGUIManager {
 
         back = new TextButton("Quit", tStyle);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
+        hidePanel = new TextButton("Toggle Panel", tStyle);
+        hidePanel.setPosition(260, Gdx.graphics.getHeight() - 70);
         help = new TextButton("Help", tStyle);
         help.setPosition(100, Gdx.graphics.getHeight() - 70);
         options = new TextButton("Options", tStyle);
@@ -373,7 +376,7 @@ public class CircuitGUIManager {
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
-                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.2f, options, help);
+                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.15f, hidePanel, options, help);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -403,15 +406,25 @@ public class CircuitGUIManager {
                 }
             }
         });
+        hidePanel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(panelShown) {
+                    hidePanel();
+                } else {
+                    showPanel();
+                }
+            }
+        });
 
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildOptionsMenu(wStyle, lStyle, l2Style, textFieldStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
-        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, help, options);
+        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, help, options, hidePanel);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, options);
+        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel);
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
@@ -522,6 +535,23 @@ public class CircuitGUIManager {
 
         Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
         Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
+    }
+
+    private void hidePanel() {
+//        Tools.slideOut(container, "right", 1f, Interpolation.exp10, 300);
+        Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
+        panelShown = false;
+    }
+
+    private void showPanel() {
+        container.setPosition(Gdx.graphics.getWidth() - 200, 0);
+        filters.setPosition(Gdx.graphics.getWidth() - 190, Gdx.graphics.getHeight() - 140);
+        Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
+        panelShown = true;
+    }
+
+    public static boolean isPanelShown() {
+        return panelShown;
     }
 
     public void update(float delta) {

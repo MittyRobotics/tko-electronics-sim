@@ -99,7 +99,11 @@ public class PropertiesBox {
     }
 
     public void show() {
-        container.setPosition(Gdx.graphics.getWidth() - 410, Gdx.graphics.getHeight() - 210);
+        if(!CircuitGUIManager.isPanelShown()) {
+            container.setPosition(Gdx.graphics.getWidth() - 220, Gdx.graphics.getHeight() - 210);
+        } else {
+            container.setPosition(Gdx.graphics.getWidth() - 410, Gdx.graphics.getHeight() - 210);
+        }
         Tools.slideIn(container, "top", 0.8f, Interpolation.exp10, 200);
         visible = true;
     }
