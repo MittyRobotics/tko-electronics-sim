@@ -71,6 +71,9 @@ public abstract class Hardware {
         }
     }
 
+    public Vector2 getDim() {
+        return new Vector2(base.getWidth(), base.getHeight());
+    }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         renderer.setProjectionMatrix(camera.getCamera().combined);
@@ -110,6 +113,7 @@ public abstract class Hardware {
 
         for(Sprite s : connectors) {
             if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
+                Gdx.app.log(connectors.indexOf(s) + "", "");
                 CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
             }
         }
@@ -145,7 +149,6 @@ public abstract class Hardware {
             if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
                 this.delete();
             }
-
 
             if(Gdx.input.isTouched() && canMove) {
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
