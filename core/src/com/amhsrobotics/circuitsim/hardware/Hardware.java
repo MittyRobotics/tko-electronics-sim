@@ -167,10 +167,11 @@ public abstract class Hardware {
         if(HardwareManager.attachWireOnDoubleClick != null) {
             if(HardwareManager.attachWireOnDoubleClick.x == this) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
-                    Cable c = new Cable(DeviceUtil.getNewHardwareID());
+                    Cable c = new Cable(CableManager.id);
+                    CableManager.id++;
                     c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
+                    firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);
                     CableManager.addCable(c);
-                    attachWire(c, HardwareManager.attachWireOnDoubleClick.y, false);
                     CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
                     HardwareManager.attachWireOnDoubleClick = null;
                 }
@@ -178,11 +179,18 @@ public abstract class Hardware {
         }
 
         for(Sprite s : connectors) {
-            if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
-                CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
-                if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.currentHardware == null && HardwareManager.attachWireOnDoubleClick == null) {
-                    CircuitGUIManager.popup.activatePrompt("Click the port again to attach a wire!");
-                    HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
+            if(connections.get(connectors.indexOf(s)) == null) {
+                if (s.getBoundingRectangle().contains(vec.x, vec.y)) {
+                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
+                    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
+                        HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
+                        Timer timer = new Timer(3000, arg0 -> {
+                            HardwareManager.attachWireOnDoubleClick = null;
+                        });
+                        timer.setRepeats(false);
+                        timer.start();
+
+                    }
                 }
             }
         }

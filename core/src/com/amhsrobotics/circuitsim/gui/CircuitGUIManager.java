@@ -553,7 +553,7 @@ public class CircuitGUIManager {
         Table helpTable = new Table();
         helpMenu.add(helpTable).expand().fill();
         helpTable.row();
-        helpTable.add(new Label("Keybinds", l2Style)).width(80).colspan(2).align(Align.center);
+        helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(80).colspan(2).align(Align.center);
         helpTable.row();
         helpTable.add(new Label("DELETE", l2Style)).width(80).align(Align.center);
         helpTable.add(new Label("Remove a node or device", lStyle)).width(180).align(Align.center);
@@ -573,6 +573,12 @@ public class CircuitGUIManager {
         helpTable.add(new Label("ESCAPE", l2Style)).width(80).align(Align.center);
         helpTable.add(new Label("Remove focus from device", lStyle)).width(180).align(Align.center);
         helpTable.row();
+        helpTable.add(new Label("Click on Grid", l2Style)).width(110).align(Align.center);
+        helpTable.add(new Label("Remove focus from current device", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("Drag Grid", l2Style)).width(90).align(Align.center);
+        helpTable.add(new Label("Move grid", lStyle)).width(180).align(Align.center);
+        helpTable.row();
         helpTable.add(new Label("CTRL + LSHIFT + /", l2Style)).width(155).align(Align.center);
         helpTable.add(new Label("Help Menu", lStyle)).width(180).align(Align.center);
         helpTable.row();
@@ -581,6 +587,9 @@ public class CircuitGUIManager {
         helpTable.row();
         helpTable.add(new Label("Selec. Device + R", l2Style)).width(155).align(Align.center);
         helpTable.add(new Label("Rotate Device", lStyle)).width(180).align(Align.center);
+        helpTable.row();
+        helpTable.add(new Label("Double Click on Port", l2Style)).width(155).align(Align.center);
+        helpTable.add(new Label("Attach cable to port", lStyle)).width(180).align(Align.center);
 
         helpMenu.row();
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);

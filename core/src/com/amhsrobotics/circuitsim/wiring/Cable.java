@@ -470,8 +470,10 @@ public class Cable implements Disposable {
     }
 
     public void drawEndpoints(ShapeRenderer renderer) {
-        renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit+3f);
-        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit+3f);
+        if(coordinates.size() > 1) {
+            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 3f);
+            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 3f);
+        }
     }
 
     public Hardware getHardwareAtOtherEnd(Hardware hardware) {
