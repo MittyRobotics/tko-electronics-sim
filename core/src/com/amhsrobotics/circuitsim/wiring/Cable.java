@@ -43,7 +43,7 @@ public class Cable implements Disposable {
     public boolean nodeChanged = false;
     public Vector2 movingNode, backupNode;
 
-    public boolean disableEnd, disableBegin, canMove;
+    public boolean disableEnd, disableBegin;
 
     public int ID;
 
@@ -56,7 +56,6 @@ public class Cable implements Disposable {
         coordinates = new ArrayList<>();
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
-        canMove = false;
 
         coordinates.add(startPoint);
 
@@ -323,10 +322,9 @@ public class Cable implements Disposable {
 
                 // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                    if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
-                        appendingFromBegin = false;
-                        appendingFromEnd = false;
-                    } else if (movingNode != null) {
+                    appendingFromBegin = false;
+                    appendingFromEnd = false;
+                    if (movingNode != null) {
                         coordinates.set(coordinates.indexOf(movingNode), backupNode);
                         movingNode = null;
                         backupNode = null;
@@ -383,12 +381,8 @@ public class Cable implements Disposable {
                     } else {
                         appendingFromEnd = false;
                         appendingFromBegin = false;
-                        if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                            coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
-                            movingNode = null;
-                            backupNode = null;
-                            nodeChanged = true;
-                        }
+                        movingNode = null;
+                        backupNode = null;
                         CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
                     }
@@ -398,10 +392,18 @@ public class Cable implements Disposable {
                 // DELETE
                 if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
                     if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
-                        if(appendingFromBegin && coordinates.size() > 1) {
+                        if(appendingFromBegin && coordinates.size() > 2) {
                             coordinates.remove(0);
-                        } else if (appendingFromEnd && coordinates.size() > 1) {
+                        } else if (appendingFromEnd && coordinates.size() > 2) {
                             coordinates.remove(coordinates.size()-1);
+                        } else if (coordinates.size() > 1) {
+                            CableManager.deleteCable(this);
+                            CableManager.currentCable = null;
+                            CircuitGUIManager.propertiesBox.hide();
+                            HardwareManager.removeCableFromHardware(this, connection1);
+                            HardwareManager.removeCableFromHardware(this, connection2);
+                            connection2 = null;
+                            connection1 = null;
                         }
                         appendingFromBegin = false;
                         appendingFromEnd = false;
@@ -528,7 +530,7 @@ public class Cable implements Disposable {
         }
     }
 
-    private Vector2 hoveringOnNode(ClippedCameraController camera) {
+    protected Vector2 hoveringOnNode(ClippedCameraController camera) {
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
 

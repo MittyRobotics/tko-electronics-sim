@@ -1,6 +1,8 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
@@ -17,109 +19,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class CrimpedCable extends Cable {
 
     public CrimpedCable(int gauge) {
-        super(new Vector2(0, 0), -1);
-        disableEnd = true;
+        super(new Vector2(0, 0), CableManager.getCrimpedID());
         this.gauge = gauge;
-    }
 
-    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        populateProperties();
+        CircuitGUIManager.propertiesBox.show();
 
-        limit = ((1/gauge)*100 + 3f)/2;
-
-        renderer.setProjectionMatrix(camera.getCamera().combined);
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        // LOGIC
-        // ---------------------------------------------------------------------
-        if(nodeChanged) {
-            nodeChanged = false;
-        }
-        disableBegin = connection1 != null;
-        disableEnd = true;
-        appendingFromBegin = false;
-        appendingFromEnd = false;
-        // ---------------------------------------------------------------------
-
-
-
-        // DRAW CABLE
-        // ---------------------------------------------------------------------
-        renderer.setColor(color);
-        for(int i = 0; i < coordinates.size() - 1; ++i) {
-            if(CableManager.currentCable != null) {
-                if(CableManager.currentCable == this) {
-                    // draw cable selected
-                    renderer.setColor(new Color(217/255f, 233/255f, 217/255f, 1));
-                    renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*140);
-                }
-            }
-            if(hoveringMouse(camera)) {
-                // draw hovering on cable
-                renderer.setColor(new Color(217 / 255f, 233 / 255f, 217 / 255f, 1));
-                renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*140);
-            }
-            // draw actual cable
-            renderer.setColor(color);
-            renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), (1/gauge)*100);
-
-            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit);
-        }
-        renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit);
-        // ---------------------------------------------------------------------
-
-
-
-        // CABLE SELECTED MECHANICS
-        // ---------------------------------------------------------------------
-
-        if(CableManager.currentCable == this) {
-
-            CableManager.moveToFront(this);
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            // IF MERGING WIRES
-            Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
-            } else {
-
-                // UNSELECT
-                if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                    CableManager.currentCable = null;
-                    appendingFromBegin = false;
-                    CircuitGUIManager.propertiesBox.hide();
-                }
-
-                // DRAW NODES IF SELECTED
-                drawNodes(renderer, camera, Color.SALMON);
-
-            }
-
-        }
-        // ---------------------------------------------------------------------
-
-        // HOVERING OVER CABLE
-        // ---------------------------------------------------------------------
-
-        if(hoveringMouse(camera)) {
-            drawNodes(renderer, camera, Color.SALMON);
-            checkForClick(camera);
-        }
-
-        // ---------------------------------------------------------------------
-
-        renderer.end();
+        // Will be attached to hardware in hardware, not here
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Rumble {
 
-    private static float time = 0, currentTime = 0, power = 0, currentPower = 0;
+    public static float time = 0, currentTime = 0, power = 0, currentPower = 0;
     private static Random random;
     private static Vector3 pos = new Vector3();
 

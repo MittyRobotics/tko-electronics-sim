@@ -13,6 +13,7 @@ public class CableManager {
 
     public static Cable currentCable = null;
     public static int id = 1;
+    public static int cId = 0;
     public static boolean merging = false;
 
     private static DelayedRemovalArray<Cable> temp;
@@ -24,6 +25,11 @@ public class CableManager {
         while(iterator.hasNext()) {
             iterator.next().update(renderer, cam);
         }
+    }
+
+    public static int getCrimpedID() {
+        cId--;
+        return cId;
     }
 
     public static void addCable(Cable cable) {
@@ -53,25 +59,33 @@ public class CableManager {
         // CHECK FOR MERGING WIRES
         if (cable.getCoordinates().size() > 1) {
             for (int x = 0; x < cables.size; x++) {
-                if (cables.get(x).getID() != cable.getID() && !(cable instanceof CrimpedCable) && cable.getID() != 9 && cables.get(x).getID() != 9) {
-                    int ans = cables.get(x).hoveringOnEndpoint(camera);
-                    if (ans == 1) {
-                        merging = true;
-                        return new Tuple<>(cables.get(x), 1);
-                    } else if (ans == 2) {
-                        merging = true;
-                        return new Tuple<>(cables.get(x), 2);
+                if (cables.get(x).getID() != cable.getID()) {
+                    if(cables.get(x).gauge == cable.gauge) {
+                        int ans = cables.get(x).hoveringOnEndpoint(camera);
+                        if (ans == 1) {
+                            merging = true;
+                            return new Tuple<>(cables.get(x), 1);
+                        } else if (ans == 2) {
+                            merging = true;
+                            return new Tuple<>(cables.get(x), 2);
+                        }
                     }
                 }
             }
         }
+
         return null;
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
         //MERGE TWO CABLES
-        cable1.mergeCable(cable2, cable2begin, cable1begin);
-        deleteCable(cable2);
+        if(cable2 instanceof CrimpedCable) {
+            cable2.mergeCable(cable1, cable1begin, cable2begin);
+            deleteCable(cable1);
+        } else {
+            cable1.mergeCable(cable2, cable2begin, cable1begin);
+            deleteCable(cable2);
+        }
         merging = false;
         currentCable = null;
     }
