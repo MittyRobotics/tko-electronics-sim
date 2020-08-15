@@ -100,12 +100,20 @@ public class PropertiesBox {
 
     public void show() {
         if(!CircuitGUIManager.isPanelShown()) {
-            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
+            shift(1);
         } else {
-            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
+            shift(2);
         }
         Tools.slideIn(container, "top", 0.8f, Interpolation.exp10, 200);
         visible = true;
+    }
+
+    public void shift(int direction) {
+        if(direction == 1) {
+            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
+        } else if(direction == 2) {
+            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
+        }
     }
 
     public void hide() {
