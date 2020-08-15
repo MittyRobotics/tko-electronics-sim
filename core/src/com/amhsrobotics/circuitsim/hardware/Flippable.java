@@ -21,8 +21,6 @@ import org.json.simple.JSONArray;
 
 public class Flippable extends Hardware  {
 
-    public int cur;
-
     public Flippable(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
@@ -36,8 +34,6 @@ public class Flippable extends Hardware  {
             temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0) /2f, (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1) /2f);
             connectors.add(temp);
         }
-
-        cur = 0;
 
         initConnections();
         initEnds();
@@ -88,20 +84,6 @@ public class Flippable extends Hardware  {
             rotateThis();
         }
     }
-
-    public Vector2 calculateDirection(int dir, int port) {
-        dir = (dir)%4;
-        if(dir == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
-        } else if (dir == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
-        } else if (dir == 2) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
-        } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
-        }
-    }
-
 
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
