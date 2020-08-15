@@ -73,49 +73,49 @@ public class HardwareManager {
 
         switch(type) {
             case PDP:
-                temp = new PowerDistributionPanel(new Vector2(startX, startY), type, false);
+                temp = new PowerDistributionPanel(new Vector2(startX, startY), type, true);
                 break;
             case VRM:
-                temp = new VoltageRegulatorModule(new Vector2(startX, startY), type, false);
+                temp = new VoltageRegulatorModule(new Vector2(startX, startY), type, true);
                 break;
             case PCM:
-                temp = new PneumaticsControlModule(new Vector2(startX, startY), type, false);
+                temp = new PneumaticsControlModule(new Vector2(startX, startY), type, true);
                 break;
             case DOUBLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                temp = new SandCrab(new Vector2(startX, startY), type, true);
                 break;
             case TRIPLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                temp = new SandCrab(new Vector2(startX, startY), type, true);
                 break;
             case ROBORIO:
-                temp = new RoboRio(new Vector2(startX, startY), type, false);
+                temp = new RoboRio(new Vector2(startX, startY), type, true);
                 break;
             case TALON:
                 temp = new Talon(new Vector2(startX, startY), type, true);
                 break;
             case SPARK:
-                temp = new Spark(new Vector2(startX, startY), type, false);
+                temp = new Spark(new Vector2(startX, startY), type, true);
                 break;
             case FALCON:
-                temp = new Falcon(new Vector2(startX, startY), type, false);
+                temp = new Falcon(new Vector2(startX, startY), type, true);
                 break;
             case MOTOR775:
-                temp = new Motor775(new Vector2(startX, startY), type, false);
+                temp = new Motor775(new Vector2(startX, startY), type, true);
                 break;
             case NEO:
-                temp = new NEO(new Vector2(startX, startY), type, false);
+                temp = new NEO(new Vector2(startX, startY), type, true);
                 break;
             case BREAKER:
-                temp = new Breaker(new Vector2(startX, startY), type, false);
+                temp = new Breaker(new Vector2(startX, startY), type, true);
                 break;
             case BATTERY:
-                temp = new Battery(new Vector2(startX, startY), type, false);
+                temp = new Battery(new Vector2(startX, startY), type, true);
                 break;
             case RADIO:
-                temp = new Radio(new Vector2(startX, startY), type);
+                temp = new Radio(new Vector2(startX, startY), type, true);
                 break;
             default:
-                temp = new SandCrab(new Vector2(startX, startY), type, false);
+                temp = new SandCrab(new Vector2(startX, startY), type, true);
                 break;
         }
 

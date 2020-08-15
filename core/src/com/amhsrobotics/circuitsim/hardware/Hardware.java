@@ -26,7 +26,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONAware;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -177,7 +176,7 @@ public abstract class Hardware {
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
 
-                if(Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) {
+                if((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) && !HardwareManager.movingObject) {
                     HardwareManager.movingObject = true;
                     canMove = true;
                 }
