@@ -52,6 +52,7 @@ public abstract class Hardware {
     public Sprite base;
     public boolean canMove;
     public boolean addCrimped;
+    public int cur;
 
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
@@ -454,6 +455,19 @@ public abstract class Hardware {
             cable.setConnection2(this);
         } else {
             cable.setConnection1(this);
+        }
+    }
+
+    public Vector2 calculateDirection(int dir, int port) {
+        dir = (dir)%4;
+        if(dir == 0) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
+        } else if (dir == 1) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+        } else if (dir == 2) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
+        } else {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
         }
     }
 

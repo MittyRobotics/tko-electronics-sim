@@ -34,4 +34,12 @@ public class Radio extends Flippable {
     public Vector2 calculate(int port) {
         return calculateDirection(cur, port);
     }
+
+    public void drawHover(ModifiedShapeRenderer renderer) {
+        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.roundedRect(getSpriteBox().x - 9, getSpriteBox().y - 9, getSpriteBox().getWidth() + 14, getSpriteBox().getHeight() + 14, 55);
+        renderer.end();
+    }
 }

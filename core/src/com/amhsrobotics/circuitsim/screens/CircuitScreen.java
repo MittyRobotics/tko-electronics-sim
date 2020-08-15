@@ -123,7 +123,6 @@ public class CircuitScreen implements Screen {
 
         if(Constants.placing_object != null) {
 
-
             HUDrenderer.setColor(Color.RED);
             HUDrenderer.begin(ShapeRenderer.ShapeType.Filled);
             HUDrenderer.rectLine(0, 0, 0, Gdx.graphics.getHeight(), 6);
