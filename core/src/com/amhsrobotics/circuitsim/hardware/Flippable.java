@@ -90,6 +90,7 @@ public class Flippable extends Hardware  {
     }
 
     public Vector2 calculateDirection(int dir, int port) {
+        dir = (dir)%4;
         if(dir == 0) {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
         } else if (dir == 1) {

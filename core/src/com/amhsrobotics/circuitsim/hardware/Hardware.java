@@ -390,7 +390,9 @@ public abstract class Hardware {
     public void delete() {
         for(Cable cable : connections) {
             if(cable != null) {
-                if(ends.get(connections.indexOf(cable))) {
+                if(cable instanceof CrimpedCable) {
+                    CableManager.deleteCable(cable);
+                } else if(ends.get(connections.indexOf(cable))) {
                     cable.setConnection2(null);
                 } else {
                     cable.setConnection1(null);
