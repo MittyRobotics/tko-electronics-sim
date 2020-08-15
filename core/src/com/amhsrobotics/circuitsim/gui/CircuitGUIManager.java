@@ -113,268 +113,165 @@ public class CircuitGUIManager {
             }
         });
         table.pad(10).defaults().expandX().space(4);
-//        for (int i = 0; i < 100; i++) {
-//            table.row();
-//
-//            Label label = new Label("Device " + (i + 1) + " Image", lStyle);
-//            label.setAlignment(Align.center);
-//            label.setWrap(true);
-//            table.add(label).width(Gdx.graphics.getWidth());
-//        }
+        container.add(scroll).expand().fill();
+
         reg_cable = new TextButton("Cable", tStyle);
         reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
-        //table.add(reg_cable).width(120);
+
         sandcrab = new TextButton("2-Way Wago", tStyle);
         sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
-        //table.add(sandcrab).width(120);
+
         sandcrab3 = new TextButton("3-Way Wago", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
         battery = new TextButton("Battery", tStyle);
         battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
-        //table.add(sandcrab3).width(120);
+
         pdp = new TextButton("PDP", tStyle);
         pdp.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
-        //table.add(pdp).width(120);
+
         vrm = new TextButton("VRM", tStyle);
         vrm.addListener(new TextTooltip("Voltage Regulation Module", ttStyle));
-        //table.add(vrm).width(120);
+
         rbr = new TextButton("roboRIO", tStyle);
         rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller", ttStyle));
-        //table.add(rbr).width(120);
+
         tln = new TextButton("Talon", tStyle);
         tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller", ttStyle));
-        //table.add(tln).width(120);
+
         pcm = new TextButton("PCM", tStyle);
         pcm.addListener(new TextTooltip("Pneumatics Control Module", ttStyle));
-        //table.add(pcm).width(120);
+
         spk = new TextButton("SPARK MAX", tStyle);
         spk.addListener(new TextTooltip("SPARK MAX Motor Controller", ttStyle));
-        //table.add(spk).width(120);
+
         neo = new TextButton("NEO", tStyle);
         neo.addListener(new TextTooltip("NEO Brushless Motor", ttStyle));
-        //table.add(neo).width(120);
+
         brk = new TextButton("Breaker", tStyle);
         brk.addListener(new TextTooltip("Main Circuit Breaker", ttStyle));
-        //table.add(brk).width(120);
+
         m775 = new TextButton("775", tStyle);
         m775.addListener(new TextTooltip("775 RedLine Motor", ttStyle));
-        //table.add(m775).width(120);
+
         fcn = new TextButton("Falcon", tStyle);
         fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor", ttStyle));
-        //table.add(fcn).width(120);
+
         rad = new TextButton("Radio", tStyle);
         rad.addListener(new TextTooltip("Radio", ttStyle));
 
         eth = new TextButton("Ethernet", tStyle);
         eth.addListener(new TextTooltip("Ethernet cable", ttStyle));
 
-        container.add(scroll).expand().fill();
-
         reg_cable.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.WIRE;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         sandcrab.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.DOUBLESANDCRAB;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         sandcrab3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TRIPLESANDCRAB;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         pdp.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.PDP;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         vrm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.VRM;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         rbr.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ROBORIO;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         tln.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TALON;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         pcm.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.PCM;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         spk.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.SPARK;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         neo.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.NEO;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
+                buttonDecline();
             }
         });
         m775.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.MOTOR775;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         fcn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.FALCON;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         brk.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.BREAKER;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         battery.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.BATTERY;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         rad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.RADIO;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
         eth.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ETHERNET;
-                if(CableManager.currentCable != null) {
-                    CableManager.currentCable.appendingFromEnd = false;
-                    CableManager.currentCable.appendingFromBegin = false;
-                    CableManager.currentCable = null;
-                }
-                HardwareManager.currentHardware = null;
-                propertiesBox.hide();
+                buttonDecline();
             }
         });
 
@@ -409,53 +306,25 @@ public class CircuitGUIManager {
         fil1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(filtersMap.get(fil1)) {
-                    filtersMap.put(fil1, false);
-                    fil1.setStyle(tStyle);
-                } else {
-                    filtersMap.put(fil1, true);
-                    fil1.setStyle(t2Style);
-                }
-                filterChanged = true;
+               filterProcess(fil1);
             }
         });
         fil2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(filtersMap.get(fil2)) {
-                    filtersMap.put(fil2, false);
-                    fil2.setStyle(tStyle);
-                } else {
-                    filtersMap.put(fil2, true);
-                    fil2.setStyle(t2Style);
-                }
-                filterChanged = true;
+                filterProcess(fil2);
             }
         });
         fil3.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(filtersMap.get(fil3)) {
-                    filtersMap.put(fil3, false);
-                    fil3.setStyle(tStyle);
-                } else {
-                    filtersMap.put(fil3, true);
-                    fil3.setStyle(t2Style);
-                }
-                filterChanged = true;
+                filterProcess(fil3);
             }
         });
         fil4.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(filtersMap.get(fil4)) {
-                    filtersMap.put(fil4, false);
-                    fil4.setStyle(tStyle);
-                } else {
-                    filtersMap.put(fil4, true);
-                    fil4.setStyle(t2Style);
-                }
-                filterChanged = true;
+                filterProcess(fil4);
             }
         });
 
@@ -540,6 +409,27 @@ public class CircuitGUIManager {
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, save, help, options, hidePanel);
 
         stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel, save);
+    }
+
+    private void buttonDecline() {
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
+        HardwareManager.currentHardware = null;
+        propertiesBox.hide();
+    }
+
+    private void filterProcess(TextButton fil) {
+        if(filtersMap.get(fil)) {
+            filtersMap.put(fil, false);
+            fil.setStyle(tStyle);
+        } else {
+            filtersMap.put(fil, true);
+            fil.setStyle(t2Style);
+        }
+        filterChanged = true;
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
