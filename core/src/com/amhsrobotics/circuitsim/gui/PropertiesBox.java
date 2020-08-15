@@ -114,9 +114,9 @@ public class PropertiesBox {
 
     public void shift(int direction) {
         if(direction == 1) {
-            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
+            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight()-210);
         } else if(direction == 2) {
-            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
+            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight()-210);
         }
     }
 

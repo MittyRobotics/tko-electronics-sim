@@ -607,19 +607,23 @@ public class CircuitGUIManager {
     }
 
     private void hidePanel() {
+        panelShown = false;
 //        Tools.slideOut(container, "right", 1f, Interpolation.exp10, 300);
         //propertiesBox.container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
         propertiesBox.hide();
-        panelShown = false;
     }
 
     private void showPanel() {
+        panelShown = true;
         container.setPosition(Gdx.graphics.getWidth() - 210, 10);
         filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
-        propertiesBox.shift(2);
+        //propertiesBox.shift(2);
+        if(propertiesBox.isVisible()) {
+            propertiesBox.hide();
+            propertiesBox.show();
+        }
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
-        panelShown = true;
     }
 
     public static boolean isPanelShown() {
