@@ -8,12 +8,12 @@
     {
       "type": "12",
       "position": [-98, -237],
-      "dimensions": [10, 10]
+      "dimensions": [20, 20]
     },
     {
       "type": "12",
       "position": [98, -237],
-      "dimensions": [10, 10]
+      "dimensions": [20, 20]
     }
   ]
 }

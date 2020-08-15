@@ -257,7 +257,6 @@ public class Cable implements Disposable {
         // ---------------------------------------------------------------------
 
 
-
         // DRAW CABLE
         // ---------------------------------------------------------------------
         renderer.setColor(color);
@@ -523,9 +522,9 @@ public class Cable implements Disposable {
                 //SELECT THIS CABLE
 
                 CableManager.currentCable = this;
+                HardwareManager.currentHardware = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
-                HardwareManager.currentHardware = null;
             }
         }
     }

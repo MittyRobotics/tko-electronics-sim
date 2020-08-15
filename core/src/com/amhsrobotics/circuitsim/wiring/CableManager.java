@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -111,6 +112,7 @@ public class CableManager {
         if(good) {
             Cable temp = new Cable(new Vector2(startX, startY), id);
             id++;
+
             currentCable = temp;
 
             temp.setAppendingFromEnd(true);

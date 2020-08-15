@@ -33,6 +33,9 @@ public class CrimpedCable extends Cable {
         populateProperties();
         CircuitGUIManager.propertiesBox.show();
 
+        appendingFromBegin = false;
+        appendingFromEnd = false;
+
         // Will be attached to hardware in hardware, not here
     }
 
