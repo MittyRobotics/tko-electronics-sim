@@ -40,7 +40,7 @@ public class CircuitGUIManager {
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
-    public static ErrorMessage error;
+    public static Message popup;
     private TextField gridSizingX, gridSizingY, gridSpacing;
 
     public boolean helpMenuShown, optionsMenuShown;
@@ -53,7 +53,7 @@ public class CircuitGUIManager {
         this.stage = stage;
 
         propertiesBox = new PropertiesBox(stage);
-        error = new ErrorMessage(stage);
+        popup = new Message(stage);
 
         tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;
@@ -583,26 +583,26 @@ public class CircuitGUIManager {
 
         try {
             if(Integer.parseInt(gridSpacing.getText()) < 10) {
-                error.activate("Minimum spacing of 10 required");
+                popup.activateError("Minimum spacing of 10 required");
             } else if (Integer.parseInt(gridSpacing.getText()) > 100) {
-                error.activate("Maximum spacing of 100 required");
+                popup.activateError("Maximum spacing of 100 required");
             } else {
                 Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
             }
             if(Float.parseFloat(gridSizingX.getText()) > 15000) {
-                error.activate("Maximum X of 15000 required");
+                popup.activateError("Maximum X of 15000 required");
             } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
-                error.activate("Minimum X of 2000 required");
+                popup.activateError("Minimum X of 2000 required");
             } else if (Float.parseFloat(gridSizingY.getText()) < 2000) {
-                error.activate("Minimum Y of 2000 required");
+                popup.activateError("Minimum Y of 2000 required");
             } else if(Float.parseFloat(gridSizingY.getText()) > 15000) {
-                error.activate("Maximum Y of 15000 required");
+                popup.activateError("Maximum Y of 15000 required");
             } else {
                 Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
             }
 
         } catch (Exception e) {
-            error.activate("Invalid input");
+            popup.activateError("Invalid input");
         }
     }
 

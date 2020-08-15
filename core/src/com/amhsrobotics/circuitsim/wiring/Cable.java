@@ -63,6 +63,17 @@ public class Cable implements Disposable {
         CircuitGUIManager.propertiesBox.show();
     }
 
+    public Cable(int count) {
+        voltage = 0;
+        gauge = DeviceUtil.GAUGES[0];
+        coordinates = new ArrayList<>();
+        this.color = DeviceUtil.COLORS.get("Green");
+        this.ID = count;
+
+        populateProperties();
+        CircuitGUIManager.propertiesBox.show();
+    }
+
     public int getID() {
         return ID;
     }
@@ -101,7 +112,7 @@ public class Cable implements Disposable {
             public void changed(ChangeEvent event, Actor actor) {
                 List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
                 if(connection1 != null || connection2 != null) {
-                    CircuitGUIManager.error.activate("Cannot modify gauge with hardware attached");
+                    CircuitGUIManager.popup.activateError("Cannot modify gauge with hardware attached");
                 } else {
                     for(int gau : gauges) {
                         if(gau == gauge) {

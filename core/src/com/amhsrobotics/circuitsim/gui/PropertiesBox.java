@@ -108,6 +108,10 @@ public class PropertiesBox {
         visible = true;
     }
 
+    public void select(int location) {
+        scroll.scrollTo(0, 30 + location * 10, scroll.getWidth(), 40 + location * 10);
+    }
+
     public void shift(int direction) {
         if(direction == 1) {
             container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);

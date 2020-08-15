@@ -8,6 +8,7 @@ import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
@@ -160,12 +161,28 @@ public abstract class Hardware {
                     break;
                 }
             }
+        }
 
+        if(HardwareManager.attachWireOnDoubleClick != null) {
+            if(HardwareManager.attachWireOnDoubleClick.x == this) {
+                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
+                    Cable c = new Cable(DeviceUtil.getNewHardwareID());
+                    c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
+                    CableManager.addCable(c);
+                    attachWire(c, HardwareManager.attachWireOnDoubleClick.y, false);
+                    CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
+                    HardwareManager.attachWireOnDoubleClick = null;
+                }
+            }
         }
 
         for(Sprite s : connectors) {
             if(s.getBoundingRectangle().contains(vec.x, vec.y)) {
                 CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
+                if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.currentHardware == null && HardwareManager.attachWireOnDoubleClick == null) {
+                    CircuitGUIManager.popup.activatePrompt("Click the port again to attach a wire!");
+                    HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
+                }
             }
         }
 
@@ -288,7 +305,7 @@ public abstract class Hardware {
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
+            CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
         } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
@@ -297,15 +314,15 @@ public abstract class Hardware {
 
             CableManager.currentCable = null;
         } else {
-            CircuitGUIManager.error.activate("Wrong gauge - must be gauge: " + portTypes.get(port));
+            CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge: " + portTypes.get(port));
         }
     }
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            CircuitGUIManager.error.activate("Port already occupied by Cable " + connections.get(port).getID());
+            CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
         } else if(portTypes.get(port).equals("13") && cable.getGauge() != 13) {
-            CircuitGUIManager.error.activate("Port requires ethernet cable");
+            CircuitGUIManager.popup.activateError("Port requires ethernet cable");
         } else {
             cable.setGauge(Integer.parseInt(portTypes.get(port)));
             connections.set(port, cable);

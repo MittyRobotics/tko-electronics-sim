@@ -12,24 +12,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import javax.swing.*;
 
-public class ErrorMessage {
+public class Message {
 
     private ModifiedStage stage;
 
 
-    public final Label.LabelStyle LABEL_SMALL = new Label.LabelStyle();
+    public final Label.LabelStyle LABEL_RED = new Label.LabelStyle();
+    public final Label.LabelStyle LABEL_GREEN = new Label.LabelStyle();
     private Label label;
     private Table table;
 
     private boolean visible;
 
-    public ErrorMessage(ModifiedStage stage) {
+    public Message(ModifiedStage stage) {
         this.stage = stage;
 
-        LABEL_SMALL.font = Constants.FONT_SMALL;
-        LABEL_SMALL.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
+        LABEL_RED.font = Constants.FONT_SMALL;
+        LABEL_RED.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
 
-        label = new Label("", LABEL_SMALL);
+        LABEL_GREEN.font = Constants.FONT_SMALL;
+        LABEL_GREEN.fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
+
+        label = new Label("", LABEL_RED);
 
         table = new Table();
         table.setBackground(Constants.SKIN.getDrawable("textbox_01"));
@@ -41,13 +45,28 @@ public class ErrorMessage {
         stage.addActor(table);
     }
 
-    public void activate(String text) {
+    public void activateError(String text) {
+        label.setStyle(LABEL_RED);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();
         show();
 
         Rumble.rumble(3f, 0.4f);
+        Timer timer = new Timer(3000, arg0 -> {
+            hide();
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    public void activatePrompt(String text) {
+        label.setStyle(LABEL_GREEN);
+        label.setText(text);
+        table.setWidth(label.getWidth());
+        table.pack();
+        show();
+
         Timer timer = new Timer(3000, arg0 -> {
             hide();
         });
