@@ -218,7 +218,11 @@ public class CircuitScreen implements Screen {
     }
 
     private void handleHardware(HardwareType type) {
-        CableManager.currentCable = null;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -260,7 +264,11 @@ public class CircuitScreen implements Screen {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            CableManager.currentCable = null;
+            if(CableManager.currentCable != null) {
+                CableManager.currentCable.appendingFromEnd = false;
+                CableManager.currentCable.appendingFromBegin = false;
+                CableManager.currentCable = null;
+            }
             if(Constants.placing_object == HardwareType.ETHERNET) {
                 CableManager.addEthernet(vec2.x, vec2.y);
             } else {

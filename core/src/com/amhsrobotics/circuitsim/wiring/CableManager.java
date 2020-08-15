@@ -88,7 +88,11 @@ public class CableManager {
             deleteCable(cable2);
         }
         merging = false;
-        currentCable = null;
+        if(currentCable != null) {
+            currentCable.appendingFromEnd = false;
+            currentCable.appendingFromBegin = false;
+            currentCable = null;
+        }
     }
 
     public static Cable getCableByID(int ID) {

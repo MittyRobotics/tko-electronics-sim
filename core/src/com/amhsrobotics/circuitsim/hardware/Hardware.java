@@ -301,7 +301,11 @@ public abstract class Hardware {
         cable.addCoordinates(calculate(port), true);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), true);
 
-        CableManager.currentCable = null;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
     }
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {
@@ -313,7 +317,11 @@ public abstract class Hardware {
 
             attachWireLib(cable, port, endOfWire);
 
-            CableManager.currentCable = null;
+            if(CableManager.currentCable != null) {
+                CableManager.currentCable.appendingFromEnd = false;
+                CableManager.currentCable.appendingFromBegin = false;
+                CableManager.currentCable = null;
+            }
         } else {
             CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge: " + portTypes.get(port));
         }
@@ -343,7 +351,11 @@ public abstract class Hardware {
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
 
         if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-        CableManager.currentCable = null;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
     }
 
 

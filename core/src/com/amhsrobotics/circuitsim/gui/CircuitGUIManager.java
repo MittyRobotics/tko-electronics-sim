@@ -174,7 +174,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.WIRE;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -183,7 +187,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.DOUBLESANDCRAB;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -192,7 +200,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TRIPLESANDCRAB;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -201,7 +213,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.PDP;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -210,7 +226,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.VRM;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -219,7 +239,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ROBORIO;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -228,7 +252,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TALON;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -237,7 +265,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.PCM;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -246,7 +278,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.SPARK;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -255,7 +291,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.NEO;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
             }
         });
@@ -263,7 +303,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.MOTOR775;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -272,7 +316,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.FALCON;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -281,7 +329,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.BREAKER;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -290,7 +342,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.BATTERY;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -299,7 +355,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.RADIO;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -308,7 +368,11 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ETHERNET;
-                CableManager.currentCable = null;
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = null;
                 propertiesBox.hide();
             }
@@ -447,6 +511,12 @@ public class CircuitGUIManager {
         hidePanel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable.appendingFromEnd = false;
+                    CableManager.currentCable.appendingFromBegin = false;
+                    CableManager.currentCable = null;
+                }
+                HardwareManager.currentHardware = null;
                 if(panelShown) {
                     hidePanel();
                 } else {

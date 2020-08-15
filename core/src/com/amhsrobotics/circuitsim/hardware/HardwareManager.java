@@ -146,7 +146,11 @@ public class HardwareManager {
         CircuitGUIManager.propertiesBox.show();
 
         currentHardware = temp;
-        CableManager.currentCable = null;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
         hardwares.add(temp);
 
         return temp;
