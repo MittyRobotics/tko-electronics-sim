@@ -316,7 +316,14 @@ public abstract class Hardware {
         }
     }
 
+    public boolean acceptPortConnection(Cable cable, int port) {
+        return true;
+    }
+
     public void attachWire(Cable cable, int port, boolean endOfWire) {
+        if(!acceptPortConnection(cable, port)) {
+            return;
+        }
         if (connections.get(port) != null) {
             CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
         } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {

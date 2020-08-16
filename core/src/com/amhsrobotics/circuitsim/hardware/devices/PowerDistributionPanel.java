@@ -1,7 +1,10 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
+import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +34,21 @@ public class PowerDistributionPanel extends Hardware {
 
         initConnections();
         initEnds();
+    }
+
+    @Override
+    public boolean acceptPortConnection(Cable cable, int port) {
+        Gdx.app.log(port + "", "");
+        if(port >= 10 && port <= 41) {
+            if (cable instanceof CrimpedCable) {
+                return true;
+            } else {
+                CircuitGUIManager.popup.activateError("PDP motor ports only accept crimped cables");
+                return false;
+            }
+        } else {
+            return true;
+        }
     }
 
     public Vector2 calculate(int port) {
