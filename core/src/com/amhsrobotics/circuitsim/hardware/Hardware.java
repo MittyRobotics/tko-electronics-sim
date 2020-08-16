@@ -219,7 +219,7 @@ public abstract class Hardware {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true))) {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
             if (Gdx.input.isTouched()) {
 
                 if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
