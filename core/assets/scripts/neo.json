@@ -2,6 +2,7 @@
   "name": "NEO Motor",
   "totalPins": 4,
   "totalLeds": 0,
+  "crimpedColors": ["White", "Black", "Red", "Black"],
   "crimped": [0, 1, 2, 3],
   "totalSprites": 5,
   "pins": [

@@ -2,7 +2,8 @@
   "name": "Falcon Motor",
   "totalPins": 6,
   "totalLeds": 1,
-  "crimped": [0, 1, 2, 3, 4, 5],
+  "crimpedColors": ["Red", "Black"],
+  "crimped": [0, 1],
   "totalSprites": 7,
   "pins": [
     {
