@@ -253,7 +253,6 @@ public class CircuitScreen implements Screen {
             HardwareManager.movingObject = false;
 
             HardwareManager.addHardware(vec2.x, vec2.y, type);
-//            HardwareManager.addHardware(HardwareManager.currentHardware);
 
         }
     }

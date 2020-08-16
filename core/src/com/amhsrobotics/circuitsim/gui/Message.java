@@ -17,8 +17,7 @@ public class Message {
     private ModifiedStage stage;
 
 
-    public final Label.LabelStyle LABEL_RED = new Label.LabelStyle();
-    public final Label.LabelStyle LABEL_GREEN = new Label.LabelStyle();
+    public final Label.LabelStyle LABEL = new Label.LabelStyle();
     private Label label;
     private Table table;
 
@@ -27,13 +26,10 @@ public class Message {
     public Message(ModifiedStage stage) {
         this.stage = stage;
 
-        LABEL_RED.font = Constants.FONT_SMALL;
-        LABEL_RED.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
+        LABEL.font = Constants.FONT_SMALL;
+        LABEL.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
 
-        LABEL_GREEN.font = Constants.FONT_SMALL;
-        LABEL_GREEN.fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
-
-        label = new Label("", LABEL_RED);
+        label = new Label("", LABEL);
 
         table = new Table();
         table.setBackground(Constants.SKIN.getDrawable("textbox_01"));
@@ -46,7 +42,7 @@ public class Message {
     }
 
     public void activateError(String text) {
-        label.setStyle(LABEL_RED);
+        label.getStyle().fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();
@@ -61,7 +57,7 @@ public class Message {
     }
 
     public void activatePrompt(String text) {
-        label.setStyle(LABEL_GREEN);
+        label.getStyle().fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();
