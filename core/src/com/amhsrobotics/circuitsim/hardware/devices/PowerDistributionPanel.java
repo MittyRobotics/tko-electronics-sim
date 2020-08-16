@@ -4,7 +4,6 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
@@ -23,8 +22,8 @@ import org.json.simple.JSONArray;
 
 public class PowerDistributionPanel extends Hardware {
 
-    public PowerDistributionPanel(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public PowerDistributionPanel(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.PDP, addCrimped);
 
 
         for(JSONArray arr : pinDefs) {

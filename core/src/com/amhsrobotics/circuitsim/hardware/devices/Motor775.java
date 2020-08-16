@@ -10,8 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Motor775 extends Flippable {
 
-    public Motor775(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public Motor775(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.MOTOR775, addCrimped);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;

@@ -77,13 +77,13 @@ public class HardwareManager {
 
         switch(type) {
             case PDP:
-                temp = new PowerDistributionPanel(new Vector2(startX, startY), type, true);
+                temp = new PowerDistributionPanel(new Vector2(startX, startY), true);
                 break;
             case VRM:
-                temp = new VoltageRegulatorModule(new Vector2(startX, startY), type, true);
+                temp = new VoltageRegulatorModule(new Vector2(startX, startY), true);
                 break;
             case PCM:
-                temp = new PneumaticsControlModule(new Vector2(startX, startY), type, true);
+                temp = new PneumaticsControlModule(new Vector2(startX, startY), true);
                 break;
             case DOUBLESANDCRAB:
                 temp = new SandCrab(new Vector2(startX, startY), type, true);
@@ -92,31 +92,31 @@ public class HardwareManager {
                 temp = new SandCrab(new Vector2(startX, startY), type, true);
                 break;
             case ROBORIO:
-                temp = new RoboRio(new Vector2(startX, startY), type, true);
+                temp = new RoboRio(new Vector2(startX, startY), true);
                 break;
             case TALON:
-                temp = new Talon(new Vector2(startX, startY), type, true);
+                temp = new Talon(new Vector2(startX, startY), true);
                 break;
             case SPARK:
-                temp = new Spark(new Vector2(startX, startY), type, true);
+                temp = new Spark(new Vector2(startX, startY), true);
                 break;
             case FALCON:
-                temp = new Falcon(new Vector2(startX, startY), type, true);
+                temp = new Falcon(new Vector2(startX, startY), true);
                 break;
             case MOTOR775:
-                temp = new Motor775(new Vector2(startX, startY), type, true);
+                temp = new Motor775(new Vector2(startX, startY), true);
                 break;
             case NEO:
-                temp = new NEO(new Vector2(startX, startY), type, true);
+                temp = new NEO(new Vector2(startX, startY), true);
                 break;
             case BREAKER:
-                temp = new Breaker(new Vector2(startX, startY), type, true);
+                temp = new Breaker(new Vector2(startX, startY), true);
                 break;
             case BATTERY:
-                temp = new Battery(new Vector2(startX, startY), type, true);
+                temp = new Battery(new Vector2(startX, startY), true);
                 break;
             case RADIO:
-                temp = new Radio(new Vector2(startX, startY), type, true);
+                temp = new Radio(new Vector2(startX, startY), true);
                 break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, true);
@@ -124,7 +124,7 @@ public class HardwareManager {
         }
 
         if(type == HardwareType.PDP) {
-            Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY), HardwareType.BREAKER);
+            Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY));
             hardwares.add(breaker);
             Cable c = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY + 250), CableManager.id);
             Cable c2 = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY - 225), CableManager.id+1);
@@ -156,6 +156,45 @@ public class HardwareManager {
         return temp;
     }
 
+
+    public static Hardware addHardware(Hardware hardware) {
+
+        HardwareType type = hardware.type;
+        float startX = hardware.getPosition().x;
+        float startY = hardware.getPosition().y;
+
+        if(type == HardwareType.PDP) {
+            Hardware breaker = new Breaker(new Vector2(startX + hardware.getDim().x - 200, startY));
+            hardwares.add(breaker);
+            Cable c = new Cable(new Vector2(startX + hardware.getDim().x / 2 + 200, startY + 250), CableManager.id);
+            Cable c2 = new Cable(new Vector2(startX + hardware.getDim().x / 2 + 200, startY - 225), CableManager.id+1);
+            CableManager.id += 2;
+            c.setGauge(4);
+            c.setColor(DeviceUtil.COLORS.get("Red"));
+            c2.setGauge(4);
+            c2.setColor(DeviceUtil.COLORS.get("Black"));
+            CableManager.addCable(c);
+            CableManager.addCable(c2);
+            breaker.attachWire(c, 0, true);
+            breaker.attachWire(c2, 1, true);
+            hardware.attachWire(c, 42, false);
+            hardware.attachWire(c2, 43, false);
+
+        }
+
+        hardware.populateProperties();
+        CircuitGUIManager.propertiesBox.show();
+
+        currentHardware = hardware;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
+        hardwares.add(hardware);
+
+        return hardware;
+    }
 
 
     public static void removeHardware(Hardware ha) {

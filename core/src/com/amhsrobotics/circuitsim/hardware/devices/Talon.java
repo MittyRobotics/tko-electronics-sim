@@ -13,8 +13,8 @@ import org.json.simple.JSONArray;
 
 public class Talon extends Flippable {
 
-    public Talon(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public Talon(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.TALON, addCrimped);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;

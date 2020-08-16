@@ -13,8 +13,8 @@ import org.json.simple.JSONArray;
 
 public class Radio extends Flippable {
 
-    public Radio(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public Radio(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.RADIO, addCrimped);
 
 
         for(JSONArray arr : pinDefs) {
