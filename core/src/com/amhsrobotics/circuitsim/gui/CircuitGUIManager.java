@@ -455,43 +455,6 @@ public class CircuitGUIManager {
             helpTable.add(new Label(((String) JSONReader.getCurrentConfig().get(o)), lStyle)).width(180).align(Align.center);
         }
 
-//        helpTable.row();
-//        helpTable.add(new Label("DELETE", l2Style)).width(80).align(Align.center);
-//        helpTable.add(new Label("Remove a node or device", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("LSHIFT", l2Style)).width(80).align(Align.center);
-//        helpTable.add(new Label("Snap node or device to grid", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("SCROLL", l2Style)).width(80).align(Align.center);
-//        helpTable.add(new Label("Zoom in/out grid", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("SCROLL + LSHIFT", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Vertical scroll grid", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("SCROLL + LALT", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Horizontal scroll grid", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("ESCAPE", l2Style)).width(80).align(Align.center);
-//        helpTable.add(new Label("Remove focus from device", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("Click on Grid", l2Style)).width(110).align(Align.center);
-//        helpTable.add(new Label("Remove focus from current device", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("Drag Grid", l2Style)).width(90).align(Align.center);
-//        helpTable.add(new Label("Move grid", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("CTRL + LSHIFT + /", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Help Menu", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("CTRL + LSHIFT + .", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Options Menu", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("Selec. Device + R", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Rotate Device", lStyle)).width(180).align(Align.center);
-//        helpTable.row();
-//        helpTable.add(new Label("Double Click on Port", l2Style)).width(155).align(Align.center);
-//        helpTable.add(new Label("Attach cable to port", lStyle)).width(180).align(Align.center);
-
         helpMenu.row();
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
     }
