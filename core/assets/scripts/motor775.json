@@ -2,6 +2,7 @@
   "name": "775 Motor",
   "totalPins": 2,
   "totalLeds": 0,
+  "crimpedColors": ["Red", "Black"],
   "crimped": [0, 1],
   "totalSprites": 3,
   "pins": [

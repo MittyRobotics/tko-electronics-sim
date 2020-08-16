@@ -39,6 +39,7 @@ public abstract class Hardware {
     public ArrayList<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
+    public ArrayList<Color> crimpedPortColors;
     public int connNum, ledNum;
     public HardwareType type;
     public String name;
@@ -62,6 +63,7 @@ public abstract class Hardware {
         connections = new ArrayList<>();
         ends = new ArrayList<>();
         crimpedPorts = new ArrayList<>();
+        crimpedPortColors = new ArrayList<>();
 
         canMove = false;
 
@@ -99,6 +101,14 @@ public abstract class Hardware {
             }
         }
 
+        JSONArray col = (JSONArray) JSONReader.getCurrentConfig().get("crimpedColors");
+
+        if(col != null) {
+            for (Object k : col) {
+                crimpedPortColors.add(DeviceUtil.COLORS.get(k));
+            }
+        }
+
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
         if(ledNum > 0) {
             for(int x = 0; x < lights.size(); x++) {
@@ -114,12 +124,15 @@ public abstract class Hardware {
     }
 
     public void checkCrimpedCables() {
+        int j = 0;
         for(int i : crimpedPorts) {
             if(connections.get(i) == null) {
                 CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)));
+                c.setColor(crimpedPortColors.get(j));
                 CableManager.addCable(c);
                 attachCrimpedCable(c, i);
             }
+            j++;
         }
     }
 
