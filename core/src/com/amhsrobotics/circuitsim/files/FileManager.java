@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.files;
 
-import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.hardware.devices.PowerDistributionPanel;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;

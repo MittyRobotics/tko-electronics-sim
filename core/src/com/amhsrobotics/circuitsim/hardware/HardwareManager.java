@@ -157,6 +157,45 @@ public class HardwareManager {
     }
 
 
+    public static Hardware addHardware(Hardware hardware) {
+
+        HardwareType type = hardware.type;
+        float startX = hardware.getPosition().x;
+        float startY = hardware.getPosition().y;
+
+        if(type == HardwareType.PDP) {
+            Hardware breaker = new Breaker(new Vector2(startX + hardware.getDim().x - 200, startY));
+            hardwares.add(breaker);
+            Cable c = new Cable(new Vector2(startX + hardware.getDim().x / 2 + 200, startY + 250), CableManager.id);
+            Cable c2 = new Cable(new Vector2(startX + hardware.getDim().x / 2 + 200, startY - 225), CableManager.id+1);
+            CableManager.id += 2;
+            c.setGauge(4);
+            c.setColor(DeviceUtil.COLORS.get("Red"));
+            c2.setGauge(4);
+            c2.setColor(DeviceUtil.COLORS.get("Black"));
+            CableManager.addCable(c);
+            CableManager.addCable(c2);
+            breaker.attachWire(c, 0, true);
+            breaker.attachWire(c2, 1, true);
+            hardware.attachWire(c, 42, false);
+            hardware.attachWire(c2, 43, false);
+
+        }
+
+        hardware.populateProperties();
+        CircuitGUIManager.propertiesBox.show();
+
+        currentHardware = hardware;
+        if(CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
+        }
+        hardwares.add(hardware);
+
+        return hardware;
+    }
+
 
     public static void removeHardware(Hardware ha) {
         hardwares.removeValue(ha, true);
