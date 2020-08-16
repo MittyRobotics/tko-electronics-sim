@@ -146,29 +146,29 @@ public class CircuitScreen implements Screen {
                 } else if (Constants.placing_object == HardwareType.TRIPLESANDCRAB) {
                     currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
                 } else if (Constants.placing_object == HardwareType.PDP) {
-                    currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y), HardwareType.PDP);
+                    currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.VRM) {
-                    currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y), HardwareType.VRM);
+                    currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.ROBORIO) {
-                    currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y), HardwareType.ROBORIO);
+                    currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.TALON) {
-                    currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), HardwareType.TALON, false);
+                    currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), false);
                 } else if (Constants.placing_object == HardwareType.PCM) {
-                    currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y), HardwareType.PCM);
+                    currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.SPARK) {
-                    currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y), HardwareType.SPARK);
+                    currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.NEO) {
-                    currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y), HardwareType.NEO);
+                    currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.MOTOR775) {
-                    currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y), HardwareType.MOTOR775);
+                    currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.BREAKER) {
-                    currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y), HardwareType.BREAKER);
+                    currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.FALCON) {
-                    currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y), HardwareType.FALCON);
+                    currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.BATTERY) {
-                    currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y), HardwareType.BATTERY);
+                    currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y));
                 } else if (Constants.placing_object == HardwareType.RADIO) {
-                    currentPlacingHardware = new Radio(new Vector2(vec2.x, vec2.y), HardwareType.RADIO);
+                    currentPlacingHardware = new Radio(new Vector2(vec2.x, vec2.y));
                 }
             }
 

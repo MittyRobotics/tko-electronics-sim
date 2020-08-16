@@ -13,8 +13,8 @@ import org.json.simple.JSONArray;
 
 public class PneumaticsControlModule extends Hardware {
 
-    public PneumaticsControlModule(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public PneumaticsControlModule(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.PCM, addCrimped);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;

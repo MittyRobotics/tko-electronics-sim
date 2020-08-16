@@ -10,8 +10,8 @@ import org.json.simple.JSONArray;
 
 public class NEO extends Flippable {
 
-    public NEO(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public NEO(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.NEO, addCrimped);
 
 
         for(JSONArray arr : pinDefs) {

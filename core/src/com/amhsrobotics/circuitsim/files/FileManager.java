@@ -11,7 +11,7 @@ public class FileManager {
 
     // testing
     public static void save() {
-        System.out.println(json.prettyPrint(new PowerDistributionPanel(new Vector2(0, 0), HardwareType.PDP)));
+        System.out.println(json.prettyPrint(new PowerDistributionPanel(new Vector2(0, 0))));
     }
 
     public static void load() {

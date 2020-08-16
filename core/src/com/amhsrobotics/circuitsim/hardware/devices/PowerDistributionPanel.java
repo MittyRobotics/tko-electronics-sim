@@ -22,8 +22,8 @@ import org.json.simple.JSONArray;
 
 public class PowerDistributionPanel extends Hardware {
 
-    public PowerDistributionPanel(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public PowerDistributionPanel(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.PDP, addCrimped);
 
 
         for(JSONArray arr : pinDefs) {

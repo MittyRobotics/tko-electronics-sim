@@ -17,8 +17,8 @@ import org.json.simple.JSONArray;
 
 public class VoltageRegulatorModule extends Hardware {
 
-    public VoltageRegulatorModule(Vector2 position, HardwareType type, boolean... addCrimped) {
-        super(position, type, addCrimped);
+    public VoltageRegulatorModule(Vector2 position, boolean... addCrimped) {
+        super(position, HardwareType.VRM, addCrimped);
 
         for(JSONArray arr : pinDefs) {
             Sprite temp;
