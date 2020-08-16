@@ -1,8 +1,8 @@
 {
   "name": "Talon",
-  "totalPins": 4,
+  "totalPins": 6,
   "totalLeds": 2,
-  "totalSprites": 5,
+  "totalSprites": 7,
   "crimped": [0, 1, 2, 3],
   "pins": [
     {
@@ -24,6 +24,17 @@
       "type": "12",
       "position": [59, -238],
       "dimensions": [25, 25]
+    },
+
+    {
+      "type": "22",
+      "position": [-40, 215],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "22",
+      "position": [-20, 215],
+      "dimensions": [15, 15]
     }
   ],
   "leds": [

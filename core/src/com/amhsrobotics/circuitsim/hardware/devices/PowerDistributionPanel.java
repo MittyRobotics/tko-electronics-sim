@@ -52,22 +52,23 @@ public class PowerDistributionPanel extends Hardware {
     }
 
     public Vector2 calculate(int port) {
+        Sprite connector = getConnector(port);
         if(port >= 0 && port <= 5) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 50, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return new Vector2(connector.getX() + connector.getWidth() / 2 - 50, connector.getY() + connector.getHeight()/2);
         } else if (port >= 6 && port <= 10) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+            return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight() / 2 + 50);
         } else if (port >= 11 && port <= 18) {
-                return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 50);
+                return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight() / 2 - 50);
         } else if (port >= 19 && port <= 26) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+            return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight() / 2 + 50);
         } else if (port >= 27 && port <= 34) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+            return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight() / 2 + 50);
         } else if (port >= 28 && port <= 35) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 50);
+            return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight() / 2 + 50);
         } else if (port == 42 || port == 43) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 50, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+            return new Vector2(connector.getX() + connector.getWidth() / 2 + 50, connector.getY() + connector.getHeight() / 2);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 - 50);
+            return new Vector2(connector.getX() + connector.getWidth() / 2, connector.getY() + connector.getHeight()/2 - 50);
         }
     }
 

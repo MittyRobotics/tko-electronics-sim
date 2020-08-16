@@ -1,8 +1,8 @@
 {
   "name": "SPARK MAX",
-  "totalPins": 5,
+  "totalPins": 7,
   "totalLeds": 2,
-  "totalSprites": 6,
+  "totalSprites": 8,
   "crimped": [0, 1, 2, 3, 4],
   "pins": [
     {
@@ -28,6 +28,17 @@
     {
       "type": "12",
       "position": [29, -240],
+      "dimensions": [25, 25]
+    },
+
+    {
+      "type": "22",
+      "position": [-102, 56],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "22",
+      "position": [-102, 28],
       "dimensions": [25, 25]
     }
   ],
