@@ -32,10 +32,10 @@ public class Talon extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(port < 2) {
-            return calculateDirection(2+cur, port);
-        } else {
+        if(port >= 2 && port < 4) {
             return calculateDirection(cur, port);
+        } else {
+            return calculateDirection(2+cur, port);
         }
     }
 
