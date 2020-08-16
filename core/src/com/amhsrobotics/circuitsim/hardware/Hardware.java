@@ -165,18 +165,6 @@ public abstract class Hardware {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
-        if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
-
-            drawHover(renderer);
-
-            for(Cable c : connections) {
-                if(c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
-                    CableManager.currentCable = c;
-                    HardwareManager.currentHardware = null;
-                    break;
-                }
-            }
-        }
 
         if(HardwareManager.attachWireOnDoubleClick != null) {
             if(HardwareManager.attachWireOnDoubleClick.x == this) {
@@ -214,53 +202,72 @@ public abstract class Hardware {
             }
         }
 
-        if (Gdx.input.isTouched()) {
+        boolean good = true;
 
-            if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
-                HardwareManager.currentHardware = this;
-                CableManager.currentCable = null;
-                populateProperties();
-                CircuitGUIManager.propertiesBox.show();
 
-                if((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) && !HardwareManager.movingObject) {
-                    HardwareManager.movingObject = true;
-                    canMove = true;
+        if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
+
+            drawHover(renderer);
+
+            for (Cable c : connections) {
+                if (c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
+                    CableManager.currentCable = c;
+                    HardwareManager.currentHardware = null;
+                    good = false;
+                    break;
                 }
-            } else {
-                Timer timer = new Timer((int)Gdx.graphics.getDeltaTime()+3, arg0 -> {
-                    if(!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == this) {
-                        CircuitGUIManager.propertiesBox.hide();
-                        HardwareManager.currentHardware = null;
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
             }
+        }
 
-        } else {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true))) {
+            if (Gdx.input.isTouched()) {
 
-            canMove = false;
-            HardwareManager.movingObject = false;
+                if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
+                    HardwareManager.currentHardware = this;
+                    CableManager.currentCable = null;
+                    populateProperties();
+                    CircuitGUIManager.propertiesBox.show();
 
+                    if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) && !HardwareManager.movingObject) {
+                        HardwareManager.movingObject = true;
+                        canMove = true;
+                    }
+                } else {
+                    Timer timer = new Timer((int) Gdx.graphics.getDeltaTime() + 3, arg0 -> {
+                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == this) {
+                            CircuitGUIManager.propertiesBox.hide();
+                            HardwareManager.currentHardware = null;
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
+                }
+
+            } else {
+
+                canMove = false;
+                HardwareManager.movingObject = false;
+
+            }
         }
 
         //SELECTED MECHANICS
         //---------------------------------------------------
 
-        if(HardwareManager.currentHardware == this) {
+        if (HardwareManager.currentHardware == this) {
             HardwareManager.moveToFront(this);
             drawHover(renderer);
 
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 HardwareManager.currentHardware = null;
                 CircuitGUIManager.propertiesBox.hide();
             }
 
-            if((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
+            if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
                 this.delete();
             }
 
-            if(Gdx.input.isTouched() && canMove) {
+            if (Gdx.input.isTouched() && canMove) {
                 if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
                     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                         SnapGrid.calculateSnap(vec);
