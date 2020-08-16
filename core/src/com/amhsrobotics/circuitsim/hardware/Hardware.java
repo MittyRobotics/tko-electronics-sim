@@ -115,6 +115,7 @@ public abstract class Hardware {
             for(int x = 0; x < lights.size(); x++) {
                 LEDs.add(new LED(
                         (JSONArray) ((JSONObject) lights.get(x)).get("position"),
+                        (JSONArray) ((JSONObject) lights.get(x)).get("dimensions"),
                         (String) ((JSONObject) lights.get(x)).get("type"),
                         (String) ((JSONObject) lights.get(x)).get("color")
                 ));
