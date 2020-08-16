@@ -8,93 +8,93 @@
     {
       "type": "18",
       "position": [-11, 105],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [11, 105],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, 74],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, 52],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, 31],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, 11],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, -10],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, -32],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, -53],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [-120, -74],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
 
     {
       "type": "18",
       "position": [120, 74],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, 52],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, 31],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, 11],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, -10],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, -32],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, -53],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
       "position": [120, -74],
-      "dimensions": [50, 130]
+      "dimensions": [10, 10]
     }
   ]
 }

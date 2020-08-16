@@ -181,7 +181,12 @@ public abstract class Hardware {
         if(HardwareManager.attachWireOnDoubleClick != null) {
             if(HardwareManager.attachWireOnDoubleClick.x == this) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
-                    Cable c = new Cable(CableManager.id);
+                    Cable c;
+                    if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
+                        c = new EthernetCable(new Vector2(0, 0), CableManager.id);
+                    } else {
+                        c = new Cable(CableManager.id);
+                    }
                     CableManager.id++;
                     c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
                     firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);

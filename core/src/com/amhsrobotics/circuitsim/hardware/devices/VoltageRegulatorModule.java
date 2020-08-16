@@ -27,6 +27,7 @@ public class VoltageRegulatorModule extends Hardware {
             }
             temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
             connectors.add(temp);
         }
 
@@ -34,43 +35,14 @@ public class VoltageRegulatorModule extends Hardware {
         initEnds();
     }
 
-    @Override
-    public void delete() {
-        for(Cable cable : connections) {
-            if(cable != null) {
-                if(ends.get(connections.indexOf(cable, true))) {
-                    cable.setConnection2(null);
-                } else {
-                    cable.setConnection1(null);
-                }
-            }
+    public Vector2 calculate(int port) {
+        if (port < 2) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
+        } else if (port < 10) {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+        } else {
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
         }
-        HardwareManager.removeHardware(this);
-        HardwareManager.currentHardware = null;
-    }
-
-    public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 20), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 20), !endOfWire);
-
-        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-    }
-
-    @Override
-    public void attachCrimpedCable(Cable cable, int port) {
-        connections.set(port, cable);
-
-        cable.removeCoordinates();
-
-        cable.setConnection1(this);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() - 40), true);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + 40), true);
-
-        CableManager.currentCable = null;
-    }
-
-    public Sprite getConnector(int conn) {
-        return connectors.get(conn);
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
