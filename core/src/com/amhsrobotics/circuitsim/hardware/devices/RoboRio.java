@@ -39,7 +39,7 @@ public class RoboRio extends Hardware {
     public void delete() {
         for(Cable cable : connections) {
             if(cable != null) {
-                if(ends.get(connections.indexOf(cable))) {
+                if(ends.get(connections.indexOf(cable, true))) {
                     cable.setConnection2(null);
                 } else {
                     cable.setConnection1(null);

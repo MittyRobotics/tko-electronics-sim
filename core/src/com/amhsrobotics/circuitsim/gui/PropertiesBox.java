@@ -80,18 +80,25 @@ public class PropertiesBox {
     }
 
 
-    public void addElement(Widget widget, boolean newRow, int colspan) {
+    public void addElement(Widget widget, boolean newRow, int colspan, int... buttonSize) {
         if(widget instanceof Label) {
             ((Label) widget).setAlignment(Align.center);
         }
         if(newRow) table.row();
+        if(buttonSize.length > 0) {
+            table.add(widget).width(buttonSize[0]).colspan(colspan);
+            return;
+        }
         table.add(widget).width(70).colspan(colspan);
     }
 
-    public void addElement(WidgetGroup widget, boolean newRow, int colspan) {
+    public void addElement(WidgetGroup widget, boolean newRow, int colspan, int... buttonSize) {
         if(newRow) table.row();
-        table.add(widget).width(70).colspan(colspan);
-    }
+        if(buttonSize.length > 0) {
+            table.add(widget).width(buttonSize[0]).colspan(colspan);
+            return;
+        }
+        table.add(widget).width(70).colspan(colspan);    }
 
     public void clearTable() {
         table.clearChildren();

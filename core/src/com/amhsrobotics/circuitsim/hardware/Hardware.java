@@ -25,6 +25,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,7 +37,7 @@ public abstract class Hardware {
 
     private Vector2 position;
     private int hardwareID;
-    public ArrayList<Cable> connections;
+    public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
     public ArrayList<Color> crimpedPortColors;
@@ -60,7 +61,7 @@ public abstract class Hardware {
         this.type = type;
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
-        connections = new ArrayList<>();
+        connections = new DelayedRemovalArray<>();
         ends = new ArrayList<>();
         crimpedPorts = new ArrayList<>();
         crimpedPortColors = new ArrayList<>();
@@ -449,7 +450,7 @@ public abstract class Hardware {
             if(cable != null) {
                 if(cable instanceof CrimpedCable) {
                     CableManager.deleteCable(cable);
-                } else if(ends.get(connections.indexOf(cable))) {
+                } else if(ends.get(connections.indexOf(cable, true))) {
                     cable.setConnection2(null);
                 } else {
                     cable.setConnection1(null);
@@ -467,7 +468,7 @@ public abstract class Hardware {
 
 
     public int getConnectionPosition(Cable cable) {
-        for(int i = 0; i < connections.size(); ++i) {
+        for(int i = 0; i < connections.size; ++i) {
             if(connections.get(i) == cable) {
                 return i;
             }
