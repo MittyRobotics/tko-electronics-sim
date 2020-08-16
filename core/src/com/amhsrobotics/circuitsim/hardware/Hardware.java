@@ -115,6 +115,7 @@ public abstract class Hardware {
             for(int x = 0; x < lights.size(); x++) {
                 LEDs.add(new LED(
                         (JSONArray) ((JSONObject) lights.get(x)).get("position"),
+                        this,
                         (JSONArray) ((JSONObject) lights.get(x)).get("dimensions"),
                         (String) ((JSONObject) lights.get(x)).get("type"),
                         (String) ((JSONObject) lights.get(x)).get("color")
@@ -153,6 +154,9 @@ public abstract class Hardware {
             Vector2 pos = new Vector2(temp.getX() + temp.getWidth()/2, temp.getY() + temp.getHeight()/2);
             pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
             temp.setCenter(pos.x, pos.y);
+        }
+        for(LED led : LEDs) {
+            led.setPosition();
         }
 
         //MOVE CABLES
@@ -298,6 +302,9 @@ public abstract class Hardware {
         batch.begin();
         for(Sprite conn : connectors) {
             conn.draw(batch);
+        }
+        for(LED led : LEDs) {
+            led.render(batch);
         }
         batch.end();
 
