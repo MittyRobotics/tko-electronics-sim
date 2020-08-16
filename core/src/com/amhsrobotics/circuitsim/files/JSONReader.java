@@ -19,18 +19,6 @@ public class JSONReader {
         }
     }
 
-    public static Object readString(String str) {
-        return currentConfig.get(str);
-    }
-
-    public static int readInt(String str) {
-        return (int) currentConfig.get(str);
-    }
-
-    public static boolean readBoolean(String str) {
-        return (boolean) currentConfig.get(str);
-    }
-
     public static JSONObject getCurrentConfig() {
         return currentConfig;
     }
