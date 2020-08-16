@@ -8,7 +8,7 @@
     {
       "type": "18",
       "position": [-135, 43],
-      "dimensions": [5,5]
+      "dimensions": [10, 10]
     },
     {
       "type": "18",
@@ -16,24 +16,24 @@
       "dimensions": [10, 10]
     },
     {
-      "type": "18",
+      "type": "22",
       "position": [-106, 104],
-      "dimensions": [10, 10]
+      "dimensions": [7, 7]
     },
     {
-      "type": "18",
+      "type": "22",
       "position": [-89, 104],
-      "dimensions": [10, 10]
+      "dimensions": [7, 7]
     },
     {
-      "type": "18",
+      "type": "22",
       "position": [-52, 104],
-      "dimensions": [10, 10]
+      "dimensions": [7, 7]
     },
     {
-      "type": "18",
+      "type": "22",
       "position": [-69, 104],
-      "dimensions": [10, 10]
+      "dimensions": [7, 7]
     },
     {
       "type": "18",
@@ -76,6 +76,7 @@
       "dimensions": [10, 10]
     },
     {
+      "type": "18",
       "position": [40, 90],
       "dimensions": [10, 10]
     },

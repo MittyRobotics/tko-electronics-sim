@@ -28,6 +28,30 @@ public class DeviceUtil {
         put("13", "Ethernet");
     }};
 
+    public static final HashMap<Float, Float> GAUGETOLIMIT = new HashMap<Float, Float>() {{
+        put(22f, 3f);
+        put(18f, 5f);
+        put(13f, 12f);
+        put(12f, 20f);
+        put(4f, 30f);
+    }};
+
+    public static final HashMap<Float, Float> GAUGETOLIMIT2 = new HashMap<Float, Float>() {{
+        put(22f, 4f);
+        put(18f, 7f);
+        put(13f, 14f);
+        put(12f, 23f);
+        put(4f, 34f);
+    }};
+
+    public static final HashMap<Float, Float> GAUGETOLIMIT3 = new HashMap<Float, Float>() {{
+        put(22f, 4f);
+        put(18f, 5f);
+        put(13f, 8f);
+        put(12f, 13f);
+        put(4f, 21f);
+    }};
+
     //WIRE GAUGES
     public static final int[] GAUGES = {22, 18, 12, 4};
 
