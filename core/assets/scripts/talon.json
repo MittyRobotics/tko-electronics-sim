@@ -4,24 +4,25 @@
   "totalLeds": 2,
   "totalSprites": 5,
   "crimped": [0, 1, 2, 3],
+  "crimpedColors": ["Black", "Red", "Green", "White"],
   "pins": [
     {
-      "type": "22",
+      "type": "12",
       "position": [-64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [-59, -238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [59, -238],
       "dimensions": [25, 25]
     }
