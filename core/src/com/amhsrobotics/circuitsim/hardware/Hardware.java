@@ -218,6 +218,7 @@ public abstract class Hardware {
 
             if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
                 HardwareManager.currentHardware = this;
+                CableManager.currentCable = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
 
@@ -424,7 +425,11 @@ public abstract class Hardware {
                 if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
                     CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 } else {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID()).length() > 10) {
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+                    } else {
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                    }
                 }
             }
         }

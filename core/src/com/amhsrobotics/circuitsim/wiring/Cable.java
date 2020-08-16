@@ -335,9 +335,16 @@ public class Cable implements Disposable {
                     appendingFromBegin = false;
                     appendingFromEnd = false;
                     if (movingNode != null) {
-                        coordinates.set(coordinates.indexOf(movingNode), backupNode);
-                        movingNode = null;
-                        backupNode = null;
+                        if(coordinates.contains(movingNode)) {
+                            coordinates.set(coordinates.indexOf(movingNode), backupNode);
+                            movingNode = null;
+                            backupNode = null;
+                        } else {
+                            movingNode = null;
+                            backupNode = null;
+                            CableManager.currentCable = null;
+                            CircuitGUIManager.propertiesBox.hide();
+                        }
                     } else {
                         CableManager.currentCable = null;
                         CircuitGUIManager.propertiesBox.hide();
