@@ -6,22 +6,22 @@
   "crimped": [0, 1, 2, 3],
   "pins": [
     {
-      "type": "22",
+      "type": "12",
       "position": [-64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [64, 238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [-59, -238],
       "dimensions": [25, 25]
     },
     {
-      "type": "22",
+      "type": "12",
       "position": [59, -238],
       "dimensions": [25, 25]
     }

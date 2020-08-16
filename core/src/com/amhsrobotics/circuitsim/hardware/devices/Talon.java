@@ -29,7 +29,6 @@ public class Talon extends Flippable {
 
         initConnections();
         initEnds();
-
     }
 
     public Vector2 calculate(int port) {
