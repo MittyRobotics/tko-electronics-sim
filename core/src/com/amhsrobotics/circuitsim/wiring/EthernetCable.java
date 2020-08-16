@@ -2,7 +2,11 @@ package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -10,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
 
@@ -49,6 +54,39 @@ public class EthernetCable extends Cable {
     }
 
     @Override
+    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        super.update(renderer, camera);
+
+        if(CableManager.currentCable == this) {
+
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+            if (appendingFromEnd && !disableEnd) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            } else if (appendingFromBegin && !disableBegin) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            }
+
+            renderer.end();
+        }
+
+    }
+
+    @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
         if(!appendingFromBegin) {
@@ -67,7 +105,7 @@ public class EthernetCable extends Cable {
             renderer.setColor(color[0]);
         }
         for(Vector2 coords : coordinates) {
-            renderer.circle(coords.x, coords.y, limit+3f);
+            renderer.circle(coords.x, coords.y, limit3);
         }
         processNodes(renderer, cam);
     }
