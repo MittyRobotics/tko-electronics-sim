@@ -55,7 +55,7 @@ public class DeviceUtil {
     //WIRE GAUGES
     public static final int[] GAUGES = {22, 18, 12, 4};
 
-    private static int curID = 0;
+    public static int curID = 0;
 
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {

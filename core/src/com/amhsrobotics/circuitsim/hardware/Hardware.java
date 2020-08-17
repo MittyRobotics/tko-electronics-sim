@@ -173,7 +173,7 @@ public abstract class Hardware {
 
 
         if(HardwareManager.attachWireOnDoubleClick != null) {
-            if(HardwareManager.attachWireOnDoubleClick.x == this) {
+            if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
                     Cable c;
                     if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
@@ -225,7 +225,7 @@ public abstract class Hardware {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
             if (Gdx.input.isTouched()) {
 
                 if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
