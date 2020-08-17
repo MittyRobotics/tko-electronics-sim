@@ -92,7 +92,6 @@ public class PowerDistributionPanel extends Hardware {
 
     @Override
     public boolean acceptPortConnection(Cable cable, int port) {
-        Gdx.app.log(port + "", "");
         if(port >= 10 && port <= 41) {
             if (cable instanceof CrimpedCable) {
                 return true;

@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.parts;
 
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,23 +15,30 @@ public class LED {
     private Vector2 position;
     private Vector2 size;
     private Sprite sprite;
+    private Hardware hardware;
 
-    public LED(JSONArray position, JSONArray size, String type, String color) {
+    public LED(JSONArray position, Hardware hardware, JSONArray size, String type, String color) {
 
+        this.hardware = hardware;
         this.position = new Vector2((long) position.get(0), (long) position.get(1));
         this.size = new Vector2((long) size.get(0), (long) size.get(1));
         this.color = color;
         this.type = type;
 
         sprite = new Sprite(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
-        sprite.setCenter(this.position.x, this.position.y);
+        setPosition();
         sprite.setSize(this.size.x, this.size.y);
     }
 
     public void render(SpriteBatch batch) {
-        batch.begin();
         sprite.draw(batch);
-        batch.end();
+    }
+
+    public void setPosition() {
+        sprite.setCenter(hardware.getPosition().x + this.position.x, hardware.getPosition().y + this.position.y);
+        Vector2 pos = new Vector2(sprite.getX() + sprite.getWidth()/2, sprite.getY() + sprite.getHeight()/2);
+        pos.rotateAround(new Vector2(hardware.base.getX() + hardware.base.getWidth() / 2, hardware.base.getY() + hardware.base.getHeight() / 2), hardware.base.getRotation());
+        sprite.setCenter(pos.x, pos.y);
     }
 
     public String getColor() {
@@ -40,7 +48,7 @@ public class LED {
     public void setColor(String color) {
         this.color = color;
         sprite = new Sprite(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
-        sprite.setCenter(position.x, position.y);
+        setPosition();
         sprite.setSize(size.x, size.y);
     }
 

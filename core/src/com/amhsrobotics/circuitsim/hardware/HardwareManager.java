@@ -12,7 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class HardwareManager {
 
@@ -31,6 +34,10 @@ public class HardwareManager {
 
     public static DelayedRemovalArray<Hardware> getHardware() {
         return hardwares;
+    }
+
+    public static List<Hardware> getHardwareAsList() {
+        return Arrays.asList(hardwares.toArray());
     }
 
     public static void moveToFront(Hardware hardware) {
