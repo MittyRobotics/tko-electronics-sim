@@ -112,12 +112,12 @@ public abstract class Hardware {
 
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
         if(ledNum > 0) {
-            for(int x = 0; x < lights.size(); x++) {
+            for (Object light : lights) {
                 LEDs.add(new LED(
-                        (JSONArray) ((JSONObject) lights.get(x)).get("position"),
-                        (JSONArray) ((JSONObject) lights.get(x)).get("dimensions"),
-                        (String) ((JSONObject) lights.get(x)).get("type"),
-                        (String) ((JSONObject) lights.get(x)).get("color")
+                        (JSONArray) ((JSONObject) light).get("position"),
+                        (JSONArray) ((JSONObject) light).get("dimensions"),
+                        (String) ((JSONObject) light).get("type"),
+                        (String) ((JSONObject) light).get("color")
                 ));
             }
         }
@@ -300,6 +300,10 @@ public abstract class Hardware {
             conn.draw(batch);
         }
         batch.end();
+
+        for(LED led : LEDs) {
+            led.render(batch);
+        }
 
         processFlip();
     }
