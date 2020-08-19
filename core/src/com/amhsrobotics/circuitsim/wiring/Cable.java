@@ -511,11 +511,17 @@ public class Cable implements Disposable {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-
-            if (appendingFromEnd) {
-                clist.get(0).attachWire(this, hardware.get(clist.get(0)), true);
-            } else if (appendingFromBegin) {
-                clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
+            if(getConnection(!appendingFromBegin) == clist.get(0)) {
+                CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
+                appendingFromEnd = false;
+                appendingFromBegin = false;
+                CableManager.currentCable = null;
+            } else {
+                if (appendingFromEnd) {
+                    clist.get(0).attachWire(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
+                }
             }
 
         }

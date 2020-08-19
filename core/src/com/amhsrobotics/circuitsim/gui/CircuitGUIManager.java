@@ -344,7 +344,7 @@ public class CircuitGUIManager {
         options = new TextButton("Options", tStyle);
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
         hidePanel = new TextButton("Toggle Panel", tStyle);
-        hidePanel.setPosition(335, Gdx.graphics.getHeight() - 70);
+        hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
         simulate = new TextButton("Simulate", tStyle);
         simulate.setPosition(460, Gdx.graphics.getHeight() - 70);
 

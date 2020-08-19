@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -87,6 +88,8 @@ public class CableManager {
                 cable1.mergeCable(cable2, cable2begin, cable1begin);
                 deleteCable(cable2);
             }
+        } else {
+            CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
         }
         merging = false;
         if(currentCable != null) {
