@@ -52,7 +52,7 @@
     {
       "color": "green",
       "type": "sensor-indicator",
-      "position": [90, -1],
+      "position": [-90, -1],
       "dimensions": [8, 8]
     },
     {
