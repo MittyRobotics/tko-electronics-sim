@@ -589,6 +589,7 @@ public class CircuitGUIManager {
             if(sim.getErrors().size() > 0) {
                 // temporary, replace this with actual error later
                 popup.activateError("Simulation Error");
+                sim.getErrors().clear();
             }
         }
 
