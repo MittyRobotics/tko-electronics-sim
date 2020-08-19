@@ -355,7 +355,7 @@ public class CircuitGUIManager {
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
-                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.1f, hidePanel, options, help, save);
+                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.07f, simulate, hidePanel, options, help, save);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -416,7 +416,7 @@ public class CircuitGUIManager {
 
 
         buildHelpMenu(wStyle, lStyle, l2Style);
-        buildOptionsMenu(wStyle, lStyle, l2Style, textFieldStyle);
+        buildOptionsMenu(wStyle, l2Style, textFieldStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
@@ -471,7 +471,7 @@ public class CircuitGUIManager {
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
     }
 
-    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle) {
+    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle) {
         optionsMenu = new Window("Options", wStyle);
         optionsMenu.setWidth(500);
         optionsMenu.setHeight(600);
