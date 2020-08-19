@@ -511,11 +511,17 @@ public class Cable implements Disposable {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-
-            if (appendingFromEnd) {
-                clist.get(0).attachWire(this, hardware.get(clist.get(0)), true);
-            } else if (appendingFromBegin) {
-                clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
+            if(getConnection(!appendingFromBegin) == clist.get(0)) {
+                CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
+                appendingFromEnd = false;
+                appendingFromBegin = false;
+                CableManager.currentCable = null;
+            } else {
+                if (appendingFromEnd) {
+                    clist.get(0).attachWire(this, hardware.get(clist.get(0)), true);
+                } else if (appendingFromBegin) {
+                    clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
+                }
             }
 
         }
@@ -657,6 +663,14 @@ public class Cable implements Disposable {
         } else {
             this.connection2 = connection2;
         }
+    }
+
+    public Hardware getOtherConnection(Hardware h) {
+        return connection1 == h ? connection2 : connection1;
+    }
+
+    public Hardware getConnection(boolean begin) {
+        return begin ? connection1 : connection2;
     }
 
     public float getVoltage() {

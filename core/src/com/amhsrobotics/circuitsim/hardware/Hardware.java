@@ -112,13 +112,13 @@ public abstract class Hardware {
 
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
         if(ledNum > 0) {
-            for(int x = 0; x < lights.size(); x++) {
+            for (Object light : lights) {
                 LEDs.add(new LED(
-                        (JSONArray) ((JSONObject) lights.get(x)).get("position"),
+                        (JSONArray) ((JSONObject) light).get("position"),
                         this,
-                        (JSONArray) ((JSONObject) lights.get(x)).get("dimensions"),
-                        (String) ((JSONObject) lights.get(x)).get("type"),
-                        (String) ((JSONObject) lights.get(x)).get("color")
+                        (JSONArray) ((JSONObject) light).get("dimensions"),
+                        (String) ((JSONObject) light).get("type"),
+                        (String) ((JSONObject) light).get("color")
                 ));
             }
         }
@@ -155,6 +155,7 @@ public abstract class Hardware {
             pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
             temp.setCenter(pos.x, pos.y);
         }
+
         for(LED led : LEDs) {
             led.setPosition();
         }
@@ -172,7 +173,7 @@ public abstract class Hardware {
 
 
         if(HardwareManager.attachWireOnDoubleClick != null) {
-            if(HardwareManager.attachWireOnDoubleClick.x == this) {
+            if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
                     Cable c;
                     if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
@@ -224,7 +225,7 @@ public abstract class Hardware {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
             if (Gdx.input.isTouched()) {
 
                 if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {

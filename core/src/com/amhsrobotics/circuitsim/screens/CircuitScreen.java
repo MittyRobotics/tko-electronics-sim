@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.camera.Rumble;
@@ -186,6 +187,7 @@ public class CircuitScreen implements Screen {
                             currentPlacingHardware = new Radio(new Vector2(vec2.x, vec2.y));
                             break;
                     }
+                    DeviceUtil.curID--;
                 }
             }
 

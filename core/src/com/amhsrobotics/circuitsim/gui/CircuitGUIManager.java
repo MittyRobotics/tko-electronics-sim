@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
@@ -32,7 +33,9 @@ public class CircuitGUIManager {
 
     private final ModifiedStage stage;
 
-    private final TextButton back, help, options, hidePanel, save;
+    private final Simulation sim;
+
+    private final TextButton simulate, back, help, options, hidePanel, save;
     public static Table container, table, table2, filters;
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
@@ -52,6 +55,8 @@ public class CircuitGUIManager {
 
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
+
+        sim = new Simulation();
 
         propertiesBox = new PropertiesBox(stage);
         popup = new Message(stage);
@@ -340,6 +345,8 @@ public class CircuitGUIManager {
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
         hidePanel = new TextButton("Toggle Panel", tStyle);
         hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
+        simulate = new TextButton("Simulate", tStyle);
+        simulate.setPosition(460, Gdx.graphics.getHeight() - 70);
 
         back.addListener(new ChangeListener() {
             @Override
@@ -400,6 +407,12 @@ public class CircuitGUIManager {
                 FileManager.save();
             }
         });
+        simulate.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log(sim.simulate()+"", "");
+            }
+        });
 
 
         buildHelpMenu(wStyle, lStyle, l2Style);
@@ -407,9 +420,9 @@ public class CircuitGUIManager {
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
-        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.3f, save, help, options, hidePanel);
+        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, hidePanel, simulate);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel, save);
+        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel, save, simulate);
     }
 
     private void buttonDecline() {
