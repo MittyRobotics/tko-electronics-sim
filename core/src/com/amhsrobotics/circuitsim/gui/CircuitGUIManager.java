@@ -410,7 +410,7 @@ public class CircuitGUIManager {
         simulate.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log(sim.simulate()+"", "");
+                sim.simulate();
             }
         });
 
@@ -584,6 +584,13 @@ public class CircuitGUIManager {
     }
 
     public void update(float delta) {
+
+        if(sim.isRunning()) {
+            if(sim.getErrors().size() > 0) {
+                // temporary, replace this with actual error later
+                popup.activateError("Simulation Error");
+            }
+        }
 
 
         if(helpMenuShown) {

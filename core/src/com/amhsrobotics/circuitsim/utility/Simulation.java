@@ -11,17 +11,28 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import java.util.HashMap;
 
 public class Simulation {
-    DelayedRemovalArray<Hardware> h;
-    DelayedRemovalArray<Cable> c;
-    HashMap<Object, String> error;
-    Battery battery;
+    private DelayedRemovalArray<Hardware> h;
+    private DelayedRemovalArray<Cable> c;
+    private HashMap<Object, String> error;
+    private Battery battery;
+
+    private boolean isRunning = false;
 
     public Simulation() {
         error = new HashMap<>();
     }
 
+    public HashMap<Object, String> getErrors() {
+        return error;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
     public HashMap<Object, String> simulate() {
         error.clear();
+        isRunning = true;
         battery = null;
 
         h = HardwareManager.getHardware();
