@@ -78,23 +78,15 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
-        //MERGE TWO CABLES
-        if(cable2 instanceof CrimpedCable) {
-            if(cable1 instanceof CrimpedCable) {
-                if(cable1.connection1.getHardwareID() != cable2.connection1.getHardwareID()) {
-                    cable2.mergeCable(cable1, cable1begin, cable2begin);
-                    deleteCable(cable1);
-                } else {
-                    cable1.appendingFromEnd = false;
-                    cable2.appendingFromEnd = false;
-                }
-            } else {
+        if(cable1.getConnection(cable1begin) != null && cable1.getConnection(cable1begin) != cable2.getConnection(cable2begin)) {
+            //MERGE TWO CABLES
+            if (cable2 instanceof CrimpedCable) {
                 cable2.mergeCable(cable1, cable1begin, cable2begin);
                 deleteCable(cable1);
+            } else {
+                cable1.mergeCable(cable2, cable2begin, cable1begin);
+                deleteCable(cable2);
             }
-        } else {
-            cable1.mergeCable(cable2, cable2begin, cable1begin);
-            deleteCable(cable2);
         }
         merging = false;
         if(currentCable != null) {

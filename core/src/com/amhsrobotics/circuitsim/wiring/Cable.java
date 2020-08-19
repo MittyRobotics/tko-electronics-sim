@@ -659,6 +659,14 @@ public class Cable implements Disposable {
         }
     }
 
+    public Hardware getOtherConnection(Hardware h) {
+        return connection1 == h ? connection2 : connection1;
+    }
+
+    public Hardware getConnection(boolean begin) {
+        return begin ? connection1 : connection2;
+    }
+
     public float getVoltage() {
         return voltage;
     }
