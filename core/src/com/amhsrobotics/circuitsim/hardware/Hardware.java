@@ -31,7 +31,6 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public abstract class Hardware {

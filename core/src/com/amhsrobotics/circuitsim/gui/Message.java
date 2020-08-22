@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-import javax.swing.*;
-
 public class Message {
 
     private ModifiedStage stage;
