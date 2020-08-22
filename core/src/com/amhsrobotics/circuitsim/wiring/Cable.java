@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.LinkTimer;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
@@ -390,14 +391,12 @@ public class Cable implements Disposable {
                                 appendingFromBegin = false;
                                 movingNode = null;
                                 backupNode = null;
-                                Timer timer = new Timer((int)Gdx.graphics.getDeltaTime()+3, arg0 -> {
-                                    if(!CircuitGUIManager.propertiesBox.hovering && CableManager.currentCable == this) {
+                                LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
+                                    if(!CircuitGUIManager.propertiesBox.hovering && CableManager.currentCable == Cable.this) {
                                         CircuitGUIManager.propertiesBox.hide();
                                         CableManager.currentCable = null;
                                     }
                                 });
-                                timer.setRepeats(false);
-                                timer.start();
                             }
                         }
                     } else {
