@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.utility.LinkTimer;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
@@ -49,11 +50,7 @@ public class Message {
         show();
 
         Rumble.rumble(3f, 0.4f);
-        Timer timer = new Timer(3000, arg0 -> {
-            hide();
-        });
-        timer.setRepeats(false);
-        timer.start();
+        LinkTimer.init(3, this::hide);
     }
 
     public void activatePrompt(String text) {
@@ -63,11 +60,7 @@ public class Message {
         table.pack();
         show();
 
-        Timer timer = new Timer(3000, arg0 -> {
-            hide();
-        });
-        timer.setRepeats(false);
-        timer.start();
+        LinkTimer.init(3, this::hide);
     }
 
     public void show() {

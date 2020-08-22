@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.LinkTimer;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
@@ -197,12 +198,12 @@ public abstract class Hardware {
                     CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
                     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
                         HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
-                        Timer timer = new Timer(3000, arg0 -> {
-                            HardwareManager.attachWireOnDoubleClick = null;
-                        });
-                        timer.setRepeats(false);
-                        timer.start();
-
+                        LinkTimer.init(3, () -> HardwareManager.attachWireOnDoubleClick = null);
+//                        Timer timer = new Timer(3000, arg0 -> {
+//                            HardwareManager.attachWireOnDoubleClick = null;
+//                        });
+//                        timer.setRepeats(false);
+//                        timer.start();
                     }
                 }
             }
@@ -239,14 +240,12 @@ public abstract class Hardware {
                         canMove = true;
                     }
                 } else {
-                    Timer timer = new Timer((int) Gdx.graphics.getDeltaTime() + 3, arg0 -> {
-                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == this) {
+                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
+                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == Hardware.this) {
                             CircuitGUIManager.propertiesBox.hide();
                             HardwareManager.currentHardware = null;
                         }
                     });
-                    timer.setRepeats(false);
-                    timer.start();
                 }
 
             } else {
