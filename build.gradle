@@ -23,9 +23,6 @@ allprojects {
         appName = "TKO1351_CircuitSim"
         gdxVersion = '1.9.11'
         roboVMVersion = '2.3.8'
-        box2DLightsVersion = '1.5'
-        ashleyVersion = '1.7.3'
-        aiVersion = '1.8.2'
     }
 
     repositories {
@@ -46,7 +43,6 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         
@@ -59,14 +55,9 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        compile "me.rohanbansal.ricochet:ricochet:1.9.5-SNAPSHOT"
+        compile "me.rohanbansal.ricochet:ricochet:1.9.8-SNAPSHOT"
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
-        // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
         compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
     }

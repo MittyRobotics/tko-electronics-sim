@@ -1,0 +1,19 @@
+{
+  "name": "DoubleSandCrab",
+  "totalPins": 2,
+  "totalLeds": 0,
+  "crimped": [],
+  "totalSprites": 3,
+  "pins": [
+    {
+      "type": "22",
+      "position": [-32, -20],
+      "dimensions": [50, 130]
+    },
+    {
+      "type": "22",
+      "position": [32, -20],
+      "dimensions": [50, 130]
+    }
+  ]
+}

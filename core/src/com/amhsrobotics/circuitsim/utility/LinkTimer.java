@@ -16,6 +16,7 @@ public class LinkTimer {
     private static int additiveTimerID = 0;
 
     public static void init(float seconds, Runnable runnable) {
+        Gdx.app.log("added timer", "");
         additiveTimerID++;
 
         timeLeft.put(additiveTimerID, 0f);
@@ -27,17 +28,21 @@ public class LinkTimer {
 
     public static void tick() {
 
-        if(currentActiveTimers.size > 0) {
-            for(int timerID : currentActiveTimers) {
-                timeLeft.put(timerID, timeLeft.get(timerID) + Gdx.graphics.getRawDeltaTime());
+        try {
+            if(currentActiveTimers.size > 0) {
+                for(int timerID : currentActiveTimers) {
+                    timeLeft.put(timerID, timeLeft.get(timerID) + Gdx.graphics.getRawDeltaTime());
 
-                if(timeLeft.get(timerID) >= timerLengths.get(timerID)) {
-                    runnables.get(timerID).run();
-                    timeLeft.remove(timerID);
-                    timerLengths.remove(timerID);
-                    currentActiveTimers.removeValue(timerID, true);
+                    if(timeLeft.get(timerID) >= timerLengths.get(timerID)) {
+                        runnables.get(timerID).run();
+                        timeLeft.remove(timerID);
+                        timerLengths.remove(timerID);
+                        currentActiveTimers.removeValue(timerID, true);
+                    }
                 }
             }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 }

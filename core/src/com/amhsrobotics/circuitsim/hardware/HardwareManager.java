@@ -128,6 +128,11 @@ public class HardwareManager {
                 break;
         }
 
+        if(type == HardwareType.EPLATE) {
+            temp = new EPlate(new Vector2(startX, startY));
+            ((EPlate) temp).init();
+        }
+
         if(type == HardwareType.PDP) {
             Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY));
             hardwares.add(breaker);

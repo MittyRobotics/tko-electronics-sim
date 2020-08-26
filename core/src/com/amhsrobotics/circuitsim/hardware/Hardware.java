@@ -31,6 +31,7 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public abstract class Hardware {
@@ -61,23 +62,25 @@ public abstract class Hardware {
         this.type = type;
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
-        connections = new DelayedRemovalArray<>();
-        ends = new ArrayList<>();
-        crimpedPorts = new ArrayList<>();
-        crimpedPortColors = new ArrayList<>();
+        if(type != HardwareType.EPLATE) {
+            connections = new DelayedRemovalArray<>();
+            ends = new ArrayList<>();
+            crimpedPorts = new ArrayList<>();
+            crimpedPortColors = new ArrayList<>();
 
-        canMove = false;
+            canMove = false;
 
-        if(addCrimped.length > 0) {
-            this.addCrimped = addCrimped[0];
+            if(addCrimped.length > 0) {
+                this.addCrimped = addCrimped[0];
+            }
+
+            if(Constants.placing_object == null) {
+                populateProperties();
+                CircuitGUIManager.propertiesBox.show();
+            }
+
+            loadThis();
         }
-
-        if(Constants.placing_object == null) {
-            populateProperties();
-            CircuitGUIManager.propertiesBox.show();
-        }
-
-        loadThis();
     }
 
     public void loadThis() {
@@ -147,6 +150,8 @@ public abstract class Hardware {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         batch.setProjectionMatrix(camera.getCamera().combined);
 
+        if(type == HardwareType.EPLATE) return;
+
         base.setCenter(getPosition().x, getPosition().y);
 
         for(Sprite temp : connectors) {
@@ -197,12 +202,12 @@ public abstract class Hardware {
                     CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
                     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
                         HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
-                        LinkTimer.init(3, () -> HardwareManager.attachWireOnDoubleClick = null);
-//                        Timer timer = new Timer(3000, arg0 -> {
-//                            HardwareManager.attachWireOnDoubleClick = null;
-//                        });
-//                        timer.setRepeats(false);
-//                        timer.start();
+//                        LinkTimer.init(3, () -> HardwareManager.attachWireOnDoubleClick = null);
+                        Timer timer = new Timer(3000, arg0 -> {
+                            HardwareManager.attachWireOnDoubleClick = null;
+                        });
+                        timer.setRepeats(false);
+                        timer.start();
                     }
                 }
             }
@@ -239,12 +244,20 @@ public abstract class Hardware {
                         canMove = true;
                     }
                 } else {
-                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
+//                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
+//                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == Hardware.this) {
+//                            CircuitGUIManager.propertiesBox.hide();
+//                            HardwareManager.currentHardware = null;
+//                        }
+//                    });
+                    Timer timer = new Timer((int) Gdx.graphics.getDeltaTime() + 3, arg0 -> {
                         if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == Hardware.this) {
                             CircuitGUIManager.propertiesBox.hide();
                             HardwareManager.currentHardware = null;
                         }
                     });
+                    timer.setRepeats(false);
+                    timer.start();
                 }
 
             } else {
