@@ -213,8 +213,6 @@ public abstract class Hardware {
             }
         }
 
-        boolean good = true;
-
 
         if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
 
@@ -224,7 +222,6 @@ public abstract class Hardware {
                 if (c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
                     CableManager.currentCable = c;
                     HardwareManager.currentHardware = null;
-                    good = false;
                     break;
                 }
             }
