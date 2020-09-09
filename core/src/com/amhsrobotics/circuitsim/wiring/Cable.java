@@ -34,7 +34,7 @@ public class Cable implements Disposable {
 
     public float voltage;
     public float gauge;
-    public Color color;
+    public Color color, nodeColor;
     public Color hoverColor = Color.WHITE;
     public ArrayList<Vector2> coordinates;
     public Hardware connection1, connection2;
@@ -57,6 +57,7 @@ public class Cable implements Disposable {
         coordinates = new ArrayList<>();
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
+        nodeColor = Color.SALMON;
 
         coordinates.add(startPoint);
 
@@ -217,41 +218,41 @@ public class Cable implements Disposable {
                 if(appendingFromBegin) {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 } else {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 }
             } else {
                 // DRAW NODES IF SELECTED
-                drawNodes(renderer, camera, Color.SALMON);
+                drawNodes(renderer, camera, nodeColor);
 
                 if (appendingFromEnd && !disableEnd) {
                     // draw potential cable wire
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 } else if (appendingFromBegin && !disableBegin){
                     // draw potential cable wire
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 }
             }
 
         }
 
-        renderer.setColor(Color.SALMON);
+        renderer.setColor(nodeColor);
         renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
 
         if(hoveringMouse(camera)) {
-            drawNodes(renderer, camera, Color.SALMON);
+            drawNodes(renderer, camera, nodeColor);
         }
 
         renderer.end();
@@ -298,7 +299,7 @@ public class Cable implements Disposable {
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
         }
-        renderer.setColor(Color.SALMON);
+        renderer.setColor(nodeColor);
         drawEndpoints(renderer);
         // ---------------------------------------------------------------------
 
@@ -322,12 +323,12 @@ public class Cable implements Disposable {
                 if(appendingFromBegin) {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 } else {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 }
 
@@ -361,8 +362,13 @@ public class Cable implements Disposable {
                 }
 
                 // CLICK
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    if((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
+                    if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
+                        backupNode = null;
+                        CircuitGUIManager.propertiesBox.hide();
+                        CableManager.currentCable = null;
+                    }
+                    if(!(CircuitGUIManager.panelShown) || Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
                         HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
                         if (hardware != null) {
@@ -394,22 +400,7 @@ public class Cable implements Disposable {
                                 appendingFromBegin = false;
                                 movingNode = null;
                                 backupNode = null;
-                                LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
-                                    if(!CircuitGUIManager.propertiesBox.hovering && CableManager.currentCable == Cable.this) {
-                                        CircuitGUIManager.propertiesBox.hide();
-                                        CableManager.currentCable = null;
-                                    }
-                                });
                             }
-                        }
-                    } else {
-                        if(!appendingFromEnd && !appendingFromBegin) {
-                            appendingFromEnd = false;
-                            appendingFromBegin = false;
-                            movingNode = null;
-                            backupNode = null;
-                            CircuitGUIManager.propertiesBox.hide();
-                            CableManager.currentCable = null;
                         }
                     }
 
@@ -445,20 +436,20 @@ public class Cable implements Disposable {
                 }
 
                 // DRAW NODES IF SELECTED
-                drawNodes(renderer, camera, Color.SALMON);
+                drawNodes(renderer, camera, nodeColor);
 
                 if (appendingFromEnd && !disableEnd) {
                     // draw potential cable wire
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
 
                 } else if (appendingFromBegin && !disableBegin){
                     // draw potential cable wire
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(Color.SALMON);
+                    renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
 
                 } else if (movingNode != null) {
@@ -478,7 +469,7 @@ public class Cable implements Disposable {
         // ---------------------------------------------------------------------
 
         if(hoveringMouse(camera)) {
-            drawNodes(renderer, camera, Color.SALMON);
+            drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
         }
 

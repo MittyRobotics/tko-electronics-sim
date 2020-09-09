@@ -23,6 +23,7 @@ public class EthernetCable extends Cable {
         super(startPoint, count);
         gauge = 13;
         color = DeviceUtil.COLORS.get("Orange");
+        hoverColor = Color.GRAY;
         populateProperties();
     }
 
@@ -55,78 +56,42 @@ public class EthernetCable extends Cable {
 
     @Override
     public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+
+        if(CableManager.currentCable == this) {
+
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+            if (appendingFromEnd && !disableEnd) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            } else if (appendingFromBegin && !disableBegin) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            }
+
+            renderer.end();
+
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            drawEndpoints(renderer);
+            renderer.end();
+        }
+
         super.render(renderer, camera);
-
-        if(CableManager.currentCable == this) {
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            if (appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            } else if (appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            }
-
-            renderer.end();
-
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawEndpoints(renderer);
-            renderer.end();
-        }
     }
 
-    @Override
-    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        super.update(renderer, camera);
-
-        if(CableManager.currentCable == this) {
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            if (appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            } else if (appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            }
-
-            renderer.end();
-
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawEndpoints(renderer);
-            renderer.end();
-        }
-
-    }
 
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {

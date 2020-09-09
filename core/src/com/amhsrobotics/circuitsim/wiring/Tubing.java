@@ -25,6 +25,8 @@ public class Tubing extends Cable {
         super(startPoint, count);
         gauge = 2;
         color = new Color(0.8f, 0.8f, 0.8f, 0.7f);
+        hoverColor = Color.GRAY;
+        nodeColor = Color.WHITE;
         populateProperties();
     }
 
@@ -35,96 +37,59 @@ public class Tubing extends Cable {
 
     @Override
     public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+
+        if(CableManager.currentCable == this) {
+
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+            if (appendingFromEnd && !disableEnd) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 2f);
+            } else if (appendingFromBegin && !disableBegin) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 2f);
+            }
+
+            renderer.end();
+
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            renderer.setColor(Color.WHITE);
+            drawEndpoints(renderer);
+            renderer.end();
+        }
+
         super.render(renderer, camera);
-
-        if(CableManager.currentCable == this) {
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            if (appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            } else if (appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            }
-
-            renderer.end();
-
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawEndpoints(renderer);
-            renderer.end();
-        }
     }
 
-    @Override
-    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        super.update(renderer, camera);
-
-        if(CableManager.currentCable == this) {
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            if (appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            } else if (appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
-            }
-
-            renderer.end();
-
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawEndpoints(renderer);
-            renderer.end();
-        }
-
-    }
 
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
         if(!appendingFromBegin) {
-            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 10f);
+            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 2f);
         }
         if(!appendingFromEnd) {
-            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 10f);
+            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 2f);
         }
 
     }
 
     @Override
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
-        if(color.length > 0) {
-            renderer.setColor(new Color(156/255f,1f,150/255f,0.4f));
-        }
+        renderer.setColor(Color.WHITE);
         for(Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit3);
         }
