@@ -323,6 +323,9 @@ public abstract class Hardware {
 
     public boolean getHoveringMouse(ClippedCameraController camera) {
         Vector2 vec = Tools.mouseScreenToWorld(camera);
+        if(this instanceof EPlate) {
+            return ((EPlate) this).getBox().contains(vec.x, vec.y);
+        }
         return base.getBoundingRectangle().contains(vec.x, vec.y);
     }
 

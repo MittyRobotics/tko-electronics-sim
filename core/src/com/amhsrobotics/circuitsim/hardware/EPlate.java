@@ -194,4 +194,9 @@ public class EPlate extends Hardware {
         renderer.end();
         Gdx.gl.glLineWidth(1);
     }
+
+
+    public Box getBox() {
+        return box;
+    }
 }
