@@ -29,7 +29,7 @@ public class EPlate extends Hardware {
 
     private ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private Color color;
-    private ResizeNode[] nodes = new ResizeNode[8];
+    private ResizeNode[] nodes = new ResizeNode[9];
 
     private int dragging = -1;
 
@@ -51,7 +51,7 @@ public class EPlate extends Hardware {
     }
 
     private void initNodes() {
-        for(int x = 0; x < 8; x++) {
+        for(int x = 0; x < 9; x++) {
             nodes[x] = new ResizeNode(box.getResizePointAtIndex(x).x, box.getResizePointAtIndex(x).y, ResizeNode.nodeMap.get(x));
         }
     }

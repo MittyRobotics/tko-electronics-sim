@@ -22,7 +22,7 @@ public class ResizeNode {
     public enum NodeType {
         BOTTOM_LEFT, BOTTOM_MIDDLE, BOTTOM_RIGHT,
         TOP_LEFT, TOP_MIDDLE, TOP_RIGHT,
-        LEFT_MIDDLE, RIGHT_MIDDLE
+        LEFT_MIDDLE, RIGHT_MIDDLE, MIDDLE
     }
 
     public static HashMap<Integer, NodeType> nodeMap = new HashMap<Integer, NodeType>() {{
@@ -34,6 +34,7 @@ public class ResizeNode {
         put(4, NodeType.TOP_MIDDLE);
         put(5, NodeType.TOP_RIGHT);
         put(7, NodeType.RIGHT_MIDDLE);
+        put(8, NodeType.MIDDLE);
     }};
 
     public ResizeNode(float x, float y, NodeType type) {
@@ -108,6 +109,10 @@ public class ResizeNode {
                     box.width = vec.x - box.x;
                     circle.setY(box.y + box.height / 2);
                     break;
+                case MIDDLE:
+                    box.x = vec.x - box.width / 2;
+                    box.y = vec.y - box.height / 2;
+                    break;
             }
         }
     }
@@ -144,6 +149,10 @@ public class ResizeNode {
                 break;
             case RIGHT_MIDDLE:
                 circle.x = box.x + box.width;
+                circle.y = box.y + box.height / 2;
+                break;
+            case MIDDLE:
+                circle.x = box.x + box.width / 2;
                 circle.y = box.y + box.height / 2;
                 break;
         }
