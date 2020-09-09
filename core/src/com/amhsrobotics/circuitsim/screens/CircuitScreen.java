@@ -143,50 +143,8 @@ public class CircuitScreen implements Screen {
                 if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if(Constants.placing_object != null) {
-                    switch (Constants.placing_object) {
-                        case DOUBLESANDCRAB:
-                            currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.DOUBLESANDCRAB);
-                            break;
-                        case TRIPLESANDCRAB:
-                            currentPlacingHardware = new SandCrab(new Vector2(vec2.x, vec2.y), HardwareType.TRIPLESANDCRAB);
-                            break;
-                        case PDP:
-                            currentPlacingHardware = new PowerDistributionPanel(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case VRM:
-                            currentPlacingHardware = new VoltageRegulatorModule(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case ROBORIO:
-                            currentPlacingHardware = new RoboRio(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case TALON:
-                            currentPlacingHardware = new Talon(new Vector2(vec2.x, vec2.y), false);
-                            break;
-                        case PCM:
-                            currentPlacingHardware = new PneumaticsControlModule(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case SPARK:
-                            currentPlacingHardware = new Spark(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case MOTOR775:
-                            currentPlacingHardware = new Motor775(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case FALCON:
-                            currentPlacingHardware = new Falcon(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case NEO:
-                            currentPlacingHardware = new NEO(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case BREAKER:
-                            currentPlacingHardware = new Breaker(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case BATTERY:
-                            currentPlacingHardware = new Battery(new Vector2(vec2.x, vec2.y));
-                            break;
-                        case RADIO:
-                            currentPlacingHardware = new Radio(new Vector2(vec2.x, vec2.y));
-                            break;
-                    }
+                    currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y);
+
                     DeviceUtil.curID--;
                 }
             }

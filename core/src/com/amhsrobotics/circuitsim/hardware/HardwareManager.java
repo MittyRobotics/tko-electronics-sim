@@ -87,9 +87,8 @@ public class HardwareManager {
         }
     }
 
-    public static Hardware addHardware(float startX, float startY, HardwareType type) {
+    public static Hardware switchCaseHardware(HardwareType type, float startX, float startY) {
         Hardware temp;
-
         switch(type) {
             case PDP:
                 temp = new PowerDistributionPanel(new Vector2(startX, startY), true);
@@ -133,10 +132,18 @@ public class HardwareManager {
             case RADIO:
                 temp = new Radio(new Vector2(startX, startY), true);
                 break;
+            case SOLENOID:
+                temp = new Solenoid(new Vector2(startX, startY), true);
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, true);
                 break;
         }
+        return temp;
+    }
+
+    public static Hardware addHardware(float startX, float startY, HardwareType type) {
+        Hardware temp = switchCaseHardware(type, startX, startY);
 
         if(type == HardwareType.EPLATE) {
             temp = new EPlate(new Vector2(startX, startY));
