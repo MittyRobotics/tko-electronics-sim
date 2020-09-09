@@ -38,6 +38,10 @@ public class Tubing extends Cable {
     @Override
     public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
+        if(nodeColor == null) {
+            nodeColor = Color.WHITE;
+        }
+
         if(CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
@@ -64,14 +68,14 @@ public class Tubing extends Cable {
 
             renderer.end();
 
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            renderer.setColor(Color.WHITE);
-            drawEndpoints(renderer);
-            renderer.end();
         }
 
         super.render(renderer, camera);
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(Color.WHITE);
+        drawEndpoints(renderer);
+        renderer.end();
     }
 
 
