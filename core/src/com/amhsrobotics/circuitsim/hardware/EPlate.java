@@ -11,8 +11,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -26,7 +24,10 @@ public class EPlate extends Hardware {
     private TextField.TextFieldStyle textFieldStyle;
 
     private ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
-    private Circle[] nodes = new Circle[4];
+    private ResizeNode[] nodes = new ResizeNode[8];
+
+    private ResizeNode prevHandle;
+    private float createTime = 0f;
 
 
     public EPlate(Vector2 pos) {
@@ -40,24 +41,24 @@ public class EPlate extends Hardware {
     }
 
     public void init() {
-        box = new Box(getPosition(), getPosition().add(100, 0), getPosition().add(0, 100), getPosition().add(100, 100));
+        box = new Box(getPosition().x, getPosition().y, 300, 300);
         initNodes();
     }
 
     private void initNodes() {
-        for(int x = 0; x < 4; x++) {
-            nodes[x] = new Circle(box.getAtIndex(x), 15);
+        for(int x = 0; x < 8; x++) {
+            nodes[x] = new ResizeNode(box.getResizePointAtIndex(x).x, box.getResizePointAtIndex(x).y, ResizeNode.nodeMap.get(x));
         }
     }
 
-    private void updateBox(int vertice, Vector2 val) {
-        box.updateVertice(vertice, val);
-        initNodes();
-    }
 
     @Override
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
+
+        if(createTime < 2) {
+            createTime += Gdx.graphics.getDeltaTime();
+        }
 
         renderer.setColor(193/255f, 211/255f, 200/255f, 0.5f);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -79,22 +80,41 @@ public class EPlate extends Hardware {
 
         if (HardwareManager.currentHardware == this) {
             drawHover(renderer);
-            drawDragNodes(vec, renderer);
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            for(ResizeNode c : nodes) {
+                c.draw(renderer, camera);
+            }
+            renderer.end();
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 HardwareManager.currentHardware = null;
                 CircuitGUIManager.propertiesBox.hide();
             }
 
+
             for(int x = 0; x < nodes.length; x++) {
-                if(Gdx.input.isTouched()) {
-                    if(nodes[x].contains(vec)) {
-                        if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0)) {
-                            nodes[x].setPosition(vec.x, vec.y);
-                            updateBox(x, new Vector2(nodes[x].x, nodes[x].y));
+                if(createTime >= 1.8f) {
+                    if(Gdx.input.isTouched()) {
+                        if(nodes[x].contains(vec)) {
+                            setSelectedNode(x);
+                            nodes[x].movePosition(camera, box);
                         }
                     }
                 }
+
+                if(!nodes[x].isSelected()) {
+                    nodes[x].updateIdlePos(box);
+                }
+            }
+        }
+    }
+
+    private void setSelectedNode(int index) {
+        for(int i = 0; i < nodes.length; i++) {
+            if(i == index) {
+                nodes[i].setSelected(true);
+            } else {
+                nodes[i].setSelected(false);
             }
         }
     }
@@ -112,22 +132,6 @@ public class EPlate extends Hardware {
         height.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         CircuitGUIManager.propertiesBox.addElement(height, false, 1);
 
-    }
-
-    private void drawDragNodes(Vector2 vec, ModifiedShapeRenderer renderer) {
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        for(Circle c : nodes) {
-            if(c.contains(vec)) {
-                renderer.setColor(Color.WHITE);
-                renderer.circle(c.x, c.y, c.radius);
-            } else {
-                renderer.setColor(Color.SALMON);
-                renderer.circle(c.x, c.y, c.radius);
-            }
-        }
-
-        renderer.end();
     }
 
     @Override
