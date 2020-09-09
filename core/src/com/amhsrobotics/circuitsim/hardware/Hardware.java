@@ -11,10 +11,7 @@ import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
-import com.amhsrobotics.circuitsim.wiring.Cable;
-import com.amhsrobotics.circuitsim.wiring.CableManager;
-import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
-import com.amhsrobotics.circuitsim.wiring.EthernetCable;
+import com.amhsrobotics.circuitsim.wiring.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -185,6 +182,8 @@ public abstract class Hardware {
                     Cable c;
                     if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
                         c = new EthernetCable(new Vector2(0, 0), CableManager.id);
+                    } else if (Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 2) {
+                        c = new Tubing(new Vector2(0, 0), CableManager.id);
                     } else {
                         c = new Cable(CableManager.id);
                     }

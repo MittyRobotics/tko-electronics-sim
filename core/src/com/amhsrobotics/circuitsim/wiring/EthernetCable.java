@@ -83,13 +83,21 @@ public class EthernetCable extends Cable {
 
             renderer.end();
 
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-            drawEndpoints(renderer);
-            renderer.end();
         }
 
         super.render(renderer, camera);
+
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        drawEndpoints(renderer);
+        renderer.end();
+    }
+
+    @Override
+    public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        super.update(renderer, camera);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        drawEndpoints(renderer);
+        renderer.end();
     }
 
 

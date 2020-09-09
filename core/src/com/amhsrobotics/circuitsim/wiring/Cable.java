@@ -57,7 +57,6 @@ public class Cable implements Disposable {
         coordinates = new ArrayList<>();
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
-        nodeColor = Color.SALMON;
 
         coordinates.add(startPoint);
 
@@ -176,6 +175,10 @@ public class Cable implements Disposable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
+        if(nodeColor == null) {
+            nodeColor = Color.SALMON;
+        }
+
         // DRAW CABLE
         // ---------------------------------------------------------------------
         renderer.setColor(color);
@@ -266,6 +269,10 @@ public class Cable implements Disposable {
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        if(nodeColor == null) {
+            nodeColor = Color.SALMON;
+        }
 
         // LOGIC
         // ---------------------------------------------------------------------
@@ -368,7 +375,7 @@ public class Cable implements Disposable {
                         CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
                     }
-                    if(!(CircuitGUIManager.panelShown) || Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+                    if(!CircuitGUIManager.isPanelShown() || Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) {
                         HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
                         if (hardware != null) {
