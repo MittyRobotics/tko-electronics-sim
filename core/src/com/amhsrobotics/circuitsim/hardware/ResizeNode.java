@@ -71,37 +71,42 @@ public class ResizeNode {
             switch(type) {
                 case BOTTOM_LEFT:
                     box.width += box.x - vec.x;
+                    box.height += box.y - vec.y;
                     box.x = vec.x;
-                    box.height = vec.y - box.y;
+                    box.y = vec.y;
                     break;
                 case BOTTOM_MIDDLE:
-                    box.height = vec.y - box.y;
+                    box.height += box.y - vec.y;
+                    box.y = vec.y;
+                    circle.setX(box.x + box.width / 2);
                     break;
                 case BOTTOM_RIGHT:
                     box.width = vec.x - box.x;
-                    box.height = vec.y - box.y;
+                    box.height += box.y - vec.y;
+                    box.y = vec.y;
                     break;
                 case TOP_LEFT:
                     box.width += box.x - vec.x;
-                    box.height += box.y - vec.y;
+                    box.height = vec.y - box.y;
                     box.x = vec.x;
-                    box.y = vec.y;
+//                    box.y = vec.y;
                     break;
                 case TOP_MIDDLE:
-                    box.height += box.y - vec.y;
-                    box.y = vec.y;
+                    box.height = vec.y - box.y;
+                    circle.setX(box.x + box.width / 2);
                     break;
                 case TOP_RIGHT:
                     box.width = vec.x - box.x;
-                    box.height += box.y - vec.y;
-                    box.y = vec.y;
+                    box.height = vec.y - box.y;
                     break;
                 case LEFT_MIDDLE:
                     box.width += box.x - vec.x;
                     box.x = vec.x;
+                    circle.setY(box.y + box.height / 2);
                     break;
                 case RIGHT_MIDDLE:
                     box.width = vec.x - box.x;
+                    circle.setY(box.y + box.height / 2);
                     break;
             }
         }

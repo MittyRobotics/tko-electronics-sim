@@ -26,10 +26,6 @@ public class EPlate extends Hardware {
     private ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private ResizeNode[] nodes = new ResizeNode[8];
 
-    private ResizeNode prevHandle;
-    private float createTime = 0f;
-
-
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
 
@@ -55,10 +51,6 @@ public class EPlate extends Hardware {
     @Override
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
-
-        if(createTime < 2) {
-            createTime += Gdx.graphics.getDeltaTime();
-        }
 
         renderer.setColor(193/255f, 211/255f, 200/255f, 0.5f);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -93,12 +85,10 @@ public class EPlate extends Hardware {
 
 
             for(int x = 0; x < nodes.length; x++) {
-                if(createTime >= 1.8f) {
-                    if(Gdx.input.isTouched()) {
-                        if(nodes[x].contains(vec)) {
-                            setSelectedNode(x);
-                            nodes[x].movePosition(camera, box);
-                        }
+                if(Gdx.input.isTouched()) {
+                    if(nodes[x].contains(vec)) {
+                        setSelectedNode(x);
+                        nodes[x].movePosition(camera, box);
                     }
                 }
 
