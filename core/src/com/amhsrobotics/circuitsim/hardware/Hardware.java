@@ -198,12 +198,12 @@ public abstract class Hardware {
 
         for(Sprite s : connectors) {
             if(connections.get(connectors.indexOf(s)) == null) {
-                if (s.getBoundingRectangle().contains(vec.x, vec.y)) {
+                if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
                     CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
                     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
                         HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
 //                        LinkTimer.init(3, () -> HardwareManager.attachWireOnDoubleClick = null);
-                        Timer timer = new Timer(3000, arg0 -> {
+                        Timer timer = new Timer(500, arg0 -> {
                             HardwareManager.attachWireOnDoubleClick = null;
                         });
                         timer.setRepeats(false);
@@ -216,7 +216,7 @@ public abstract class Hardware {
         boolean good = true;
 
 
-        if(base.getBoundingRectangle().contains(vec.x, vec.y)) {
+        if(HardwareManager.getCurrentlyHovering(camera) == this) {
 
             drawHover(renderer);
 
@@ -233,7 +233,7 @@ public abstract class Hardware {
         if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
             if (Gdx.input.isTouched()) {
 
-                if (base.getBoundingRectangle().contains(vec.x, vec.y) || canMove) {
+                if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
                     HardwareManager.currentHardware = this;
                     CableManager.currentCable = null;
                     populateProperties();
@@ -242,6 +242,7 @@ public abstract class Hardware {
                     if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) && !HardwareManager.movingObject) {
                         HardwareManager.movingObject = true;
                         canMove = true;
+                        HardwareManager.currentHardware = this;
                     }
                 } else {
 //                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
@@ -321,6 +322,11 @@ public abstract class Hardware {
         batch.end();
 
         processFlip();
+    }
+
+    public boolean getHoveringMouse(ClippedCameraController camera) {
+        Vector2 vec = Tools.mouseScreenToWorld(camera);
+        return base.getBoundingRectangle().contains(vec.x, vec.y);
     }
 
     public void processFlip() {}

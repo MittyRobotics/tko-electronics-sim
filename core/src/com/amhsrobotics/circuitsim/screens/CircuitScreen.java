@@ -209,10 +209,10 @@ public class CircuitScreen implements Screen {
             }
             CableManager.currentCable.render(renderer, camera);
             if(CableManager.currentCable.connection1 != null) {
-                CableManager.currentCable.connection1.renderConnectors(batch);
+                HardwareManager.moveToFront(CableManager.currentCable.connection1);
             }
             if(CableManager.currentCable.connection2 != null) {
-                CableManager.currentCable.connection2.renderConnectors(batch);
+                HardwareManager.moveToFront(CableManager.currentCable.connection2);
             }
         }
 

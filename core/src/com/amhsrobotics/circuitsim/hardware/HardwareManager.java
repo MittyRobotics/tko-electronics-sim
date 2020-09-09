@@ -39,6 +39,16 @@ public class HardwareManager {
         return Arrays.asList(hardwares.toArray());
     }
 
+    public static Hardware getCurrentlyHovering(ClippedCameraController camera) {
+        for(int i = hardwares.size-1; i >= 0; i--) {
+            if(hardwares.get(i).getHoveringMouse(camera)) {
+                return hardwares.get(i);
+            }
+        }
+        return null;
+
+    }
+
     public static void moveToFront(Hardware hardware) {
         DelayedRemovalArray<Hardware> temp = new DelayedRemovalArray<>();
         for(int i = 0; i < hardwares.size; i++) {
