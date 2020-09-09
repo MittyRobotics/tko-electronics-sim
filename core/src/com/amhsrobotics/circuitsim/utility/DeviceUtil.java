@@ -20,6 +20,13 @@ public class DeviceUtil {
         put("Orange", new Color(255/255f, 130/255f, 0/255f, 1));
     }};
 
+    public static final LinkedHashMap<String, Color> COLORS_EPLATE = new LinkedHashMap<String, Color>() {{
+        //WIRE COLORS
+        put("Lime", new Color(193/255f, 211/255f, 200/255f, 0.5f));
+        put("Amber", new Color(240/255f, 214/255f, 166/255f, 0.7f));
+        put("Sky", new Color(166/255f, 205/255f, 240/255f, 0.5f));
+    }};
+
     public static final HashMap<String, String> GAUGETODEVICE = new HashMap<String, String>() {{
         put("22", "CAN / Sensor");
         put("12", "Motor");
