@@ -1,0 +1,50 @@
+{
+  "name": "Radio",
+  "totalPins": 3,
+  "totalLeds": 4,
+  "crimped": [],
+  "totalSprites": 4,
+  "pins": [
+    {
+      "type": "4",
+      "position": [-56, -147],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "13",
+      "position": [-26, -147],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "13",
+      "position": [16, -147],
+      "dimensions": [25, 25]
+    }
+  ],
+  "leds": [
+    {
+      "color": "blue",
+      "type": "status",
+      "position": [-38, 115],
+      "dimensions": [8, 8]
+    },
+    {
+      "color": "blue",
+      "type": "status",
+      "position": [-15, 115],
+      "dimensions": [8, 8]
+    },
+    {
+      "color": "blue",
+      "type": "status",
+      "position": [9, 115],
+      "dimensions": [8, 8]
+    },
+    {
+      "color": "green",
+      "type": "status",
+      "position": [32, 115],
+      "dimensions": [8, 8]
+    }
+  ]
+}

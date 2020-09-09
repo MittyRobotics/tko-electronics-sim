@@ -1,0 +1,70 @@
+{
+  "name": "SPARK MAX",
+  "totalPins": 9,
+  "totalLeds": 2,
+  "totalSprites": 10,
+  "crimped": [0, 1, 2, 3, 4],
+  "crimpedColors": ["Red", "Black", "White", "Red", "Black"],
+  "pins": [
+    {
+      "type": "12",
+      "position": [-51, 240],
+      "dimensions": [50, 50]
+    },
+    {
+      "type": "12",
+      "position": [-1, 240],
+      "dimensions": [50, 50]
+    },
+    {
+      "type": "12",
+      "position": [49, 240],
+      "dimensions": [50, 50]
+    },
+    {
+      "type": "12",
+      "position": [-30, -240],
+      "dimensions": [50, 50]
+    },
+    {
+      "type": "12",
+      "position": [29, -240],
+      "dimensions": [50, 50]
+    },
+
+    {
+      "type": "22",
+      "position": [-102, 160],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "22",
+      "position": [-102, 145],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "22",
+      "position": [-102, 130],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "22",
+      "position": [-102, 115],
+      "dimensions": [25, 25]
+    }
+  ],
+  "leds": [
+    {
+      "color": "blue",
+      "type": "sensor-indicator",
+      "position": [-56, -96],
+      "dimensions": [5, 5]
+    },
+    {
+      "color": "red",
+      "type": "sensor-indicator",
+      "position": [41, -96],
+      "dimensions": [8, 8]
+    }
+  ]
+}

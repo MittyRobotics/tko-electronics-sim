@@ -40,7 +40,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub;
+    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -171,6 +171,9 @@ public class CircuitGUIManager {
         tub = new TextButton("Tubing", tStyle);
         tub.addListener(new TextTooltip("Pneumatics tubing", ttStyle));
 
+        ep = new TextButton("E-Plate", tStyle);
+        ep.addListener(new TextTooltip("Electronics Plate", ttStyle));
+
         reg_cable.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -281,12 +284,19 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ETHERNET;
                 buttonDecline();
+                buttonDecline();
             }
         });
         tub.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TUBING;
+            }
+        });
+        ep.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.EPLATE;
                 buttonDecline();
             }
         });
@@ -645,6 +655,8 @@ public class CircuitGUIManager {
             if(filtersMap.get(fil2)) {
                 //Control
                 table.row();
+                table.add(ep).width(120);
+                table.row();
                 table.add(rbr).width(120);
                 table.row();
                 table.add(pdp).width(120);
@@ -691,6 +703,8 @@ public class CircuitGUIManager {
             table.add(battery).width(120);
             table.row();
             table.add(brk).width(120);
+            table.row();
+            table.add(ep).width(120);
             table.row();
             table.add(eth).width(120);
             table.row();
