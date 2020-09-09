@@ -10,8 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Solenoid extends Flippable {
 
-    public Solenoid(Vector2 position, boolean... addCrimped) {
-        super(position, HardwareType.SOLENOID, addCrimped);
+    public Solenoid(Vector2 position, HardwareType type, boolean... addCrimped) {
+        super(position, type, addCrimped);
 
 
         for(JSONArray arr : pinDefs) {
@@ -30,12 +30,23 @@ public class Solenoid extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(port == 0) {
-            return calculateDirection(3+cur, port);
-        } else if (port == 1) {
-            return calculateDirection(1+cur, port);
+        if(type == HardwareType.DOUBLESOLENOID) {
+            if(port == 2 || port == 3) {
+                return calculateDirection(1+cur, port);
+            } else if (port == 4 || port == 5) {
+                return calculateDirection(3+cur, port);
+            } else if (port == 1) {
+                return calculateDirection(3+cur, port);
+            } else {
+                return calculateDirection(1+cur, port);
+            }
         } else {
-            return calculateDirection(cur, port);
+            if(port == 0) {
+                return calculateDirection(1+cur, port);
+            } else {
+                return calculateDirection(3+cur, port);
+            }
         }
+
     }
 }
