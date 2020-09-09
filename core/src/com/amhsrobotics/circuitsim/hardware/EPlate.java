@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
@@ -90,6 +91,12 @@ public class EPlate extends Hardware {
             renderer.end();
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                HardwareManager.currentHardware = null;
+                CircuitGUIManager.propertiesBox.hide();
+            }
+
+            if(Gdx.input.isKeyJustPressed(Input.Keys.DEL) || Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
+                HardwareManager.removeHardware(this);
                 HardwareManager.currentHardware = null;
                 CircuitGUIManager.propertiesBox.hide();
             }
