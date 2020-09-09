@@ -100,10 +100,10 @@ public class HardwareManager {
                 temp = new PneumaticsControlModule(new Vector2(startX, startY), true);
                 break;
             case DOUBLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), type, true);
+                temp = new SandCrab(new Vector2(startX, startY), HardwareType.DOUBLESANDCRAB, true);
                 break;
             case TRIPLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), type, true);
+                temp = new SandCrab(new Vector2(startX, startY), HardwareType.TRIPLESANDCRAB, true);
                 break;
             case ROBORIO:
                 temp = new RoboRio(new Vector2(startX, startY), true);
@@ -132,8 +132,11 @@ public class HardwareManager {
             case RADIO:
                 temp = new Radio(new Vector2(startX, startY), true);
                 break;
-            case SOLENOID:
-                temp = new Solenoid(new Vector2(startX, startY), true);
+            case DOUBLESOLENOID:
+                temp = new Solenoid(new Vector2(startX, startY), HardwareType.DOUBLESOLENOID, true);
+                break;
+            case SINGLESOLENOID:
+                temp = new Solenoid(new Vector2(startX, startY), HardwareType.SINGLESOLENOID, true);
                 break;
             case PRESSURESWITCH:
                 temp = null;

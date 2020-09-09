@@ -1,0 +1,25 @@
+{
+  "name": "Single Solenoid",
+  "totalPins": 3,
+  "totalLeds": 0,
+  "crimpedColors": ["Black", "Black"],
+  "crimped": [1, 2],
+  "totalSprites": 4,
+  "pins": [
+    {
+      "type": "2",
+      "position": [-163, 3],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "22",
+      "position": [-436, 10],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "22",
+      "position": [-436, -10],
+      "dimensions": [10, 10]
+    }
+  ]
+}

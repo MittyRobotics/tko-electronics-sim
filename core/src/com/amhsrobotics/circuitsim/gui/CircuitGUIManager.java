@@ -40,7 +40,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk;
+    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -124,13 +124,19 @@ public class CircuitGUIManager {
         reg_cable = new TextButton("Cable", tStyle);
         reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
 
-        sandcrab = new TextButton("2-Way Wago", tStyle);
+        sandcrab = new TextButton("Double WAGO", tStyle);
         sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
 
-        sandcrab3 = new TextButton("3-Way Wago", tStyle);
+        sandcrab3 = new TextButton("Triple WAGO", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
         battery = new TextButton("Battery", tStyle);
         battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
+
+        ds = new TextButton("Double Solenoid", tStyle);
+        ds.addListener(new TextTooltip("Pneumatics Electronic Control", ttStyle));
+
+        ss = new TextButton("Single Solenoid", tStyle);
+        ss.addListener(new TextTooltip("Pneumatics Electronic Control", ttStyle));
 
         pdp = new TextButton("PDP", tStyle);
         pdp.addListener(new TextTooltip("Power Distribution Panel to distribute power to various components", ttStyle));
@@ -337,6 +343,21 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TANK;
+                buttonDecline();
+            }
+        });
+
+        ds.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.DOUBLESOLENOID;
+                buttonDecline();
+            }
+        });
+        ss.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.SINGLESOLENOID;
                 buttonDecline();
             }
         });
@@ -734,7 +755,10 @@ public class CircuitGUIManager {
                 table.add(man).width(120);
                 table.row();
                 table.add(tnk).width(120);
-
+                table.row();
+                table.add(ds).width(120);
+                table.row();
+                table.add(ss).width(120);
             }
         }
 
@@ -786,6 +810,10 @@ public class CircuitGUIManager {
             table.add(man).width(120);
             table.row();
             table.add(tnk).width(120);
+            table.row();
+            table.add(ds).width(120);
+            table.row();
+            table.add(ss).width(120);
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {
