@@ -40,7 +40,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep;
+    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -133,46 +133,58 @@ public class CircuitGUIManager {
         battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
 
         pdp = new TextButton("PDP", tStyle);
-        pdp.addListener(new TextTooltip("Power Distribution Panel", ttStyle));
+        pdp.addListener(new TextTooltip("Power Distribution Panel to distribute power to various components", ttStyle));
 
         vrm = new TextButton("VRM", tStyle);
-        vrm.addListener(new TextTooltip("Voltage Regulation Module", ttStyle));
+        vrm.addListener(new TextTooltip("Voltage Regulation Module to adjust voltage", ttStyle));
 
         rbr = new TextButton("roboRIO", tStyle);
-        rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller", ttStyle));
+        rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller, the onboard computer", ttStyle));
 
         tln = new TextButton("Talon", tStyle);
-        tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller", ttStyle));
+        tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller, controls 775 motors", ttStyle));
 
         pcm = new TextButton("PCM", tStyle);
-        pcm.addListener(new TextTooltip("Pneumatics Control Module", ttStyle));
+        pcm.addListener(new TextTooltip("Pneumatics Control Module, controls pneumatics components", ttStyle));
 
         spk = new TextButton("SPARK MAX", tStyle);
-        spk.addListener(new TextTooltip("SPARK MAX Motor Controller", ttStyle));
+        spk.addListener(new TextTooltip("SPARK MAX Motor Controller, controls NEO motors", ttStyle));
 
         neo = new TextButton("NEO", tStyle);
-        neo.addListener(new TextTooltip("NEO Brushless Motor", ttStyle));
+        neo.addListener(new TextTooltip("NEO Brushless Motor, uses SPARK MAX controllers", ttStyle));
 
         brk = new TextButton("Breaker", tStyle);
-        brk.addListener(new TextTooltip("Main Circuit Breaker", ttStyle));
+        brk.addListener(new TextTooltip("Main Circuit Breaker to cut the power", ttStyle));
 
         m775 = new TextButton("775", tStyle);
-        m775.addListener(new TextTooltip("775 RedLine Motor", ttStyle));
+        m775.addListener(new TextTooltip("775 RedLine Motor, uses Talon controllers", ttStyle));
 
         fcn = new TextButton("Falcon", tStyle);
-        fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor", ttStyle));
+        fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor, builtin controller", ttStyle));
 
         rad = new TextButton("Radio", tStyle);
-        rad.addListener(new TextTooltip("Radio", ttStyle));
+        rad.addListener(new TextTooltip("Radio to communicate with the driver", ttStyle));
 
         eth = new TextButton("Ethernet", tStyle);
-        eth.addListener(new TextTooltip("Ethernet cable", ttStyle));
+        eth.addListener(new TextTooltip("Ethernet cable for WiFi", ttStyle));
 
         tub = new TextButton("Tubing", tStyle);
-        tub.addListener(new TextTooltip("Pneumatics tubing", ttStyle));
+        tub.addListener(new TextTooltip("Adjustable pneumatics tubing", ttStyle));
 
         ep = new TextButton("E-Plate", tStyle);
-        ep.addListener(new TextTooltip("Electronics Plate", ttStyle));
+        ep.addListener(new TextTooltip("Electronics Plate to hold hardware in place", ttStyle));
+
+        psw = new TextButton("Pres. Switch", tStyle);
+        psw.addListener(new TextTooltip("Pneumatics pressure switch to adjust air pressure", ttStyle));
+
+        pis = new TextButton("Piston", tStyle);
+        pis.addListener(new TextTooltip("Pneumatics piston moved with pressured air", ttStyle));
+
+        man = new TextButton("Manifold", tStyle);
+        man.addListener(new TextTooltip("Pneumatics manifold to distribute air across multiple components", ttStyle));
+
+        tnk = new TextButton("Tank", tStyle);
+        tnk.addListener(new TextTooltip("Pneumatics tank to hold pressured air", ttStyle));
 
         reg_cable.addListener(new ChangeListener() {
             @Override
@@ -297,6 +309,34 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.EPLATE;
+                buttonDecline();
+            }
+        });
+        psw.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.PRESSURESWITCH;
+                buttonDecline();
+            }
+        });
+        pis.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.PISTON;
+                buttonDecline();
+            }
+        });
+        man.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.MANIFOLD;
+                buttonDecline();
+            }
+        });
+        tnk.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.TANK;
                 buttonDecline();
             }
         });
@@ -686,6 +726,15 @@ public class CircuitGUIManager {
                 table.add(pcm).width(120);
                 table.row();
                 table.add(tub).width(120);
+                table.row();
+                table.add(psw).width(120);
+                table.row();
+                table.add(pis).width(120);
+                table.row();
+                table.add(man).width(120);
+                table.row();
+                table.add(tnk).width(120);
+
             }
         }
 
@@ -729,6 +778,14 @@ public class CircuitGUIManager {
             table.add(pcm).width(120);
             table.row();
             table.add(tub).width(120);
+            table.row();
+            table.add(psw).width(120);
+            table.row();
+            table.add(pis).width(120);
+            table.row();
+            table.add(man).width(120);
+            table.row();
+            table.add(tnk).width(120);
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {
