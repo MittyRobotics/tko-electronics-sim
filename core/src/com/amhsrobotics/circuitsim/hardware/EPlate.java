@@ -106,14 +106,15 @@ public class EPlate extends Hardware {
                 nodes[dragging].movePosition(camera, box);
             }
 
+            boolean good = true;
 
             for(int x = 0; x < nodes.length; x++) {
                 if(Gdx.input.isTouched()) {
                     if(nodes[x].contains(vec)) {
-                        if (Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) {
-                            dragging = x;
-                        }
+                        dragging = x;
+                        good = false;
                     }
+
                 } else {
                     dragging = -1;
                 }
@@ -121,6 +122,11 @@ public class EPlate extends Hardware {
                 if(!nodes[x].isSelected()) {
                     nodes[x].updateIdlePos(box);
                 }
+            }
+
+            if(Gdx.input.isTouched() && !box.contains(vec.x, vec.y) && good) {
+                HardwareManager.currentHardware = null;
+                CircuitGUIManager.propertiesBox.hide();
             }
         }
     }

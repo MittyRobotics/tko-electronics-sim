@@ -57,6 +57,8 @@ public abstract class Hardware {
     public boolean addCrimped;
     public int cur;
 
+    public float diffX, diffY;
+
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
         this.type = type;
@@ -236,10 +238,12 @@ public abstract class Hardware {
                     populateProperties();
                     CircuitGUIManager.propertiesBox.show();
 
-                    if ((Gdx.input.getDeltaX() != 0 || Gdx.input.getDeltaY() != 0) && !HardwareManager.movingObject) {
+                    if (!HardwareManager.movingObject) {
                         HardwareManager.movingObject = true;
                         canMove = true;
                         HardwareManager.currentHardware = this;
+                        diffX = position.x - vec.x;
+                        diffY = position.y - vec.y;
                     }
                 } else {
 //                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
@@ -248,14 +252,11 @@ public abstract class Hardware {
 //                            HardwareManager.currentHardware = null;
 //                        }
 //                    });
-                    Timer timer = new Timer((int) Gdx.graphics.getDeltaTime() + 3, arg0 -> {
-                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == Hardware.this) {
-                            CircuitGUIManager.propertiesBox.hide();
-                            HardwareManager.currentHardware = null;
-                        }
-                    });
-                    timer.setRepeats(false);
-                    timer.start();
+                    if (HardwareManager.currentHardware == Hardware.this && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
+                        CircuitGUIManager.propertiesBox.hide();
+                        HardwareManager.currentHardware = null;
+                    }
+
                 }
 
             } else {
@@ -289,7 +290,7 @@ public abstract class Hardware {
                     }
 
                     //SET OWN POSITION
-                    setPosition(vec.x, vec.y);
+                    setPosition(vec.x + diffX, vec.y + diffY);
                 }
 
             }
