@@ -72,13 +72,13 @@ public class EthernetCable extends Cable {
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
+                renderer.circle(vec2.x, vec2.y, limit + 5f);
             } else if (appendingFromBegin && !disableBegin) {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 10f);
+                renderer.circle(vec2.x, vec2.y, limit + 5f);
             }
 
             renderer.end();
@@ -105,10 +105,10 @@ public class EthernetCable extends Cable {
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
         if(!appendingFromBegin) {
-            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 10f);
+            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 5f);
         }
         if(!appendingFromEnd) {
-            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 10f);
+            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 5f);
         }
 
     }

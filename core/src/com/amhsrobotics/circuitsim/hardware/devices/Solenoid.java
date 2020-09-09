@@ -36,17 +36,16 @@ public class Solenoid extends Flippable {
             } else if (port == 4 || port == 5) {
                 return calculateDirection(3+cur, port);
             } else if (port == 1) {
-                return calculateDirection(3+cur, port);
+                return calculateDirection(3+cur, port, 100);
             } else {
-                return calculateDirection(1+cur, port);
+                return calculateDirection(1+cur, port, 100);
             }
         } else {
             if(port == 0) {
-                return calculateDirection(1+cur, port);
+                return calculateDirection(1+cur, port, 100);
             } else {
-                return calculateDirection(3+cur, port);
+                return calculateDirection(3+cur, port, 100);
             }
         }
-
     }
 }

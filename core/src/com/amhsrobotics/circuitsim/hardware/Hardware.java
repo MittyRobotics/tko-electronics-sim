@@ -15,6 +15,7 @@ import com.amhsrobotics.circuitsim.wiring.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -305,6 +306,8 @@ public abstract class Hardware {
 
         for(Cable c : connections) {
             if(c != null) {
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
             }
         }
@@ -542,16 +545,17 @@ public abstract class Hardware {
         }
     }
 
-    public Vector2 calculateDirection(int dir, int port) {
+    public Vector2 calculateDirection(int dir, int port, int... length) {
         dir = (dir)%4;
+        int useLength = length.length > 0 ? length[0] : 40;
         if(dir == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - useLength);
         } else if (dir == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + useLength, getConnector(port).getY() + getConnector(port).getHeight() / 2);
         } else if (dir == 2) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + useLength);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - useLength, getConnector(port).getY() + getConnector(port).getHeight() / 2);
         }
     }
 
