@@ -54,6 +54,43 @@ public class EthernetCable extends Cable {
     }
 
     @Override
+    public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        super.render(renderer, camera);
+
+        if(CableManager.currentCable == this) {
+
+            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
+
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                SnapGrid.calculateSnap(vec2);
+            }
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+
+            if (appendingFromEnd && !disableEnd) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            } else if (appendingFromBegin && !disableBegin) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(Color.WHITE);
+                renderer.circle(vec2.x, vec2.y, limit + 10f);
+            }
+
+            renderer.end();
+
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            drawEndpoints(renderer);
+            renderer.end();
+        }
+    }
+
+    @Override
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(renderer, camera);
 
@@ -82,6 +119,11 @@ public class EthernetCable extends Cable {
             }
 
             renderer.end();
+
+
+            renderer.begin(ShapeRenderer.ShapeType.Filled);
+            drawEndpoints(renderer);
+            renderer.end();
         }
 
     }
@@ -95,8 +137,7 @@ public class EthernetCable extends Cable {
         if(!appendingFromEnd) {
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 10f);
         }
-//        renderer.rect(coordinates.get(0).x - 10, coordinates.get(0).y - 10, 20, 20);
-//        renderer.rect(coordinates.get(coordinates.size() - 1).x - 10, coordinates.get(coordinates.size() - 1).y - 10, 20, 20);
+
     }
 
     @Override

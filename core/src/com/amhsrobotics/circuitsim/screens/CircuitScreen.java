@@ -191,7 +191,7 @@ public class CircuitScreen implements Screen {
                 }
             }
 
-            if (Constants.placing_object != HardwareType.WIRE && Constants.placing_object != HardwareType.ETHERNET) {
+            if (Constants.placing_object != HardwareType.WIRE && Constants.placing_object != HardwareType.ETHERNET && Constants.placing_object != HardwareType.TUBING) {
                 handleHardware(Constants.placing_object);
             } else {
                 handleCable();
@@ -218,7 +218,7 @@ public class CircuitScreen implements Screen {
 
 
         if(Constants.placing_object != null) {
-            if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
+            if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.update(batch, renderer, camera);
@@ -288,8 +288,11 @@ public class CircuitScreen implements Screen {
                 CableManager.currentCable.appendingFromBegin = false;
                 CableManager.currentCable = null;
             }
+
             if(Constants.placing_object == HardwareType.ETHERNET) {
                 CableManager.addEthernet(vec2.x, vec2.y);
+            } else if (Constants.placing_object == HardwareType.TUBING) {
+                CableManager.addTubing(vec2.x, vec2.y);
             } else {
                 CableManager.addCable(vec2.x, vec2.y);
             }

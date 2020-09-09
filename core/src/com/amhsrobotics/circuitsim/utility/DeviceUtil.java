@@ -26,6 +26,7 @@ public class DeviceUtil {
         put("4", "Power");
         put("18", "VRM / PCM");
         put("13", "Ethernet");
+        put("2", "Tubing");
     }};
 
     public static final HashMap<Float, Float> GAUGETOLIMIT = new HashMap<Float, Float>() {{
@@ -34,6 +35,7 @@ public class DeviceUtil {
         put(13f, 15f);
         put(12f, 20f);
         put(4f, 30f);
+        put(2f, 40f);
     }};
 
     public static final HashMap<Float, Float> GAUGETOLIMIT2 = new HashMap<Float, Float>() {{
@@ -42,6 +44,7 @@ public class DeviceUtil {
         put(13f, 18f);
         put(12f, 26f);
         put(4f, 38f);
+        put(2f, 50f);
     }};
 
     public static final HashMap<Float, Float> GAUGETOLIMIT3 = new HashMap<Float, Float>() {{
@@ -50,6 +53,7 @@ public class DeviceUtil {
         put(13f, 10f);
         put(12f, 13f);
         put(4f, 21f);
+        put(2f, 30f);
     }};
 
     //WIRE GAUGES

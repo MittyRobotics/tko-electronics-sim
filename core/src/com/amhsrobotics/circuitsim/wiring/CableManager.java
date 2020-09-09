@@ -147,6 +147,25 @@ public class CableManager {
         }
     }
 
+    public static void addTubing(float startX, float startY) {
+        boolean good = true;
+        Iterator<Cable> iterator = cables.iterator();
+        while(iterator.hasNext()) {
+            if (iterator.next().pointIsOnEndpoint(startX, startY) != 0) {
+                good = false;
+                break;
+            }
+        }
+        if(good) {
+            Tubing temp = new Tubing(new Vector2(startX, startY), id);
+            id++;
+            currentCable = temp;
+
+            temp.setAppendingFromEnd(true);
+            cables.add(temp);
+        }
+    }
+
     public static void deleteCable(Cable cable) {
         cables.removeValue(cable, true);
 //        cables.remove(cable);
