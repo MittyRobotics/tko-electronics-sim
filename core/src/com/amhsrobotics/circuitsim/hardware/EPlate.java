@@ -1,17 +1,20 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -27,7 +30,7 @@ public class EPlate extends Hardware {
     private Box box;
     private TextField.TextFieldStyle textFieldStyle;
 
-    private ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
+    private ArrayList<MainObject> hardwareOnPlate = new ArrayList<>();
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
 
@@ -64,7 +67,7 @@ public class EPlate extends Hardware {
 //        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         renderer.setColor(color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(box.getX(), box.getY(), box.getWidth(), box.getHeight(), 5);
+        renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
         renderer.end();
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
@@ -102,6 +105,26 @@ public class EPlate extends Hardware {
             if(dragging != -1) {
                 setSelectedNode(dragging);
                 nodes[dragging].movePosition(camera, box);
+            }
+
+            if(dragging == 8) {
+                for(Hardware h : HardwareManager.getHardwareAsList()) {
+                    if(h != this) {
+                        if(h.getSpriteBox().overlaps(new Rectangle(box.x, box.y, box.width, box.height))) {
+                            if(!hardwareOnPlate.contains(h)) {
+                                hardwareOnPlate.add(h);
+                                h.posAdditor = h.getPosition().sub(vec);
+                            }
+                        }
+                    }
+                }
+                for(MainObject mo : hardwareOnPlate) {
+                    ((Hardware) mo).setPosition(vec.x + mo.posAdditor.x, vec.y + mo.posAdditor.y);
+                }
+            } else {
+//                for(MainObject mo : hardwareOnPlate) {
+//                    mo.posAdditor = null;
+//                }
             }
 
             boolean good = true;
@@ -147,11 +170,11 @@ public class EPlate extends Hardware {
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Width", CircuitGUIManager.propertiesBox.LABEL), true, 1);
-        TextField width = new TextField(box.getWidth() + "", textFieldStyle);
+        TextField width = new TextField(box.width + "", textFieldStyle);
         width.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         CircuitGUIManager.propertiesBox.addElement(width, false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Height", CircuitGUIManager.propertiesBox.LABEL), true, 1);
-        TextField height = new TextField(box.getHeight() + "", textFieldStyle);
+        TextField height = new TextField(box.height + "", textFieldStyle);
         height.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         CircuitGUIManager.propertiesBox.addElement(height, false, 1);
 
@@ -194,7 +217,7 @@ public class EPlate extends Hardware {
 
         Gdx.gl.glLineWidth(5);
         renderer.begin(ShapeRenderer.ShapeType.Line);
-        renderer.roundedRect(box.getX() - 5, box.getY() - 5, box.getWidth() + 10, box.getHeight() + 10, 5);
+        renderer.roundedRect(box.x - 5, box.y - 5, box.width + 10, box.height + 10, 5);
         renderer.end();
         Gdx.gl.glLineWidth(1);
     }

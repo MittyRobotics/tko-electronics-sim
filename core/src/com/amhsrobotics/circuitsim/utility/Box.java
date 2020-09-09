@@ -30,24 +30,7 @@ public class Box {
         return resizePoints[index];
     }
 
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
     public boolean contains(float x, float y) {
-        return getX() <= x && getX() + getWidth() >= x && getY() <= y && getY() + getHeight() >= y;
+        return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
     }
 }

@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
@@ -31,7 +32,7 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class Hardware {
+public abstract class Hardware extends MainObject {
 
     private Vector2 position;
     private int hardwareID;
