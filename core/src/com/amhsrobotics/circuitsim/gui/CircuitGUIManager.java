@@ -284,13 +284,13 @@ public class CircuitGUIManager {
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.ETHERNET;
                 buttonDecline();
-                buttonDecline();
             }
         });
         tub.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Constants.placing_object = HardwareType.TUBING;
+                buttonDecline();
             }
         });
         ep.addListener(new ChangeListener() {
