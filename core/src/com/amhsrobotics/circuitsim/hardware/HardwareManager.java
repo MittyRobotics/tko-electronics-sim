@@ -150,6 +150,9 @@ public class HardwareManager {
             case TANK:
                 temp = new Tank(new Vector2(startX, startY), addCrimped);
                 break;
+            case EPLATE:
+                temp = new EPlate(new Vector2(startX, startY));
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
                 break;
@@ -161,8 +164,7 @@ public class HardwareManager {
         Hardware temp = switchCaseHardware(type, startX, startY, true);
 
         if(type == HardwareType.EPLATE) {
-            temp = new EPlate(new Vector2(startX, startY));
-            ((EPlate) temp).init();
+            DeviceUtil.curID.put(HardwareType.EPLATE, DeviceUtil.curID.get(HardwareType.EPLATE)-1);
         }
 
         if(type == HardwareType.PDP) {

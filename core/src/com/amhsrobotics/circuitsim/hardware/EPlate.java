@@ -31,9 +31,8 @@ public class EPlate extends Hardware {
 
     private Box box;
     private TextField.TextFieldStyle textFieldStyle;
-    private boolean canMove;
 
-    private ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
+    public ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
 
@@ -49,9 +48,7 @@ public class EPlate extends Hardware {
         textFieldStyle.cursor = Constants.SKIN.getDrawable("textbox_cursor_02");
         textFieldStyle.font = Constants.FONT_SMALL;
         textFieldStyle.fontColor = Color.BLACK;
-    }
 
-    public void init() {
         box = new Box(getPosition().x, getPosition().y, 300, 300);
         initNodes();
     }
@@ -60,6 +57,16 @@ public class EPlate extends Hardware {
         for(int x = 0; x < 9; x++) {
             nodes[x] = new ResizeNode(box.getResizePointAtIndex(x).x, box.getResizePointAtIndex(x).y, ResizeNode.nodeMap.get(x));
         }
+    }
+
+    public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
+        box.x = Tools.mouseScreenToWorld(camera).x;
+        box.y = Tools.mouseScreenToWorld(camera).y;
+
+        renderer.setColor(color);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
+        renderer.end();
     }
 
     @Override
@@ -95,10 +102,12 @@ public class EPlate extends Hardware {
                 if (hardwareOnPlate.contains(HardwareManager.hardwares.get(i))) {
                     if (!box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
                         hardwareOnPlate.remove(HardwareManager.hardwares.get(i));
+                        HardwareManager.hardwares.get(i).attached = null;
                     }
                 } else {
                     if (box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
                         hardwareOnPlate.add(HardwareManager.hardwares.get(i));
+                        HardwareManager.hardwares.get(i).attached = this;
                     }
                 }
             }
@@ -128,34 +137,12 @@ public class EPlate extends Hardware {
                 nodes[dragging].movePosition(camera, box, hardwareOnPlate);
             }
 
-            /*if(dragging == 8) {
-                for(Hardware h : HardwareManager.getHardwareAsList()) {
-                    if(h != this) {
-                        if(h.getSpriteBox().overlaps(new Rectangle(box.x, box.y, box.width, box.height))) {
-                            if(!hardwareOnPlate.contains(h)) {
-                                hardwareOnPlate.add(h);
-                                h.posAdditor = h.getPosition().sub(vec);
-                            }
-                        }
-                    }
-                }
-                for(MainObject mo : hardwareOnPlate) {
-                    ((Hardware) mo).setPosition(vec.x + mo.posAdditor.x, vec.y + mo.posAdditor.y);
-                }
-            } else {
-//                for(MainObject mo : hardwareOnPlate) {
-//                    mo.posAdditor = null;
-//                }
-            }*/
-
-            boolean good = true;
 
             if(!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
                     if (Gdx.input.isTouched()) {
                         if (nodes[x].contains(vec)) {
                             dragging = x;
-                            good = false;
                         }
 
                     } else {
@@ -168,7 +155,7 @@ public class EPlate extends Hardware {
                 }
             }
 
-            if(Gdx.input.isTouched() && good) {
+            if(Gdx.input.isTouched() && dragging == -1) {
 
                 if (box.contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == null) {
                     HardwareManager.currentHardware = this;
@@ -194,8 +181,8 @@ public class EPlate extends Hardware {
                         box.x = vec.x + diffX;
                         box.y = vec.y + diffY;
 
-                        for (int x = 0; x < nodes.length; x++) {
-                            nodes[x].updateIdlePos(box);
+                        for (ResizeNode node : nodes) {
+                            node.updateIdlePos(box);
                         }
                     }
                 }

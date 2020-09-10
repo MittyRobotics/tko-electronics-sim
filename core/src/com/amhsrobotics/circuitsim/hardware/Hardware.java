@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
@@ -35,12 +36,11 @@ import java.util.ArrayList;
 public abstract class Hardware extends MainObject {
 
     private Vector2 position;
-    public int hardwareID, hardwareID2;
+    public int hardwareID, hardwareID2, cur,connNum, ledNum ;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
     public ArrayList<Color> crimpedPortColors;
-    public int connNum, ledNum;
     public HardwareType type;
     public String name;
 
@@ -51,9 +51,8 @@ public abstract class Hardware extends MainObject {
     public ArrayList<LED> LEDs = new ArrayList<>();
 
     public Sprite base;
-    public boolean canMove;
-    public boolean addCrimped;
-    public int cur;
+    public boolean canMove, addCrimped;
+    public EPlate attached;
 
     public float diffX, diffY;
 
@@ -82,6 +81,15 @@ public abstract class Hardware extends MainObject {
 
             loadThis();
         }
+    }
+
+    public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
+        position = Tools.mouseScreenToWorld(camera);
+
+        base.setCenter(getPosition().x, getPosition().y);
+        batch.begin();
+        base.draw(batch);
+        batch.end();
     }
 
     public void loadThis() {
@@ -450,6 +458,8 @@ public abstract class Hardware extends MainObject {
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2+"", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             if(connections.get(x) == null) {
