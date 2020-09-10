@@ -40,7 +40,7 @@ public class CircuitGUIManager {
     private Window helpMenu, optionsMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss;
+    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss, cps;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -192,6 +192,9 @@ public class CircuitGUIManager {
 
         tnk = new TextButton("Tank", tStyle);
         tnk.addListener(new TextTooltip("Pneumatics tank to hold pressured air", ttStyle));
+
+        cps = new TextButton("Compressor", tStyle);
+        cps.addListener(new TextTooltip("Pneumatics compressor to increase air pressure", ttStyle));
 
         reg_cable.addListener(new ChangeListener() {
             @Override
@@ -362,7 +365,13 @@ public class CircuitGUIManager {
                 buttonDecline();
             }
         });
-
+        cps.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Constants.placing_object = HardwareType.COMPRESSOR;
+                buttonDecline();
+            }
+        });
         filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         filters.setWidth(200);
@@ -757,6 +766,8 @@ public class CircuitGUIManager {
                 table.row();
                 table.add(tnk).width(150);
                 table.row();
+                table.add(cps).width(150);
+                table.row();
                 table.add(ds).width(150);
                 table.row();
                 table.add(ss).width(150);
@@ -811,6 +822,8 @@ public class CircuitGUIManager {
             table.add(man).width(150);
             table.row();
             table.add(tnk).width(150);
+            table.row();
+            table.add(cps).width(150);
             table.row();
             table.add(ds).width(150);
             table.row();
