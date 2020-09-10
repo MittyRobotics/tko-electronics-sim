@@ -213,13 +213,8 @@ public class EPlate extends Hardware {
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        TextButton freeze = new TextButton("Freeze", CircuitGUIManager.propertiesBox.TBUTTON);
+        TextButton freeze = new TextButton(frozen ? "Unfreeze" : "Freeze", CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(freeze, true, 2);
-        if(frozen) {
-            freeze.setText("Unfreeze");
-        } else {
-            freeze.setText("Freeze");
-        }
 
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
