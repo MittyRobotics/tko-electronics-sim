@@ -35,6 +35,7 @@ public class EPlate extends Hardware {
     private boolean frozen = false;
 
     private int dragging = -1;
+    private boolean frozen = false;
 
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
@@ -101,11 +102,10 @@ public class EPlate extends Hardware {
                         HardwareManager.hardwares.get(i).attached = null;
                     }
                 } else {
-                    if(!frozen) {
-                        if (box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
-                            hardwareOnPlate.add(HardwareManager.hardwares.get(i));
-                            HardwareManager.hardwares.get(i).attached = this;
-                        }
+                    if (!frozen && box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
+                        hardwareOnPlate.add(HardwareManager.hardwares.get(i));
+                        HardwareManager.hardwares.get(i).attached = this;
+
                     }
                 }
             }
@@ -125,6 +125,9 @@ public class EPlate extends Hardware {
             }
 
             if(Gdx.input.isKeyJustPressed(Input.Keys.DEL) || Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
+                for(Hardware h : hardwareOnPlate) {
+                    h.attached = null;
+                }
                 HardwareManager.removeHardware(this);
                 HardwareManager.currentHardware = null;
                 CircuitGUIManager.propertiesBox.hide();
@@ -210,10 +213,17 @@ public class EPlate extends Hardware {
     @Override
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Freeze", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        final TextButton fre = new TextButton("Toggle", CircuitGUIManager.propertiesBox.TBUTTON);
-        CircuitGUIManager.propertiesBox.addElement(fre, false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        TextButton freeze = new TextButton("Freeze", CircuitGUIManager.propertiesBox.TBUTTON);
+        CircuitGUIManager.propertiesBox.addElement(freeze, true, 2);
+        if(frozen) {
+            freeze.setText("Unfreeze");
+        } else {
+            freeze.setText("Freeze");
+        }
+
+        freeze.setWidth(120);
+
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
@@ -260,10 +270,18 @@ public class EPlate extends Hardware {
             }
         });
 
-        fre.addListener(new ChangeListener() {
+
+        freeze.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               frozen = !frozen;
+                if(!frozen) {
+                    frozen = true;
+                    freeze.setText("Unfreeze");
+                } else {
+                    frozen = false;
+                    freeze.setText("Freeze");
+                }
+
             }
         });
 

@@ -460,6 +460,7 @@ public abstract class Hardware implements Json.Serializable {
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2+"", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         for (int x = 0; x < connectors.size(); x++) {
@@ -580,7 +581,6 @@ public abstract class Hardware implements Json.Serializable {
     public void write(Json json) {
         json.writeValue("id", this.hardwareID);
         json.writeValue("position", this.position);
-//        json.writeValue("connections", this.connections);
         json.writeValue("ends", this.ends);
         json.writeValue("connNum", this.connNum);
         json.writeValue("ledNum", this.ledNum);
