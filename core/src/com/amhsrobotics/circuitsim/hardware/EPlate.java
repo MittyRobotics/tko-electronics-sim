@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
@@ -30,7 +32,7 @@ public class EPlate extends Hardware {
     private Box box;
     private TextField.TextFieldStyle textFieldStyle;
 
-    private ArrayList<MainObject> hardwareOnPlate = new ArrayList<>();
+    public ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
 
@@ -46,9 +48,7 @@ public class EPlate extends Hardware {
         textFieldStyle.cursor = Constants.SKIN.getDrawable("textbox_cursor_02");
         textFieldStyle.font = Constants.FONT_SMALL;
         textFieldStyle.fontColor = Color.BLACK;
-    }
 
-    public void init() {
         box = new Box(getPosition().x, getPosition().y, 300, 300);
         initNodes();
     }
@@ -57,6 +57,16 @@ public class EPlate extends Hardware {
         for(int x = 0; x < 9; x++) {
             nodes[x] = new ResizeNode(box.getResizePointAtIndex(x).x, box.getResizePointAtIndex(x).y, ResizeNode.nodeMap.get(x));
         }
+    }
+
+    public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
+        box.x = Tools.mouseScreenToWorld(camera).x;
+        box.y = Tools.mouseScreenToWorld(camera).y;
+
+        renderer.setColor(color);
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
+        renderer.end();
     }
 
     @Override
@@ -72,6 +82,10 @@ public class EPlate extends Hardware {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            SnapGrid.calculateSnap(vec);
+        }
+
         if(box.contains(vec.x, vec.y)) {
             drawHover(renderer);
 
@@ -80,6 +94,22 @@ public class EPlate extends Hardware {
                 CableManager.currentCable = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
+            }
+        }
+
+        for(int i = 0; i < HardwareManager.hardwares.size; ++i) {
+            if(!(HardwareManager.hardwares.get(i) instanceof EPlate)) {
+                if (hardwareOnPlate.contains(HardwareManager.hardwares.get(i))) {
+                    if (!box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
+                        hardwareOnPlate.remove(HardwareManager.hardwares.get(i));
+                        HardwareManager.hardwares.get(i).attached = null;
+                    }
+                } else {
+                    if (box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
+                        hardwareOnPlate.add(HardwareManager.hardwares.get(i));
+                        HardwareManager.hardwares.get(i).attached = this;
+                    }
+                }
             }
         }
 
@@ -104,51 +134,68 @@ public class EPlate extends Hardware {
 
             if(dragging != -1) {
                 setSelectedNode(dragging);
-                nodes[dragging].movePosition(camera, box);
+                nodes[dragging].movePosition(camera, box, hardwareOnPlate);
             }
 
-            if(dragging == 8) {
-                for(Hardware h : HardwareManager.getHardwareAsList()) {
-                    if(h != this) {
-                        if(h.getSpriteBox().overlaps(new Rectangle(box.x, box.y, box.width, box.height))) {
-                            if(!hardwareOnPlate.contains(h)) {
-                                hardwareOnPlate.add(h);
-                                h.posAdditor = h.getPosition().sub(vec);
-                            }
+
+            if(!canMove) {
+                for (int x = 0; x < nodes.length; x++) {
+                    if (Gdx.input.isTouched()) {
+                        if (nodes[x].contains(vec)) {
+                            dragging = x;
+                        }
+
+                    } else {
+                        dragging = -1;
+                    }
+
+                    if (!nodes[x].isSelected()) {
+                        nodes[x].updateIdlePos(box);
+                    }
+                }
+            }
+
+            if(Gdx.input.isTouched() && dragging == -1) {
+
+                if (box.contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == null) {
+                    HardwareManager.currentHardware = this;
+                    CableManager.currentCable = null;
+                    populateProperties();
+                    CircuitGUIManager.propertiesBox.show();
+
+                    if (!HardwareManager.movingObject) {
+                        HardwareManager.movingObject = true;
+                        canMove = true;
+                        HardwareManager.currentHardware = this;
+                        diffX = box.x - vec.x;
+                        diffY = box.y - vec.y;
+                    }
+                }
+
+                if(canMove) {
+                    if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
+                        for(Hardware h : hardwareOnPlate) {
+                            h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
+                        }
+
+                        box.x = vec.x + diffX;
+                        box.y = vec.y + diffY;
+
+                        for (ResizeNode node : nodes) {
+                            node.updateIdlePos(box);
                         }
                     }
                 }
-                for(MainObject mo : hardwareOnPlate) {
-                    ((Hardware) mo).setPosition(vec.x + mo.posAdditor.x, vec.y + mo.posAdditor.y);
+
+                if(!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
+                    HardwareManager.currentHardware = null;
+                    CircuitGUIManager.propertiesBox.hide();
                 }
             } else {
-//                for(MainObject mo : hardwareOnPlate) {
-//                    mo.posAdditor = null;
-//                }
+                canMove = false;
+                HardwareManager.movingObject = false;
             }
 
-            boolean good = true;
-
-            for(int x = 0; x < nodes.length; x++) {
-                if(Gdx.input.isTouched()) {
-                    if(nodes[x].contains(vec)) {
-                        dragging = x;
-                        good = false;
-                    }
-
-                } else {
-                    dragging = -1;
-                }
-
-                if(!nodes[x].isSelected()) {
-                    nodes[x].updateIdlePos(box);
-                }
-            }
-
-            if(Gdx.input.isTouched() && !box.contains(vec.x, vec.y) && good) {
-                HardwareManager.currentHardware = null;
-                CircuitGUIManager.propertiesBox.hide();
-            }
         }
     }
 
@@ -169,14 +216,16 @@ public class EPlate extends Hardware {
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Width", CircuitGUIManager.propertiesBox.LABEL), true, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Width", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         TextField width = new TextField(box.width + "", textFieldStyle);
         width.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         CircuitGUIManager.propertiesBox.addElement(width, false, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Height", CircuitGUIManager.propertiesBox.LABEL), true, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Height", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         TextField height = new TextField(box.height + "", textFieldStyle);
         height.setTextFieldFilter(new TextField.TextFieldFilter.DigitsOnlyFilter());
         CircuitGUIManager.propertiesBox.addElement(height, false, 1);
+
+        CircuitGUIManager.propertiesBox.addElement(new Label("", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
 
         width.addListener(new ChangeListener() {
             @Override
@@ -209,7 +258,14 @@ public class EPlate extends Hardware {
                 }
             }
         });
+
+
+        CircuitGUIManager.propertiesBox.addElement(new Label("Connections", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        for(Hardware h : hardwareOnPlate) {
+            CircuitGUIManager.propertiesBox.addElement(new Label(h.name + " " + h.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+        }
     }
+
 
     @Override
     public void drawHover(ModifiedShapeRenderer renderer) {

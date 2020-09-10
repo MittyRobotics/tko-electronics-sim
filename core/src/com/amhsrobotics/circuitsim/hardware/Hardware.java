@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -37,12 +38,11 @@ import java.util.ArrayList;
 public abstract class Hardware extends MainObject implements Json.Serializable {
 
     private Vector2 position;
-    private int hardwareID;
+    public int hardwareID, hardwareID2, cur,connNum, ledNum ;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
     public ArrayList<Color> crimpedPortColors;
-    public int connNum, ledNum;
     public HardwareType type;
     public String name;
 
@@ -53,9 +53,8 @@ public abstract class Hardware extends MainObject implements Json.Serializable {
     public ArrayList<LED> LEDs = new ArrayList<>();
 
     public Sprite base;
-    public boolean canMove;
-    public boolean addCrimped;
-    public int cur;
+    public boolean canMove, addCrimped;
+    public EPlate attached;
 
     public float diffX, diffY;
 
@@ -64,6 +63,7 @@ public abstract class Hardware extends MainObject implements Json.Serializable {
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
         this.type = type;
+        this.hardwareID2 = DeviceUtil.getNewHardwareID(type);
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
         if(type != HardwareType.EPLATE) {
@@ -85,6 +85,15 @@ public abstract class Hardware extends MainObject implements Json.Serializable {
 
             loadThis();
         }
+    }
+
+    public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
+        position = Tools.mouseScreenToWorld(camera);
+
+        base.setCenter(getPosition().x, getPosition().y);
+        batch.begin();
+        base.draw(batch);
+        batch.end();
     }
 
     public void loadThis() {
@@ -452,7 +461,9 @@ public abstract class Hardware extends MainObject implements Json.Serializable {
 
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2+"", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             if(connections.get(x) == null) {
@@ -465,10 +476,10 @@ public abstract class Hardware extends MainObject implements Json.Serializable {
                 if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
                     CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 } else {
-                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID()).length() > 10) {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2).length() > 10) {
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
                     } else {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                     }
                 }
             }

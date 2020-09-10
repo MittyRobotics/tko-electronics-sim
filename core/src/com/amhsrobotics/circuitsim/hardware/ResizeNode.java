@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ResizeNode {
@@ -64,7 +65,7 @@ public class ResizeNode {
         }
     }
 
-    public void movePosition(CameraController camera, Box box) {
+    public void movePosition(CameraController camera, Box box, ArrayList<Hardware> hardwareArrayList) {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
         circle.setPosition(vec);
@@ -110,6 +111,11 @@ public class ResizeNode {
                     circle.setY(box.y + box.height / 2);
                     break;
                 case MIDDLE:
+
+                    for(Hardware h : hardwareArrayList) {
+                        h.setPosition(h.getPosition().x + vec.x - box.width / 2 - box.x, h.getPosition().y + vec.y - box.height / 2 - box.y);
+                    }
+
                     box.x = vec.x - box.width / 2;
                     box.y = vec.y - box.height / 2;
                     break;

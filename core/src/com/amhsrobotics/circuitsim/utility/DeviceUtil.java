@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.utility;
 
+import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.badlogic.gdx.graphics.Color;
 
 import java.util.HashMap;
@@ -70,7 +71,15 @@ public class DeviceUtil {
     //WIRE GAUGES
     public static final int[] GAUGES = {22, 18, 14, 12, 4};
 
-    public static int curID = 0;
+    public static int counter = 0;
+
+    //public static int curID = 0;
+    public static final HashMap<HardwareType, Integer> curID = new HashMap<HardwareType, Integer>() {{
+        for(HardwareType h : HardwareType.values()) {
+            put(h, 0);
+        }
+    }};
+
 
     public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
         for (Map.Entry<T, E> entry : map.entrySet()) {
@@ -81,8 +90,13 @@ public class DeviceUtil {
         return null;
     }
 
+    public static int getNewHardwareID(HardwareType type) {
+        curID.put(type, curID.get(type)+1);
+        return curID.get(type);
+    }
+
     public static int getNewHardwareID() {
-        curID++;
-        return curID;
+        counter++;
+        return counter;
     }
 }

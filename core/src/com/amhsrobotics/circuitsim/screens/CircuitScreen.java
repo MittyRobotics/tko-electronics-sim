@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 
 public class CircuitScreen implements Screen {
 
-    private final ModifiedStage stage;
+    private static ModifiedStage stage;
     private final Game game;
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
@@ -145,7 +146,8 @@ public class CircuitScreen implements Screen {
                 } else if(Constants.placing_object != null) {
                     currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y, false);
 
-                    DeviceUtil.curID--;
+                    DeviceUtil.curID.put(Constants.placing_object, DeviceUtil.curID.get(Constants.placing_object)-1);
+                    DeviceUtil.counter--;
                 }
             }
 
@@ -179,7 +181,7 @@ public class CircuitScreen implements Screen {
             if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
-                currentPlacingHardware.update(batch, renderer, camera);
+                currentPlacingHardware.updatePosition(camera, renderer, batch);
             }
         }
 
