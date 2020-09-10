@@ -739,6 +739,9 @@ public class CircuitGUIManager {
         panelShown = false;
 
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
+        Tools.sequenceSlideOut("left", 0.5f, Interpolation.exp5, 300, 0.1f, back, save, help, options);
+        Tools.slideOut(hidePanel, "left", 1.5f, Interpolation.exp5, -20);
+        Tools.slideOut(simulate, "left", 2f, Interpolation.exp5, -150);
         propertiesBox.hide();
     }
 
@@ -746,11 +749,20 @@ public class CircuitGUIManager {
         panelShown = true;
         container.setPosition(Gdx.graphics.getWidth() - 210, 10);
         filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
+        hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
+        simulate.setPosition(460, Gdx.graphics.getHeight() - 70);
+        back.setPosition(20, Gdx.graphics.getHeight() - 70);
+        save.setPosition(100, Gdx.graphics.getHeight() - 70);
+        help.setPosition(180, Gdx.graphics.getHeight() - 70);
+        options.setPosition(260, Gdx.graphics.getHeight() - 70);
         if(propertiesBox.isVisible()) {
             propertiesBox.hide();
             propertiesBox.show();
         }
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
+        Tools.slideIn(simulate, "left", 1f, Interpolation.exp5, -150);
+        Tools.slideIn(hidePanel, "left", 1f, Interpolation.exp5, -20);
+        Tools.sequenceSlideIn("left", 1f, Interpolation.exp5, 300, 0.2f, options, help, save, back);
     }
 
     public static boolean isPanelShown() {
