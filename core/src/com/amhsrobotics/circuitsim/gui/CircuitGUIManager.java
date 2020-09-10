@@ -129,14 +129,15 @@ public class CircuitGUIManager {
 
         sandcrab3 = new TextButton("Triple WAGO", tStyle);
         sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
+
         battery = new TextButton("Battery", tStyle);
         battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
 
         ds = new TextButton("Double Solenoid", tStyle);
-        ds.addListener(new TextTooltip("Pneumatics Electronic Control", ttStyle));
+        ds.addListener(new TextTooltip("Electronic air control for two pistons", ttStyle));
 
         ss = new TextButton("Single Solenoid", tStyle);
-        ss.addListener(new TextTooltip("Pneumatics Electronic Control", ttStyle));
+        ss.addListener(new TextTooltip("Electronic air control for one piston", ttStyle));
 
         pdp = new TextButton("PDP", tStyle);
         pdp.addListener(new TextTooltip("Power Distribution Panel to distribute power to various components", ttStyle));
@@ -180,7 +181,7 @@ public class CircuitGUIManager {
         ep = new TextButton("E-Plate", tStyle);
         ep.addListener(new TextTooltip("Electronics Plate to hold hardware in place", ttStyle));
 
-        psw = new TextButton("Pres. Switch", tStyle);
+        psw = new TextButton("Pressure Switch", tStyle);
         psw.addListener(new TextTooltip("Pneumatics pressure switch to adjust air pressure", ttStyle));
 
         pis = new TextButton("Piston", tStyle);
@@ -700,65 +701,65 @@ public class CircuitGUIManager {
             if(filtersMap.get(fil1)){
                 //Wiring
                 table.row();
-                table.add(reg_cable).width(120);
+                table.add(reg_cable).width(150);
                 table.row();
-                table.add(sandcrab).width(120);
+                table.add(sandcrab).width(150);
                 table.row();
-                table.add(sandcrab3).width(120);
+                table.add(sandcrab3).width(150);
                 table.row();
-                table.add(battery).width(120);
+                table.add(battery).width(150);
                 table.row();
-                table.add(brk).width(120);
+                table.add(brk).width(150);
                 table.row();
-                table.add(eth).width(120);
+                table.add(eth).width(150);
             }
 
             if(filtersMap.get(fil2)) {
                 //Control
                 table.row();
-                table.add(ep).width(120);
+                table.add(ep).width(150);
                 table.row();
-                table.add(rbr).width(120);
+                table.add(rbr).width(150);
                 table.row();
-                table.add(pdp).width(120);
+                table.add(pdp).width(150);
                 table.row();
-                table.add(vrm).width(120);
+                table.add(vrm).width(150);
                 table.row();
-                table.add(rad).width(120);
+                table.add(rad).width(150);
             }
 
             if(filtersMap.get(fil3)) {
                 //Motors
                 table.row();
-                table.add(tln).width(120);
+                table.add(tln).width(150);
                 table.row();
-                table.add(spk).width(120);
+                table.add(spk).width(150);
                 table.row();
-                table.add(m775).width(120);
+                table.add(m775).width(150);
                 table.row();
-                table.add(neo).width(120);
+                table.add(neo).width(150);
                 table.row();
-                table.add(fcn).width(120);
+                table.add(fcn).width(150);
             }
 
             if(filtersMap.get(fil4)){
                 //Pneumatics
                 table.row();
-                table.add(pcm).width(120);
+                table.add(pcm).width(150);
                 table.row();
-                table.add(tub).width(120);
+                table.add(tub).width(150);
                 table.row();
-                table.add(psw).width(120);
+                table.add(psw).width(150);
                 table.row();
-                table.add(pis).width(120);
+                table.add(pis).width(150);
                 table.row();
-                table.add(man).width(120);
+                table.add(man).width(150);
                 table.row();
-                table.add(tnk).width(120);
+                table.add(tnk).width(150);
                 table.row();
-                table.add(ds).width(120);
+                table.add(ds).width(150);
                 table.row();
-                table.add(ss).width(120);
+                table.add(ss).width(150);
             }
         }
 
@@ -767,53 +768,53 @@ public class CircuitGUIManager {
             table.clear();
 
             table.row();
-            table.add(reg_cable).width(120);
+            table.add(reg_cable).width(150);
             table.row();
-            table.add(sandcrab).width(120);
+            table.add(sandcrab).width(150);
             table.row();
-            table.add(sandcrab3).width(120);
+            table.add(sandcrab3).width(150);
             table.row();
-            table.add(battery).width(120);
+            table.add(battery).width(150);
             table.row();
-            table.add(brk).width(120);
+            table.add(brk).width(150);
             table.row();
-            table.add(ep).width(120);
+            table.add(ep).width(150);
             table.row();
-            table.add(eth).width(120);
+            table.add(eth).width(150);
             table.row();
-            table.add(rbr).width(120);
+            table.add(rbr).width(150);
             table.row();
-            table.add(pdp).width(120);
+            table.add(pdp).width(150);
             table.row();
-            table.add(vrm).width(120);
+            table.add(vrm).width(150);
             table.row();
-            table.add(rad).width(120);
+            table.add(rad).width(150);
             table.row();
-            table.add(tln).width(120);
+            table.add(tln).width(150);
             table.row();
-            table.add(spk).width(120);
+            table.add(spk).width(150);
             table.row();
-            table.add(m775).width(120);
+            table.add(m775).width(150);
             table.row();
-            table.add(neo).width(120);
+            table.add(neo).width(150);
             table.row();
-            table.add(fcn).width(120);
+            table.add(fcn).width(150);
             table.row();
-            table.add(pcm).width(120);
+            table.add(pcm).width(150);
             table.row();
-            table.add(tub).width(120);
+            table.add(tub).width(150);
             table.row();
-            table.add(psw).width(120);
+            table.add(psw).width(150);
             table.row();
-            table.add(pis).width(120);
+            table.add(pis).width(150);
             table.row();
-            table.add(man).width(120);
+            table.add(man).width(150);
             table.row();
-            table.add(tnk).width(120);
+            table.add(tnk).width(150);
             table.row();
-            table.add(ds).width(120);
+            table.add(ds).width(150);
             table.row();
-            table.add(ss).width(120);
+            table.add(ss).width(150);
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {

@@ -139,16 +139,16 @@ public class HardwareManager {
                 temp = new Solenoid(new Vector2(startX, startY), HardwareType.SINGLESOLENOID, addCrimped);
                 break;
             case PRESSURESWITCH:
-                temp = null;
+                temp = new PressureSwitch(new Vector2(startX, startY), addCrimped);
                 break;
             case PISTON:
-                temp = null;
+                temp = new Piston(new Vector2(startX, startY), addCrimped);
                 break;
             case MANIFOLD:
-                temp = null;
+                temp = new Manifold(new Vector2(startX, startY), addCrimped);
                 break;
             case TANK:
-                temp = null;
+                temp = new Tank(new Vector2(startX, startY), addCrimped);
                 break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
