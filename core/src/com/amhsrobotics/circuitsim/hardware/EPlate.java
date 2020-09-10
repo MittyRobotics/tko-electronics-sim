@@ -33,6 +33,7 @@ public class EPlate extends Hardware {
     private ResizeNode[] nodes = new ResizeNode[9];
 
     private int dragging = -1;
+
     private boolean frozen = false;
 
     public EPlate(Vector2 pos) {
