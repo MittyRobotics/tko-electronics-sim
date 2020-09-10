@@ -32,8 +32,6 @@ public class EPlate extends Hardware {
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
 
-    private boolean frozen = false;
-
     private int dragging = -1;
     private boolean frozen = false;
 
@@ -221,8 +219,6 @@ public class EPlate extends Hardware {
         } else {
             freeze.setText("Freeze");
         }
-
-        freeze.setWidth(120);
 
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
