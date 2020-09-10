@@ -15,6 +15,7 @@ public class FileManager {
     // testing
     public static void save() {
         DelayedRemovalArray<JsonValue> hardware = new DelayedRemovalArray<>();
+        json.prettyPrint(HardwareManager.getHardwareAsList().get(0));
         for(Hardware h : HardwareManager.getHardwareAsList()) {
             JsonValue jsonHardware = new JsonValue(JsonValue.ValueType.object);
             jsonHardware.addChild("name", new JsonValue(h.getName()));
