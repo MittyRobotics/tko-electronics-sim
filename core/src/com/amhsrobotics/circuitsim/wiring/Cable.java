@@ -348,8 +348,6 @@ public class Cable extends MainObject implements Disposable {
 
                 // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                    appendingFromBegin = false;
-                    appendingFromEnd = false;
                     if (movingNode != null) {
                         if(coordinates.contains(movingNode)) {
                             coordinates.set(coordinates.indexOf(movingNode), backupNode);
@@ -362,9 +360,13 @@ public class Cable extends MainObject implements Disposable {
                             CircuitGUIManager.propertiesBox.hide();
                         }
                     } else {
-                        CableManager.currentCable = null;
-                        CircuitGUIManager.propertiesBox.hide();
+                        if(!appendingFromEnd && !appendingFromBegin) {
+                            CableManager.currentCable = null;
+                            CircuitGUIManager.propertiesBox.hide();
+                        }
                     }
+                    appendingFromBegin = false;
+                    appendingFromEnd = false;
                 }
 
                 // CLICK

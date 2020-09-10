@@ -87,56 +87,56 @@ public class HardwareManager {
         }
     }
 
-    public static Hardware switchCaseHardware(HardwareType type, float startX, float startY) {
+    public static Hardware switchCaseHardware(HardwareType type, float startX, float startY, boolean addCrimped) {
         Hardware temp;
         switch(type) {
             case PDP:
-                temp = new PowerDistributionPanel(new Vector2(startX, startY), true);
+                temp = new PowerDistributionPanel(new Vector2(startX, startY), addCrimped);
                 break;
             case VRM:
-                temp = new VoltageRegulatorModule(new Vector2(startX, startY), true);
+                temp = new VoltageRegulatorModule(new Vector2(startX, startY), addCrimped);
                 break;
             case PCM:
-                temp = new PneumaticsControlModule(new Vector2(startX, startY), true);
+                temp = new PneumaticsControlModule(new Vector2(startX, startY), addCrimped);
                 break;
             case DOUBLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), HardwareType.DOUBLESANDCRAB, true);
+                temp = new SandCrab(new Vector2(startX, startY), HardwareType.DOUBLESANDCRAB, addCrimped);
                 break;
             case TRIPLESANDCRAB:
-                temp = new SandCrab(new Vector2(startX, startY), HardwareType.TRIPLESANDCRAB, true);
+                temp = new SandCrab(new Vector2(startX, startY), HardwareType.TRIPLESANDCRAB, addCrimped);
                 break;
             case ROBORIO:
-                temp = new RoboRio(new Vector2(startX, startY), true);
+                temp = new RoboRio(new Vector2(startX, startY), addCrimped);
                 break;
             case TALON:
-                temp = new Talon(new Vector2(startX, startY), true);
+                temp = new Talon(new Vector2(startX, startY), addCrimped);
                 break;
             case SPARK:
-                temp = new Spark(new Vector2(startX, startY), true);
+                temp = new Spark(new Vector2(startX, startY), addCrimped);
                 break;
             case FALCON:
-                temp = new Falcon(new Vector2(startX, startY), true);
+                temp = new Falcon(new Vector2(startX, startY), addCrimped);
                 break;
             case MOTOR775:
-                temp = new Motor775(new Vector2(startX, startY), true);
+                temp = new Motor775(new Vector2(startX, startY), addCrimped);
                 break;
             case NEO:
-                temp = new NEO(new Vector2(startX, startY), true);
+                temp = new NEO(new Vector2(startX, startY), addCrimped);
                 break;
             case BREAKER:
-                temp = new Breaker(new Vector2(startX, startY), true);
+                temp = new Breaker(new Vector2(startX, startY), addCrimped);
                 break;
             case BATTERY:
-                temp = new Battery(new Vector2(startX, startY), true);
+                temp = new Battery(new Vector2(startX, startY), addCrimped);
                 break;
             case RADIO:
-                temp = new Radio(new Vector2(startX, startY), true);
+                temp = new Radio(new Vector2(startX, startY), addCrimped);
                 break;
             case DOUBLESOLENOID:
-                temp = new Solenoid(new Vector2(startX, startY), HardwareType.DOUBLESOLENOID, true);
+                temp = new Solenoid(new Vector2(startX, startY), HardwareType.DOUBLESOLENOID, addCrimped);
                 break;
             case SINGLESOLENOID:
-                temp = new Solenoid(new Vector2(startX, startY), HardwareType.SINGLESOLENOID, true);
+                temp = new Solenoid(new Vector2(startX, startY), HardwareType.SINGLESOLENOID, addCrimped);
                 break;
             case PRESSURESWITCH:
                 temp = null;
@@ -151,14 +151,14 @@ public class HardwareManager {
                 temp = null;
                 break;
             default:
-                temp = new SandCrab(new Vector2(startX, startY), type, true);
+                temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
                 break;
         }
         return temp;
     }
 
     public static Hardware addHardware(float startX, float startY, HardwareType type) {
-        Hardware temp = switchCaseHardware(type, startX, startY);
+        Hardware temp = switchCaseHardware(type, startX, startY, true);
 
         if(type == HardwareType.EPLATE) {
             temp = new EPlate(new Vector2(startX, startY));
