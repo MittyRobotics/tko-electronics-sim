@@ -1,27 +1,23 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
-import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
@@ -35,6 +31,8 @@ public class EPlate extends Hardware {
     public ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
+
+    private boolean frozen = false;
 
     private int dragging = -1;
     private boolean frozen = false;
@@ -74,8 +72,6 @@ public class EPlate extends Hardware {
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
 
-//        Gdx.gl.glEnable(GL20.GL_BLEND);
-//        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         renderer.setColor(color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
@@ -109,6 +105,7 @@ public class EPlate extends Hardware {
                     if (!frozen && box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
                         hardwareOnPlate.add(HardwareManager.hardwares.get(i));
                         HardwareManager.hardwares.get(i).attached = this;
+
                     }
                 }
             }
@@ -273,6 +270,7 @@ public class EPlate extends Hardware {
             }
         });
 
+
         freeze.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -283,6 +281,7 @@ public class EPlate extends Hardware {
                     frozen = false;
                     freeze.setText("Freeze");
                 }
+
             }
         });
 

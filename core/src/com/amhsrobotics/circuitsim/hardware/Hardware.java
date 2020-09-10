@@ -1,7 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
@@ -23,11 +22,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,7 +33,7 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class Hardware extends MainObject {
+public abstract class Hardware implements Json.Serializable {
 
     private Vector2 position;
     public int hardwareID, hardwareID2, cur,connNum, ledNum ;
@@ -57,6 +55,8 @@ public abstract class Hardware extends MainObject {
     public EPlate attached;
 
     public float diffX, diffY;
+
+    public Hardware() {}
 
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
@@ -575,5 +575,24 @@ public abstract class Hardware extends MainObject {
 
     public int getHardwareID() {
         return hardwareID;
+    }
+
+    @Override
+    public void write(Json json) {
+        json.writeValue("id", this.hardwareID);
+        json.writeValue("position", this.position);
+        json.writeValue("ends", this.ends);
+        json.writeValue("connNum", this.connNum);
+        json.writeValue("ledNum", this.ledNum);
+        json.writeValue("type", this.type);
+        json.writeValue("name", this.name);
+        json.writeValue("ledNum", this.ledNum);
+        json.writeValue("canMove", this.canMove);
+        json.writeValue("addCrimped", this.addCrimped);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+
     }
 }

@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
@@ -19,7 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cable extends MainObject implements Disposable {
+public class Cable implements Json.Serializable {
 
     public float voltage;
     public float gauge;
@@ -49,6 +49,7 @@ public class Cable extends MainObject implements Disposable {
 
     public float limit, limit2, limit3;
 
+    public Cable() {}
 
     public Cable(Vector2 startPoint, int count) {
         voltage = 0;
@@ -801,6 +802,22 @@ public class Cable extends MainObject implements Disposable {
     }
 
     @Override
-    public void dispose() {
+    public void write(Json json) {
+        json.writeValue("id", this.ID);
+        json.writeValue("gauge", this.gauge);
+        json.writeValue("color", this.color);
+        json.writeValue("nodeColor", this.nodeColor);
+        json.writeValue("appendingFromEnd", this.appendingFromEnd);
+        json.writeValue("appendingFromBegin", this.appendingFromBegin);
+        json.writeValue("disableEnd", this.disableEnd);
+        json.writeValue("disableBegin", this.disableBegin);
+//        json.writeValue("connection1", this.connection1);
+//        json.writeValue("connection2", this.connection2);
+        json.writeValue("coordinates", this.coordinates);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+
     }
 }
