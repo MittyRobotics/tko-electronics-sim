@@ -1,27 +1,23 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
-import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
@@ -35,6 +31,8 @@ public class EPlate extends Hardware {
     public ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
     private Color color;
     private ResizeNode[] nodes = new ResizeNode[9];
+
+    private boolean frozen = false;
 
     private int dragging = -1;
 
@@ -73,8 +71,6 @@ public class EPlate extends Hardware {
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
 
-//        Gdx.gl.glEnable(GL20.GL_BLEND);
-//        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         renderer.setColor(color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
@@ -105,9 +101,11 @@ public class EPlate extends Hardware {
                         HardwareManager.hardwares.get(i).attached = null;
                     }
                 } else {
-                    if (box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
-                        hardwareOnPlate.add(HardwareManager.hardwares.get(i));
-                        HardwareManager.hardwares.get(i).attached = this;
+                    if(!frozen) {
+                        if (box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
+                            hardwareOnPlate.add(HardwareManager.hardwares.get(i));
+                            HardwareManager.hardwares.get(i).attached = this;
+                        }
                     }
                 }
             }
@@ -213,6 +211,9 @@ public class EPlate extends Hardware {
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label("Freeze", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        final TextButton fre = new TextButton("Toggle", CircuitGUIManager.propertiesBox.TBUTTON);
+        CircuitGUIManager.propertiesBox.addElement(fre, false, 1);
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS_EPLATE, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
@@ -256,6 +257,13 @@ public class EPlate extends Hardware {
                         break;
                     }
                 }
+            }
+        });
+
+        fre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+               frozen = !frozen;
             }
         });
 

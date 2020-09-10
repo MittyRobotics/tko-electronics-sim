@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
@@ -19,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraController;
@@ -31,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Cable extends MainObject implements Json.Serializable {
+public class Cable implements Json.Serializable {
 
     public float voltage;
     public float gauge;

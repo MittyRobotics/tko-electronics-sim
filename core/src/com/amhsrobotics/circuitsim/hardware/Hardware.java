@@ -1,7 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.MainObject;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
@@ -24,7 +23,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -35,7 +33,7 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class Hardware extends MainObject implements Json.Serializable {
+public abstract class Hardware implements Json.Serializable {
 
     private Vector2 position;
     public int hardwareID, hardwareID2, cur,connNum, ledNum ;
