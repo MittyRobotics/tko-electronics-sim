@@ -157,7 +157,7 @@ public class CircuitScreen implements Screen {
             if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.setPosition(vec2.x, vec2.y);
             } else {
-                if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
+                if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if(Constants.placing_object != null) {
                     currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y, false);
