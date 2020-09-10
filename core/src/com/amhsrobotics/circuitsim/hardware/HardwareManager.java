@@ -150,6 +150,9 @@ public class HardwareManager {
             case TANK:
                 temp = new Tank(new Vector2(startX, startY), addCrimped);
                 break;
+            case COMPRESSOR:
+                temp = new Compressor(new Vector2(startX, startY));
+                break;
             case EPLATE:
                 temp = new EPlate(new Vector2(startX, startY));
                 break;
