@@ -143,7 +143,7 @@ public class CircuitScreen implements Screen {
                 if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if(Constants.placing_object != null) {
-                    currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y);
+                    currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y, false);
 
                     DeviceUtil.curID--;
                 }
