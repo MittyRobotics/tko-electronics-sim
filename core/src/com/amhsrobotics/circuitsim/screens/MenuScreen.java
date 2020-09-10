@@ -73,6 +73,7 @@ public class MenuScreen implements Screen {
         new_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - Unsaved *");
                 Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
                 Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
                 if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);

@@ -10,6 +10,9 @@
   "CTRL + SHIFT + /": "Help Menu",
   "CTRL + SHIFT + .": "Options Menu",
   "SELECT DEVICE + R": "Rotate Device",
-  "DOUBLE CLICK PORT": "Attach cable"
+  "DOUBLE CLICK PORT": "Attach cable",
+  "CTRL + S": "Save",
+  "CTRL + SHIFT + S": "Save As"
+
 }
 

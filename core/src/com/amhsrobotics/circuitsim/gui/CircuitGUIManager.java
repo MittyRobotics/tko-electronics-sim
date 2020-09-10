@@ -26,6 +26,7 @@ import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,6 +39,7 @@ public class CircuitGUIManager {
     private final TextButton simulate, back, help, options, hidePanel, save;
     public static Table container, table, table2, filters;
     private Window helpMenu, optionsMenu;
+    private static Window saveMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
     private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss, cps;
@@ -45,9 +47,11 @@ public class CircuitGUIManager {
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
     public static Message popup;
-    private TextField gridSizingX, gridSizingY, gridSpacing;
+    private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
+    private TextButton saveButton, fileSave;
 
     public boolean helpMenuShown, optionsMenuShown;
+    public static boolean saveMenuShown = false;
     public static boolean panelShown = true;
 
     private boolean filterChanged = false;
@@ -495,7 +499,11 @@ public class CircuitGUIManager {
         save.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FileManager.save();
+                if(FileManager.fileName.equals("")) {
+                    CircuitGUIManager.saveMenu();
+                } else {
+                    FileManager.save(FileManager.fileName);
+                }
             }
         });
         simulate.addListener(new ChangeListener() {
@@ -507,13 +515,14 @@ public class CircuitGUIManager {
 
 
         buildHelpMenu(wStyle, lStyle, l2Style);
+        buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
         buildOptionsMenu(wStyle, l2Style, textFieldStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, hidePanel, simulate);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, options, hidePanel, save, simulate);
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate);
     }
 
     private void buttonDecline() {
@@ -562,6 +571,80 @@ public class CircuitGUIManager {
         helpMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
     }
 
+    private void buildSaveMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle, TextButton.TextButtonStyle tbStyle) {
+        saveMenu = new Window("Save", wStyle);
+        saveMenu.setWidth(500);
+        saveMenu.setHeight(400);
+        saveMenu.setKeepWithinStage(false);
+        saveMenu.setMovable(false);
+        saveMenu.setPosition(-700, -700);
+
+        Table saveTable = new   Table();
+        saveMenu.add(saveTable).expand().fill();
+        saveTable.row();
+        saveTable.add(new Label("Save Project", l2Style)).width(90).colspan(2).padBottom(40).align(Align.center);
+
+        saveTable.row();
+        saveTable.add(new Label("File Location", l2Style)).width(100).align(Align.center);
+        fileSave = new TextButton("Browse", tbStyle);
+        saveTable.add(fileSave).width(90);
+        saveTable.row();
+        fileLocation = new TextField("", textFieldStyle);
+        saveTable.add(fileLocation).width(180).colspan(2).align(Align.center).padTop(10);
+
+        fileSave.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFileChooser chooser = new JFileChooser();
+                        JFrame f = new JFrame();
+                        f.setVisible(true);
+                        f.toFront();
+                        f.setVisible(false);
+                        int res = chooser.showSaveDialog(f);
+                        f.dispose();
+                        if (res == JFileChooser.APPROVE_OPTION) {
+                            fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
+                        }
+                    }
+                }).start();
+            }
+        });
+
+        saveTable.row();
+        saveButton = new TextButton("Save", tbStyle);
+        saveTable.add(saveButton).width(90).colspan(2).align(Align.center).padTop(60);
+
+        saveButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(!fileLocation.getText().contains(".")) {
+                    popup.activateError("No File Given");
+                } else {
+                    FileManager.save(fileLocation.getText());
+                    popup.activatePrompt("Successfully Saved!");
+                    hideSaveMenu();
+                }
+            }
+        });
+
+        saveMenu.row();
+        saveMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
+    }
+
+    public static void saveMenu() {
+        saveMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - saveMenu.getWidth() / 2, 250);
+        Tools.slideIn(saveMenu, "down", 1f, Interpolation.exp10, 600);
+        saveMenuShown = true;
+    }
+
+    private void hideSaveMenu() {
+        Tools.slideOut(saveMenu, "down", 1f, Interpolation.exp10, 700);
+        saveMenuShown = false;
+    }
+
     private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle) {
         optionsMenu = new Window("Options", wStyle);
         optionsMenu.setWidth(500);
@@ -606,7 +689,7 @@ public class CircuitGUIManager {
 
     private void showHelpMenu() {
         hideOptionsMenu();
-        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
+        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 80);
         Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 600);
         helpMenuShown = true;
     }
@@ -618,7 +701,7 @@ public class CircuitGUIManager {
 
     private void showOptionsMenu() {
         hideHelpMenu();
-        optionsMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 100);
+        optionsMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 80);
         Tools.slideIn(optionsMenu, "down", 1f, Interpolation.exp10, 600);
         optionsMenuShown = true;
     }
@@ -635,7 +718,7 @@ public class CircuitGUIManager {
             } else {
                 Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
             }
-            if(Float.parseFloat(gridSizingX.getText()) > 15000) {
+                if(Float.parseFloat(gridSizingX.getText()) > 15000) {
                 popup.activateError("Maximum X of 15000 required");
             } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
                 popup.activateError("Minimum X of 2000 required");
@@ -694,6 +777,12 @@ public class CircuitGUIManager {
         if(optionsMenuShown) {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideOptionsMenu();
+            }
+        }
+
+        if(saveMenuShown) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                hideSaveMenu();
             }
         }
 

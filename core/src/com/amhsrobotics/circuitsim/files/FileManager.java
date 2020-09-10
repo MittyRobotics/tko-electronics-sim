@@ -1,37 +1,39 @@
 package com.amhsrobotics.circuitsim.files;
 
+import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
+
+import java.util.ArrayList;
 
 public class FileManager {
 
     private static Json json = new Json();
+    public static AppData appdata;
+    public static String fileName = "";
 
     // testing
-    public static void save() {
-        DelayedRemovalArray<JsonValue> hardware = new DelayedRemovalArray<>();
-        System.out.println(json.prettyPrint(HardwareManager.getHardwareAsList().get(0)));
-//        for(Hardware h : HardwareManager.getHardwareAsList()) {
-//            JsonValue jsonHardware = new JsonValue(JsonValue.ValueType.object);
-//            jsonHardware.addChild("name", new JsonValue(h.getName()));
-//            jsonHardware.addChild("positionX", new JsonValue(h.getPosition().x));
-//            jsonHardware.addChild("positionY", new JsonValue(h.getPosition().y));
-//
-//            hardware.add(jsonHardware);
-//        }
-//
-//        JsonValue main = new JsonValue(JsonValue.ValueType.object);
-//        for(JsonValue v : hardware) {
-//            main.addChild(v);
-//        }
-//
-//        FileHandle file = Gdx.files.local("save.tko");
-//        file.writeString(json.prettyPrint(main), false);
+    public static void save(String filename) {
+        fileName = filename;
+        appdata = new AppData();
+        ArrayList<Hardware> hardware = new ArrayList<>(HardwareManager.getHardwareAsList());
+        ArrayList<Cable> cables = new ArrayList<>();
+        for(Cable c : CableManager.getCables()) {
+            cables.add(c);
+        }
+        appdata.setHardware(hardware);
+        appdata.setCables(cables);
+        appdata.setGridSize(Constants.WORLD_DIM);
+        appdata.setGridSpacing(Constants.GRID_SIZE);
+
+        FileHandle file = Gdx.files.absolute(filename);
+        file.writeString(json.prettyPrint(appdata), false);
+        Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
     }
 
     public static void load() {

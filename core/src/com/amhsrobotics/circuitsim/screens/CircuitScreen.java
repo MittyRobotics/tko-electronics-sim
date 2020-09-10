@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
@@ -112,6 +113,21 @@ public class CircuitScreen implements Screen {
         if (Rumble.getRumbleTimeLeft() > 0){
             Rumble.tick(Gdx.graphics.getDeltaTime());
             camera.getCamera().translate(Rumble.getPos());
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+                if(FileManager.fileName.equals("")) {
+                    CircuitGUIManager.saveMenu();
+                } else {
+                    FileManager.save(FileManager.fileName);
+                }
+            }
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+                    CircuitGUIManager.saveMenu();
+                }
+            }
         }
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
