@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public abstract class Hardware extends MainObject {
 
     private Vector2 position;
-    private int hardwareID;
+    public int hardwareID, hardwareID2;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
@@ -60,6 +60,7 @@ public abstract class Hardware extends MainObject {
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
         this.type = type;
+        this.hardwareID2 = DeviceUtil.getNewHardwareID(type);
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
         if(type != HardwareType.EPLATE) {
@@ -448,7 +449,7 @@ public abstract class Hardware extends MainObject {
 
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
         for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             if(connections.get(x) == null) {
@@ -461,10 +462,10 @@ public abstract class Hardware extends MainObject {
                 if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
                     CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 } else {
-                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID()).length() > 10) {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2).length() > 10) {
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
                     } else {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                     }
                 }
             }

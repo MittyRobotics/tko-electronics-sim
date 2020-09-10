@@ -41,7 +41,7 @@ public class HardwareManager {
 
     public static Hardware getCurrentlyHovering(ClippedCameraController camera) {
         for(int i = hardwares.size-1; i >= 0; i--) {
-            if(hardwares.get(i).getHoveringMouse(camera)) {
+            if((!(hardwares.get(i) instanceof EPlate)) && hardwares.get(i).getHoveringMouse(camera)) {
                 return hardwares.get(i);
             }
         }

@@ -145,7 +145,8 @@ public class CircuitScreen implements Screen {
                 } else if(Constants.placing_object != null) {
                     currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y, false);
 
-                    DeviceUtil.curID--;
+                    DeviceUtil.curID.put(Constants.placing_object, DeviceUtil.curID.get(Constants.placing_object)-1);
+                    DeviceUtil.counter--;
                 }
             }
 
