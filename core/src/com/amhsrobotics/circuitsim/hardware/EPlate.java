@@ -35,7 +35,6 @@ public class EPlate extends Hardware {
     private boolean frozen = false;
 
     private int dragging = -1;
-    private boolean frozen = false;
 
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
@@ -216,12 +215,6 @@ public class EPlate extends Hardware {
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
         TextButton freeze = new TextButton("Freeze", CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(freeze, true, 2);
-        if(frozen) {
-            freeze.setText("Unfreeze");
-        } else {
-            freeze.setText("Freeze");
-        }
-
         freeze.setWidth(120);
 
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
