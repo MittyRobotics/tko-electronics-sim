@@ -157,7 +157,7 @@ public class EPlate extends Hardware {
 
             if(Gdx.input.isTouched() && dragging == -1) {
 
-                if (box.contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == null) {
+                if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
                     HardwareManager.currentHardware = this;
                     CableManager.currentCable = null;
                     populateProperties();

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public abstract class Hardware implements Json.Serializable {
 
-    private Vector2 position;
+    public Vector2 position;
     public int hardwareID, hardwareID2, cur,connNum, ledNum ;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
@@ -245,17 +245,19 @@ public abstract class Hardware implements Json.Serializable {
             if (Gdx.input.isTouched()) {
 
                 if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
-                    HardwareManager.currentHardware = this;
-                    CableManager.currentCable = null;
-                    populateProperties();
-                    CircuitGUIManager.propertiesBox.show();
-
-                    if (!HardwareManager.movingObject) {
-                        HardwareManager.movingObject = true;
-                        canMove = true;
+                    if(!(HardwareManager.currentHardware != this && HardwareManager.movingObject)) {
                         HardwareManager.currentHardware = this;
-                        diffX = position.x - vec.x;
-                        diffY = position.y - vec.y;
+                        CableManager.currentCable = null;
+                        populateProperties();
+                        CircuitGUIManager.propertiesBox.show();
+
+                        if (!HardwareManager.movingObject) {
+                            HardwareManager.movingObject = true;
+                            canMove = true;
+                            HardwareManager.currentHardware = this;
+                            diffX = position.x - vec.x;
+                            diffY = position.y - vec.y;
+                        }
                     }
                 } else {
 //                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
