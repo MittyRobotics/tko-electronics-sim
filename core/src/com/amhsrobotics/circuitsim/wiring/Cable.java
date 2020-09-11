@@ -523,6 +523,7 @@ public class Cable implements Json.Serializable {
                     appendingFromBegin = false;
                     HardwareManager.currentHardware = null;
                 }
+
             } else if (hoveringOnNode(camera) != null) {
                 HardwareManager.currentHardware = null;
                 if (movingNode == null && !nodeChanged) {

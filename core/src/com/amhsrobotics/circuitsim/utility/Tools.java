@@ -34,7 +34,7 @@ public class Tools {
         return new Vector2(vec.x, vec.y);
     }
 
-    public static void slideIn(Actor actor, String direction, float duration, Interpolation interp, int offset, Runnable... runnable) {
+    public static void slideIn(Actor actor, String location, float duration, Interpolation interp, int offset, Runnable... runnable) {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
         Runnable toRun = null;
@@ -42,28 +42,28 @@ public class Tools {
             toRun = runnable[0];
         }
 
-        if(direction.equals("left")) {
+        if(location.equals("left")) {
             actor.setPosition(-offset, actorXY.y);
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(direction.equals("right")) {
+        } else if(location.equals("right")) {
             actor.setPosition(Gdx.graphics.getWidth() + offset, actorXY.y);
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(direction.equals("top")) {
+        } else if(location.equals("top")) {
             actor.setPosition(actorXY.x, Gdx.graphics.getHeight() + offset);
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(direction.equals("down")) {
+        } else if(location.equals("down")) {
             actor.setPosition(actorXY.x, -offset);
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
@@ -77,7 +77,7 @@ public class Tools {
         }
     }
 
-    public static void slideOut(Actor actor, String direction, float duration, Interpolation interp, int offset, Runnable... runnable) {
+    public static void slideOut(Actor actor, String location, float duration, Interpolation interp, int offset, Runnable... runnable) {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
         Runnable toRun = null;
@@ -85,25 +85,25 @@ public class Tools {
             toRun = runnable[0];
         }
 
-        if(direction.equals("left")) {
+        if(location.equals("left")) {
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(-offset, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(-offset, actorXY.y, duration, interp));
             }
-        } else if(direction.equals("right")) {
+        } else if(location.equals("right")) {
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp));
             }
-        } else if(direction.equals("top")) {
+        } else if(location.equals("top")) {
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp));
             }
-        } else if(direction.equals("down")) {
+        } else if(location.equals("down")) {
             if(toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, -offset, duration, interp), run(toRun)));
             } else {
@@ -111,7 +111,7 @@ public class Tools {
             }        }
     }
 
-    public static void sequenceSlideIn(String direction, float duration, Interpolation interp, int offset, float delay, Actor... actors) {
+    public static void sequenceSlideIn(String location, float duration, Interpolation interp, int offset, float delay, Actor... actors) {
 
         float currentDelay = 0f;
 
@@ -124,23 +124,23 @@ public class Tools {
 
             Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
-            if(direction.equals("left")) {
+            if(location.equals("left")) {
                 actor.setPosition(-offset, actorXY.y);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(direction.equals("right")) {
+            } else if(location.equals("right")) {
                 actor.setPosition(Gdx.graphics.getWidth() + offset, actorXY.y);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(direction.equals("top")) {
+            } else if(location.equals("top")) {
                 actor.setPosition(actorXY.x, Gdx.graphics.getHeight() + offset);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(direction.equals("down")) {
+            } else if(location.equals("down")) {
                 actor.setPosition(actorXY.x, -offset);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
             }
         }
     }
 
-    public static void sequenceSlideOut(String direction, float duration, Interpolation interp, int offset, float delay, Actor... actors) {
+    public static void sequenceSlideOut(String location, float duration, Interpolation interp, int offset, float delay, Actor... actors) {
 
         float currentDelay = 0f;
 
@@ -153,13 +153,13 @@ public class Tools {
 
             Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
-            if(direction.equals("left")) {
+            if(location.equals("left")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(-offset, actorXY.y, duration, interp)));
-            } else if(direction.equals("right")) {
+            } else if(location.equals("right")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp)));
-            } else if(direction.equals("top")) {
+            } else if(location.equals("top")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp)));
-            } else if(direction.equals("down")) {
+            } else if(location.equals("down")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, -offset, duration, interp)));
             }
         }
