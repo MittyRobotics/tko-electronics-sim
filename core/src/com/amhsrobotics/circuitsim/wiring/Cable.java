@@ -504,7 +504,7 @@ public class Cable implements Json.Serializable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
+        if((CableManager.currentCable == null || CableManager.currentCable == this || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
 
             // CLICKED ON END
 
