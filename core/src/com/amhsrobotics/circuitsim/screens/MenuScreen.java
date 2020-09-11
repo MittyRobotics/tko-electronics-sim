@@ -16,12 +16,18 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
 
 
 public class MenuScreen implements Screen {
@@ -37,6 +43,7 @@ public class MenuScreen implements Screen {
     private static TextButton importButton, fileSave;
     private Label rohan, andy;
     private Image title;
+    private Label.LabelStyle lStyle, l2Style;
 
     private boolean creditsShown = false;
 
@@ -59,9 +66,13 @@ public class MenuScreen implements Screen {
         t2Style.up = Constants.SKIN.getDrawable("button_03");
         t2Style.down = Constants.SKIN.getDrawable("button_02");
 
-        Label.LabelStyle lStyle = new Label.LabelStyle();
+        lStyle = new Label.LabelStyle();
         lStyle.font = Constants.FONT;
         lStyle.fontColor = Color.CYAN;
+
+        l2Style = new Label.LabelStyle();
+        l2Style.font = Constants.FONT;
+        l2Style.fontColor = Color.WHITE;
 
         final Window.WindowStyle wStyle = new Window.WindowStyle();
         wStyle.background = Constants.SKIN.getDrawable("window_02");
@@ -78,14 +89,18 @@ public class MenuScreen implements Screen {
         l2Style.font = Constants.FONT_SMALL;
         l2Style.fontColor = Color.BLACK;
 
-        new_circuit = new TextButton("   New Circuit   ", tStyle);
-        import_circuit = new TextButton(" Import Circuit ", tStyle);
-        credits = new TextButton("      Credits      ", tStyle);
-        contests = new TextButton("    Contests    ", tStyle);
+        new_circuit = new TextButton("New Circuit", tStyle);
+        new_circuit.setWidth(200);
+        import_circuit = new TextButton("Import Circuit", tStyle);
+        import_circuit.setWidth(200);
+        credits = new TextButton("Credits", tStyle);
+        credits.setWidth(200);
+        contests = new TextButton("Contests", tStyle);
+        contests.setWidth(200);
 
-        rohan = new Label(" Rohan Bansal ", lStyle);
+        rohan = new Label("Rohan Bansal", lStyle);
         rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
-        andy = new Label(" Andy Li ", lStyle);
+        andy = new Label("Andy Li", lStyle);
         andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, -100);
 
         title = new Image(new Texture(Gdx.files.internal("img/logo/circuitsim.png")));
@@ -231,17 +246,40 @@ public class MenuScreen implements Screen {
 
         SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
+        if(creditsShown) {
+            float x = Gdx.input.getX();
+            float y = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            if(x >= (float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2 && x <= (float) Gdx.graphics.getWidth() / 2 + andy.getWidth() / 2 && y >= 10 && y <= 10 + andy.getHeight()) {
+                andy.setStyle(l2Style);
+                if(Gdx.input.isButtonJustPressed(0)) {
+                    openWebpage("https://github.com/AndyLi23");
+                }
+            } else {
+                andy.setStyle(lStyle);
+            }
+
+            if(x >= (float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2 && x <= (float) Gdx.graphics.getWidth() / 2 + rohan.getWidth() / 2 && y >= 46 && y <= 46 + rohan.getHeight()) {
+                rohan.setStyle(l2Style);
+                if(Gdx.input.isButtonJustPressed(0)) {
+                    openWebpage("https://github.com/Rohan-Bansal");
+                }
+            } else {
+                rohan.setStyle(lStyle);
+            }
+        }
+
         stage.act(delta);
         stage.draw();
     }
 
-//    public static void openWebpage(String urlString) {
-//        try {
-//            Desktop.getDesktop().browse(new URL(urlString).toURI());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public static void openWebpage(String urlString) {
+        try {
+            Desktop.getDesktop().browse(new URL(urlString).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void dispose() {
