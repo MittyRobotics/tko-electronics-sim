@@ -10,7 +10,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -44,6 +46,7 @@ public class MenuScreen implements Screen {
     private Label rohan, andy;
     private Image title;
     private Label.LabelStyle lStyle, l2Style;
+    private GlyphLayout rohanL = new GlyphLayout(), andyL = new GlyphLayout();
 
     private boolean creditsShown = false;
 
@@ -100,8 +103,10 @@ public class MenuScreen implements Screen {
 
         rohan = new Label("Rohan Bansal", lStyle);
         rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
+        rohanL.setText(Constants.FONT, "Rohan Bansal");
         andy = new Label("Andy Li", lStyle);
         andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, -100);
+        andyL.setText(Constants.FONT, "Andy Li");
 
         title = new Image(new Texture(Gdx.files.internal("img/logo/circuitsim.png")));
         title.setPosition((float) Gdx.graphics.getWidth() / 2 - title.getWidth() / 2, Gdx.graphics.getHeight() - 250);
@@ -247,25 +252,35 @@ public class MenuScreen implements Screen {
         SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
         if(creditsShown) {
-            float x = Gdx.input.getX();
-            float y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-            if(x >= (float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2 && x <= (float) Gdx.graphics.getWidth() / 2 + andy.getWidth() / 2 && y >= 10 && y <= 10 + andy.getHeight()) {
-                andy.setStyle(l2Style);
-                if(Gdx.input.isButtonJustPressed(0)) {
-                    openWebpage("https://github.com/AndyLi23");
-                }
-            } else {
-                andy.setStyle(lStyle);
-            }
-
-            if(x >= (float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2 && x <= (float) Gdx.graphics.getWidth() / 2 + rohan.getWidth() / 2 && y >= 46 && y <= 46 + rohan.getHeight()) {
+            if(new Rectangle(
+                    Math.round(rohan.getX()),
+                    Math.round(rohan.getY()),
+                    Math.round(rohanL.width),
+                    Math.round(rohanL.height)).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
                 rohan.setStyle(l2Style);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
                 if(Gdx.input.isButtonJustPressed(0)) {
                     openWebpage("https://github.com/Rohan-Bansal");
                 }
             } else {
                 rohan.setStyle(lStyle);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+            }
+
+            if(new Rectangle(
+                    Math.round(andy.getX()),
+                    Math.round(andy.getY()),
+                    Math.round(andyL.width),
+                    Math.round(andyL.height)).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
+                andy.setStyle(l2Style);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
+                if(Gdx.input.isButtonJustPressed(0)) {
+                    openWebpage("https://github.com/AndyLi23");
+                }
+            } else {
+                andy.setStyle(lStyle);
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
             }
         }
 
