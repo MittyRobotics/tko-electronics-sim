@@ -54,6 +54,11 @@ public class MenuScreen implements Screen {
         tStyle.up = Constants.SKIN.getDrawable("button_03");
         tStyle.down = Constants.SKIN.getDrawable("button_02");
 
+        TextButton.TextButtonStyle t2Style = new TextButton.TextButtonStyle();
+        t2Style.font = Constants.FONT_SMALL;
+        t2Style.up = Constants.SKIN.getDrawable("button_03");
+        t2Style.down = Constants.SKIN.getDrawable("button_02");
+
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = Constants.FONT;
         lStyle.fontColor = Color.CYAN;
@@ -143,7 +148,7 @@ public class MenuScreen implements Screen {
 
         importTable.row();
         importTable.add(new Label("File Location", l2Style)).width(100).align(Align.center);
-        fileSave = new TextButton("Browse", tStyle);
+        fileSave = new TextButton("Browse", t2Style);
         importTable.add(fileSave).width(90);
         importTable.row();
         fileLocation = new TextField("", textFieldStyle);
@@ -172,7 +177,7 @@ public class MenuScreen implements Screen {
         });
 
         importTable.row();
-        importButton = new TextButton("Import", tStyle);
+        importButton = new TextButton("Import", t2Style);
         importTable.add(importButton).width(90).colspan(2).align(Align.center).padTop(60);
 
         importButton.addListener(new ChangeListener() {
