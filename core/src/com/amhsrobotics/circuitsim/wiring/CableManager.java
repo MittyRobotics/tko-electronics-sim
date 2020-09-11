@@ -16,7 +16,6 @@ public class CableManager {
     public static Cable currentCable = null;
     public static int id = 1;
     public static int cId = 0;
-    public static boolean merging = false;
 
     private static DelayedRemovalArray<Cable> temp;
 
@@ -65,10 +64,8 @@ public class CableManager {
                     if(cables.get(x).gauge == cable.gauge) {
                         int ans = cables.get(x).hoveringOnEndpoint(camera);
                         if (ans == 1) {
-                            merging = true;
                             return new Tuple<>(cables.get(x), 1);
                         } else if (ans == 2) {
-                            merging = true;
                             return new Tuple<>(cables.get(x), 2);
                         }
                     }
@@ -92,7 +89,6 @@ public class CableManager {
         } else {
             CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
         }
-        merging = false;
         if(currentCable != null) {
             currentCable.appendingFromEnd = false;
             currentCable.appendingFromBegin = false;
