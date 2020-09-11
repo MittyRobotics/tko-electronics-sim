@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -34,7 +35,7 @@ public class EPlate extends Hardware {
 
     private int dragging = -1;
 
-    private boolean frozen = false;
+    private boolean frozen = false, disableTouch = false;
 
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
@@ -75,6 +76,18 @@ public class EPlate extends Hardware {
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
         renderer.end();
+
+        disableTouch = false;
+        hardwareloop:
+        for(Hardware h : hardwareOnPlate) {
+            for(Cable c : h.getCableConnections()) {
+                if(c != null && c.hoveringOnEndpoint(camera) != 0) {
+                    disableTouch = true;
+                    Gdx.app.log("here", "");
+                    break hardwareloop;
+                }
+            }
+        }
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
@@ -132,11 +145,12 @@ public class EPlate extends Hardware {
                 CircuitGUIManager.propertiesBox.hide();
             }
 
-            if(dragging != -1) {
-                setSelectedNode(dragging);
-                nodes[dragging].movePosition(camera, box, hardwareOnPlate);
+            if(!disableTouch) {
+                if (dragging != -1) {
+                    setSelectedNode(dragging);
+                    nodes[dragging].movePosition(camera, box, hardwareOnPlate);
+                }
             }
-
 
             if(!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
@@ -152,49 +166,48 @@ public class EPlate extends Hardware {
                         nodes[x].updateIdlePos(box);
                     }
                 }
-            }
 
-            if(Gdx.input.isTouched() && dragging == -1) {
+                if(Gdx.input.isTouched() && dragging == -1 && !disableTouch) {
 
-                if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
-                    HardwareManager.currentHardware = this;
-                    CableManager.currentCable = null;
-                    populateProperties();
-                    CircuitGUIManager.propertiesBox.show();
-
-                    if (!HardwareManager.movingObject) {
-                        HardwareManager.movingObject = true;
-                        canMove = true;
+                    if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
                         HardwareManager.currentHardware = this;
-                        diffX = box.x - vec.x;
-                        diffY = box.y - vec.y;
-                    }
-                }
+                        CableManager.currentCable = null;
+                        populateProperties();
+                        CircuitGUIManager.propertiesBox.show();
 
-                if(canMove) {
-                    if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
-                        for(Hardware h : hardwareOnPlate) {
-                            h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
-                        }
-
-                        box.x = vec.x + diffX;
-                        box.y = vec.y + diffY;
-
-                        for (ResizeNode node : nodes) {
-                            node.updateIdlePos(box);
+                        if (!HardwareManager.movingObject) {
+                            HardwareManager.movingObject = true;
+                            canMove = true;
+                            HardwareManager.currentHardware = this;
+                            diffX = box.x - vec.x;
+                            diffY = box.y - vec.y;
                         }
                     }
-                }
 
-                if(!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
-                    HardwareManager.currentHardware = null;
-                    CircuitGUIManager.propertiesBox.hide();
+                    if(canMove) {
+                        if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
+                            for(Hardware h : hardwareOnPlate) {
+                                h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
+                            }
+
+                            box.x = vec.x + diffX;
+                            box.y = vec.y + diffY;
+
+                            for (ResizeNode node : nodes) {
+                                node.updateIdlePos(box);
+                            }
+                        }
+                    }
+
+                    if(!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
+                        HardwareManager.currentHardware = null;
+                        CircuitGUIManager.propertiesBox.hide();
+                    }
+                } else {
+                    canMove = false;
+                    HardwareManager.movingObject = false;
                 }
-            } else {
-                canMove = false;
-                HardwareManager.movingObject = false;
             }
-
         }
     }
 
