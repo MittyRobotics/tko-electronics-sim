@@ -16,7 +16,6 @@ public class LinkTimer {
     private static int additiveTimerID = 0;
 
     public static void init(float seconds, Runnable runnable) {
-        Gdx.app.log("added timer", "");
         additiveTimerID++;
 
         timeLeft.put(additiveTimerID, 0f);

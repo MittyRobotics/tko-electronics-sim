@@ -3,8 +3,6 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -21,7 +19,7 @@ public class CableManager {
 
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
-    public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
+    public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
         Iterator<Cable> iterator = cables.iterator();
         while(iterator.hasNext()) {
             iterator.next().update(renderer, cam);

@@ -320,8 +320,6 @@ public class Cable implements Json.Serializable {
                 // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 
-                    Gdx.app.log(appendingFromBegin+"", appendingFromEnd+"");
-
                     if (movingNode != null) {
                         if(coordinates.contains(movingNode)) {
                             coordinates.set(coordinates.indexOf(movingNode), backupNode);
@@ -509,12 +507,10 @@ public class Cable implements Json.Serializable {
             // CLICKED ON END
 
             if (hoveringOnEndpoint(camera) == 1) {
-                Gdx.app.log("clicked1", "");
                 appendingFromBegin = true;
                 appendingFromEnd = false;
                 HardwareManager.currentHardware = null;
             } else if (hoveringOnEndpoint(camera) == 2) {
-                Gdx.app.log("clicked2", "");
                 appendingFromEnd = true;
                 appendingFromBegin = false;
                 HardwareManager.currentHardware = null;
