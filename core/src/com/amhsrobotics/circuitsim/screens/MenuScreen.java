@@ -1,11 +1,13 @@
 package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,12 +15,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+
+import javax.swing.*;
 
 
 public class MenuScreen implements Screen {
@@ -29,6 +32,9 @@ public class MenuScreen implements Screen {
     private final ModifiedShapeRenderer renderer;
 
     private TextButton new_circuit, import_circuit, credits, contests;
+    private static TextField fileLocation;
+    private static Window importMenu;
+    private static TextButton importButton, fileSave;
     private Label rohan, andy;
     private Image title;
 
@@ -51,6 +57,21 @@ public class MenuScreen implements Screen {
         Label.LabelStyle lStyle = new Label.LabelStyle();
         lStyle.font = Constants.FONT;
         lStyle.fontColor = Color.CYAN;
+
+        final Window.WindowStyle wStyle = new Window.WindowStyle();
+        wStyle.background = Constants.SKIN.getDrawable("window_02");
+        wStyle.titleFont = Constants.FONT_MEDIUM;
+        wStyle.titleFontColor = Color.WHITE;
+
+        final TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.background = Constants.SKIN.getDrawable("textbox_02");
+        textFieldStyle.cursor = Constants.SKIN.getDrawable("textbox_cursor_02");
+        textFieldStyle.font = Constants.FONT_SMALL;
+        textFieldStyle.fontColor = Color.BLACK;
+
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = Constants.FONT_SMALL;
+        l2Style.fontColor = Color.BLACK;
 
         new_circuit = new TextButton("   New Circuit   ", tStyle);
         import_circuit = new TextButton(" Import Circuit ", tStyle);
@@ -104,28 +125,104 @@ public class MenuScreen implements Screen {
         import_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
-                Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
-                if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
-                Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
-                    @Override
-                    public void run() {
-                        dispose();
-                        game.setScreen(new ImportScreen(game));
-                    }
-                });
+                importMenu();
             }
         });
+
+        importMenu = new Window("Import", wStyle);
+        importMenu.setWidth(500);
+        importMenu.setHeight(400);
+        importMenu.setKeepWithinStage(false);
+        importMenu.setMovable(false);
+        importMenu.setPosition(-700, -700);
+
+        Table importTable = new   Table();
+        importMenu.add(importTable).expand().fill();
+        importTable.row();
+        importTable.add(new Label("Import Project", l2Style)).width(90).colspan(2).padBottom(40).align(Align.center);
+
+        importTable.row();
+        importTable.add(new Label("File Location", l2Style)).width(100).align(Align.center);
+        fileSave = new TextButton("Browse", tStyle);
+        importTable.add(fileSave).width(90);
+        importTable.row();
+        fileLocation = new TextField("", textFieldStyle);
+        importTable.add(fileLocation).width(180).colspan(2).align(Align.center).padTop(10);
+
+        fileSave.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JFileChooser chooser = new JFileChooser();
+                        JFrame f = new JFrame();
+                        f.setVisible(true);
+                        f.toFront();
+                        f.setVisible(false);
+                        int res = chooser.showSaveDialog(f);
+                        chooser.setDialogTitle("Import");
+                        f.dispose();
+                        if (res == JFileChooser.APPROVE_OPTION) {
+                            fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
+                        }
+                    }
+                }).start();
+            }
+        });
+
+        importTable.row();
+        importButton = new TextButton("Import", tStyle);
+        importTable.add(importButton).width(90).colspan(2).align(Align.center).padTop(60);
+
+        importButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(fileLocation.getText().contains(".")) {
+                    hideAndLoadImportMenu();
+                }
+            }
+        });
+
+        importMenu.row();
+        importMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
 
         Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit);
         Tools.slideIn(credits, "down", 1.0f, Interpolation.exp5, 50);
         Tools.slideIn(title, "top", 0.5f, Interpolation.exp5, 300);
 
-        stage.addActors(new_circuit, import_circuit, credits, title, andy, rohan);
+        stage.addActors(new_circuit, import_circuit, credits, title, andy, rohan, importMenu);
+    }
+
+    public static void importMenu() {
+        importMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - importMenu.getWidth() / 2, 250);
+        Tools.slideIn(importMenu, "down", 1f, Interpolation.exp10, 600);
+    }
+
+    private void hideImportMenu() {
+        Tools.slideOut(importMenu, "down", 1f, Interpolation.exp10, 700);
+    }
+
+    private void hideAndLoadImportMenu() {
+        Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
+        Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
+        if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
+        Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
+            @Override
+            public void run() {
+                dispose();
+            }
+        });
+        Tools.slideOut(importMenu, "down", 1f, Interpolation.exp10, 700);
+        FileManager.load(fileLocation.getText());
     }
 
     @Override
     public void render(float delta) {
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            hideImportMenu();
+        }
 
         SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
