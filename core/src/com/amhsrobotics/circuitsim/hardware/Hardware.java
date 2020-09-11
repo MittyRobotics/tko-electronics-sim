@@ -105,10 +105,6 @@ public abstract class Hardware implements Json.Serializable {
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
 
-        for(int i = 0; i < connNum; ++i) {
-            connections.add(null);
-        }
-
         ledNum = ((Long) JSONReader.getCurrentConfig().get("totalLeds")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
