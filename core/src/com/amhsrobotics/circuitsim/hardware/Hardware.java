@@ -36,7 +36,7 @@ import java.util.ArrayList;
 public abstract class Hardware implements Json.Serializable {
 
     public Vector2 position;
-    public int hardwareID, hardwareID2, cur,connNum, ledNum ;
+    public int hardwareID, hardwareID2, cur,connNum, ledNum;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
@@ -83,6 +83,10 @@ public abstract class Hardware implements Json.Serializable {
 
             loadThis();
         }
+    }
+
+    public DelayedRemovalArray<Cable> getCableConnections() {
+        return connections;
     }
 
     public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
