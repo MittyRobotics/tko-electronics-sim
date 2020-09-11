@@ -20,8 +20,6 @@ public class RoboRio extends Hardware {
     public RoboRio(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.ROBORIO, addCrimped);
 
-
-
         for(JSONArray arr : pinDefs) {
             Sprite temp;
             if(connectors.size() == connNum) {

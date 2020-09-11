@@ -539,11 +539,17 @@ public class CircuitGUIManager {
         if(filtersMap.get(fil)) {
             filtersMap.put(fil, false);
             fil.setStyle(tStyle);
+            processChangedFilter();
         } else {
             filtersMap.put(fil, true);
             fil.setStyle(t2Style);
+            processChangedFilter();
         }
         filterChanged = true;
+    }
+
+    private void processChangedFilter() {
+
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
@@ -810,125 +816,32 @@ public class CircuitGUIManager {
             table.clearChildren();
             if(filtersMap.get(fil1)){
                 //Wiring
-                table.row();
-                table.add(reg_cable).width(150);
-                table.row();
-                table.add(sandcrab).width(150);
-                table.row();
-                table.add(sandcrab3).width(150);
-                table.row();
-                table.add(battery).width(150);
-                table.row();
-                table.add(brk).width(150);
-                table.row();
-                table.add(eth).width(150);
+                filterWiring();
             }
 
             if(filtersMap.get(fil2)) {
                 //Control
-                table.row();
-                table.add(ep).width(150);
-                table.row();
-                table.add(rbr).width(150);
-                table.row();
-                table.add(pdp).width(150);
-                table.row();
-                table.add(vrm).width(150);
-                table.row();
-                table.add(rad).width(150);
+               filterControl();
             }
 
             if(filtersMap.get(fil3)) {
                 //Motors
-                table.row();
-                table.add(tln).width(150);
-                table.row();
-                table.add(spk).width(150);
-                table.row();
-                table.add(m775).width(150);
-                table.row();
-                table.add(neo).width(150);
-                table.row();
-                table.add(fcn).width(150);
+               filterMotors();
             }
 
             if(filtersMap.get(fil4)){
                 //Pneumatics
-                table.row();
-                table.add(pcm).width(150);
-                table.row();
-                table.add(tub).width(150);
-                table.row();
-                table.add(psw).width(150);
-                table.row();
-                table.add(pis).width(150);
-                table.row();
-                table.add(man).width(150);
-                table.row();
-                table.add(tnk).width(150);
-                table.row();
-                table.add(cps).width(150);
-                table.row();
-                table.add(ds).width(150);
-                table.row();
-                table.add(ss).width(150);
+               filterPneumatics();
             }
         }
 
         if(addAll) {
             addAll = false;
             table.clear();
-
-            table.row();
-            table.add(reg_cable).width(150);
-            table.row();
-            table.add(sandcrab).width(150);
-            table.row();
-            table.add(sandcrab3).width(150);
-            table.row();
-            table.add(battery).width(150);
-            table.row();
-            table.add(brk).width(150);
-            table.row();
-            table.add(ep).width(150);
-            table.row();
-            table.add(eth).width(150);
-            table.row();
-            table.add(rbr).width(150);
-            table.row();
-            table.add(pdp).width(150);
-            table.row();
-            table.add(vrm).width(150);
-            table.row();
-            table.add(rad).width(150);
-            table.row();
-            table.add(tln).width(150);
-            table.row();
-            table.add(spk).width(150);
-            table.row();
-            table.add(m775).width(150);
-            table.row();
-            table.add(neo).width(150);
-            table.row();
-            table.add(fcn).width(150);
-            table.row();
-            table.add(pcm).width(150);
-            table.row();
-            table.add(tub).width(150);
-            table.row();
-            table.add(psw).width(150);
-            table.row();
-            table.add(pis).width(150);
-            table.row();
-            table.add(man).width(150);
-            table.row();
-            table.add(tnk).width(150);
-            table.row();
-            table.add(cps).width(150);
-            table.row();
-            table.add(ds).width(150);
-            table.row();
-            table.add(ss).width(150);
+            filterWiring();
+            filterControl();
+            filterMotors();
+            filterPneumatics();
         }
 
         if(!filtersMap.containsValue(true) && filterChanged) {
@@ -941,5 +854,67 @@ public class CircuitGUIManager {
 
         stage.act(delta);
         stage.draw();
+    }
+
+    public void filterWiring() {
+        table.row();
+        table.add(reg_cable).width(150);
+        table.row();
+        table.add(sandcrab).width(150);
+        table.row();
+        table.add(sandcrab3).width(150);
+        table.row();
+        table.add(battery).width(150);
+        table.row();
+        table.add(brk).width(150);
+        table.row();
+        table.add(eth).width(150);
+    }
+
+    public void filterControl() {
+        table.row();
+        table.add(ep).width(150);
+        table.row();
+        table.add(rbr).width(150);
+        table.row();
+        table.add(pdp).width(150);
+        table.row();
+        table.add(vrm).width(150);
+        table.row();
+        table.add(rad).width(150);
+    }
+
+    public void filterMotors() {
+        table.row();
+        table.add(tln).width(150);
+        table.row();
+        table.add(spk).width(150);
+        table.row();
+        table.add(m775).width(150);
+        table.row();
+        table.add(neo).width(150);
+        table.row();
+        table.add(fcn).width(150);
+    }
+
+    public void filterPneumatics() {
+        table.row();
+        table.add(pcm).width(150);
+        table.row();
+        table.add(tub).width(150);
+        table.row();
+        table.add(psw).width(150);
+        table.row();
+        table.add(pis).width(150);
+        table.row();
+        table.add(man).width(150);
+        table.row();
+        table.add(tnk).width(150);
+        table.row();
+        table.add(cps).width(150);
+        table.row();
+        table.add(ds).width(150);
+        table.row();
+        table.add(ss).width(150);
     }
 }

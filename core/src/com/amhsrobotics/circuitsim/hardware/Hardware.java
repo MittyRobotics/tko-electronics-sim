@@ -587,11 +587,8 @@ public abstract class Hardware implements Json.Serializable {
         json.writeValue("id", this.hardwareID);
         json.writeValue("position", this.position);
         json.writeValue("ends", this.ends);
-        json.writeValue("connNum", this.connNum);
-        json.writeValue("ledNum", this.ledNum);
         json.writeValue("type", this.type);
         json.writeValue("name", this.name);
-        json.writeValue("ledNum", this.ledNum);
         json.writeValue("canMove", this.canMove);
         json.writeValue("addCrimped", this.addCrimped);
     }
@@ -599,6 +596,10 @@ public abstract class Hardware implements Json.Serializable {
     @Override
     public void read(Json json, JsonValue jsonData) {
         this.hardwareID = jsonData.get("hardware").getInt("id");
+//        this.connNum = jsonData.get("hardware").getInt("id");
+//        this.hardwareID = jsonData.get("hardware").getInt("id");
+//        this.hardwareID = jsonData.get("hardware").getInt("id");
+
         Gdx.app.log("id", this.hardwareID + "");
 //        this.position = jsonData.child().getInt("id");
 //        this.ends = jsonData.child().getInt("id");
