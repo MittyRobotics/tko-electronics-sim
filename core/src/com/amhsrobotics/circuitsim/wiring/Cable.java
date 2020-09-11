@@ -310,21 +310,6 @@ public class Cable implements Json.Serializable {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            /* RENDER POSSIBLE IF MERGING
-            if(CableManager.merging) {
-                if(appendingFromBegin) {
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                } else if (appendingFromEnd) {
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                }
-
-            }*/
 
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
@@ -519,15 +504,17 @@ public class Cable implements Json.Serializable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) && !CableManager.merging) {
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
 
             // CLICKED ON END
 
             if (hoveringOnEndpoint(camera) == 1) {
+                Gdx.app.log("clicked1", "");
                 appendingFromBegin = true;
                 appendingFromEnd = false;
                 HardwareManager.currentHardware = null;
             } else if (hoveringOnEndpoint(camera) == 2) {
+                Gdx.app.log("clicked2", "");
                 appendingFromEnd = true;
                 appendingFromBegin = false;
                 HardwareManager.currentHardware = null;
