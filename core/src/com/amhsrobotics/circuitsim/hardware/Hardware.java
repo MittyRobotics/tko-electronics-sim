@@ -593,6 +593,13 @@ public abstract class Hardware implements Json.Serializable {
 
     @Override
     public void read(Json json, JsonValue jsonData) {
-
+        this.hardwareID = jsonData.get("hardware").getInt("id");
+        Gdx.app.log("id", this.hardwareID + "");
+//        this.position = jsonData.child().getInt("id");
+//        this.ends = jsonData.child().getInt("id");
+//        this.hardwareID = jsonData.child().getInt("id");
+//        this.hardwareID = jsonData.child().getInt("id");
+//        this.hardwareID = jsonData.child().getInt("id");
+//        this.hardwareID = jsonData.child().getInt("id");
     }
 }
