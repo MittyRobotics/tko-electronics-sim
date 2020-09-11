@@ -36,7 +36,11 @@ public class FileManager {
         Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
     }
 
-    public static void load(String text) {
+    public static void load(String filename) {
+        fileName = filename;
 
+        FileHandle file = Gdx.files.absolute(filename);
+        appdata = json.fromJson(AppData.class, file.readString());
+        Gdx.app.log("loaded appdata", "");
     }
 }
