@@ -141,10 +141,9 @@ public class EPlate extends Hardware {
             if(!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
                     if (Gdx.input.isTouched()) {
-                        if (nodes[x].contains(vec)) {
+                        if (nodes[x].contains(vec) && (dragging == -1 || dragging == x)) {
                             dragging = x;
                         }
-
                     } else {
                         dragging = -1;
                     }
