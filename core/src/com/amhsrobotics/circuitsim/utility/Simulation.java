@@ -36,27 +36,11 @@ public class Simulation {
         battery = null;
 
         h = HardwareManager.getHardware();
-        c = CableManager.getCables();
 
         for(Hardware ha : h) {
-            if(ha.type == HardwareType.BATTERY) {
-                if(battery == null) {
-                    battery = (Battery) ha;
-                } else {
-                    error.put(ha, "Only one battery is valid");
-                    return error;
-                }
-            }
-        }
-
-        if (battery == null) {
-            error.put(null, "A battery is required");
-            return error;
-        }
-
-        if(battery.connections.get(0) == null || battery.connections.get(1) == null) {
-            error.put(battery, "Battery is not connected correctly");
-            return error;
+            //if(!(h.check() == null) {
+            //  error.put(h, h.check());
+            //}
         }
 
         return error;

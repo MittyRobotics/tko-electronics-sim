@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -79,7 +80,7 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
-        if(cable1.getConnection(cable1begin) != null && cable1.getConnection(cable1begin) != cable2.getConnection(cable2begin)) {
+        if(cable1.getConnection(!cable1begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID) {
             //MERGE TWO CABLES
             if (cable2 instanceof CrimpedCable) {
                 cable2.mergeCable(cable1, cable1begin, cable2begin);

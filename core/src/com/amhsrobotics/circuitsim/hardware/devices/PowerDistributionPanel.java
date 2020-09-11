@@ -44,55 +44,6 @@ public class PowerDistributionPanel extends Hardware {
     }
 
     @Override
-    public void populateProperties() {
-
-        CircuitGUIManager.propertiesBox.clearTable();
-
-        TextButton disableCrimp = new TextButton("Toggle Crimped", CircuitGUIManager.propertiesBox.TBUTTON);
-
-        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        CircuitGUIManager.propertiesBox.addElement(disableCrimp, true, 2, 120);
-        for (int x = 0; x < connectors.size(); x++) {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            if(connections.get(x) == null) {
-                CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x) instanceof CrimpedCable) {
-                CircuitGUIManager.propertiesBox.addElement(new Label("Crimped", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x) instanceof EthernetCable) {
-                CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else {
-                if(connections.get(x).getHardwareAtOtherEnd(this) == null) {
-                    CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-                } else {
-                    if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID()).length() > 10) {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-                    } else {
-                        CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).getHardwareID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-                    }
-                }
-            }
-        }
-
-        disableCrimp.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-//                if(addCrimped) {
-//                    addCrimped = false;
-//                    for(Cable c : connections) {
-//                        if(c instanceof CrimpedCable) {
-//                            CableManager.deleteCable(c);
-//                            connections.removeValue(c, true);
-//                        }
-//                    }
-//                } else {
-//                    addCrimped = true;
-//                }
-            }
-        });
-
-    }
-
-    @Override
     public boolean acceptPortConnection(Cable cable, int port) {
         if(port >= 10 && port <= 41) {
             if (cable instanceof CrimpedCable) {
