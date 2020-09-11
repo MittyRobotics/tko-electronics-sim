@@ -505,7 +505,7 @@ public class Cable implements Json.Serializable {
         if((CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
             // CLICKED ON END
 
-            if (hoveringOnEndpoint(camera) == 1) {
+            if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {
 
                 if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
@@ -514,7 +514,7 @@ public class Cable implements Json.Serializable {
                     appendingFromEnd = false;
                     HardwareManager.currentHardware = null;
                 }
-            } else if (hoveringOnEndpoint(camera) == 2) {
+            } else if (hoveringOnEndpoint(camera) == 2 && !disableEnd) {
 
                 if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");

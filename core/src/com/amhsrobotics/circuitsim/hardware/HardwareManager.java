@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -168,25 +169,6 @@ public class HardwareManager {
 
         if(type == HardwareType.EPLATE) {
             DeviceUtil.curID.put(HardwareType.EPLATE, DeviceUtil.curID.get(HardwareType.EPLATE)-1);
-        }
-
-        if(type == HardwareType.PDP) {
-            Hardware breaker = new Breaker(new Vector2(startX + temp.getDim().x - 200, startY));
-            hardwares.add(breaker);
-            Cable c = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY + 250), CableManager.id);
-            Cable c2 = new Cable(new Vector2(startX + temp.getDim().x / 2 + 200, startY - 225), CableManager.id+1);
-            CableManager.id += 2;
-            c.setGauge(4);
-            c.setColor(DeviceUtil.COLORS.get("Red"));
-            c2.setGauge(4);
-            c2.setColor(DeviceUtil.COLORS.get("Black"));
-            CableManager.addCable(c);
-            CableManager.addCable(c2);
-            breaker.attachWire(c, 0, true);
-            breaker.attachWire(c2, 1, true);
-            temp.attachWire(c, 42, false);
-            temp.attachWire(c2, 43, false);
-
         }
 
         temp.populateProperties();

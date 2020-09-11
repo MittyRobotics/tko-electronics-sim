@@ -452,32 +452,24 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        if(connections.get(port) != null) {
-            if(connections.get(port) instanceof CrimpedCable) {
-                CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
-            } else {
-                CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
-            }
-        } else {
-            cable.addCoordinates(calculate(port), !endOfWire);
-            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
+        cable.addCoordinates(calculate(port), !endOfWire);
+        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
 
-            if (endOfWire) {
-                cable.setConnection2(this);
-            } else {
-                cable.setConnection1(this);
-            }
-            if (CableManager.currentCable != null) {
-                CableManager.currentCable.appendingFromEnd = false;
-                CableManager.currentCable.appendingFromBegin = false;
-                CableManager.currentCable = null;
-            }
+        if (endOfWire) {
+            cable.setConnection2(this);
+        } else {
+            cable.setConnection1(this);
+        }
+        if (CableManager.currentCable != null) {
+            CableManager.currentCable.appendingFromEnd = false;
+            CableManager.currentCable.appendingFromBegin = false;
+            CableManager.currentCable = null;
         }
     }
 
 
     public void editWire(Cable cable, int port, boolean endOfWire) {
-        cable.editCoordinates(calculate(port), endOfWire,true);
+        cable.editCoordinates(calculate(port), endOfWire, true);
         cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
     }
 
