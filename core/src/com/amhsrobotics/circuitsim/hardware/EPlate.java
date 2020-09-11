@@ -146,27 +146,12 @@ public class EPlate extends Hardware {
             }
 
             if(!disableTouch) {
-                if(dragging != -1) {
+                if (dragging != -1) {
                     setSelectedNode(dragging);
                     nodes[dragging].movePosition(camera, box, hardwareOnPlate);
                 }
+            }
 
-                if(!canMove) {
-                    for (int x = 0; x < nodes.length; x++) {
-                        if (Gdx.input.isTouched()) {
-                            if (nodes[x].contains(vec)) {
-                                dragging = x;
-                            }
-
-<<<<<<< HEAD
-                        } else {
-                            dragging = -1;
-                        }
-
-                        if (!nodes[x].isSelected()) {
-                            nodes[x].updateIdlePos(box);
-                        }
-=======
             if(!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
                     if (Gdx.input.isTouched()) {
@@ -179,7 +164,6 @@ public class EPlate extends Hardware {
 
                     if (!nodes[x].isSelected()) {
                         nodes[x].updateIdlePos(box);
->>>>>>> af56bfb8a519b1e60d9ca24f7408f406ba363382
                     }
                 }
 
