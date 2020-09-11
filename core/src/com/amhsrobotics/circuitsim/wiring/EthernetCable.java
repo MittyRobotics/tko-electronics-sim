@@ -9,11 +9,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
@@ -114,6 +116,22 @@ public class EthernetCable extends Cable {
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 5f);
         }
 
+    }
+
+    public int hoveringOnEndpoint(CameraController cameraController) {
+        // CHECK IF HOVERING ON ENDPOINT
+        Vector2 vec = Tools.mouseScreenToWorld(cameraController);
+
+
+        Vector2 c2 = coordinates.get(coordinates.size() - 1);
+        Vector2 c = coordinates.get(0);
+
+        if(new Circle(c2.x, c2.y, limit + 5f).contains(vec.x, vec.y)) {
+            return 2;
+        } else if(new Circle(c.x, c.y, limit + 5f).contains(vec.x, vec.y)) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override
