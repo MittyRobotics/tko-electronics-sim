@@ -83,6 +83,7 @@ public abstract class Hardware implements Json.Serializable {
 
             loadThis();
         }
+
     }
 
     public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
@@ -99,6 +100,11 @@ public abstract class Hardware implements Json.Serializable {
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/" + type.toString().toLowerCase() + ".png")));
 
         connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
+
+        for(int i = 0; i < connNum; ++i) {
+            connections.add(null);
+        }
+
         ledNum = ((Long) JSONReader.getCurrentConfig().get("totalLeds")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
@@ -164,6 +170,10 @@ public abstract class Hardware implements Json.Serializable {
 
         if(type == HardwareType.EPLATE) return;
 
+        if(this.addCrimped) {
+            checkCrimpedCables();
+        }
+
         base.setCenter(getPosition().x, getPosition().y);
 
         for(Sprite temp : connectors) {
@@ -190,7 +200,7 @@ public abstract class Hardware implements Json.Serializable {
 
 
         if(HardwareManager.attachWireOnDoubleClick != null) {
-            if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove) {
+            if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove && connections.get(HardwareManager.attachWireOnDoubleClick.y) == null) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
                     Cable c;
                     if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
@@ -310,9 +320,6 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        if(this.addCrimped) {
-            checkCrimpedCables();
-        }
 
         batch.begin();
         base.draw(batch);
@@ -398,7 +405,11 @@ public abstract class Hardware implements Json.Serializable {
             return;
         }
         if (connections.get(port) != null) {
-            CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
+            if(connections.get(port) instanceof CrimpedCable) {
+                CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
+            } else {
+                CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
+            }
         } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
@@ -417,10 +428,16 @@ public abstract class Hardware implements Json.Serializable {
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
+            if(connections.get(port) instanceof CrimpedCable) {
+                CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
+            } else {
+                CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
+            }
         } else if(portTypes.get(port).equals("13") && cable.getGauge() != 13) {
             CircuitGUIManager.popup.activateError("Port requires ethernet cable");
-        } else {
+        } else if(portTypes.get(port).equals("2") && cable.getGauge() != 2) {
+            CircuitGUIManager.popup.activateError("Port requires pneumatics tubing");
+        }  else {
             cable.setGauge(Integer.parseInt(portTypes.get(port)));
             connections.set(port, cable);
             ends.set(port, endOfWire);
@@ -435,14 +452,26 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void attachWireLib(Cable cable, int port, boolean endOfWire) {
-        cable.addCoordinates(calculate(port), !endOfWire);
-        cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
+        if(connections.get(port) != null) {
+            if(connections.get(port) instanceof CrimpedCable) {
+                CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
+            } else {
+                CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
+            }
+        } else {
+            cable.addCoordinates(calculate(port), !endOfWire);
+            cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), !endOfWire);
 
-        if(endOfWire) {cable.setConnection2(this);} else {cable.setConnection1(this);}
-        if(CableManager.currentCable != null) {
-            CableManager.currentCable.appendingFromEnd = false;
-            CableManager.currentCable.appendingFromBegin = false;
-            CableManager.currentCable = null;
+            if (endOfWire) {
+                cable.setConnection2(this);
+            } else {
+                cable.setConnection1(this);
+            }
+            if (CableManager.currentCable != null) {
+                CableManager.currentCable.appendingFromEnd = false;
+                CableManager.currentCable.appendingFromBegin = false;
+                CableManager.currentCable = null;
+            }
         }
     }
 

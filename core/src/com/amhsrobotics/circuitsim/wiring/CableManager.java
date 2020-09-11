@@ -76,13 +76,17 @@ public class CableManager {
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
         if(cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID) {
-            //MERGE TWO CABLES
-            if (cable2 instanceof CrimpedCable) {
-                cable2.mergeCable(cable1, cable1begin, cable2begin);
-                deleteCable(cable1);
+            if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
+                //MERGE TWO CABLES
+                if (cable2 instanceof CrimpedCable) {
+                    cable2.mergeCable(cable1, cable1begin, cable2begin);
+                    deleteCable(cable1);
+                } else {
+                    cable1.mergeCable(cable2, cable2begin, cable1begin);
+                    deleteCable(cable2);
+                }
             } else {
-                cable1.mergeCable(cable2, cable2begin, cable1begin);
-                deleteCable(cable2);
+                CircuitGUIManager.popup.activateError("Connection already taken");
             }
         } else {
             CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
