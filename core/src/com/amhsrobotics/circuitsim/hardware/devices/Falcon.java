@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Falcon extends Flippable {
 
+    public Falcon() {}
+
     public Falcon(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.FALCON, addCrimped);
 

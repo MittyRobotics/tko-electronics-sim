@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Compressor extends Flippable {
 
+    public Compressor() {}
+
     public Compressor(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.COMPRESSOR, addCrimped);
 

@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Spark extends Flippable {
 
+    public Spark() {}
+
     public Spark(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.SPARK, addCrimped);
 

@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class Tubing extends Cable {
+
+    public Tubing() {}
+
     public Tubing(Vector2 startPoint, int count) {
         super(startPoint, count);
         gauge = 2;

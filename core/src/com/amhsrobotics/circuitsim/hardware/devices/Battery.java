@@ -13,6 +13,8 @@ import org.json.simple.JSONArray;
 
 public class Battery extends Hardware {
 
+    public Battery() {}
+
     public Battery(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.BATTERY, addCrimped);
 

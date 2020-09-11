@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Piston extends Flippable {
 
+    public Piston() {}
+
     public Piston(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.PISTON, addCrimped);
 

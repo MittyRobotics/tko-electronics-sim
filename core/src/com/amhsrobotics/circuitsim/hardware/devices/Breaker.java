@@ -13,6 +13,8 @@ import org.json.simple.JSONArray;
 
 public class Breaker extends Hardware {
 
+    public Breaker() {}
+
     public Breaker(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.BREAKER, addCrimped);
 

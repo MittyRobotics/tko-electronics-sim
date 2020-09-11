@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 
 public class SandCrab extends Hardware {
 
+    public SandCrab() {}
 
     public SandCrab(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);

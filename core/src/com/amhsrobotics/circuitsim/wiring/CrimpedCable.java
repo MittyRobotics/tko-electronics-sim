@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class CrimpedCable extends Cable {
 
+    public CrimpedCable() {}
+
     public CrimpedCable(int gauge) {
         super(new Vector2(0, 0), CableManager.getCrimpedID());
         this.gauge = gauge;

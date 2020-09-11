@@ -13,6 +13,8 @@ import org.json.simple.JSONArray;
 
 public class PneumaticsControlModule extends Hardware {
 
+    public PneumaticsControlModule() {}
+
     public PneumaticsControlModule(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.PCM, addCrimped);
 

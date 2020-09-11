@@ -19,6 +19,8 @@ import org.json.simple.JSONArray;
 
 public class Flippable extends Hardware  {
 
+    public Flippable() {}
+
     public Flippable(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 

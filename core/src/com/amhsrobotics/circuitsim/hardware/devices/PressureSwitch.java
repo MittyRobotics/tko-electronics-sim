@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class PressureSwitch extends Flippable {
 
+    public PressureSwitch() {}
+
     public PressureSwitch(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.PRESSURESWITCH, addCrimped);
 

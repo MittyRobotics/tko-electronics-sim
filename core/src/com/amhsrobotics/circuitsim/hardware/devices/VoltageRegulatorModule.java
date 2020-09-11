@@ -14,6 +14,8 @@ import org.json.simple.JSONArray;
 
 public class VoltageRegulatorModule extends Hardware {
 
+    public VoltageRegulatorModule() {}
+
     public VoltageRegulatorModule(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.VRM, addCrimped);
 

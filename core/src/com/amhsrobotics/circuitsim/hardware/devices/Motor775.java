@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Motor775 extends Flippable {
 
+    public Motor775() {}
+
     public Motor775(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.MOTOR775, addCrimped);
 

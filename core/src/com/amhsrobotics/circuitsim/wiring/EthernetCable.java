@@ -19,6 +19,9 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import java.util.ArrayList;
 
 public class EthernetCable extends Cable {
+
+    public EthernetCable() {}
+
     public EthernetCable(Vector2 startPoint, int count) {
         super(startPoint, count);
         gauge = 13;

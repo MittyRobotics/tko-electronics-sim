@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Tank extends Flippable {
 
+    public Tank() {}
+
     public Tank(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.TANK, addCrimped);
 

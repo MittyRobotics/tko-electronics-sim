@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Manifold extends Flippable {
 
+    public Manifold() {}
+
     public Manifold(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.MANIFOLD, addCrimped);
 

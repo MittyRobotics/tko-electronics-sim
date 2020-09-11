@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 
 public class Talon extends Flippable {
 
+    public Talon() {}
+
     public Talon(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.TALON, addCrimped);
 

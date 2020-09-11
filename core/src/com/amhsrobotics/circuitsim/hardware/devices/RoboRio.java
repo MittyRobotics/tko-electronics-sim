@@ -15,6 +15,8 @@ import org.json.simple.JSONArray;
 
 public class RoboRio extends Hardware {
 
+    public RoboRio() {}
+
     public RoboRio(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.ROBORIO, addCrimped);
 
