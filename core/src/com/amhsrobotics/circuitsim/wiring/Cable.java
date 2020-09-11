@@ -216,36 +216,21 @@ public class Cable implements Json.Serializable {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            // RENDER POSSIBLE IF MERGING
-            if(CableManager.merging) {
-                if(appendingFromBegin) {
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                } else {
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                }
-            } else {
-                // DRAW NODES IF SELECTED
-                drawNodes(renderer, camera, nodeColor);
+            // DRAW NODES IF SELECTED
+            drawNodes(renderer, camera, nodeColor);
 
-                if (appendingFromEnd && !disableEnd) {
-                    // draw potential cable wire
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                } else if (appendingFromBegin && !disableBegin){
-                    // draw potential cable wire
-                    renderer.setColor(color);
-                    renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                    renderer.setColor(nodeColor);
-                    renderer.circle(vec2.x, vec2.y, limit3);
-                }
+            if (appendingFromEnd && !disableEnd) {
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(nodeColor);
+                renderer.circle(vec2.x, vec2.y, limit3);
+            } else if (appendingFromBegin && !disableBegin){
+                // draw potential cable wire
+                renderer.setColor(color);
+                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
+                renderer.setColor(nodeColor);
+                renderer.circle(vec2.x, vec2.y, limit3);
             }
 
         }
@@ -325,30 +310,33 @@ public class Cable implements Json.Serializable {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            // RENDER POSSIBLE IF MERGING
+            /* RENDER POSSIBLE IF MERGING
             if(CableManager.merging) {
                 if(appendingFromBegin) {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
                     renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
-                } else {
+                } else if (appendingFromEnd) {
                     renderer.setColor(color);
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                     renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
                 }
 
-            }
+            }*/
 
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if (secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
+            if ((appendingFromBegin || appendingFromEnd) && secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
             } else {
 
                 // UNSELECT
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+
+                    Gdx.app.log(appendingFromBegin+"", appendingFromEnd+"");
+
                     if (movingNode != null) {
                         if(coordinates.contains(movingNode)) {
                             coordinates.set(coordinates.indexOf(movingNode), backupNode);
@@ -368,6 +356,7 @@ public class Cable implements Json.Serializable {
                     }
                     appendingFromBegin = false;
                     appendingFromEnd = false;
+
                 }
 
                 // CLICK
@@ -422,14 +411,12 @@ public class Cable implements Json.Serializable {
                             coordinates.remove(0);
                         } else if (appendingFromEnd && coordinates.size() > 2) {
                             coordinates.remove(coordinates.size()-1);
-                        } else if (coordinates.size() > 1) {
+                        } else {
                             CableManager.deleteCable(this);
                             CableManager.currentCable = null;
                             CircuitGUIManager.propertiesBox.hide();
                             HardwareManager.removeCableFromHardware(this, connection1);
                             HardwareManager.removeCableFromHardware(this, connection2);
-                            connection2 = null;
-                            connection1 = null;
                         }
                         appendingFromBegin = false;
                         appendingFromEnd = false;
@@ -439,8 +426,6 @@ public class Cable implements Json.Serializable {
                         CircuitGUIManager.propertiesBox.hide();
                         HardwareManager.removeCableFromHardware(this, connection1);
                         HardwareManager.removeCableFromHardware(this, connection2);
-                        connection2 = null;
-                        connection1 = null;
                     }
                 }
 

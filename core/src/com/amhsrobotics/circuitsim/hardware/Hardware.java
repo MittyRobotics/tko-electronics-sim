@@ -148,6 +148,7 @@ public abstract class Hardware implements Json.Serializable {
                 c.setColor(crimpedPortColors.get(j));
                 CableManager.addCable(c);
                 attachCrimpedCable(c, i);
+                CircuitGUIManager.propertiesBox.hide();
             }
             j++;
         }
@@ -371,10 +372,13 @@ public abstract class Hardware implements Json.Serializable {
 
         cable.removeCoordinates();
 
-        cable.setConnection1(this);
-
         cable.addCoordinates(calculate(port), true);
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), true);
+
+        cable.setConnection1(this);
+
+        cable.appendingFromEnd = false;
+        cable.appendingFromBegin = false;
 
         if(CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;

@@ -1,7 +1,11 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,14 +17,9 @@ import java.util.ArrayList;
 
 public class CrimpedCable extends Cable {
 
-    public CrimpedCable() {}
-
     public CrimpedCable(int gauge) {
         super(new Vector2(0, 0), CableManager.getCrimpedID());
         this.gauge = gauge;
-
-        populateProperties();
-        CircuitGUIManager.propertiesBox.show();
 
         appendingFromBegin = false;
         appendingFromEnd = false;
@@ -55,4 +54,5 @@ public class CrimpedCable extends Cable {
             }
         });
     }
+
 }

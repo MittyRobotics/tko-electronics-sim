@@ -43,20 +43,6 @@ public class PowerDistributionPanel extends Hardware {
         initEnds();
     }
 
-    @Override
-    public boolean acceptPortConnection(Cable cable, int port) {
-        if(port >= 10 && port <= 41) {
-            if (cable instanceof CrimpedCable) {
-                return true;
-            } else {
-                CircuitGUIManager.popup.activateError("PDP motor ports only accept crimped cables");
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
     public Vector2 calculate(int port) {
         if(port >= 0 && port <= 5) {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 50, getConnector(port).getY() + getConnector(port).getHeight()/2);
