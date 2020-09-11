@@ -2,8 +2,6 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.Tools;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -91,7 +89,6 @@ public class ResizeNode {
                     box.width += box.x - vec.x;
                     box.height = vec.y - box.y;
                     box.x = vec.x;
-//                    box.y = vec.y;
                     break;
                 case TOP_MIDDLE:
                     box.height = vec.y - box.y;

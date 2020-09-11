@@ -177,20 +177,17 @@ public class MenuScreen implements Screen {
         fileSave.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JFileChooser chooser = new JFileChooser();
-                        JFrame f = new JFrame();
-                        f.setVisible(true);
-                        f.toFront();
-                        f.setVisible(false);
-                        int res = chooser.showSaveDialog(f);
-                        chooser.setDialogTitle("Import");
-                        f.dispose();
-                        if (res == JFileChooser.APPROVE_OPTION) {
-                            fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
-                        }
+                new Thread(() -> {
+                    JFileChooser chooser = new JFileChooser();
+                    JFrame f = new JFrame();
+                    f.setVisible(true);
+                    f.toFront();
+                    f.setVisible(false);
+                    int res = chooser.showSaveDialog(f);
+                    chooser.setDialogTitle("Import");
+                    f.dispose();
+                    if (res == JFileChooser.APPROVE_OPTION) {
+                        fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
                     }
                 }).start();
             }
