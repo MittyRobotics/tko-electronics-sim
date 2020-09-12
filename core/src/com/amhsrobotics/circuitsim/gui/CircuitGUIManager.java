@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -42,7 +44,9 @@ public class CircuitGUIManager {
     private static Window saveMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss, cps;
+//    private final TextButton eth, reg_cable, sandcrab, sandcrab3, pdp, vrm, rbr, tln, pcm, spk, neo, brk, m775, fcn, battery, rad, tub, ep, psw, pis, man, tnk, ds, ss, cps;
+    private final ArrayList<TextButton> deviceButtons = new ArrayList<>();
+    private final HashMap<TextButton, String> categories = new HashMap<>();
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -125,257 +129,282 @@ public class CircuitGUIManager {
         table.pad(10).defaults().expandX().space(4);
         container.add(scroll).expand().fill();
 
-        reg_cable = new TextButton("Cable", tStyle);
-        reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
+        JSONReader.loadConfig("scripts/gui/elements.json");
 
-        sandcrab = new TextButton("Double WAGO", tStyle);
-        sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
-
-        sandcrab3 = new TextButton("Triple WAGO", tStyle);
-        sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
-
-        battery = new TextButton("Battery", tStyle);
-        battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
-
-        ds = new TextButton("Double Solenoid", tStyle);
-        ds.addListener(new TextTooltip("Electronic air control for two pistons", ttStyle));
-
-        ss = new TextButton("Single Solenoid", tStyle);
-        ss.addListener(new TextTooltip("Electronic air control for one piston", ttStyle));
-
-        pdp = new TextButton("PDP", tStyle);
-        pdp.addListener(new TextTooltip("Power Distribution Panel to distribute power to various components", ttStyle));
-
-        vrm = new TextButton("VRM", tStyle);
-        vrm.addListener(new TextTooltip("Voltage Regulation Module to adjust voltage", ttStyle));
-
-        rbr = new TextButton("roboRIO", tStyle);
-        rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller, the onboard computer", ttStyle));
-
-        tln = new TextButton("Talon", tStyle);
-        tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller, controls 775 motors", ttStyle));
-
-        pcm = new TextButton("PCM", tStyle);
-        pcm.addListener(new TextTooltip("Pneumatics Control Module, controls pneumatics components", ttStyle));
-
-        spk = new TextButton("SPARK MAX", tStyle);
-        spk.addListener(new TextTooltip("SPARK MAX Motor Controller, controls NEO motors", ttStyle));
-
-        neo = new TextButton("NEO", tStyle);
-        neo.addListener(new TextTooltip("NEO Brushless Motor, uses SPARK MAX controllers", ttStyle));
-
-        brk = new TextButton("Breaker", tStyle);
-        brk.addListener(new TextTooltip("Main Circuit Breaker to cut the power", ttStyle));
-
-        m775 = new TextButton("775", tStyle);
-        m775.addListener(new TextTooltip("775 RedLine Motor, uses Talon controllers", ttStyle));
-
-        fcn = new TextButton("Falcon", tStyle);
-        fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor, builtin controller", ttStyle));
-
-        rad = new TextButton("Radio", tStyle);
-        rad.addListener(new TextTooltip("Radio to communicate with the driver", ttStyle));
-
-        eth = new TextButton("Ethernet", tStyle);
-        eth.addListener(new TextTooltip("Ethernet cable for WiFi", ttStyle));
-
-        tub = new TextButton("Tubing", tStyle);
-        tub.addListener(new TextTooltip("Adjustable pneumatics tubing", ttStyle));
-
-        ep = new TextButton("E-Plate", tStyle);
-        ep.addListener(new TextTooltip("Electronics Plate to hold hardware in place", ttStyle));
-
-        psw = new TextButton("Pressure Switch", tStyle);
-        psw.addListener(new TextTooltip("Pneumatics pressure switch to adjust air pressure", ttStyle));
-
-        pis = new TextButton("Piston", tStyle);
-        pis.addListener(new TextTooltip("Pneumatics piston moved with pressured air", ttStyle));
-
-        man = new TextButton("Manifold", tStyle);
-        man.addListener(new TextTooltip("Pneumatics manifold to distribute air across multiple components", ttStyle));
-
-        tnk = new TextButton("Tank", tStyle);
-        tnk.addListener(new TextTooltip("Pneumatics tank to hold pressured air", ttStyle));
-
-        cps = new TextButton("Compressor", tStyle);
-        cps.addListener(new TextTooltip("Pneumatics compressor to increase air pressure", ttStyle));
-
-        reg_cable.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.WIRE;
-                buttonDecline();
+        for(Object o : JSONReader.getCurrentConfig().keySet()) {
+            TextButton t = new TextButton((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), tStyle);
+            t.addListener(new TextTooltip((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("tooltip"), ttStyle));
+            categories.put(t, (String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category"));
+            HardwareType buttonType = null;
+            for(HardwareType type : HardwareType.values()) {
+                if(type.name().equalsIgnoreCase((String) o)) {
+                    buttonType = type;
+                }
             }
-        });
-        sandcrab.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.DOUBLESANDCRAB;
-                buttonDecline();
-            }
-        });
-        sandcrab3.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.TRIPLESANDCRAB;
-                buttonDecline();
-            }
-        });
-        pdp.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.PDP;
-                buttonDecline();
-            }
-        });
-        vrm.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.VRM;
-                buttonDecline();
-            }
-        });
-        rbr.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.ROBORIO;
-                buttonDecline();
-            }
-        });
-        tln.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.TALON;
-                buttonDecline();
-            }
-        });
-        pcm.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.PCM;
-                buttonDecline();
-            }
-        });
-        spk.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.SPARK;
-                buttonDecline();
-            }
-        });
-        neo.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.NEO;
-                buttonDecline();
-            }
-        });
-        m775.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.MOTOR775;
-                buttonDecline();
-            }
-        });
-        fcn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.FALCON;
-                buttonDecline();
-            }
-        });
-        brk.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.BREAKER;
-                buttonDecline();
-            }
-        });
-        battery.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.BATTERY;
-                buttonDecline();
-            }
-        });
-        rad.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.RADIO;
-                buttonDecline();
-            }
-        });
-        eth.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.ETHERNET;
-                buttonDecline();
-            }
-        });
-        tub.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.TUBING;
-                buttonDecline();
-            }
-        });
-        ep.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.EPLATE;
-                buttonDecline();
-            }
-        });
-        psw.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.PRESSURESWITCH;
-                buttonDecline();
-            }
-        });
-        pis.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.PISTON;
-                buttonDecline();
-            }
-        });
-        man.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.MANIFOLD;
-                buttonDecline();
-            }
-        });
-        tnk.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.TANK;
-                buttonDecline();
-            }
-        });
+            HardwareType finalButtonType = buttonType;
+            t.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Constants.placing_object = finalButtonType;
+                    buttonDecline();
+                }
+            });
+        }
+        for(String s : categories.values()) {
+            System.out.println(s);
+        }
 
-        ds.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.DOUBLESOLENOID;
-                buttonDecline();
-            }
-        });
-        ss.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.SINGLESOLENOID;
-                buttonDecline();
-            }
-        });
-        cps.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Constants.placing_object = HardwareType.COMPRESSOR;
-                buttonDecline();
-            }
-        });
+//        reg_cable = new TextButton("Cable", tStyle);
+//        reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
+//
+//        sandcrab = new TextButton("Double WAGO", tStyle);
+//        sandcrab.addListener(new TextTooltip("A connector that connects two wires together", ttStyle));
+//
+//        sandcrab3 = new TextButton("Triple WAGO", tStyle);
+//        sandcrab3.addListener(new TextTooltip("A connector with 1 input and 2 outputs", ttStyle));
+//
+//        battery = new TextButton("Battery", tStyle);
+//        battery.addListener(new TextTooltip("A 12 Volt battery to power the circuit", ttStyle));
+//
+//        ds = new TextButton("Double Solenoid", tStyle);
+//        ds.addListener(new TextTooltip("Electronic air control for two pistons", ttStyle));
+//
+//        ss = new TextButton("Single Solenoid", tStyle);
+//        ss.addListener(new TextTooltip("Electronic air control for one piston", ttStyle));
+//
+//        pdp = new TextButton("PDP", tStyle);
+//        pdp.addListener(new TextTooltip("Power Distribution Panel to distribute power to various components", ttStyle));
+//
+//        vrm = new TextButton("VRM", tStyle);
+//        vrm.addListener(new TextTooltip("Voltage Regulation Module to adjust voltage", ttStyle));
+//
+//        rbr = new TextButton("roboRIO", tStyle);
+//        rbr.addListener(new TextTooltip("roboRIO Advanced Robotics Controller, the onboard computer", ttStyle));
+//
+//        tln = new TextButton("Talon", tStyle);
+//        tln.addListener(new TextTooltip("Talon SRX Smart Motor Controller, controls 775 motors", ttStyle));
+//
+//        pcm = new TextButton("PCM", tStyle);
+//        pcm.addListener(new TextTooltip("Pneumatics Control Module, controls pneumatics components", ttStyle));
+//
+//        spk = new TextButton("SPARK MAX", tStyle);
+//        spk.addListener(new TextTooltip("SPARK MAX Motor Controller, controls NEO motors", ttStyle));
+//
+//        neo = new TextButton("NEO", tStyle);
+//        neo.addListener(new TextTooltip("NEO Brushless Motor, uses SPARK MAX controllers", ttStyle));
+//
+//        brk = new TextButton("Breaker", tStyle);
+//        brk.addListener(new TextTooltip("Main Circuit Breaker to cut the power", ttStyle));
+//
+//        m775 = new TextButton("775", tStyle);
+//        m775.addListener(new TextTooltip("775 RedLine Motor, uses Talon controllers", ttStyle));
+//
+//        fcn = new TextButton("Falcon", tStyle);
+//        fcn.addListener(new TextTooltip("Falcon 500 Brushless Motor, builtin controller", ttStyle));
+//
+//        rad = new TextButton("Radio", tStyle);
+//        rad.addListener(new TextTooltip("Radio to communicate with the driver", ttStyle));
+//
+//        eth = new TextButton("Ethernet", tStyle);
+//        eth.addListener(new TextTooltip("Ethernet cable for WiFi", ttStyle));
+//
+//        tub = new TextButton("Tubing", tStyle);
+//        tub.addListener(new TextTooltip("Adjustable pneumatics tubing", ttStyle));
+//
+//        ep = new TextButton("E-Plate", tStyle);
+//        ep.addListener(new TextTooltip("Electronics Plate to hold hardware in place", ttStyle));
+//
+//        psw = new TextButton("Pressure Switch", tStyle);
+//        psw.addListener(new TextTooltip("Pneumatics pressure switch to adjust air pressure", ttStyle));
+//
+//        pis = new TextButton("Piston", tStyle);
+//        pis.addListener(new TextTooltip("Pneumatics piston moved with pressured air", ttStyle));
+//
+//        man = new TextButton("Manifold", tStyle);
+//        man.addListener(new TextTooltip("Pneumatics manifold to distribute air across multiple components", ttStyle));
+//
+//        tnk = new TextButton("Tank", tStyle);
+//        tnk.addListener(new TextTooltip("Pneumatics tank to hold pressured air", ttStyle));
+//
+//        cps = new TextButton("Compressor", tStyle);
+//        cps.addListener(new TextTooltip("Pneumatics compressor to increase air pressure", ttStyle));
+//
+//        reg_cable.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.WIRE;
+//                buttonDecline();
+//            }
+//        });
+//        sandcrab.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.DOUBLESANDCRAB;
+//                buttonDecline();
+//            }
+//        });
+//        sandcrab3.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.TRIPLESANDCRAB;
+//                buttonDecline();
+//            }
+//        });
+//        pdp.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.PDP;
+//                buttonDecline();
+//            }
+//        });
+//        vrm.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.VRM;
+//                buttonDecline();
+//            }
+//        });
+//        rbr.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.ROBORIO;
+//                buttonDecline();
+//            }
+//        });
+//        tln.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.TALON;
+//                buttonDecline();
+//            }
+//        });
+//        pcm.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.PCM;
+//                buttonDecline();
+//            }
+//        });
+//        spk.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.SPARK;
+//                buttonDecline();
+//            }
+//        });
+//        neo.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.NEO;
+//                buttonDecline();
+//            }
+//        });
+//        m775.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.MOTOR775;
+//                buttonDecline();
+//            }
+//        });
+//        fcn.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.FALCON;
+//                buttonDecline();
+//            }
+//        });
+//        brk.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.BREAKER;
+//                buttonDecline();
+//            }
+//        });
+//        battery.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.BATTERY;
+//                buttonDecline();
+//            }
+//        });
+//        rad.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.RADIO;
+//                buttonDecline();
+//            }
+//        });
+//        eth.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.ETHERNET;
+//                buttonDecline();
+//            }
+//        });
+//        tub.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.TUBING;
+//                buttonDecline();
+//            }
+//        });
+//        ep.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.EPLATE;
+//                buttonDecline();
+//            }
+//        });
+//        psw.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.PRESSURESWITCH;
+//                buttonDecline();
+//            }
+//        });
+//        pis.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.PISTON;
+//                buttonDecline();
+//            }
+//        });
+//        man.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.MANIFOLD;
+//                buttonDecline();
+//            }
+//        });
+//        tnk.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.TANK;
+//                buttonDecline();
+//            }
+//        });
+//
+//        ds.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.DOUBLESOLENOID;
+//                buttonDecline();
+//            }
+//        });
+//        ss.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.SINGLESOLENOID;
+//                buttonDecline();
+//            }
+//        });
+//        cps.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Constants.placing_object = HardwareType.COMPRESSOR;
+//                buttonDecline();
+//            }
+//        });
         filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         filters.setWidth(200);
@@ -857,64 +886,39 @@ public class CircuitGUIManager {
     }
 
     public void filterWiring() {
-        table.row();
-        table.add(reg_cable).width(150);
-        table.row();
-        table.add(sandcrab).width(150);
-        table.row();
-        table.add(sandcrab3).width(150);
-        table.row();
-        table.add(battery).width(150);
-        table.row();
-        table.add(brk).width(150);
-        table.row();
-        table.add(eth).width(150);
+        for(String type : categories.values()) {
+            if(type.equals("wiring")) {
+                table.row();
+                Gdx.app.log(DeviceUtil.getKeyByValue(categories, type) + "", "");
+                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+            }
+        }
     }
 
     public void filterControl() {
-        table.row();
-        table.add(ep).width(150);
-        table.row();
-        table.add(rbr).width(150);
-        table.row();
-        table.add(pdp).width(150);
-        table.row();
-        table.add(vrm).width(150);
-        table.row();
-        table.add(rad).width(150);
+        for(String type : categories.values()) {
+            if(type.equals("control")) {
+                table.row();
+                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+            }
+        }
     }
 
     public void filterMotors() {
-        table.row();
-        table.add(tln).width(150);
-        table.row();
-        table.add(spk).width(150);
-        table.row();
-        table.add(m775).width(150);
-        table.row();
-        table.add(neo).width(150);
-        table.row();
-        table.add(fcn).width(150);
+        for(String type : categories.values()) {
+            if(type.equals("motors")) {
+                table.row();
+                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+            }
+        }
     }
 
     public void filterPneumatics() {
-        table.row();
-        table.add(pcm).width(150);
-        table.row();
-        table.add(tub).width(150);
-        table.row();
-        table.add(psw).width(150);
-        table.row();
-        table.add(pis).width(150);
-        table.row();
-        table.add(man).width(150);
-        table.row();
-        table.add(tnk).width(150);
-        table.row();
-        table.add(cps).width(150);
-        table.row();
-        table.add(ds).width(150);
-        table.row();
-        table.add(ss).width(150);
+        for(String type : categories.values()) {
+            if(type.equals("pneumatics")) {
+                table.row();
+                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+            }
+        }
     }
 }
