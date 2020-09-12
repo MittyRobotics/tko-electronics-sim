@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import org.json.simple.JSONValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -827,8 +828,34 @@ public class Cable implements Json.Serializable {
         json.writeValue("coordinates", this.coordinates);
     }
 
+    private void parseColor(Color var, JsonValue jsonData, String identifier) {
+        try {
+            var.r = jsonData.get(identifier).getFloat("r");
+        } catch (Exception e) {
+            var.r = 0/255f;
+        }
+        try {
+            var.g = jsonData.get(identifier).getFloat("g");
+        } catch (Exception e) {
+            var.g = 0/255f;
+        }
+        try {
+            var.b = jsonData.get(identifier).getFloat("b");
+        } catch (Exception e) {
+            var.b = 0/255f;
+        }
+        var.a = jsonData.get(identifier).getFloat("a");
+    }
+
     @Override
     public void read(Json json, JsonValue jsonData) {
 
+        this.ID = jsonData.getInt("id");
+        this.gauge = jsonData.getInt("gauge");
+        this.color = new Color();
+        parseColor(this.color, jsonData, "color");
+        this.nodeColor = new Color();
+        parseColor(this.nodeColor, jsonData, "nodeColor");
+        Gdx.app.log(this.ID + " " + this.gauge, this.color.toString());
     }
 }
