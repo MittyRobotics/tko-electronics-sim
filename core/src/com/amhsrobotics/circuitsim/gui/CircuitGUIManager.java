@@ -150,9 +150,6 @@ public class CircuitGUIManager {
                 }
             });
         }
-        for(String s : categories.values()) {
-            System.out.println(s);
-        }
 
 //        reg_cable = new TextButton("Cable", tStyle);
 //        reg_cable.addListener(new TextTooltip("An adjustable hardware to hardware wire", ttStyle));
@@ -890,7 +887,7 @@ public class CircuitGUIManager {
             if(type.equals("wiring")) {
                 table.row();
                 Gdx.app.log(DeviceUtil.getKeyByValue(categories, type) + "", "");
-                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+                table.add(catToBut.get(type)).width(150);
             }
         }
     }
@@ -899,7 +896,7 @@ public class CircuitGUIManager {
         for(String type : categories.values()) {
             if(type.equals("control")) {
                 table.row();
-                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+                table.add(catToBut.get(type)).width(150);
             }
         }
     }
@@ -908,7 +905,7 @@ public class CircuitGUIManager {
         for(String type : categories.values()) {
             if(type.equals("motors")) {
                 table.row();
-                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+                table.add(catToBut.get(type)).width(150);
             }
         }
     }
@@ -917,7 +914,7 @@ public class CircuitGUIManager {
         for(String type : categories.values()) {
             if(type.equals("pneumatics")) {
                 table.row();
-                table.add(DeviceUtil.getKeyByValue(categories, type)).width(150);
+                table.add(catToBut.get(type)).width(150);
             }
         }
     }
