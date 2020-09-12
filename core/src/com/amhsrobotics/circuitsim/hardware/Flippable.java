@@ -1,6 +1,8 @@
 package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.devices.SandCrab;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.amhsrobotics.circuitsim.wiring.EthernetCable;
 import com.badlogic.gdx.Gdx;
@@ -24,15 +26,17 @@ public class Flippable extends Hardware  {
     public Flippable(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
-        for(JSONArray arr : pinDefs) {
-            Sprite temp;
-            if(connectors.size() == connNum) {
-                break;
+        if(!(this instanceof SandCrab)) {
+            for (JSONArray arr : pinDefs) {
+                Sprite temp;
+                if (connectors.size() == connNum) {
+                    break;
+                }
+                temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
+                temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
+                temp.setSize((Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(0) / 2f, (Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(1) / 2f);
+                connectors.add(temp);
             }
-            temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
-            temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0) /2f, (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1) /2f);
-            connectors.add(temp);
         }
 
         initConnections();
@@ -78,9 +82,30 @@ public class Flippable extends Hardware  {
         });
     }
 
+    public void editWire(Cable cable, int port, boolean endOfWire) {
+        cable.editCoordinates(calculate(port), endOfWire, true);
+        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
+
+        cableDX = cable.getCoordinate(endOfWire).x - getConnector(port).getX() - getConnector(port).getWidth() / 2;
+        cableDY = cable.getCoordinate(endOfWire).y - getConnector(port).getY() - getConnector(port).getHeight() / 2;
+
+        cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
+    }
+
     private void rotateThis() {
         base.rotate(90);
+        if(this instanceof SandCrab) {
+            for (Sprite s : connectors) {
+                s.rotate(90);
+            }
+        }
         cur = (cur+1)%4;
+        for (JSONArray arr : pinDefs) {
+            int index = pinDefs.indexOf(arr);
+            if (connections.get(index) != null) {
+                editWire(connections.get(index), index, ends.get(index));
+            }
+        }
     }
 
     @Override
