@@ -318,8 +318,6 @@ public class Cable implements Json.Serializable {
 
         if(CableManager.currentCable == this) {
 
-            CableManager.moveToFront(this);
-
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -357,6 +355,7 @@ public class Cable implements Json.Serializable {
                     appendingFromEnd = false;
 
                 }
+
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
@@ -557,6 +556,13 @@ public class Cable implements Json.Serializable {
                     CableManager.currentCable.appendingFromEnd = false;
                 }
                 CableManager.currentCable = this;
+                CableManager.moveToFront(this);
+                if(connection1 != null) {
+                    HardwareManager.moveToFront(connection1);
+                }
+                if(connection2 != null) {
+                    HardwareManager.moveToFront(connection2);
+                }
                 HardwareManager.currentHardware = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();

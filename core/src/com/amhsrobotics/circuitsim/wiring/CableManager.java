@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.math.Vector2;
@@ -47,6 +48,37 @@ public class CableManager {
         temp.add(cable);
         cables = temp;
 
+    }
+
+    public static void moveToBack(Cable cable) {
+        temp = new DelayedRemovalArray<>();
+        temp.add(cable);
+        for(int i = 0; i < cables.size; i++) {
+            if(cables.get(i).getID() != cable.getID()) {
+                temp.add(cables.get(i));
+            }
+        }
+
+        cables = temp;
+
+    }
+
+    public static void moveBack(Cable cable) {
+        int i = cables.indexOf(cable, true);
+        if(i != 0) {
+            Cable temp = cables.get(i-1);
+            cables.set(i-1, cable);
+            cables.set(i, temp);
+        }
+    }
+
+    public static void moveForward(Cable cable) {
+        int i = cables.indexOf(cable, true);
+        if(i != cables.size-1) {
+            Cable temp = cables.get(i+1);
+            cables.set(i+1, cable);
+            cables.set(i, temp);
+        }
     }
 
     public static DelayedRemovalArray<Cable> getCables() {

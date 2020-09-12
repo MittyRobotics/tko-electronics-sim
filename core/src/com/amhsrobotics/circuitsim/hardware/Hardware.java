@@ -259,6 +259,12 @@ public abstract class Hardware implements Json.Serializable {
 
                 if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
                     if(!(HardwareManager.currentHardware != this && HardwareManager.movingObject)) {
+                        HardwareManager.moveToFront(this);
+                        for(Cable c : connections) {
+                            if(c != null) {
+                                CableManager.moveToFront(c);
+                            }
+                        }
                         HardwareManager.currentHardware = this;
                         CableManager.currentCable = null;
                         populateProperties();
@@ -267,6 +273,12 @@ public abstract class Hardware implements Json.Serializable {
                         if (!HardwareManager.movingObject) {
                             HardwareManager.movingObject = true;
                             canMove = true;
+                            HardwareManager.moveToFront(this);
+                            for(Cable c : connections) {
+                                if(c != null) {
+                                    CableManager.moveToFront(c);
+                                }
+                            }
                             HardwareManager.currentHardware = this;
                             diffX = position.x - vec.x;
                             diffY = position.y - vec.y;
@@ -298,12 +310,47 @@ public abstract class Hardware implements Json.Serializable {
         //---------------------------------------------------
 
         if (HardwareManager.currentHardware == this) {
-            HardwareManager.moveToFront(this);
             drawHover(renderer);
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 HardwareManager.currentHardware = null;
                 CircuitGUIManager.propertiesBox.hide();
+            }
+
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
+                    HardwareManager.moveToFront(this);
+                    for(Cable c : connections) {
+                        if(c != null) {
+                            CableManager.moveToFront(c);
+                        }
+                    }
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                    HardwareManager.moveToBack(this);
+                    for(Cable c : connections) {
+                        if(c != null) {
+                            CableManager.moveToBack(c);
+                        }
+                    }
+                }
+            } else {
+                if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
+                    Gdx.app.log("moving forward", "");
+                    HardwareManager.moveForward(this);
+                    for(Cable c : connections) {
+                        if(c != null) {
+                            CableManager.moveForward(c);
+                        }
+                    }
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
+                    Gdx.app.log("moving backward", "");
+                    HardwareManager.moveBack(this);
+                    for(Cable c : connections) {
+                        if(c != null) {
+                            CableManager.moveBack(c);
+                        }
+                    }
+                }
             }
 
             if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL))) {
@@ -333,6 +380,11 @@ public abstract class Hardware implements Json.Serializable {
                 Gdx.gl.glEnable(GL20.GL_BLEND);
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
+                batch.begin();
+                if(c.getOtherConnection(this) != null) {
+                    c.getOtherConnection(this).getConnector(c.getOtherConnection(this).getConnectionPosition(c)).draw(batch);
+                }
+                batch.end();
             }
         }
 

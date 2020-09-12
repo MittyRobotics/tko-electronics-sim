@@ -7,17 +7,17 @@
   "pins": [
     {
       "type": "22",
-      "position": [-77, -20],
+      "position": [-77, -40],
       "dimensions": [50, 130]
     },
     {
       "type": "22",
-      "position": [0, -20],
+      "position": [0, -40],
       "dimensions": [50, 130]
     },
     {
       "type": "22",
-      "position": [77, -20],
+      "position": [77, -40],
       "dimensions": [50, 130]
     }
   ]
