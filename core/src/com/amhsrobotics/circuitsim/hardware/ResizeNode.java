@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.hardware;
 
 import com.amhsrobotics.circuitsim.utility.Box;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -111,6 +112,12 @@ public class ResizeNode {
 
                     for(Hardware h : hardwareArrayList) {
                         h.setPosition(h.getPosition().x + vec.x - box.width / 2 - box.x, h.getPosition().y + vec.y - box.height / 2 - box.y);
+
+                        for(Cable c : h.connections) {
+                            if(c != null) {
+                                c.moveEntireCable(vec.x - box.width / 2 - box.x, vec.y - box.height / 2 - box.y);
+                            }
+                        }
                     }
 
                     box.x = vec.x - box.width / 2;

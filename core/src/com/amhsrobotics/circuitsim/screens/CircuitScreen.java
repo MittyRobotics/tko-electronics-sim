@@ -173,7 +173,7 @@ public class CircuitScreen implements Screen {
 
         }
 
-
+        HardwareManager.updateEplates(renderer, batch, camera);
         CableManager.update(renderer, camera);
         HardwareManager.update(renderer, batch, camera);
 

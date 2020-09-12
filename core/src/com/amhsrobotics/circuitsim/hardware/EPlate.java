@@ -35,7 +35,7 @@ public class EPlate extends Hardware {
 
     private int dragging = -1;
 
-    private boolean frozen = false, disableTouch = false;
+    private boolean frozen = false;
 
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
@@ -77,17 +77,6 @@ public class EPlate extends Hardware {
         renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
         renderer.end();
 
-        disableTouch = false;
-        hardwareloop:
-        for(Hardware h : hardwareOnPlate) {
-            for(Cable c : h.getCableConnections()) {
-                if(c != null && c.hoveringOnEndpoint(camera) != 0) {
-                    disableTouch = true;
-                    Gdx.app.log("here", "");
-                    break hardwareloop;
-                }
-            }
-        }
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
@@ -98,9 +87,8 @@ public class EPlate extends Hardware {
         if(box.contains(vec.x, vec.y)) {
             drawHover(renderer);
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if((CableManager.currentCable == null || (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd)) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 HardwareManager.currentHardware = this;
-                CableManager.currentCable = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
             }
@@ -126,7 +114,7 @@ public class EPlate extends Hardware {
         if (HardwareManager.currentHardware == this) {
             drawHover(renderer);
             renderer.begin(ShapeRenderer.ShapeType.Filled);
-            for(ResizeNode c : nodes) {
+            for (ResizeNode c : nodes) {
                 c.draw(renderer, camera);
             }
             renderer.end();
@@ -136,8 +124,8 @@ public class EPlate extends Hardware {
                 CircuitGUIManager.propertiesBox.hide();
             }
 
-            if(Gdx.input.isKeyJustPressed(Input.Keys.DEL) || Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
-                for(Hardware h : hardwareOnPlate) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.DEL) || Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
+                for (Hardware h : hardwareOnPlate) {
                     h.attached = null;
                 }
                 HardwareManager.removeHardware(this);
@@ -145,14 +133,12 @@ public class EPlate extends Hardware {
                 CircuitGUIManager.propertiesBox.hide();
             }
 
-            if(!disableTouch) {
-                if (dragging != -1) {
-                    setSelectedNode(dragging);
-                    nodes[dragging].movePosition(camera, box, hardwareOnPlate);
-                }
+            if (dragging != -1) {
+                setSelectedNode(dragging);
+                nodes[dragging].movePosition(camera, box, hardwareOnPlate);
             }
 
-            if(!canMove) {
+            if (!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
                     if (Gdx.input.isTouched()) {
                         if (nodes[x].contains(vec) && (dragging == -1 || dragging == x)) {
@@ -166,59 +152,53 @@ public class EPlate extends Hardware {
                         nodes[x].updateIdlePos(box);
                     }
                 }
-
-                if(Gdx.input.isTouched() && dragging == -1 && !disableTouch) {
-
-                    if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
-                        HardwareManager.currentHardware = this;
-                        CableManager.currentCable = null;
-                        populateProperties();
-                        CircuitGUIManager.propertiesBox.show();
-
-                        if (!HardwareManager.movingObject) {
-                            HardwareManager.movingObject = true;
-                            canMove = true;
-                            HardwareManager.currentHardware = this;
-                            diffX = box.x - vec.x;
-                            diffY = box.y - vec.y;
-                        }
-                    }
-
-                    if(canMove) {
-                        if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
-                            for(Hardware h : hardwareOnPlate) {
-                                h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
-                            }
-
-                            box.x = vec.x + diffX;
-                            box.y = vec.y + diffY;
-
-                            for (ResizeNode node : nodes) {
-                                node.updateIdlePos(box);
-                            }
-                        }
-                    }
-
-                    if(!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
-                        HardwareManager.currentHardware = null;
-                        CircuitGUIManager.propertiesBox.hide();
-                    }
-                } else {
-                    canMove = false;
-                    HardwareManager.movingObject = false;
-                }
             }
+
+            if (Gdx.input.isTouched() && dragging == -1) {
+
+                if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
+                    if (!HardwareManager.movingObject) {
+                        HardwareManager.movingObject = true;
+                        canMove = true;
+                        diffX = box.x - vec.x;
+                        diffY = box.y - vec.y;
+                    }
+                }
+
+                if (canMove) {
+                    if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
+                        for (Hardware h : hardwareOnPlate) {
+                            h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
+                            for(Cable c : h.connections) {
+                                if(c != null) {
+                                    c.moveEntireCable(vec.x + diffX - box.x, vec.y + diffY - box.y);
+                                }
+                            }
+                        }
+
+                        box.x = vec.x + diffX;
+                        box.y = vec.y + diffY;
+
+                    }
+                }
+
+                if (!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
+                    HardwareManager.currentHardware = null;
+                    CircuitGUIManager.propertiesBox.hide();
+                }
+            } else {
+                canMove = false;
+                HardwareManager.movingObject = false;
+            }
+        }
+
+        for (ResizeNode node : nodes) {
+            node.updateIdlePos(box);
         }
     }
 
     private void setSelectedNode(int index) {
-        for(int i = 0; i < nodes.length; i++) {
-            if(i == index) {
-                nodes[i].setSelected(true);
-            } else {
-                nodes[i].setSelected(false);
-            }
-        }
+        nodes[index].setSelected(true);
     }
 
     @Override

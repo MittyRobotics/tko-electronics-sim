@@ -7,7 +7,6 @@ import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
-import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -28,7 +27,17 @@ public class HardwareManager {
 
     public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
         for(Hardware h : hardwares) {
-            h.update(batch, renderer, cam);
+            if(!(h instanceof EPlate)) {
+                h.update(batch, renderer, cam);
+            }
+        }
+    }
+
+    public static void updateEplates(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
+        for(Hardware h : hardwares) {
+            if(h instanceof EPlate) {
+                h.update(batch, renderer, cam);
+            }
         }
     }
 
