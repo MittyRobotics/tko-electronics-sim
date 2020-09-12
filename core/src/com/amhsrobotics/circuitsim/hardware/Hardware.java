@@ -334,20 +334,18 @@ public abstract class Hardware implements Json.Serializable {
                     }
                 }
             } else {
-                if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
-                    Gdx.app.log("moving forward", "");
-                    HardwareManager.moveForward(this);
-                    for(Cable c : connections) {
-                        if(c != null) {
-                            CableManager.moveForward(c);
-                        }
-                    }
-                } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
-                    Gdx.app.log("moving backward", "");
+                if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                     HardwareManager.moveBack(this);
                     for(Cable c : connections) {
                         if(c != null) {
                             CableManager.moveBack(c);
+                        }
+                    }
+                } else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
+                    HardwareManager.moveForward(this);
+                    for(Cable c : connections) {
+                        if(c != null) {
+                            CableManager.moveForward(c);
                         }
                     }
                 }

@@ -500,7 +500,7 @@ public class Cable implements Json.Serializable {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-            if(getConnection(!appendingFromBegin) == clist.get(0)) {
+            if(getConnection(!appendingFromBegin) == clist.get(0) && (appendingFromBegin || appendingFromEnd)) {
                 CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
                 appendingFromEnd = false;
                 appendingFromBegin = false;
@@ -522,7 +522,7 @@ public class Cable implements Json.Serializable {
 
             if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {
 
-                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
+                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge && (CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
                 } else {
                     appendingFromBegin = true;
@@ -531,7 +531,7 @@ public class Cable implements Json.Serializable {
                 }
             } else if (hoveringOnEndpoint(camera) == 2 && !disableEnd) {
 
-                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
+                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge && (CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
                 } else {
                     appendingFromEnd = true;

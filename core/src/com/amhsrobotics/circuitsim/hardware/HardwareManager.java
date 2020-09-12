@@ -25,7 +25,20 @@ public class HardwareManager {
 
     public static DelayedRemovalArray<Hardware> hardwares = new DelayedRemovalArray<>();
 
+    public static Hardware toBeMovedForward;
+
     public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
+        if(toBeMovedForward != null) {
+            int i = hardwares.indexOf(toBeMovedForward, true);
+            if(i != hardwares.size-1) {
+                Hardware temp = hardwares.get(i+1);
+                hardwares.set(i+1, toBeMovedForward);
+                hardwares.set(i, temp);
+            }
+            toBeMovedForward = null;
+        }
+
+
         for(Hardware h : hardwares) {
             if(!(h instanceof EPlate)) {
                 h.update(batch, renderer, cam);
@@ -94,12 +107,7 @@ public class HardwareManager {
     }
 
     public static void moveForward(Hardware hardware) {
-        int i = hardwares.indexOf(hardware, true);
-        if(i != hardwares.size-1) {
-            Hardware temp = hardwares.get(i+1);
-            hardwares.set(i+1, hardware);
-            hardwares.set(i, temp);
-        }
+        toBeMovedForward = hardware;
     }
 
     public static HashMap<Hardware, Integer> wireHoveringHardware(Vector2 vec) {

@@ -20,7 +20,19 @@ public class CableManager {
 
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
+    public static Cable toBeMovedForward;
+
     public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
+        if(toBeMovedForward != null) {
+            int i = cables.indexOf(toBeMovedForward, true);
+            if(i != cables.size-1) {
+                Cable temp = cables.get(i+1);
+                cables.set(i+1, toBeMovedForward);
+                cables.set(i, temp);
+            }
+            toBeMovedForward = null;
+        }
+
         Iterator<Cable> iterator = cables.iterator();
         while(iterator.hasNext()) {
             iterator.next().update(renderer, cam);
@@ -73,12 +85,7 @@ public class CableManager {
     }
 
     public static void moveForward(Cable cable) {
-        int i = cables.indexOf(cable, true);
-        if(i != cables.size-1) {
-            Cable temp = cables.get(i+1);
-            cables.set(i+1, cable);
-            cables.set(i, temp);
-        }
+        toBeMovedForward = cable;
     }
 
     public static DelayedRemovalArray<Cable> getCables() {
