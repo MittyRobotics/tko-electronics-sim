@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.devices.SandCrab;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
@@ -43,6 +44,7 @@ public abstract class Hardware implements Json.Serializable {
     public ArrayList<Color> crimpedPortColors;
     public HardwareType type;
     public String name;
+    public boolean rotated = false;
 
     public ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     public ArrayList<Sprite> connectors = new ArrayList<>();
@@ -195,6 +197,7 @@ public abstract class Hardware implements Json.Serializable {
                 editWire(connections.get(index), index, ends.get(index));
             }
         }
+        rotated = false;
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
@@ -325,8 +328,8 @@ public abstract class Hardware implements Json.Serializable {
         base.draw(batch);
         batch.end();
 
-        for(Cable c : connections) {
-            if(c != null) {
+        for (Cable c : connections) {
+            if (c != null) {
                 Gdx.gl.glEnable(GL20.GL_BLEND);
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);

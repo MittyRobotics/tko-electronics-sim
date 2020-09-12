@@ -11,6 +11,7 @@ import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -781,17 +782,21 @@ public class Cable implements Json.Serializable {
     }
 
     public void moveEntireCable(float x, float y) {
-        for(int i = 0; i < coordinates.size(); i++) {
-            if((connection1 == null || (i != 0 && i != 1)) && (connection2 == null || (i != coordinates.size()-1 && i != coordinates.size()-2))) {
-                coordinates.set(i, new Vector2(coordinates.get(i).x+x, coordinates.get(i).y + y));
+        if(movingNode == null) {
+            for (int i = 0; i < coordinates.size(); i++) {
+                if ((connection1 == null || (i != 0 && i != 1)) && (connection2 == null || (i != coordinates.size() - 1 && i != coordinates.size() - 2))) {
+                    coordinates.set(i, new Vector2(coordinates.get(i).x + x, coordinates.get(i).y + y));
+                }
             }
         }
     }
 
     public void moveEntireCable(float x, float y, boolean endOfWire) {
-        for(int i = 0; i < coordinates.size(); i++) {
-            if((!endOfWire || connection1 == null || (i != 0 && i != 1)) && (endOfWire || connection2 == null || (i != coordinates.size()-1 && i != coordinates.size()-2))) {
-                coordinates.set(i, new Vector2(coordinates.get(i).x+x, coordinates.get(i).y + y));
+        if(movingNode == null) {
+            for (int i = 0; i < coordinates.size(); i++) {
+                if ((!endOfWire || connection1 == null || (i != 0 && i != 1)) && (endOfWire || connection2 == null || (i != coordinates.size() - 1 && i != coordinates.size() - 2))) {
+                    coordinates.set(i, new Vector2(coordinates.get(i).x + x, coordinates.get(i).y + y));
+                }
             }
         }
     }

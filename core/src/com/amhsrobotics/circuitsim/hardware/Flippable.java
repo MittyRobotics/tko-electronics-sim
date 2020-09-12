@@ -83,8 +83,10 @@ public class Flippable extends Hardware  {
     }
 
     public void editWire(Cable cable, int port, boolean endOfWire) {
-        cable.editCoordinates(calculate(port), endOfWire, true);
-        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
+        if(rotated) {
+            cable.editCoordinates(calculate(port), endOfWire, true);
+            cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), endOfWire, false);
+        }
 
         cableDX = cable.getCoordinate(endOfWire).x - getConnector(port).getX() - getConnector(port).getWidth() / 2;
         cableDY = cable.getCoordinate(endOfWire).y - getConnector(port).getY() - getConnector(port).getHeight() / 2;
@@ -106,6 +108,8 @@ public class Flippable extends Hardware  {
                 editWire(connections.get(index), index, ends.get(index));
             }
         }
+
+        rotated = true;
     }
 
     @Override
