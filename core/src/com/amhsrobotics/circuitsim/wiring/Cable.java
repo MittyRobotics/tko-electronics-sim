@@ -92,6 +92,20 @@ public class Cable implements Json.Serializable {
         final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
 
+        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
+            CircuitGUIManager.propertiesBox.addElement(new Label(connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+        } else {
+            CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        }
+
+        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+        if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
+            CircuitGUIManager.propertiesBox.addElement(new Label(connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+        } else {
+            CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        }
+
         cb.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
