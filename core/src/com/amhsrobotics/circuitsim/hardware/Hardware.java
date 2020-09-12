@@ -54,7 +54,7 @@ public abstract class Hardware implements Json.Serializable {
     public boolean canMove, addCrimped;
     public EPlate attached;
 
-    public float diffX, diffY;
+    public float diffX, diffY, cableDX, cableDY;
 
     public Hardware() {}
 
@@ -469,8 +469,10 @@ public abstract class Hardware implements Json.Serializable {
 
 
     public void editWire(Cable cable, int port, boolean endOfWire) {
-        cable.editCoordinates(calculate(port), endOfWire, true);
-        cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2), endOfWire, false);
+        cableDX = cable.getCoordinate(endOfWire).x - getConnector(port).getX() - getConnector(port).getWidth() / 2;
+        cableDY = cable.getCoordinate(endOfWire).y - getConnector(port).getY() - getConnector(port).getHeight() / 2;
+
+        cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
     }
 
     public void renderConnectors(Batch batch) {

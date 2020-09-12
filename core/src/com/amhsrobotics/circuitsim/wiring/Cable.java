@@ -788,6 +788,21 @@ public class Cable implements Json.Serializable {
         }
     }
 
+    public void moveEntireCable(float x, float y, boolean endOfWire) {
+        for(int i = 0; i < coordinates.size(); i++) {
+            if((!endOfWire || connection1 == null || (i != 0 && i != 1)) && (endOfWire || connection2 == null || (i != coordinates.size()-1 && i != coordinates.size()-2))) {
+                coordinates.set(i, new Vector2(coordinates.get(i).x+x, coordinates.get(i).y + y));
+            }
+        }
+    }
+
+    public Vector2 getCoordinate(boolean endOfWire) {
+        if(endOfWire) {
+            return coordinates.get(coordinates.size()-1);
+        }
+        return coordinates.get(0);
+    }
+
     public void removeCoordinates() {
         coordinates.clear();
     }
