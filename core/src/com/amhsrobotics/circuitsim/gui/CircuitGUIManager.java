@@ -6,7 +6,6 @@ import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
@@ -23,8 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -32,10 +29,9 @@ import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CircuitGUIManager {
 
@@ -49,9 +45,7 @@ public class CircuitGUIManager {
     private static Window saveMenu;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
-    private final ArrayList<TextButton> deviceButtons = new ArrayList<>();
-    private final HashMap<TextButton, String> categories = new HashMap<>();
-    private Map<String, ArrayList<TextButton>> reverseMap;
+    private Map<String, LinkedList<TextButton>> reverseMap;
 
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
@@ -136,10 +130,18 @@ public class CircuitGUIManager {
 
         JSONReader.loadConfig("scripts/gui/elements.json");
 
+        reverseMap = new HashMap<String, LinkedList<TextButton>>() {{
+            put("wiring", new LinkedList<>());
+            put("control", new LinkedList<>());
+            put("pneumatics", new LinkedList<>());
+            put("motors", new LinkedList<>());
+        }};
+
         for(Object o : JSONReader.getCurrentConfig().keySet()) {
             TextButton t = new TextButton((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), tStyle);
             t.addListener(new TextTooltip((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("tooltip"), ttStyle));
-            categories.put(t, (String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category"));
+            reverseMap.get((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category")).add(t);
+//            categories.put(t, (String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category"));
             HardwareType buttonType = null;
             for(HardwareType type : HardwareType.values()) {
                 if(type.name().equalsIgnoreCase((String) o)) {
@@ -156,17 +158,11 @@ public class CircuitGUIManager {
             });
         }
 
-        reverseMap = new HashMap<>(
-                categories.entrySet().stream()
-                        .collect(Collectors.groupingBy(Map.Entry::getValue)).values().stream()
-                        .collect(Collectors.toMap(
-                                item -> item.get(0).getValue(),
-                                item -> new ArrayList<>(
-                                        item.stream()
-                                                .map(Map.Entry::getKey)
-                                                .collect(Collectors.toList())
-                                ))
-                        ));
+        for(String s : reverseMap.keySet()) {
+            for(TextButton t : reverseMap.get(s)) {
+                System.out.println(t.getText());
+            }
+        }
 
         filters = new Table();
         filters.setBackground(Constants.SKIN.getDrawable("textbox_01"));
@@ -674,9 +670,5 @@ public class CircuitGUIManager {
             table.row();
             table.add(t).width(150);
         }
-    }
-
-    public ArrayList<TextButton> getDeviceButtons() {
-        return deviceButtons;
     }
 }
