@@ -343,7 +343,7 @@ public class CircuitGUIManager {
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
         helpMenu = new Window("Help", wStyle);
         helpMenu.setWidth(500);
-        helpMenu.setHeight(600);
+        helpMenu.setHeight(650);
         helpMenu.setKeepWithinStage(false);
         helpMenu.setMovable(false);
         helpMenu.setPosition(-700, -700);
@@ -483,13 +483,13 @@ public class CircuitGUIManager {
 
     private void showHelpMenu() {
         hideOptionsMenu();
-        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 80);
-        Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 600);
+        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 30);
+        Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 700);
         helpMenuShown = true;
     }
 
     private void hideHelpMenu() {
-        Tools.slideOut(helpMenu, "down", 1f, Interpolation.exp10, 700);
+        Tools.slideOut(helpMenu, "down", 1f, Interpolation.exp10, 800);
         helpMenuShown = false;
     }
 

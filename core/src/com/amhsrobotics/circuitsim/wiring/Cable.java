@@ -318,8 +318,6 @@ public class Cable implements Json.Serializable {
 
         if(CableManager.currentCable == this) {
 
-            CableManager.moveToFront(this);
-
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -357,6 +355,7 @@ public class Cable implements Json.Serializable {
                     appendingFromEnd = false;
 
                 }
+
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
@@ -501,7 +500,7 @@ public class Cable implements Json.Serializable {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-            if(getConnection(!appendingFromBegin) == clist.get(0)) {
+            if(getConnection(!appendingFromBegin) == clist.get(0) && (appendingFromBegin || appendingFromEnd)) {
                 CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
                 appendingFromEnd = false;
                 appendingFromBegin = false;
@@ -523,7 +522,7 @@ public class Cable implements Json.Serializable {
 
             if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {
 
-                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
+                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge && (CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
                 } else {
                     appendingFromBegin = true;
@@ -532,7 +531,7 @@ public class Cable implements Json.Serializable {
                 }
             } else if (hoveringOnEndpoint(camera) == 2 && !disableEnd) {
 
-                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge) {
+                if (CableManager.currentCable != null && CableManager.currentCable != this && CableManager.currentCable.gauge != this.gauge && (CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) {
                     CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
                 } else {
                     appendingFromEnd = true;
@@ -557,6 +556,13 @@ public class Cable implements Json.Serializable {
                     CableManager.currentCable.appendingFromEnd = false;
                 }
                 CableManager.currentCable = this;
+                CableManager.moveToFront(this);
+                if(connection1 != null) {
+                    HardwareManager.moveToFront(connection1);
+                }
+                if(connection2 != null) {
+                    HardwareManager.moveToFront(connection2);
+                }
                 HardwareManager.currentHardware = null;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
