@@ -32,12 +32,10 @@ public class PressureSwitch extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(port < 3) {
-            return calculateDirection(cur+2, port);
-        } else if (port < 5) {
-            return calculateDirection(cur, port);
+        if(port == 1) {
+            return calculateDirection(cur+1, port);
         } else {
-            return calculateDirection(cur+3, port);
+            return calculateDirection(cur+1, port);
         }
     }
 }
