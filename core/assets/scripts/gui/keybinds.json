@@ -6,8 +6,6 @@
   "SCROLL + LALT": "Horizontal scroll grid",
   "ESCAPE": "Remove focus from device",
   "GRID CLICK": "Remove focus from device",
-  "[": "Move hardware forward",
-  "]": "Move hardware backwards",
   "SHIFT + [": "Move hardware to front",
   "SHIFT + ]": "Move hardware to back",
   "GRID DRAG": "Pan around the grid",
