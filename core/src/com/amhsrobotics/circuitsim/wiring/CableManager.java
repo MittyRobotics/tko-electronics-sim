@@ -148,7 +148,7 @@ public class CableManager {
         return null;
     }
 
-    public static void addCable(float startX, float startY) {
+    private static void addCableLib(int type, float startX, float startY) {
         boolean good = true;
         Iterator<Cable> iterator = cables.iterator();
         while(iterator.hasNext()) {
@@ -158,7 +158,21 @@ public class CableManager {
             }
         }
         if(good) {
-            Cable temp = new Cable(new Vector2(startX, startY), id);
+            Cable temp = null;
+            switch(type) {
+                case 0:
+                    temp = new Cable(new Vector2(startX, startY), id);
+                    break;
+                case 1:
+                    temp = new EthernetCable(new Vector2(startX, startY), id);
+                    break;
+                case 2:
+                    temp = new Tubing(new Vector2(startX, startY), id);
+                    break;
+                case 3:
+                    temp = new CurvedCable(new Vector2(startX, startY), id);
+                    break;
+            }
             id++;
 
             currentCable = temp;
@@ -166,44 +180,24 @@ public class CableManager {
             temp.setAppendingFromEnd(true);
             cables.add(temp);
         }
+    }
+
+    public static void addCable(float startX, float startY) {
+        addCableLib(0, startX, startY);
     }
 
     public static void addEthernet(float startX, float startY) {
-        boolean good = true;
-        Iterator<Cable> iterator = cables.iterator();
-        while(iterator.hasNext()) {
-            if (iterator.next().pointIsOnEndpoint(startX, startY) != 0) {
-                good = false;
-                break;
-            }
-        }
-        if(good) {
-            EthernetCable temp = new EthernetCable(new Vector2(startX, startY), id);
-            id++;
-            currentCable = temp;
+        addCableLib(1, startX, startY);
 
-            temp.setAppendingFromEnd(true);
-            cables.add(temp);
-        }
     }
 
     public static void addTubing(float startX, float startY) {
-        boolean good = true;
-        Iterator<Cable> iterator = cables.iterator();
-        while(iterator.hasNext()) {
-            if (iterator.next().pointIsOnEndpoint(startX, startY) != 0) {
-                good = false;
-                break;
-            }
-        }
-        if(good) {
-            Tubing temp = new Tubing(new Vector2(startX, startY), id);
-            id++;
-            currentCable = temp;
+        addCableLib(2, startX, startY);
 
-            temp.setAppendingFromEnd(true);
-            cables.add(temp);
-        }
+    }
+
+    public static void addCurvedCable(float x, float y) {
+        addCableLib(3, x, y);
     }
 
     public static void deleteCable(Cable cable) {

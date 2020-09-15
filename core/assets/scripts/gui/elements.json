@@ -2,8 +2,14 @@
   "elements": [
     {
       "objectName": "WIRE",
-      "name": "Cable",
-      "tooltip": "An adjustable hardware to hardware wire",
+      "name": "Jointed Cable",
+      "tooltip": "An adjustable hardware to hardware wire - multiple joints",
+      "category": "wiring"
+    },
+    {
+      "objectName": "CURVEDCABLE",
+      "name": "Curved Cable",
+      "tooltip": "An adjustable hardware to hardware wire - 2 joints, curved wire",
       "category": "wiring"
     },
     {

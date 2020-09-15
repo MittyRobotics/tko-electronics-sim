@@ -155,7 +155,7 @@ public class CircuitScreen implements Screen {
             if(currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.setPosition(vec2.x, vec2.y);
             } else {
-                if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING) {
+                if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING || Constants.placing_object == HardwareType.CURVEDCABLE) {
                     drawPlacing(vec2.x, vec2.y);
                 } else if(Constants.placing_object != null) {
                     currentPlacingHardware = HardwareManager.switchCaseHardware(Constants.placing_object, vec2.x, vec2.y, false);
@@ -165,7 +165,7 @@ public class CircuitScreen implements Screen {
                 }
             }
 
-            if (Constants.placing_object != HardwareType.WIRE && Constants.placing_object != HardwareType.ETHERNET && Constants.placing_object != HardwareType.TUBING) {
+            if (Constants.placing_object != HardwareType.WIRE && Constants.placing_object != HardwareType.ETHERNET && Constants.placing_object != HardwareType.TUBING && Constants.placing_object != HardwareType.CURVEDCABLE) {
                 handleHardware(Constants.placing_object);
             } else {
                 handleCable();
@@ -198,7 +198,7 @@ public class CircuitScreen implements Screen {
 
 
         if(Constants.placing_object != null) {
-            if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING) {
+            if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING || Constants.placing_object == HardwareType.CURVEDCABLE) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
                 currentPlacingHardware.updatePosition(camera, renderer, batch);
@@ -273,6 +273,8 @@ public class CircuitScreen implements Screen {
                 CableManager.addEthernet(vec2.x, vec2.y);
             } else if (Constants.placing_object == HardwareType.TUBING) {
                 CableManager.addTubing(vec2.x, vec2.y);
+            } else if (Constants.placing_object == HardwareType.CURVEDCABLE) {
+                    CableManager.addCurvedCable(vec2.x, vec2.y);
             } else {
                 CableManager.addCable(vec2.x, vec2.y);
             }
