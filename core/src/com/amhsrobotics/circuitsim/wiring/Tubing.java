@@ -76,10 +76,10 @@ public class Tubing extends Cable {
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
         if(!appendingFromBegin) {
-            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 2f);
+            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, 1);
         }
         if(!appendingFromEnd) {
-            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 2f);
+            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, 1);
         }
 
     }
@@ -88,7 +88,7 @@ public class Tubing extends Cable {
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
         renderer.setColor(Color.WHITE);
         for(Vector2 coords : coordinates) {
-            renderer.circle(coords.x, coords.y, limit3);
+            renderer.circle(coords.x, coords.y, 1);
         }
         processNodes(renderer, cam);
     }
