@@ -258,7 +258,7 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (!(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && !CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (!(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd || CableManager.currentCable.movingNode != null)))) {
             if (Gdx.input.isTouched() && checkGood()) {
 
                 if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
