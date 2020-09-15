@@ -38,6 +38,8 @@ public class DeviceUtil {
         put("2", "Tubing");
     }};
 
+    public static final String[] HARDWARE_IN_ORDER = new String[]{"WIRE", "DOUBLESANDCRAB", "TRIPLESANDCRAB", "PDP", "VRM", "ROBORIO", "TALON", "PCM", "SPARK", "MOTOR775", "FALCON", "NEO", "BREAKER", "BATTERY", "RADIO", "ETHERNET", "TUBING", "EPLATE", "DOUBLESOLENOID", "SINGLESOLENOID", "PRESSURESWITCH", "PISTON", "MANIFOLD", "TANK", "COMPRESSOR"};
+
     public static final HashMap<Float, Float> GAUGETOLIMIT = new HashMap<Float, Float>() {{
         put(22f, 5f);
         put(18f, 8f);

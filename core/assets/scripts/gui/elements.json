@@ -17,7 +17,7 @@
   "BATTERY": {
     "name": "Battery",
     "tooltip": "A 12 Volt battery to power the circuit",
-    "category": "control"
+    "category": "wiring"
   },
   "DOUBLESOLENOID": {
     "name": "Double Solenoid",
@@ -47,7 +47,7 @@
   "TALON": {
     "name": "Talon",
     "tooltip": "Talon SRX Smart Motor Controller, controls 775 motors",
-    "category": "control"
+    "category": "motors"
   },
   "PCM": {
     "name": "PCM",
@@ -55,9 +55,9 @@
     "category": "control"
   },
   "SPARK": {
-  "name": "SPARK MAX",
-  "tooltip": "SPARK MAX Motor Controller, controls NEO motors",
-  "category": "control"
+    "name": "SPARK MAX",
+    "tooltip": "SPARK MAX Motor Controller, controls NEO motors",
+    "category": "motors"
   },
   "NEO": {
     "name": "NEO",
@@ -67,7 +67,7 @@
   "BREAKER": {
     "name": "Breaker",
     "tooltip": "Main Circuit Breaker to cut the power",
-    "category": "control"
+    "category": "wiring"
   },
   "MOTOR775": {
     "name": "775",

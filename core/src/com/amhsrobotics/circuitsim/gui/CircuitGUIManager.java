@@ -6,6 +6,7 @@ import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
@@ -137,14 +138,14 @@ public class CircuitGUIManager {
             put("motors", new LinkedList<>());
         }};
 
-        for(Object o : JSONReader.getCurrentConfig().keySet()) {
+        for(String o : DeviceUtil.HARDWARE_IN_ORDER) {
+            Gdx.app.log((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), "");
             TextButton t = new TextButton((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), tStyle);
             t.addListener(new TextTooltip((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("tooltip"), ttStyle));
             reverseMap.get((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category")).add(t);
-//            categories.put(t, (String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category"));
             HardwareType buttonType = null;
             for(HardwareType type : HardwareType.values()) {
-                if(type.name().equalsIgnoreCase((String) o)) {
+                if(type.name().equalsIgnoreCase(o)) {
                     buttonType = type;
                 }
             }
@@ -156,12 +157,6 @@ public class CircuitGUIManager {
                     buttonDecline();
                 }
             });
-        }
-
-        for(String s : reverseMap.keySet()) {
-            for(TextButton t : reverseMap.get(s)) {
-                System.out.println(t.getText());
-            }
         }
 
         filters = new Table();
