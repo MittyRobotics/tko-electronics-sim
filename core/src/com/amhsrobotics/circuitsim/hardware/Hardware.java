@@ -73,6 +73,7 @@ public abstract class Hardware implements Json.Serializable {
             crimpedPortColors = new ArrayList<>();
 
             canMove = false;
+            HardwareManager.movingObject = false;
 
             if(addCrimped.length > 0) {
                 this.addCrimped = addCrimped[0];
@@ -95,7 +96,11 @@ public abstract class Hardware implements Json.Serializable {
     public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
         position = Tools.mouseScreenToWorld(camera);
 
-        base.setCenter(getPosition().x, getPosition().y);
+        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+            SnapGrid.calculateSnap(position);
+        }
+
+        base.setCenter(position.x, position.y);
         batch.begin();
         base.draw(batch);
         batch.end();
@@ -349,8 +354,8 @@ public abstract class Hardware implements Json.Serializable {
                 this.delete();
             }
 
-            if (Gdx.input.isTouched() && canMove && checkGood()) {
-                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            if (Gdx.input.isTouched() && canMove) {
+                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     SnapGrid.calculateSnap(vec);
                 }
 
@@ -400,7 +405,7 @@ public abstract class Hardware implements Json.Serializable {
 
     public boolean checkGood() {
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()));
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject && !CableManager.movingCable);
     }
 
     public void processFlip() {}

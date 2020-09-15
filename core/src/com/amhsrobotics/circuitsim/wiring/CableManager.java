@@ -22,6 +22,8 @@ public class CableManager {
 
     public static Cable toBeMovedForward;
 
+    public static boolean movingCable = false;
+
     public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
         if(toBeMovedForward != null) {
             int i = cables.indexOf(toBeMovedForward, true);

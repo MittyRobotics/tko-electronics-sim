@@ -33,23 +33,16 @@ import java.util.stream.Collectors;
 
 public class Cable implements Json.Serializable {
 
-    public float voltage;
-    public float gauge;
-    public Color color, nodeColor;
-    public Color hoverColor = Color.WHITE;
+    public float voltage, gauge, x1, x2, y1, y2, a, limit, limit2, limit3;
+    public Color color, nodeColor, hoverColor = Color.WHITE;
     public ArrayList<Vector2> coordinates;
     public Hardware connection1, connection2;
-    public float x1, x2, y1, y2, a;
 
-    public boolean appendingFromEnd, appendingFromBegin;
-    public boolean nodeChanged = false;
-    public Vector2 movingNode, backupNode;
-
-    public boolean disableEnd, disableBegin;
+    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false;
+    public Vector2 movingNode, backupNode, prevPos;
 
     public int ID;
 
-    public float limit, limit2, limit3;
 
     public Cable() {}
 
@@ -228,7 +221,7 @@ public class Cable implements Json.Serializable {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
 
@@ -320,7 +313,7 @@ public class Cable implements Json.Serializable {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
 
@@ -356,6 +349,12 @@ public class Cable implements Json.Serializable {
 
                 }
 
+                if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && checkGood() && canMove) {
+                    Vector2 diff = Tools.mouseScreenToWorld(camera).sub(prevPos);
+                    prevPos = Tools.mouseScreenToWorld(camera);
+                    moveEntireCable(diff.x, diff.y);
+                }
+
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood()) {
@@ -364,39 +363,37 @@ public class Cable implements Json.Serializable {
                         CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
                     }
-                    if(!CircuitGUIManager.isPanelShown() || Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) {
-                        HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
+                    HashMap<Hardware, Integer> hardware = HardwareManager.wireHoveringHardware(vec2);
 
-                        if (hardware != null) {
-                            // HARDWARE
-                            processHardwareClick(hardware);
-                        } else {
-                            // ADD NEW POINT
-                            if (checkBeforeClick(camera) && appendingFromEnd && !disableEnd) {
-                                if(!CircuitGUIManager.propertiesBox.hovering) {
-                                    addCoordinates(new Vector2(vec2.x, vec2.y), false);
-                                } else {
-                                    appendingFromEnd = false;
-                                }
-                            } else if (checkBeforeClick(camera) && appendingFromBegin && !disableBegin) {
-                                if(!CircuitGUIManager.propertiesBox.hovering) {
-                                    addCoordinates(new Vector2(vec2.x, vec2.y), true);
-                                } else {
-                                    appendingFromBegin = false;
-                                }
-                            } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                                if(coordinates.contains(movingNode)) {
-                                    coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
-                                }
-                                movingNode = null;
-                                backupNode = null;
-                                nodeChanged = true;
-                            } else if (!hoveringMouse(camera)) {
+                    if (hardware != null) {
+                        // HARDWARE
+                        processHardwareClick(hardware);
+                    } else {
+                        // ADD NEW POINT
+                        if (checkBeforeClick(camera) && appendingFromEnd && !disableEnd) {
+                            if(!CircuitGUIManager.propertiesBox.hovering) {
+                                addCoordinates(new Vector2(vec2.x, vec2.y), false);
+                            } else {
                                 appendingFromEnd = false;
-                                appendingFromBegin = false;
-                                movingNode = null;
-                                backupNode = null;
                             }
+                        } else if (checkBeforeClick(camera) && appendingFromBegin && !disableBegin) {
+                            if(!CircuitGUIManager.propertiesBox.hovering) {
+                                addCoordinates(new Vector2(vec2.x, vec2.y), true);
+                            } else {
+                                appendingFromBegin = false;
+                            }
+                        } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
+                            if(coordinates.contains(movingNode)) {
+                                coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
+                            }
+                            movingNode = null;
+                            backupNode = null;
+                            nodeChanged = true;
+                        } else if (!hoveringMouse(camera)) {
+                            appendingFromEnd = false;
+                            appendingFromBegin = false;
+                            movingNode = null;
+                            backupNode = null;
                         }
                     }
 
@@ -463,6 +460,16 @@ public class Cable implements Json.Serializable {
         if(hoveringMouse(camera)) {
             drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
+            if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
+                canMove = true;
+                CableManager.movingCable = true;
+                prevPos = Tools.mouseScreenToWorld(camera);
+            }
+        } else {
+            if(!Gdx.input.isButtonPressed(0)) {
+                canMove = false;
+                CableManager.movingCable = false;
+            }
         }
 
         // ---------------------------------------------------------------------
@@ -489,7 +496,7 @@ public class Cable implements Json.Serializable {
 
     public boolean checkGood() {
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()));
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject && !CableManager.movingCable);
     }
 
 
@@ -522,7 +529,7 @@ public class Cable implements Json.Serializable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if((HardwareManager.getCurrentlyHovering(camera) == null && (CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood())) {
+        if(((HardwareManager.getCurrentlyHovering(camera) == null || HardwareManager.getCurrentlyHovering(camera).connections.contains(this, true)) && (CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood())) {
             // CLICKED ON END
 
             if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {
