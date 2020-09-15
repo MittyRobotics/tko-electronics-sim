@@ -1,127 +1,154 @@
 {
-  "WIRE": {
-    "name": "Cable",
-    "tooltip": "An adjustable hardware to hardware wire",
-    "category": "wiring"
-  },
-  "DOUBLESANDCRAB": {
-    "name": "Double WAGO",
-    "tooltip": "A connector that connects two wires together",
-    "category": "wiring"
-  },
-  "TRIPLESANDCRAB": {
-    "name": "Triple WAGO",
-    "tooltip": "A connector with 1 input and 2 outputs",
-    "category": "wiring"
-  },
-  "BATTERY": {
-    "name": "Battery",
-    "tooltip": "A 12 Volt battery to power the circuit",
-    "category": "wiring"
-  },
-  "DOUBLESOLENOID": {
-    "name": "Double Solenoid",
-    "tooltip": "Electronic air control for two pistons",
-    "category": "pneumatics"
-  },
-  "SINGLESOLENOID": {
-    "name": "Single Solenoid",
-    "tooltip": "lectronic air control for one piston",
-    "category": "pneumatics"
-  },
-  "PDP": {
-    "name": "PDP",
-    "tooltip": "Power Distribution Panel to distribute power to various components",
-    "category": "control"
-  },
-  "VRM": {
-    "name": "VRM",
-    "tooltip": "Voltage Regulation Module to adjust voltage",
-    "category": "control"
-  },
-  "ROBORIO": {
-    "name": "roboRIO",
-    "tooltip": "roboRIO Advanced Robotics Controller, the onboard computer",
-    "category": "control"
-  },
-  "TALON": {
-    "name": "Talon",
-    "tooltip": "Talon SRX Smart Motor Controller, controls 775 motors",
-    "category": "motors"
-  },
-  "PCM": {
-    "name": "PCM",
-    "tooltip": "Pneumatics Control Module, controls pneumatics components",
-    "category": "control"
-  },
-  "SPARK": {
-    "name": "SPARK MAX",
-    "tooltip": "SPARK MAX Motor Controller, controls NEO motors",
-    "category": "motors"
-  },
-  "NEO": {
-    "name": "NEO",
-    "tooltip": "NEO Brushless Motor, uses SPARK MAX controllers",
-    "category": "motors"
-  },
-  "BREAKER": {
-    "name": "Breaker",
-    "tooltip": "Main Circuit Breaker to cut the power",
-    "category": "wiring"
-  },
-  "MOTOR775": {
-    "name": "775",
-    "tooltip": "775 RedLine Motor, uses Talon controllers",
-    "category": "motors"
-  },
-  "FALCON": {
-    "name": "Falcon",
-    "tooltip": "Falcon 500 Brushless Motor, builtin controller",
-    "category": "motors"
-  },
-  "RADIO": {
-    "name": "Radio",
-    "tooltip": "Radio to communicate with the driver",
-    "category": "control"
-  },
-  "ETHERNET": {
-    "name": "Ethernet",
-    "tooltip": "Ethernet cable for WiFi",
-    "category": "wiring"
-  },
-  "TUBING": {
-    "name": "Tubing",
-    "tooltip": "Adjustable pneumatics tubing",
-    "category": "pneumatics"
-  },
-  "EPLATE": {
-    "name": "E-Plate",
-    "tooltip": "Electronics Plate to hold hardware in place",
-    "category": "control"
-  },
-  "PRESSURESWITCH": {
-    "name": "Pressure Switch",
-    "tooltip": "Pneumatics pressure switch to adjust air pressure",
-    "category": "pneumatics"
-  },
-  "PISTON": {
-    "name": "Piston",
-    "tooltip": "Pneumatics piston moved with pressured air",
-    "category": "pneumatics"
-  },
-  "MANIFOLD": {
-    "name": "Manifold",
-    "tooltip": "Pneumatics manifold to distribute air across multiple components",
-    "category": "pneumatics"
-  },
-  "TANK": {
-    "name": "Tank",
-    "tooltip": "Pneumatics tank to hold pressured air",
-    "category": "pneumatics"
-  },
-  "COMPRESSOR": {
-    "name": "Compressor",
-    "tooltip": "Pneumatics compressor to increase air pressure",
-    "category": "pneumatics"
-  }
+  "elements": [
+    {
+      "objectName": "WIRE",
+      "name": "Cable",
+      "tooltip": "An adjustable hardware to hardware wire",
+      "category": "wiring"
+    },
+    {
+      "objectName": "DOUBLESANDCRAB",
+      "name": "Double WAGO",
+      "tooltip": "A connector that connects two wires together",
+      "category": "wiring"
+    },
+    {
+      "objectName": "TRIPLESANDCRAB",
+      "name": "Triple WAGO",
+      "tooltip": "A connector with 1 input and 2 outputs",
+      "category": "wiring"
+    },
+    {
+      "objectName": "PDP",
+      "name": "PDP",
+      "tooltip": "Power Distribution Panel to distribute power to various components",
+      "category": "control"
+    },
+    {
+      "objectName": "VRM",
+      "name": "VRM",
+      "tooltip": "Voltage Regulation Module to adjust voltage",
+      "category": "control"
+    },
+    {
+      "objectName": "ROBORIO",
+      "name": "roboRIO",
+      "tooltip": "roboRIO Advanced Robotics Controller, the onboard computer",
+      "category": "control"
+    },
+    {
+      "objectName": "TALON",
+      "name": "Talon",
+      "tooltip": "Talon SRX Smart Motor Controller, controls 775 motors",
+      "category": "control"
+    },
+    {
+      "objectName": "PCM",
+      "name": "PCM",
+      "tooltip": "Pneumatics Control Module, controls pneumatics components",
+      "category": "control"
+    },
+    {
+      "objectName": "SPARK",
+      "name": "SPARK MAX",
+      "tooltip": "SPARK MAX Motor Controller, controls NEO motors",
+      "category": "control"
+    },
+    {
+      "objectName": "MOTOR775",
+      "name": "775",
+      "tooltip": "775 RedLine Motor, uses Talon controllers",
+      "category": "motors"
+    },
+    {
+      "objectName": "FALCON",
+      "name": "Falcon",
+      "tooltip": "Falcon 500 Brushless Motor, builtin controller",
+      "category": "motors"
+    },
+    {
+      "objectName": "NEO",
+      "name": "NEO",
+      "tooltip": "NEO Brushless Motor, uses SPARK MAX controllers",
+      "category": "motors"
+    },
+    {
+      "objectName": "BREAKER",
+      "name": "Breaker",
+      "tooltip": "Main Circuit Breaker to cut the power",
+      "category": "control"
+    },
+    {
+      "objectName": "BATTERY",
+      "name": "Battery",
+      "tooltip": "A 12 Volt battery to power the circuit",
+      "category": "control"
+    },
+    {
+      "objectName": "RADIO",
+      "name": "Radio",
+      "tooltip": "Radio to communicate with the driver",
+      "category": "control"
+    },
+    {
+      "objectName": "ETHERNET",
+      "name": "Ethernet",
+      "tooltip": "Ethernet cable for WiFi",
+      "category": "wiring"
+    },
+    {
+      "objectName": "TUBING",
+      "name": "Tubing",
+      "tooltip": "Adjustable pneumatics tubing",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "EPLATE",
+      "name": "E-Plate",
+      "tooltip": "Electronics Plate to hold hardware in place",
+      "category": "control"
+    },
+    {
+      "objectName": "DOUBLESOLENOID",
+      "name": "Double Solenoid",
+      "tooltip": "Electronic air control for two pistons",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "SINGLESOLENOID",
+      "name": "Single Solenoid",
+      "tooltip": "Electronic air control for one piston",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "PRESSURESWITCH",
+      "name": "Pressure Switch",
+      "tooltip": "Pneumatics pressure switch to adjust air pressure",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "PISTON",
+      "name": "Piston",
+      "tooltip": "Pneumatics piston moved with pressured air",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "MANIFOLD",
+      "name": "Manifold",
+      "tooltip": "Pneumatics manifold to distribute air across multiple components",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "TANK",
+      "name": "Tank",
+      "tooltip": "Pneumatics tank to hold pressured air",
+      "category": "pneumatics"
+    },
+    {
+      "objectName": "COMPRESSOR",
+      "name": "Compressor",
+      "tooltip": "Pneumatics compressor to increase air pressure",
+      "category": "pneumatics"
+    }
+  ]
 }

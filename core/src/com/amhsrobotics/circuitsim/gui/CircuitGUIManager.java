@@ -6,7 +6,6 @@ import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
@@ -26,6 +25,7 @@ import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -138,14 +138,15 @@ public class CircuitGUIManager {
             put("motors", new LinkedList<>());
         }};
 
-        for(String o : DeviceUtil.HARDWARE_IN_ORDER) {
-            Gdx.app.log((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), "");
-            TextButton t = new TextButton((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("name"), tStyle);
-            t.addListener(new TextTooltip((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("tooltip"), ttStyle));
-            reverseMap.get((String) ((JSONObject)JSONReader.getCurrentConfig().get(o)).get("category")).add(t);
+        JSONArray elementList = (JSONArray) JSONReader.getCurrentConfig().get("elements");
+
+        for(Object o : elementList) {
+            TextButton t = new TextButton((String) ((JSONObject) o).get("name"), tStyle);
+            t.addListener(new TextTooltip((String) ((JSONObject) o).get("tooltip"), ttStyle));
+            reverseMap.get((String) ((JSONObject) o).get("category")).add(t);
             HardwareType buttonType = null;
             for(HardwareType type : HardwareType.values()) {
-                if(type.name().equalsIgnoreCase(o)) {
+                if(type.name().equalsIgnoreCase((String) ((JSONObject) o).get("objectName"))) {
                     buttonType = type;
                 }
             }
@@ -190,7 +191,7 @@ public class CircuitGUIManager {
         fil1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               filterProcess(fil1);
+                filterProcess(fil1);
             }
         });
         fil2.addListener(new ChangeListener() {
@@ -338,7 +339,7 @@ public class CircuitGUIManager {
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
         helpMenu = new Window("Help", wStyle);
         helpMenu.setWidth(500);
-        helpMenu.setHeight(650);
+        helpMenu.setHeight(600);
         helpMenu.setKeepWithinStage(false);
         helpMenu.setMovable(false);
         helpMenu.setPosition(-700, -700);
@@ -478,13 +479,13 @@ public class CircuitGUIManager {
 
     private void showHelpMenu() {
         hideOptionsMenu();
-        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 30);
-        Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 700);
+        helpMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - helpMenu.getWidth() / 2, 80);
+        Tools.slideIn(helpMenu, "down", 1f, Interpolation.exp10, 600);
         helpMenuShown = true;
     }
 
     private void hideHelpMenu() {
-        Tools.slideOut(helpMenu, "down", 1f, Interpolation.exp10, 800);
+        Tools.slideOut(helpMenu, "down", 1f, Interpolation.exp10, 700);
         helpMenuShown = false;
     }
 
@@ -507,7 +508,7 @@ public class CircuitGUIManager {
             } else {
                 Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
             }
-                if(Float.parseFloat(gridSizingX.getText()) > 15000) {
+            if(Float.parseFloat(gridSizingX.getText()) > 15000) {
                 popup.activateError("Maximum X of 15000 required");
             } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
                 popup.activateError("Minimum X of 2000 required");
@@ -604,17 +605,17 @@ public class CircuitGUIManager {
 
             if(filtersMap.get(fil2)) {
                 //Control
-               filterControl();
+                filterControl();
             }
 
             if(filtersMap.get(fil3)) {
                 //Motors
-               filterMotors();
+                filterMotors();
             }
 
             if(filtersMap.get(fil4)){
                 //Pneumatics
-               filterPneumatics();
+                filterPneumatics();
             }
         }
 
