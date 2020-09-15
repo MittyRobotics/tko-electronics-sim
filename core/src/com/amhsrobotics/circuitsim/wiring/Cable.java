@@ -368,6 +368,14 @@ public class Cable implements Json.Serializable {
                     if (hardware != null) {
                         // HARDWARE
                         processHardwareClick(hardware);
+                        disableBegin = connection1 != null;
+                        disableEnd = connection2 != null;
+                        if(disableBegin) {
+                            appendingFromBegin = false;
+                        }
+                        if(disableEnd) {
+                            appendingFromEnd = false;
+                        }
                     } else {
                         // ADD NEW POINT
                         if (checkBeforeClick(camera) && appendingFromEnd && !disableEnd) {
@@ -526,13 +534,16 @@ public class Cable implements Json.Serializable {
                 } else if (appendingFromBegin) {
                     clist.get(0).attachWire(this, hardware.get(clist.get(0)), false);
                 }
+                appendingFromEnd = false;
+                appendingFromBegin = false;
             }
 
         }
+        Gdx.app.log(appendingFromBegin+"", appendingFromEnd+"");
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if(((HardwareManager.getCurrentlyHovering(camera) == null || HardwareManager.getCurrentlyHovering(camera).connections.contains(this, true)) && (CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood())) {
+        if(((HardwareManager.getCurrentlyHovering(camera) == null || HardwareManager.getCurrentlyHovering(camera).connections.contains(this, true)) && (((CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge)) && !(CableManager.currentCable == this)) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood())) {
             // CLICKED ON END
 
             if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {
