@@ -1,0 +1,20 @@
+{
+  "DELETE": "Remove a node or device",
+  "LSHIFT": "Snap node or device to grid",
+  "SCROLL": "Zoom in/out grid",
+  "SCROLL + LSHIFT": "Vertical scroll grid",
+  "SCROLL + LALT": "Horizontal scroll grid",
+  "ESCAPE": "Remove focus from device",
+  "GRID CLICK": "Remove focus from device",
+  "SHIFT + [": "Move hardware to front",
+  "SHIFT + ]": "Move hardware to back",
+  "GRID DRAG": "Pan around the grid",
+  "CTRL + SHIFT + /": "Help Menu",
+  "CTRL + SHIFT + .": "Options Menu",
+  "SELECT DEVICE + R": "Rotate Device",
+  "DOUBLE CLICK PORT": "Attach cable",
+  "CTRL + S": "Save",
+  "CTRL + SHIFT + S": "Save As"
+
+}
+

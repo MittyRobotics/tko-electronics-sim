@@ -1,0 +1,19 @@
+{
+  "name": "Battery",
+  "totalPins": 2,
+  "totalLeds": 0,
+  "crimped": [],
+  "totalSprites": 3,
+  "pins": [
+    {
+      "type": "4",
+      "position": [-245, 270],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "4",
+      "position": [245, 270],
+      "dimensions": [25, 25]
+    }
+  ]
+}

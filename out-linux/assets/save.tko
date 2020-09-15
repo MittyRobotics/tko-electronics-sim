@@ -1,0 +1,9 @@
+{
+hardware: []
+cables: []
+gridSpacing: 60
+gridSize: {
+	x: 8000
+	y: 8000
+}
+}

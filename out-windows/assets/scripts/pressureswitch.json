@@ -1,0 +1,22 @@
+{
+  "name": "Pressure Switch",
+  "totalPins": 2,
+  "totalLeds": 0,
+  "crimpedColors": [],
+  "crimped": [],
+  "totalSprites": 3,
+  "pins": [
+    {
+      "type": "22",
+      "position": [136, 64],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "22",
+      "position": [136, -64],
+      "dimensions": [15, 15]
+    }
+  ],
+  "leds": [
+  ]
+}

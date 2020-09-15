@@ -1,12 +1,12 @@
 java -jar ~/development/IDEA-JavaProjects/JAR_LIB/packr-all-2.7.0.jar \
-     --platform linux64 \
-     --jdk ~/Downloads/OpenJDK8U-jdk_x64_linux_hotspot_8u265b01.tar.gz \
+     --platform windows64 \
+     --jdk ~/Downloads/OpenJDK8U-jdk_x64_windows_hotspot_8u265b01.zip \
      --useZgcIfSupportedOs \
      --executable CircuitSimulator \
-     --classpath ~/development/FRC_amhsrobotics/TKO1351CircuitSim/desktop-1.0.jar \
-     --removelibs ~/development/FRC_amhsrobotics/TKO1351CircuitSim/desktop-1.0.jar \
+     --classpath ~/development/FRC_amhsrobotics/TKO1351CircuitSim/desktop/build/lib/desktop-1.0.jar \
+     --removelibs ~/development/FRC_amhsrobotics/TKO1351CircuitSim/desktop/build/lib/desktop-1.0.jar \
      --mainclass com.amhsrobotics.circuitsim.desktop.DesktopLauncher \
      --vmargs Xmx1G \
      --resources ~/development/FRC_amhsrobotics/TKO1351CircuitSim/core/assets/ \
      --minimizejre soft \
-     --output out-linux
+     --output out-windows

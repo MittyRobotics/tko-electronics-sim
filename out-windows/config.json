@@ -1,0 +1,10 @@
+{
+  "classPath": [
+    "desktop-1.0.jar"
+  ],
+  "mainClass": "com.amhsrobotics.circuitsim.desktop.DesktopLauncher",
+  "useZgcIfSupportedOs": true,
+  "vmArgs": [
+    "-Xmx1G"
+  ]
+}

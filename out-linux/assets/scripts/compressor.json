@@ -1,0 +1,27 @@
+{
+  "name": "Compressor",
+  "totalPins": 3,
+  "totalLeds": 0,
+  "crimpedColors": [],
+  "crimped": [],
+  "totalSprites": 4,
+  "pins": [
+    {
+      "type": "2",
+      "position": [-67, 0],
+      "dimensions": [20, 20]
+    },
+    {
+      "type": "22",
+      "position": [-237, 45],
+      "dimensions": [20, 20]
+    },
+    {
+      "type": "22",
+      "position": [-237, -45],
+      "dimensions": [8, 8]
+    }
+  ],
+  "leds": [
+  ]
+}
