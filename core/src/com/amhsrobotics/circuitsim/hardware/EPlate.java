@@ -84,10 +84,14 @@ public class EPlate extends Hardware {
             SnapGrid.calculateSnap(vec);
         }
 
+
         if(box.contains(vec.x, vec.y)) {
             drawHover(renderer);
 
-            if((CableManager.currentCable == null || (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd)) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            if((CableManager.currentCable == null || (!CableManager.currentCable.hoveringMouse(camera) && (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd && CableManager.currentCable.movingNode == null))) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood(camera)) {
+                if(CableManager.currentCable != null) {
+                    CableManager.currentCable = null;
+                }
                 HardwareManager.currentHardware = this;
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
@@ -140,7 +144,7 @@ public class EPlate extends Hardware {
 
             if (!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
-                    if (Gdx.input.isTouched()) {
+                    if (Gdx.input.isTouched()  && checkGood(camera)) {
                         if (nodes[x].contains(vec) && (dragging == -1 || dragging == x)) {
                             dragging = x;
                         }
@@ -154,7 +158,7 @@ public class EPlate extends Hardware {
                 }
             }
 
-            if (Gdx.input.isTouched() && dragging == -1) {
+            if (Gdx.input.isTouched() && dragging == -1  && checkGood(camera)) {
 
                 if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
                     if (!HardwareManager.movingObject) {
@@ -199,6 +203,18 @@ public class EPlate extends Hardware {
 
     private void setSelectedNode(int index) {
         nodes[index].setSelected(true);
+    }
+
+    public boolean checkGood(ClippedCameraController camera) {
+        boolean good = true;
+        for(Cable c : CableManager.getCables()) {
+            if(c.hoveringMouse(camera)) {
+                good = false;
+            }
+        }
+
+        return (good && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable);
     }
 
     @Override
