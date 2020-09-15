@@ -451,6 +451,9 @@ public class Cable implements Json.Serializable {
                 }
             }
 
+        } else {
+            canMove = false;
+            CableManager.movingCable = false;
         }
         // ---------------------------------------------------------------------
 
