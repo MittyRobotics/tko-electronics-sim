@@ -204,7 +204,7 @@ public abstract class Hardware implements Json.Serializable {
 
         if(HardwareManager.attachWireOnDoubleClick != null) {
             if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove && connections.get(HardwareManager.attachWireOnDoubleClick.y) == null) {
-                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y)) {
+                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y) && checkGood()) {
                     Cable c;
                     if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
                         c = new EthernetCable(new Vector2(0, 0), CableManager.id);
@@ -225,11 +225,10 @@ public abstract class Hardware implements Json.Serializable {
 
         for(Sprite s : connectors) {
             if(connections.get(connectors.indexOf(s)) == null) {
-                if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
+                if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this && checkGood()) {
                     CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
                     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
                         HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
-//                        LinkTimer.init(3, () -> HardwareManager.attachWireOnDoubleClick = null);
                         Timer timer = new Timer(500, arg0 -> {
                             HardwareManager.attachWireOnDoubleClick = null;
                         });
@@ -246,7 +245,7 @@ public abstract class Hardware implements Json.Serializable {
             drawHover(renderer);
 
             for (Cable c : connections) {
-                if (c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera)) {
+                if (c != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && c.hoveringMouse(camera) && checkGood() && HardwareManager.getCurrentlyHovering(camera) == this) {
                     CableManager.currentCable = c;
                     HardwareManager.currentHardware = null;
                     break;
@@ -254,8 +253,8 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (CableManager.currentCable != null && !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
-            if (Gdx.input.isTouched()) {
+        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && CableManager.currentCable.hoveringMouse(camera)) && (CableManager.currentCable == null || (!(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)))) {
+            if (Gdx.input.isTouched() && checkGood()) {
 
                 if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
                     if(!(HardwareManager.currentHardware != this && HardwareManager.movingObject)) {
@@ -285,13 +284,8 @@ public abstract class Hardware implements Json.Serializable {
                         }
                     }
                 } else {
-//                    LinkTimer.init((int) Gdx.graphics.getDeltaTime() + 3, () -> {
-//                        if (!CircuitGUIManager.propertiesBox.hovering && HardwareManager.currentHardware == Hardware.this) {
-//                            CircuitGUIManager.propertiesBox.hide();
-//                            HardwareManager.currentHardware = null;
-//                        }
-//                    });
-                    if (HardwareManager.currentHardware == Hardware.this && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
+
+                    if (HardwareManager.currentHardware == Hardware.this) {
                         CircuitGUIManager.propertiesBox.hide();
                         HardwareManager.currentHardware = null;
                     }
@@ -355,17 +349,15 @@ public abstract class Hardware implements Json.Serializable {
                 this.delete();
             }
 
-            if (Gdx.input.isTouched() && canMove) {
-                if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
-                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                        SnapGrid.calculateSnap(vec);
-                    }
-
-                    //SET OWN POSITION
-                    setPosition(vec.x + diffX, vec.y + diffY);
+            if (Gdx.input.isTouched() && canMove && checkGood()) {
+                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    SnapGrid.calculateSnap(vec);
                 }
 
+                //SET OWN POSITION
+                setPosition(vec.x + diffX, vec.y + diffY);
             }
+
         }
 
 
@@ -404,6 +396,11 @@ public abstract class Hardware implements Json.Serializable {
             return ((EPlate) this).getBox().contains(vec.x, vec.y);
         }
         return base.getBoundingRectangle().contains(vec.x, vec.y);
+    }
+
+    public boolean checkGood() {
+        return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()));
     }
 
     public void processFlip() {}

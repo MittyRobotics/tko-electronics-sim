@@ -23,6 +23,7 @@ public class DeviceUtil {
 
     public static final LinkedHashMap<String, Color> COLORS_EPLATE = new LinkedHashMap<String, Color>() {{
         //WIRE COLORS
+        put("Plastic", new Color(255f/255f, 255f/255f, 255f/255f, 0.5f));
         put("Lime", new Color(193/255f, 211/255f, 200/255f, 0.5f));
         put("Amber", new Color(240/255f, 214/255f, 166/255f, 0.7f));
         put("Sky", new Color(166/255f, 205/255f, 240/255f, 0.5f));

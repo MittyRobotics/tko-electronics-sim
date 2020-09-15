@@ -327,7 +327,7 @@ public class Cable implements Json.Serializable {
 
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
-            if ((appendingFromBegin || appendingFromEnd) && secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
+            if ((appendingFromBegin || appendingFromEnd) && secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood()) {
                 CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
             } else {
 
@@ -358,7 +358,7 @@ public class Cable implements Json.Serializable {
 
 
                 // CLICK
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210))) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood()) {
                     if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
                         backupNode = null;
                         CircuitGUIManager.propertiesBox.hide();
@@ -487,6 +487,11 @@ public class Cable implements Json.Serializable {
         }
     }
 
+    public boolean checkGood() {
+        return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()));
+    }
+
 
     protected void processHardwareClick(HashMap<Hardware, Integer> hardware) {
         ArrayList<Hardware> clist = new ArrayList<>(hardware.keySet());
@@ -517,7 +522,7 @@ public class Cable implements Json.Serializable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if((CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
+        if((HardwareManager.getCurrentlyHovering(camera) == null && (CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd) || CableManager.currentCable.gauge != this.gauge) && !(CableManager.currentCable == this) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood())) {
             // CLICKED ON END
 
             if (hoveringOnEndpoint(camera) == 1 && !disableBegin) {

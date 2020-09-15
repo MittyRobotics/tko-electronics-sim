@@ -40,7 +40,7 @@ public class EPlate extends Hardware {
     public EPlate(Vector2 pos) {
         super(pos, HardwareType.EPLATE);
 
-        color = new Color(193/255f, 211/255f, 200/255f, 0.5f);
+        color = DeviceUtil.COLORS_EPLATE.get("Plastic");
 
         textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.background = Constants.SKIN.getDrawable("textbox_02");
