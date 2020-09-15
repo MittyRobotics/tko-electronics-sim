@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class Tubing extends Cable {
@@ -27,22 +25,7 @@ public class Tubing extends Cable {
     }
 
     public void populateProperties() {
-        CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label("Tubing - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
+        super.populateProperties("Tubing", false, false, true);
     }
 
     @Override

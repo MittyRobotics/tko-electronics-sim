@@ -43,6 +43,8 @@ public class Cable implements Json.Serializable {
 
     public int ID;
 
+    private String title;
+    private boolean enableGauge, enableConn, enableColor;
 
     public Cable() {}
 
@@ -55,7 +57,7 @@ public class Cable implements Json.Serializable {
 
         coordinates.add(startPoint);
 
-        populateProperties();
+        populateProperties("Cable", true, true, true);
         CircuitGUIManager.propertiesBox.show();
     }
 
@@ -66,7 +68,7 @@ public class Cable implements Json.Serializable {
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
 
-        populateProperties();
+//        populateProperties();
         CircuitGUIManager.propertiesBox.show();
     }
 
@@ -74,76 +76,84 @@ public class Cable implements Json.Serializable {
         return ID;
     }
 
-    public void populateProperties(String... title) {
+    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections) {
+        this.title = title;
+        this.enableColor = enableColor;
+        this.enableGauge = enableGauge;
+        this.enableConn = enableConnections;
         CircuitGUIManager.propertiesBox.clearTable();
-        if(title.length > 0) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(title[0] + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        }
-        CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
-        CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
+//        if(properties.length > 0 && properties[0] != null) {
+//            CircuitGUIManager.propertiesBox.addElement(new Label(properties[0] + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+//        } else {
+//            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+//        }
+        CircuitGUIManager.propertiesBox.addElement(new Label(title + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
 
-        CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
-        CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-
-        cb.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
-                for(String str : keys) {
-                    if(str.contentEquals(cb.getText())) {
-                        if(keys.indexOf(str) == keys.size() - 1) {
-                            cb.setText(keys.get(0));
-                            color = DeviceUtil.COLORS.get(keys.get(0));
-                        } else {
-                            cb.setText(keys.get(keys.indexOf(str) + 1));
-                            color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
-                        }
-                        break;
-                    }
-                }
-            }
-        });
-        ga.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                if(connection1 != null || connection2 != null) {
-                    CircuitGUIManager.popup.activateError("Cannot modify gauge with hardware attached");
-                } else {
-                    for(int gau : gauges) {
-                        if(gau == gauge) {
-                            if(gauges.indexOf(gau) == gauges.size() - 1) {
-                                gauge = gauges.get(0);
-                                ga.setText(gauge + "");
+        if(enableColor) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
+            CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
+            cb.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
+                    for(String str : keys) {
+                        if(str.contentEquals(cb.getText())) {
+                            if(keys.indexOf(str) == keys.size() - 1) {
+                                cb.setText(keys.get(0));
+                                color = DeviceUtil.COLORS.get(keys.get(0));
                             } else {
-                                gauge = gauges.get(gauges.indexOf(gau) + 1);
-                                ga.setText(gauge + "");
+                                cb.setText(keys.get(keys.indexOf(str) + 1));
+                                color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
                             }
                             break;
                         }
                     }
                 }
-
+            });
+        }
+        if(enableGauge) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
+            CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
+            ga.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
+                    if(connection1 != null || connection2 != null) {
+                        CircuitGUIManager.popup.activateError("Cannot modify gauge with hardware attached");
+                    } else {
+                        for(int gau : gauges) {
+                            if(gau == gauge) {
+                                if(gauges.indexOf(gau) == gauges.size() - 1) {
+                                    gauge = gauges.get(0);
+                                    ga.setText(gauge + "");
+                                } else {
+                                    gauge = gauges.get(gauges.indexOf(gau) + 1);
+                                    ga.setText(gauge + "");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        if(enableConnections) {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
+                CircuitGUIManager.propertiesBox.addElement(new Label(connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+            } else {
+                CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             }
-        });
+
+            CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
+            if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
+                CircuitGUIManager.propertiesBox.addElement(new Label(connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+            } else {
+                CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            }
+        }
     }
 
     public void setColor(Color color) {
@@ -595,7 +605,7 @@ public class Cable implements Json.Serializable {
                     HardwareManager.moveToFront(connection2);
                 }
                 HardwareManager.currentHardware = null;
-                populateProperties();
+                populateProperties(title, enableColor, enableGauge, enableConn);
                 CircuitGUIManager.propertiesBox.show();
             }
         }

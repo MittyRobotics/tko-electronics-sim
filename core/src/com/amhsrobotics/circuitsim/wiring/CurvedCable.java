@@ -1,6 +1,5 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
@@ -11,14 +10,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-
-import java.util.ArrayList;
 
 public class CurvedCable extends Cable {
 
@@ -28,12 +21,12 @@ public class CurvedCable extends Cable {
         super(startPoint, count);
         color = DeviceUtil.COLORS.get("White");
         hoverColor = Color.GRAY;
-        populateProperties();
+        populateProperties("Curved Cable", true, true, true);
     }
 
     @Override
-    public void populateProperties(String... title) {
-        super.populateProperties("Curved Cable");
+    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections) {
+        super.populateProperties(title, enableColor, enableGauge, enableConnections);
     }
 
     @Override
