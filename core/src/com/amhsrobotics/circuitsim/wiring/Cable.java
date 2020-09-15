@@ -74,9 +74,13 @@ public class Cable implements Json.Serializable {
         return ID;
     }
 
-    public void populateProperties() {
+    public void populateProperties(String... title) {
         CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        if(title.length > 0) {
+            CircuitGUIManager.propertiesBox.addElement(new Label(title[0] + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        } else {
+            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        }
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
         final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
         CircuitGUIManager.propertiesBox.addElement(cb, false, 1);

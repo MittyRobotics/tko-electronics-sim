@@ -28,7 +28,7 @@ public class CrimpedCable extends Cable {
     }
 
     @Override
-    public void populateProperties() {
+    public void populateProperties(String... name) {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label("Crimped Cable", CircuitGUIManager.propertiesBox.LABEL), true, 2);
         CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);

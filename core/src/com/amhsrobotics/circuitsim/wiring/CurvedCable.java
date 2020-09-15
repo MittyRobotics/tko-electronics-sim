@@ -26,51 +26,14 @@ public class CurvedCable extends Cable {
 
     public CurvedCable(Vector2 startPoint, int count) {
         super(startPoint, count);
-        gauge = 13;
-        color = DeviceUtil.COLORS.get("Orange");
+        color = DeviceUtil.COLORS.get("White");
         hoverColor = Color.GRAY;
         populateProperties();
     }
 
-    public void populateProperties() {
-        CircuitGUIManager.propertiesBox.clearTable();
-        CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
-        CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-
-        CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
-        } else {
-            CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-        }
-
-        cb.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
-                for(String str : keys) {
-                    if(str.contentEquals(cb.getText())) {
-                        if(keys.indexOf(str) == keys.size() - 1) {
-                            cb.setText(keys.get(0));
-                            color = DeviceUtil.COLORS.get(keys.get(0));
-                        } else {
-                            cb.setText(keys.get(keys.indexOf(str) + 1));
-                            color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
-                        }
-                        break;
-                    }
-                }
-            }
-        });
+    @Override
+    public void populateProperties(String... title) {
+        super.populateProperties("Curved Cable");
     }
 
     @Override
