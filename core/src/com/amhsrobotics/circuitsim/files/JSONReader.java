@@ -5,6 +5,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class JSONReader {
 
@@ -13,7 +16,11 @@ public class JSONReader {
 
     public static void loadConfig(String path) {
         try {
-            currentConfig = (JSONObject) reader.parse(new FileReader(Gdx.files.internal(path).file()));
+            InputStream inputStream = ClassLoader.getSystemResourceAsStream(path);
+            assert inputStream != null;
+            currentConfig = (JSONObject) reader.parse(
+                    new InputStreamReader(inputStream, StandardCharsets.UTF_8)
+            );
         } catch (Exception e) {
             Gdx.app.exit();
         }
