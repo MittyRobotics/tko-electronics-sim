@@ -124,19 +124,21 @@ public class CableManager {
             if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
                 //MERGE TWO CABLES
                 if (cable2 instanceof CrimpedCable) {
-                    cable2.color2n = cable2.coordinates.size()-1;
-                    cable2.mergeCable(cable1, cable1begin, cable2begin);
-                    cable2.color2 = cable1.color;
-                    deleteCable(cable1);
+                    if(cable1 instanceof CrimpedCable) {
+                        cable2.color2n = cable2.coordinates.size() - 1;
+                        cable2.mergeCable(cable1, cable1begin, cable2begin);
+                        cable2.color2 = cable1.color;
+                        deleteCable(cable1);
+                    } else {
+                        CircuitGUIManager.popup.activateError("Crimped cannot be connected to regular");
+                    }
                 } else {
-                    if(cable1 instanceof CrimpedCable) {
-                        cable1.color2n = cable1.coordinates.size();
+                    if(!(cable1 instanceof CrimpedCable)) {
+                        cable1.mergeCable(cable2, cable2begin, cable1begin);
+                        deleteCable(cable2);
+                    } else {
+                        CircuitGUIManager.popup.activateError("Crimped cannot be connected to regular");
                     }
-                    cable1.mergeCable(cable2, cable2begin, cable1begin);
-                    if(cable1 instanceof CrimpedCable) {
-                        cable1.color2 = cable2.color;
-                    }
-                    deleteCable(cable2);
                 }
             } else {
                 CircuitGUIManager.popup.activateError("Connection already taken");
