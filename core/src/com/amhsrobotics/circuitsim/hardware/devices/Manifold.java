@@ -32,6 +32,6 @@ public class Manifold extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-       return calculateDirection(cur, port);
+       return calculateDirection(cur, port, 100);
     }
 }
