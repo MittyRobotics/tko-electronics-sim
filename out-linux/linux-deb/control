@@ -1,6 +1,0 @@
-Section: games
-Priority: optional
-Architecture: all
-Maintainer: Rohan Bansal
-Description: Electronics Simulator Built for Real FRC Testing
-Depends: openjdk-8-jre | oracle-java8-installer | jarwrapper
