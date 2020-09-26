@@ -356,7 +356,7 @@ public class Cable implements Json.Serializable {
             // IF MERGING WIRES
             Tuple<Cable, Integer> secondCable = CableManager.wireHoveringWire(camera, this);
             if ((appendingFromBegin || appendingFromEnd) && secondCable != null && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood()) {
-                CableManager.mergeCables(this, secondCable.x, secondCable.y == 1, appendingFromBegin);
+                CableManager.mergeCables(this, secondCable.x, appendingFromBegin, secondCable.y == 1);
             } else {
 
                 // UNSELECT
@@ -787,7 +787,7 @@ public class Cable implements Json.Serializable {
         this.appendingFromBegin = appendingFromBegin;
     }
 
-    public void mergeCable(Cable cable2, boolean begin, boolean cable1begin) {
+    public void mergeCable(Cable cable2, boolean cable1begin, boolean begin) {
 
         // MERGE TWO CABLES
 

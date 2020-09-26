@@ -4,6 +4,7 @@ import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -117,6 +118,8 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
+        Gdx.app.log(cable1begin+"", cable2begin+"");
+        Gdx.app.log(cable1.getConnection(cable1begin)+"", cable2.getConnection(cable2begin)+"");
         if(cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID) {
             if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
                 //MERGE TWO CABLES
@@ -126,9 +129,13 @@ public class CableManager {
                     cable2.color2 = cable1.color;
                     deleteCable(cable1);
                 } else {
-                    cable1.color2n = cable1.coordinates.size();
+                    if(cable1 instanceof CrimpedCable) {
+                        cable1.color2n = cable1.coordinates.size();
+                    }
                     cable1.mergeCable(cable2, cable2begin, cable1begin);
-                    cable1.color2 = cable2.color;
+                    if(cable1 instanceof CrimpedCable) {
+                        cable1.color2 = cable2.color;
+                    }
                     deleteCable(cable2);
                 }
             } else {
