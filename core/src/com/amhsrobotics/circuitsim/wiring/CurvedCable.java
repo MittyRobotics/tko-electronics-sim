@@ -21,12 +21,12 @@ public class CurvedCable extends Cable {
         super(startPoint, count);
         color = DeviceUtil.COLORS.get("White");
         hoverColor = Color.GRAY;
-        populateProperties("Curved Cable", true, true, true);
+        populateProperties("Curved Cable", true, true, true, ID);
     }
 
     @Override
-    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections) {
-        super.populateProperties(title, enableColor, enableGauge, enableConnections);
+    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections, int ID) {
+        super.populateProperties(title, enableColor, enableGauge, enableConnections, ID);
     }
 
     @Override

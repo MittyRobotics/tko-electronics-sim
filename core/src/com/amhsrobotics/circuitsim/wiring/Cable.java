@@ -34,17 +34,16 @@ import java.util.stream.Collectors;
 public class Cable implements Json.Serializable {
 
     public float voltage, gauge, x1, x2, y1, y2, a, limit, limit2, limit3;
-    public Color color, nodeColor, hoverColor = Color.WHITE;
+    public Color color, nodeColor, hoverColor = Color.WHITE, color2 = null;
     public ArrayList<Vector2> coordinates;
     public Hardware connection1, connection2;
 
-    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false;
+    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false, enableGauge, enableConn, enableColor;
     public Vector2 movingNode, backupNode, prevPos;
 
-    public int ID;
+    public int ID, color2n;
 
     private String title;
-    private boolean enableGauge, enableConn, enableColor;
 
     public Cable() {}
 
@@ -57,7 +56,7 @@ public class Cable implements Json.Serializable {
 
         coordinates.add(startPoint);
 
-        populateProperties("Cable", true, true, true);
+        populateProperties("Cable", true, true, true, ID);
         CircuitGUIManager.propertiesBox.show();
     }
 
@@ -76,7 +75,7 @@ public class Cable implements Json.Serializable {
         return ID;
     }
 
-    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections) {
+    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections, int ID) {
         this.title = title;
         this.enableColor = enableColor;
         this.enableGauge = enableGauge;
@@ -102,9 +101,11 @@ public class Cable implements Json.Serializable {
                             if(keys.indexOf(str) == keys.size() - 1) {
                                 cb.setText(keys.get(0));
                                 color = DeviceUtil.COLORS.get(keys.get(0));
+                                color2 = null;
                             } else {
                                 cb.setText(keys.get(keys.indexOf(str) + 1));
                                 color = DeviceUtil.COLORS.get(keys.get(keys.indexOf(str) + 1));
+                                color2 = null;
                             }
                             break;
                         }
@@ -219,7 +220,11 @@ public class Cable implements Json.Serializable {
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
             }
             // draw actual cable
-            renderer.setColor(color);
+            if(i >= color2n && color2 != null) {
+                renderer.setColor(color2);
+            } else {
+                renderer.setColor(color);
+            }
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit);
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
@@ -244,13 +249,21 @@ public class Cable implements Json.Serializable {
 
             if (appendingFromEnd && !disableEnd) {
                 // draw potential cable wire
-                renderer.setColor(color);
+                if(coordinates.size()-1 >= color2n && color2 != null) {
+                    renderer.setColor(color2);
+                } else {
+                    renderer.setColor(color);
+                }
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(nodeColor);
                 renderer.circle(vec2.x, vec2.y, limit3);
             } else if (appendingFromBegin && !disableBegin){
                 // draw potential cable wire
-                renderer.setColor(color);
+                if(0 >= color2n && color2 != null) {
+                    renderer.setColor(color2);
+                } else {
+                    renderer.setColor(color);
+                }
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(nodeColor);
                 renderer.circle(vec2.x, vec2.y, limit3);
@@ -294,7 +307,11 @@ public class Cable implements Json.Serializable {
 
         // DRAW CABLE
         // ---------------------------------------------------------------------
-        renderer.setColor(color);
+        if(0 >= color2n && color2 != null) {
+            renderer.setColor(color2);
+        } else {
+            renderer.setColor(color);
+        }
         for(int i = 0; i < coordinates.size() - 1; ++i) {
             if(CableManager.currentCable != null) {
                 if(CableManager.currentCable == this) {
@@ -309,7 +326,11 @@ public class Cable implements Json.Serializable {
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
             }
             // draw actual cable
-            renderer.setColor(color);
+            if(i >= color2n && color2 != null) {
+                renderer.setColor(color2);
+            } else {
+                renderer.setColor(color);
+            }
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit);
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
@@ -426,6 +447,7 @@ public class Cable implements Json.Serializable {
                     if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
                         if(appendingFromBegin && coordinates.size() > 2) {
                             coordinates.remove(0);
+                            color2n--;
                         } else if (appendingFromEnd && coordinates.size() > 2) {
                             coordinates.remove(coordinates.size()-1);
                         } else {
@@ -451,14 +473,22 @@ public class Cable implements Json.Serializable {
 
                 if (appendingFromEnd && !disableEnd) {
                     // draw potential cable wire
-                    renderer.setColor(color);
+                    if(coordinates.size()-1 >= color2n && color2 != null) {
+                        renderer.setColor(color2);
+                    } else {
+                        renderer.setColor(color);
+                    }
                     renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                     renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
 
                 } else if (appendingFromBegin && !disableBegin){
                     // draw potential cable wire
-                    renderer.setColor(color);
+                    if(0 >= color2n && color2 != null) {
+                        renderer.setColor(color2);
+                    } else {
+                        renderer.setColor(color);
+                    }
                     renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
                     renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
@@ -466,7 +496,15 @@ public class Cable implements Json.Serializable {
                 } else if (movingNode != null) {
                     movingNode.set(vec2.x, vec2.y);
                     if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
-                        coordinates.remove(movingNode);
+                        if(coordinates.indexOf(movingNode) < color2n) {
+                            color2n--;
+                        }
+                        if(!(this instanceof CrimpedCable && coordinates.indexOf(movingNode) == 1)) {
+                            coordinates.remove(movingNode);
+                        } else {
+                            coordinates.set(coordinates.indexOf(movingNode), backupNode);
+                            color2n++;
+                        }
                         movingNode = null;
                         backupNode = null;
                     }
@@ -605,7 +643,7 @@ public class Cable implements Json.Serializable {
                     HardwareManager.moveToFront(connection2);
                 }
                 HardwareManager.currentHardware = null;
-                populateProperties(title, enableColor, enableGauge, enableConn);
+                populateProperties(title, enableColor, enableGauge, enableConn, ID);
                 CircuitGUIManager.propertiesBox.show();
             }
         }

@@ -16,8 +16,8 @@ public class CrimpedCable extends Cable {
     }
 
     @Override
-    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections) {
-        super.populateProperties("Crimped Cable", true, false, true);
+    public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections, int ID) {
+        super.populateProperties("Crimped", true, false, true, -ID);
     }
 
 }

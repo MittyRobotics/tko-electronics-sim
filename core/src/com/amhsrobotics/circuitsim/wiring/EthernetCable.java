@@ -26,7 +26,7 @@ public class EthernetCable extends Cable {
     }
 
     public void populateProperties() {
-        super.populateProperties("Ethernet", true, false, true);
+        super.populateProperties("Ethernet", true, false, true, ID);
     }
 
     @Override

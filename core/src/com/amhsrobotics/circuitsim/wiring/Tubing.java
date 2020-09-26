@@ -25,7 +25,7 @@ public class Tubing extends Cable {
     }
 
     public void populateProperties() {
-        super.populateProperties("Tubing", false, false, true);
+        super.populateProperties("Tubing", false, false, true, ID);
     }
 
     @Override
