@@ -645,6 +645,8 @@ public class CircuitGUIManager {
             table.row();
             table.add(t).width(150);
         }
+        table.row();
+        table.add().expand().fill();
     }
 
     public void filterControl() {
@@ -652,6 +654,8 @@ public class CircuitGUIManager {
             table.row();
             table.add(t).width(150);
         }
+        table.row();
+        table.add().expand().fill();
     }
 
     public void filterMotors() {
@@ -659,6 +663,8 @@ public class CircuitGUIManager {
             table.row();
             table.add(t).width(150);
         }
+        table.row();
+        table.add().expand().fill();
     }
 
     public void filterPneumatics() {
@@ -666,5 +672,7 @@ public class CircuitGUIManager {
             table.row();
             table.add(t).width(150);
         }
+        table.row();
+        table.add().expand().fill();
     }
 }
