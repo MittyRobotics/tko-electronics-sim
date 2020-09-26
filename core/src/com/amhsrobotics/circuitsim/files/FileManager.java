@@ -46,5 +46,6 @@ public class FileManager {
         Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
 
         Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
+
     }
 }
