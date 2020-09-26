@@ -48,7 +48,7 @@ public class DeviceUtil {
         put(13f, 15f);
         put(12f, 16f);
         put(4f, 30f);
-        put(2f, 40f);
+        put(2f, 30f);
     }};
 
     public static final HashMap<Float, Float> GAUGETOLIMIT2 = new HashMap<Float, Float>() {{
@@ -58,7 +58,7 @@ public class DeviceUtil {
         put(13f, 18f);
         put(12f, 19f);
         put(4f, 38f);
-        put(2f, 50f);
+        put(2f, 30f);
     }};
 
     public static final HashMap<Float, Float> GAUGETOLIMIT3 = new HashMap<Float, Float>() {{
@@ -68,7 +68,7 @@ public class DeviceUtil {
         put(13f, 10f);
         put(12f, 10f);
         put(4f, 25f);
-        put(2f, 30f);
+        put(2f, 17f);
     }};
 
     //WIRE GAUGES

@@ -858,13 +858,13 @@ public class Cable implements Json.Serializable {
 
             //VERTICAL LINES
 
-            if(x1 == x2 && x > x1-limit2 && x < x1+limit2 && ((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
+            if(x1 == x2 && x > x1-limit2/2 && x < x1+limit2/2 && ((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
                 return true;
             }
 
             //HORIZONTAL LINES
 
-            if(y1 == y2 && y > y1-limit2 && y < y1+limit2 && ((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))) {
+            if(y1 == y2 && y > y1-limit2/2 && y < y1+limit2/2 && ((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))) {
                 return true;
             }
 
@@ -873,7 +873,7 @@ public class Cable implements Json.Serializable {
 
                 a = -1 * ((y2 - y1) / (x2 - x1));
 
-                if (Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit2) {
+                if (Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit2/2) {
                     return true;
                 }
             }

@@ -33,9 +33,9 @@ public class Tank extends Flippable {
 
     public Vector2 calculate(int port) {
         if(port == 1) {
-            return calculateDirection(cur+3, port);
+            return calculateDirection(cur+3, port, 100);
         } else {
-            return calculateDirection(cur+1, port);
+            return calculateDirection(cur+1, port, 100);
         }
     }
 }

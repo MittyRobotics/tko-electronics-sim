@@ -28,58 +28,16 @@ public class Tubing extends Cable {
         super.populateProperties("Tubing", false, false, true, ID);
     }
 
-    @Override
-    public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-
-        if(nodeColor == null) {
-            nodeColor = Color.WHITE;
-        }
-
-        if(CableManager.currentCable == this) {
-
-            Vector2 vec2 = Tools.mouseScreenToWorld(camera);
-
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                SnapGrid.calculateSnap(vec2);
-            }
-
-            renderer.begin(ShapeRenderer.ShapeType.Filled);
-
-            if (appendingFromEnd && !disableEnd) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 2f);
-            } else if (appendingFromBegin && !disableBegin) {
-                // draw potential cable wire
-                renderer.setColor(color);
-                renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 2f);
-            }
-
-            renderer.end();
-
-        }
-
-        super.render(renderer, camera);
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(Color.WHITE);
-        drawEndpoints(renderer);
-        renderer.end();
-    }
 
 
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
         if(!appendingFromBegin) {
-            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, 1);
+            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         }
         if(!appendingFromEnd) {
-            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, 1);
+            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
         }
 
     }
@@ -88,7 +46,7 @@ public class Tubing extends Cable {
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
         renderer.setColor(Color.WHITE);
         for(Vector2 coords : coordinates) {
-            renderer.circle(coords.x, coords.y, 1);
+            renderer.circle(coords.x, coords.y, limit3);
         }
         processNodes(renderer, cam);
     }
