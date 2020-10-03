@@ -6,11 +6,12 @@
 ### Features
 
 - Native, can be run anywhere
+- Accurate circuit builder using real FRC parts
 - CPU-efficient
 
 ### Near Future
 
-- Accurate circuit simulation with real FRC parts
+- Real-time simulation
 - Importing circuits
 
 ### Use
@@ -24,4 +25,4 @@ If you use Windows, remove the `./` from the above commands.
 
 ##### Package
 
-*Non-existent at the moment.*
+Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform.
