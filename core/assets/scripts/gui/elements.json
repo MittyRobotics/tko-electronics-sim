@@ -7,12 +7,6 @@
       "category": "wiring"
     },
     {
-      "objectName": "CURVEDCABLE",
-      "name": "Curved Cable",
-      "tooltip": "An adjustable hardware to hardware wire - 2 joints, curved wire",
-      "category": "wiring"
-    },
-    {
       "objectName": "DOUBLESANDCRAB",
       "name": "Double WAGO",
       "tooltip": "A connector that connects two wires together",
