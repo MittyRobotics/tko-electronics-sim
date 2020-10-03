@@ -31,6 +31,9 @@ public class FileManager {
         appdata.setGridSize(Constants.WORLD_DIM);
         appdata.setGridSpacing(Constants.GRID_SIZE);
 
+        if(!filename.contains(".tko")) {
+            filename += ".tko";
+        }
         FileHandle file = Gdx.files.absolute(filename);
         file.writeString(json.prettyPrint(appdata), false);
         Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
