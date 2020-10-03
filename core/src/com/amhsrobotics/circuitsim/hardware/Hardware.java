@@ -185,7 +185,7 @@ public abstract class Hardware implements Json.Serializable {
 
         for(Sprite temp : connectors) {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
-            temp.setSize((DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2), (DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2));
+            if(!(this instanceof SandCrab)) temp.setSize((DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2), (DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2));
             Vector2 pos = new Vector2(temp.getX() + temp.getWidth()/2, temp.getY() + temp.getHeight()/2);
             pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
             temp.setCenter(pos.x, pos.y);
