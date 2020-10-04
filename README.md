@@ -23,6 +23,8 @@ Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim
 
 For Mac OS: right click the app icon and select OPEN, then select OPEN ANYWAY.
 
+For Windows: run the exe in the top-level `bin` folder. 
+
 
 ##### Gradle
 
