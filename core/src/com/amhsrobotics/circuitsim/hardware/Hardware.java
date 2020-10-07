@@ -97,7 +97,9 @@ public abstract class Hardware implements Json.Serializable {
         position = Tools.mouseScreenToWorld(camera);
 
         if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-            SnapGrid.calculateSnap(position);
+            if(SnapGrid.renderGridB) {
+                SnapGrid.calculateSnap(position);
+            }
         }
 
         base.setCenter(position.x, position.y);
@@ -362,7 +364,9 @@ public abstract class Hardware implements Json.Serializable {
 
             if (Gdx.input.isTouched() && canMove) {
                 if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    SnapGrid.calculateSnap(vec);
+                    if(SnapGrid.renderGridB) {
+                        SnapGrid.calculateSnap(vec);
+                    }
                 }
 
                 //SET OWN POSITION

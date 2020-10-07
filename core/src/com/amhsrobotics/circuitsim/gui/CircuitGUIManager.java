@@ -10,6 +10,7 @@ import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
+import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -52,7 +53,7 @@ public class CircuitGUIManager {
     public static PropertiesBox propertiesBox;
     public static Message popup;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
-    private TextButton saveButton, fileSave;
+    private TextButton saveButton, fileSave, togGridButton;
 
     public boolean helpMenuShown, optionsMenuShown;
     public static boolean saveMenuShown = false;
@@ -300,7 +301,7 @@ public class CircuitGUIManager {
 
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
-        buildOptionsMenu(wStyle, l2Style, textFieldStyle);
+        buildOptionsMenu(wStyle, l2Style, textFieldStyle, tStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
@@ -435,7 +436,7 @@ public class CircuitGUIManager {
         saveMenuShown = false;
     }
 
-    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle) {
+    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle, TextButton.TextButtonStyle tbStyle) {
         optionsMenu = new Window("Options", wStyle);
         optionsMenu.setWidth(500);
         optionsMenu.setHeight(600);
@@ -445,6 +446,21 @@ public class CircuitGUIManager {
 
         Table optionsTable = new Table();
         optionsMenu.add(optionsTable).expand().fill();
+
+        optionsTable.row();
+        Label togglegrid = new Label("View Grid", l2Style);
+        togglegrid.setAlignment(Align.center);
+        optionsTable.add(togglegrid).width(180);
+
+        togGridButton = new TextButton("Toggle", tbStyle);
+        optionsTable.add(togGridButton).width(180);
+
+        togGridButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                SnapGrid.renderGridB = !SnapGrid.renderGridB;
+            }
+        });
 
         optionsTable.row();
         Label spacing = new Label("Grid Spacing", l2Style);
