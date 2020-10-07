@@ -3,7 +3,7 @@
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
   <jar>desktop-1.0.jar</jar>
-  <outfile>/home/titan/development/FRC_amhsrobotics/TKO1351CircuitSim/packaging/final_OS_outputs/windows/bin/TKOcircuitsim.exe</outfile>
+  <outfile>/home/titan/development/FRC_amhsrobotics/TKO1351CircuitSim/packaging/windows/bin/TKOcircuitsim.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
