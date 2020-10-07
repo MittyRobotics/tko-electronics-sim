@@ -37,28 +37,23 @@ import java.util.Map;
 
 public class CircuitGUIManager {
 
-    private final ModifiedStage stage;
-
-    private final Simulation sim;
-
-    private final TextButton simulate, back, help, options, hidePanel, save;
     public static Table container, table, table2, filters;
-    private Window helpMenu, optionsMenu;
-    private static Window saveMenu;
-    private final TextButton.TextButtonStyle tStyle, t2Style;
-    private final TextButton fil1, fil2, fil3, fil4;
-    private Map<String, LinkedList<TextButton>> reverseMap;
-
-    private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public static PropertiesBox propertiesBox;
     public static Message popup;
-    private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
-    private TextButton saveButton, fileSave, togGridButton;
-
-    public boolean helpMenuShown, optionsMenuShown;
     public static boolean saveMenuShown = false;
     public static boolean panelShown = true;
-
+    private static Window saveMenu;
+    private final ModifiedStage stage;
+    private final Simulation sim;
+    private final TextButton simulate, back, help, options, hidePanel, save;
+    private final TextButton.TextButtonStyle tStyle, t2Style;
+    private final TextButton fil1, fil2, fil3, fil4;
+    private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
+    public boolean helpMenuShown, optionsMenuShown;
+    private Window helpMenu, optionsMenu;
+    private Map<String, LinkedList<TextButton>> reverseMap;
+    private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
+    private TextButton saveButton, fileSave, togGridButton;
     private boolean filterChanged = false;
     private boolean addAll = true;
 
@@ -310,6 +305,16 @@ public class CircuitGUIManager {
         stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate);
     }
 
+    public static void saveMenu() {
+        saveMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - saveMenu.getWidth() / 2, 250);
+        Tools.slideIn(saveMenu, "down", 1f, Interpolation.exp10, 600);
+        saveMenuShown = true;
+    }
+
+    public static boolean isPanelShown() {
+        return panelShown;
+    }
+
     private void buttonDecline() {
         if(CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;
@@ -423,12 +428,6 @@ public class CircuitGUIManager {
 
         saveMenu.row();
         saveMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
-    }
-
-    public static void saveMenu() {
-        saveMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - saveMenu.getWidth() / 2, 250);
-        Tools.slideIn(saveMenu, "down", 1f, Interpolation.exp10, 600);
-        saveMenuShown = true;
     }
 
     private void hideSaveMenu() {
@@ -569,10 +568,6 @@ public class CircuitGUIManager {
         Tools.slideIn(simulate, "left", 1f, Interpolation.exp5, -150);
         Tools.slideIn(hidePanel, "left", 1f, Interpolation.exp5, -20);
         Tools.sequenceSlideIn("left", 1f, Interpolation.exp5, 300, 0.2f, options, help, save, back);
-    }
-
-    public static boolean isPanelShown() {
-        return panelShown;
     }
 
     public void update(float delta) {
