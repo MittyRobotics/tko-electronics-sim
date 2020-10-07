@@ -33,21 +33,13 @@ public class Solenoid extends Flippable {
 
     public Vector2 calculate(int port) {
         if(type == HardwareType.DOUBLESOLENOID) {
-            if(port == 2 || port == 3) {
-                return calculateDirection(3+cur, port);
-            } else if (port == 4 || port == 5) {
-                return calculateDirection(1+cur, port);
-            } else if (port == 1) {
+            if (port == 0 || port == 1) {
                 return calculateDirection(3+cur, port, 100);
             } else {
                 return calculateDirection(1+cur, port, 100);
             }
         } else {
-            if(port == 0) {
-                return calculateDirection(1+cur, port, 100);
-            } else {
-                return calculateDirection(3+cur, port, 100);
-            }
+            return calculateDirection(3+cur, port, 100);
         }
     }
 }

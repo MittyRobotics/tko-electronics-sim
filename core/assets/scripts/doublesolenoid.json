@@ -1,21 +1,11 @@
 {
   "name": "Double Solenoid",
-  "totalPins": 6,
+  "totalPins": 4,
   "totalLeds": 0,
   "crimpedColors": ["Black", "Black", "Black", "Black"],
-  "crimped": [2, 3, 4, 5],
-  "totalSprites": 7,
+  "crimped": [0, 1, 2, 3],
+  "totalSprites": 5,
   "pins": [
-    {
-      "type": "2",
-      "position": [-126, 4],
-      "dimensions": [25, 25]
-    },
-    {
-      "type": "2",
-      "position": [126, 4],
-      "dimensions": [25, 25]
-    },
     {
       "type": "22",
       "position": [-225, 5],
