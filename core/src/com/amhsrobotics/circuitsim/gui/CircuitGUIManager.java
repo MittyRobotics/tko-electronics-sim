@@ -350,7 +350,7 @@ public class CircuitGUIManager {
         Table helpTable = new Table();
         helpMenu.add(helpTable).expand().fill();
         helpTable.row();
-        helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center);
+        helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center).padBottom(5);
 
         for(Object o : JSONReader.getCurrentConfig().keySet()) {
             helpTable.row();
@@ -450,10 +450,10 @@ public class CircuitGUIManager {
         optionsTable.row();
         Label togglegrid = new Label("View Grid", l2Style);
         togglegrid.setAlignment(Align.center);
-        optionsTable.add(togglegrid).width(180);
+        optionsTable.add(togglegrid).width(180).padBottom(20);
 
         togGridButton = new TextButton("Toggle", tbStyle);
-        optionsTable.add(togGridButton).width(180);
+        optionsTable.add(togGridButton).width(180).padBottom(20);
 
         togGridButton.addListener(new ChangeListener() {
             @Override
@@ -662,7 +662,6 @@ public class CircuitGUIManager {
             table.add(t).width(150);
         }
         table.row();
-        table.add().expand().fill();
     }
 
     public void filterControl() {
@@ -671,7 +670,6 @@ public class CircuitGUIManager {
             table.add(t).width(150);
         }
         table.row();
-        table.add().expand().fill();
     }
 
     public void filterMotors() {
@@ -680,7 +678,6 @@ public class CircuitGUIManager {
             table.add(t).width(150);
         }
         table.row();
-        table.add().expand().fill();
     }
 
     public void filterPneumatics() {
@@ -689,6 +686,5 @@ public class CircuitGUIManager {
             table.add(t).width(150);
         }
         table.row();
-        table.add().expand().fill();
     }
 }

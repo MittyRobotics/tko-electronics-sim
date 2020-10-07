@@ -10,7 +10,6 @@
   "]": "move hardware backward",
   "SHIFT + [": "Move hardware to front",
   "SHIFT + ]": "Move hardware to back",
-  "GRID DRAG": "Pan around the grid",
   "CTRL + SHIFT + /": "Help Menu",
   "CTRL + SHIFT + .": "Options Menu",
   "SELECT DEVICE + R": "Rotate Device",
