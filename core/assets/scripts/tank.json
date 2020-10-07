@@ -1,10 +1,8 @@
 {
   "name": "Tank",
-  "totalPins": 2,
   "totalLeds": 0,
   "crimpedColors": [],
   "crimped": [],
-  "totalSprites": 3,
   "pins": [
     {
       "type": "2",

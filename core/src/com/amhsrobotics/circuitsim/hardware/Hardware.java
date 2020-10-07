@@ -112,11 +112,11 @@ public abstract class Hardware implements Json.Serializable {
         JSONReader.loadConfig("scripts/" + type.toString().toLowerCase() + ".json");
         base = new Sprite(new Texture(Gdx.files.internal("img/hardware/" + type.toString().toLowerCase() + ".png")));
 
-        connNum = ((Long) JSONReader.getCurrentConfig().get("totalPins")).intValue();
 
         ledNum = ((Long) JSONReader.getCurrentConfig().get("totalLeds")).intValue();
         name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
+        connNum = pins.size();
         for(int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));

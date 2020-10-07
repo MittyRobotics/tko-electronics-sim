@@ -1,9 +1,7 @@
 {
   "name": "VRM",
-  "totalPins": 18,
   "totalLeds": 0,
   "crimped": [],
-  "totalSprites": 19,
   "pins": [
     {
       "type": "18",

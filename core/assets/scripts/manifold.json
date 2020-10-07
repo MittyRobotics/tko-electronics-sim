@@ -1,10 +1,8 @@
 {
   "name": "Manifold",
-  "totalPins": 14,
   "totalLeds": 0,
   "crimpedColors": [],
   "crimped": [],
-  "totalSprites": 15,
   "pins": [
     {
       "type": "2",

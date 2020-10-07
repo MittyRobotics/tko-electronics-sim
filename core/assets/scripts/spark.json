@@ -1,8 +1,6 @@
 {
   "name": "SPARK MAX",
-  "totalPins": 9,
   "totalLeds": 2,
-  "totalSprites": 10,
   "crimped": [0, 1, 2, 3, 4],
   "crimpedColors": ["Red", "Black", "White", "Red", "Black"],
   "pins": [

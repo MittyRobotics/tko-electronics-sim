@@ -1,9 +1,7 @@
 {
   "name": "Radio",
-  "totalPins": 3,
   "totalLeds": 4,
   "crimped": [],
-  "totalSprites": 4,
   "pins": [
     {
       "type": "14",

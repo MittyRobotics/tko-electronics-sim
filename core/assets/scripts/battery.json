@@ -1,9 +1,7 @@
 {
   "name": "Battery",
-  "totalPins": 2,
   "totalLeds": 0,
   "crimped": [],
-  "totalSprites": 3,
   "pins": [
     {
       "type": "4",

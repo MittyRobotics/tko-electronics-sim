@@ -1,10 +1,8 @@
 {
   "name": "Piston",
-  "totalPins": 1,
   "totalLeds": 0,
   "crimpedColors": [],
   "crimped": [],
-  "totalSprites": 2,
   "pins": [
     {
       "type": "2",
