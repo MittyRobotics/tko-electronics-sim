@@ -6,22 +6,29 @@
 ### Features
 
 - Native, can be run anywhere
+- Accurate circuit builder using real FRC parts
 - CPU-efficient
 
 ### Near Future
 
-- Accurate circuit simulation with real FRC parts
+- Real-time simulation
 - Importing circuits
 
 ### Use
 
-##### Gradle
-
-1. Clone repository
-2. Run `./gradlew build && ./gradlew run` in a console in the repository directory
-
-If you use Windows, remove the `./` from the above commands.
 
 ##### Package
 
-*Non-existent at the moment.*
+Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform.
+
+For Mac OS: right click the app icon and select OPEN, then select OPEN ANYWAY.
+
+For Windows: run the exe in the top-level `bin` folder. 
+
+
+##### Gradle
+
+1. Clone repository
+2. Run `gradlew build` and then `gradlew run` in a console in the top directory
+
+If you use Linux/Mac OS, add `./` before the above commands.
