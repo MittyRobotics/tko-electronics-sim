@@ -37,6 +37,7 @@ public class DeviceUtil {
         put("13", "Ethernet");
         put("14", "Power");
         put("2", "Tubing");
+        put("all", "Universal");
     }};
 
     public static final String[] HARDWARE_IN_ORDER = new String[]{"WIRE", "DOUBLESANDCRAB", "TRIPLESANDCRAB", "PDP", "VRM", "ROBORIO", "TALON", "PCM", "SPARK", "MOTOR775", "FALCON", "NEO", "BREAKER", "BATTERY", "RADIO", "ETHERNET", "TUBING", "EPLATE", "DOUBLESOLENOID", "SINGLESOLENOID", "PRESSURESWITCH", "PISTON", "MANIFOLD", "TANK", "COMPRESSOR"};

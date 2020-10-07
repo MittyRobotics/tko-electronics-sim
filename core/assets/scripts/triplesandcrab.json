@@ -6,17 +6,17 @@
   "totalSprites": 4,
   "pins": [
     {
-      "type": "22",
+      "type": "all",
       "position": [-77, -40],
       "dimensions": [50, 130]
     },
     {
-      "type": "22",
+      "type": "all",
       "position": [0, -40],
       "dimensions": [50, 130]
     },
     {
-      "type": "22",
+      "type": "all",
       "position": [77, -40],
       "dimensions": [50, 130]
     }

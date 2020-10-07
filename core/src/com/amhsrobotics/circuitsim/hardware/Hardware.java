@@ -232,7 +232,11 @@ public abstract class Hardware implements Json.Serializable {
         for(Sprite s : connectors) {
             if(connections.get(connectors.indexOf(s)) == null) {
                 if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this && checkGood()) {
-                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
+                    if(!(this instanceof SandCrab)) {
+                        CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
+                    } else {
+                        CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
+                    }
                     if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
                         HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
                         Timer timer = new Timer(500, arg0 -> {
@@ -467,7 +471,7 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port)) || this instanceof SandCrab) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
@@ -664,13 +668,10 @@ public abstract class Hardware implements Json.Serializable {
 
     @Override
     public void write(Json json) {
-        json.writeValue("id", this.hardwareID);
         json.writeValue("position", this.position);
-        json.writeValue("ends", this.ends);
         json.writeValue("type", this.type);
-        json.writeValue("name", this.name);
-        json.writeValue("canMove", this.canMove);
         json.writeValue("addCrimped", this.addCrimped);
+        json.writeValue("connections", this.connections);
     }
 
     @Override
