@@ -475,7 +475,7 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if(cable.getGauge() == Integer.parseInt(portTypes.get(port)) || this instanceof SandCrab) {
+        } else if(this instanceof SandCrab || cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
