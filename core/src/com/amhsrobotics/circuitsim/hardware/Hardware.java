@@ -214,7 +214,9 @@ public abstract class Hardware implements Json.Serializable {
             if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove && connections.get(HardwareManager.attachWireOnDoubleClick.y) == null) {
                 if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y) && checkGood()) {
                     Cable c;
-                    if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
+                    if(portTypes.get(HardwareManager.attachWireOnDoubleClick.y).equals("all")) {
+                        c = new Cable(CableManager.id);
+                    } else if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
                         c = new EthernetCable(new Vector2(0, 0), CableManager.id);
                     } else if (Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 2) {
                         c = new Tubing(new Vector2(0, 0), CableManager.id);
@@ -222,7 +224,11 @@ public abstract class Hardware implements Json.Serializable {
                         c = new Cable(CableManager.id);
                     }
                     CableManager.id++;
-                    c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
+                    if(portTypes.get(HardwareManager.attachWireOnDoubleClick.y).equals("all")) {
+                        c.setGauge(22);
+                    } else {
+                        c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
+                    }
                     firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);
                     CableManager.addCable(c);
                     //CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
@@ -506,7 +512,11 @@ public abstract class Hardware implements Json.Serializable {
         } else if(portTypes.get(port).equals("2") && cable.getGauge() != 2) {
             CircuitGUIManager.popup.activateError("Port requires pneumatics tubing");
         }  else {
-            cable.setGauge(Integer.parseInt(portTypes.get(port)));
+            if(portTypes.get(port).equals("all")) {
+                cable.setGauge(22);
+            } else {
+                cable.setGauge(Integer.parseInt(portTypes.get(port)));
+            }
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
