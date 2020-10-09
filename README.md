@@ -14,21 +14,15 @@
 - Real-time simulation
 - Importing circuits
 
-### Use
+### Installation
 
+#### Releases
 
-##### Package
+Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation are also included there.
 
-Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform.
+#### Gradle
 
-For Mac OS: right click the app icon and select OPEN, then select OPEN ANYWAY.
-
-For Windows: run the exe in the top-level `bin` folder. 
-
-
-##### Gradle
-
-1. Clone repository
+1. Clone the repository using git
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
 
-If you use Linux/Mac OS, add `./` before the above commands.
+If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
