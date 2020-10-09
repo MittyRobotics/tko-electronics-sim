@@ -202,7 +202,7 @@ public class CircuitScreen implements Screen {
             CableManager.update(renderer, camera);
             HardwareManager.update(renderer, batch, camera);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
+            JOptionPane.showMessageDialog(new JFrame(), getError(e) + "\nPlease screenshot this and send it to your lead.", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
@@ -243,6 +243,14 @@ public class CircuitScreen implements Screen {
         }
         batch.end();
         drawString = "";
+    }
+
+    public String getError(Exception e) {
+        StringBuilder ans = new StringBuilder();
+        for(StackTraceElement i : e.getStackTrace()) {
+            ans.append("Line ").append(i.getLineNumber()).append(" in ").append(i.getClassName()).append(": ").append(i.toString()).append("\n");
+        }
+        return ans.toString();
     }
 
     private void handleHardware(HardwareType type) {
