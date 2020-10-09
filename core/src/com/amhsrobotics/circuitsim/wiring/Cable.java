@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.wiring;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+import com.amhsrobotics.circuitsim.hardware.devices.SandCrab;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
@@ -126,7 +127,7 @@ public class Cable implements Json.Serializable {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                    if(connection1 != null || connection2 != null) {
+                    if((connection1 != null && !(connection1 instanceof SandCrab) || connection2 != null && !(connection2 instanceof SandCrab))) {
                         CircuitGUIManager.popup.activateError("Cannot modify gauge with hardware attached");
                     } else {
                         for(int gau : gauges) {
