@@ -202,7 +202,7 @@ public class CircuitScreen implements Screen {
             CableManager.update(renderer, camera);
             HardwareManager.update(renderer, batch, camera);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), e+"", "Error (report to your lead)",
+            JOptionPane.showMessageDialog(new JFrame(), e.getMessage(), "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
 
