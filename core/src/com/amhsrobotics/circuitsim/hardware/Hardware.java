@@ -225,7 +225,7 @@ public abstract class Hardware implements Json.Serializable {
                     c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
                     firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);
                     CableManager.addCable(c);
-                    CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
+                    //CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
                     HardwareManager.attachWireOnDoubleClick = null;
                 }
             }
@@ -414,6 +414,9 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean checkGood() {
+        if(canMove) {
+            return !CableManager.movingCable && Gdx.input.getX() >= 0 && Gdx.input.getX() <= Gdx.graphics.getWidth() && Gdx.input.getY() >= 0 && Gdx.input.getY() <= Gdx.graphics.getHeight();
+        }
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
                 Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable);
     }

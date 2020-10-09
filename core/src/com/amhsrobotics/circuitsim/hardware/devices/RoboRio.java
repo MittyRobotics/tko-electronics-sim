@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
-public class RoboRio extends Hardware {
+public class RoboRio extends Flippable {
 
     public RoboRio() {}
 
@@ -35,42 +36,20 @@ public class RoboRio extends Hardware {
         initEnds();
     }
 
-    @Override
-    public void delete() {
-        for(Cable cable : connections) {
-            if(cable != null) {
-                if(ends.get(connections.indexOf(cable, true))) {
-                    cable.setConnection2(null);
-                } else {
-                    cable.setConnection1(null);
-                }
-            }
-        }
-        HardwareManager.removeHardware(this);
-        HardwareManager.currentHardware = null;
-    }
-
     public Vector2 calculate(int port) {
         if(port == 0) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 40);
+            return calculateDirection(cur+2, port, 40);
         } else if (port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return calculateDirection(cur+1, port, 40);
         } else if(port >= 2 && port <= 15) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return calculateDirection(cur+3, port, 40);
         } else if(port >= 16 && port <= 24) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
+            return calculateDirection(cur, port, 40);
         } else if(port == 36) {
-                return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight()/2 + 120);
+            return calculateDirection(cur+2, port, 120);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + 40, getConnector(port).getY() + getConnector(port).getHeight()/2);
+            return calculateDirection(cur+1, port, 40);
         }
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-5, getPosition().y - (base.getHeight() / 2)-5, base.getWidth()+12, base.getHeight()+10, 45);
-        renderer.end();
-    }
 }
