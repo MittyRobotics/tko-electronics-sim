@@ -196,9 +196,13 @@ public class CircuitScreen implements Screen {
 
         }
 
-        HardwareManager.updateEplates(renderer, batch, camera);
-        CableManager.update(renderer, camera);
-        HardwareManager.update(renderer, batch, camera);
+        try {
+            HardwareManager.updateEplates(renderer, batch, camera);
+            CableManager.update(renderer, camera);
+            HardwareManager.update(renderer, batch, camera);
+        } catch (Exception e) {
+            Gdx.app.log(e+"", "");
+        }
 
         if(CableManager.currentCable != null) {
             if(!CircuitGUIManager.propertiesBox.isVisible()) {
