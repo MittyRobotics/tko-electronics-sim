@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.gui;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.files.JSONReader;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
@@ -45,7 +46,7 @@ public class CircuitGUIManager {
     private static Window saveMenu;
     private final ModifiedStage stage;
     private final Simulation sim;
-    private final TextButton simulate, back, help, options, hidePanel, save;
+    private final TextButton simulate, back, help, options, hidePanel, save, clear;
     private final TextButton.TextButtonStyle tStyle, t2Style;
     private final TextButton fil1, fil2, fil3, fil4;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
@@ -219,20 +220,21 @@ public class CircuitGUIManager {
         options = new TextButton("Options", tStyle);
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
         hidePanel = new TextButton("Toggle Panel", tStyle);
-        hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
+        hidePanel.setPosition(420, Gdx.graphics.getHeight() - 70);
         simulate = new TextButton("Simulate", tStyle);
-        simulate.setPosition(460, Gdx.graphics.getHeight() - 70);
+        simulate.setPosition(540, Gdx.graphics.getHeight() - 70);
+        clear = new TextButton("Clear", tStyle);
+        clear.setPosition(340, Gdx.graphics.getHeight() - 70);
+
 
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                HardwareManager.clearHardware();
-                CableManager.clearCables();
                 camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
                 camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                     add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                 }});
-                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.07f, simulate, hidePanel, options, help, save);
+                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.07f, simulate, hidePanel, clear, options, help, save);
                 Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -295,6 +297,14 @@ public class CircuitGUIManager {
             }
         });
 
+        clear.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                HardwareManager.clearHardware();
+                CableManager.clearCables();
+            }
+        });
+
 
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
@@ -302,9 +312,9 @@ public class CircuitGUIManager {
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
-        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, hidePanel, simulate);
+        Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate);
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate, clear);
     }
 
     public static void saveMenu() {
@@ -546,7 +556,7 @@ public class CircuitGUIManager {
         panelShown = false;
 
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
-        Tools.sequenceSlideOut("left", 0.5f, Interpolation.exp5, 300, 0.1f, back, save, help, options);
+        Tools.sequenceSlideOut("left", 0.5f, Interpolation.exp5, 300, 0.1f, clear, back, save, help, options);
         Tools.slideOut(hidePanel, "left", 1.5f, Interpolation.exp5, -20);
         Tools.slideOut(simulate, "left", 2f, Interpolation.exp5, -150);
         propertiesBox.hide();
@@ -556,12 +566,13 @@ public class CircuitGUIManager {
         panelShown = true;
         container.setPosition(Gdx.graphics.getWidth() - 210, 10);
         filters.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 140);
-        hidePanel.setPosition(340, Gdx.graphics.getHeight() - 70);
-        simulate.setPosition(460, Gdx.graphics.getHeight() - 70);
+        hidePanel.setPosition(420, Gdx.graphics.getHeight() - 70);
+        simulate.setPosition(540, Gdx.graphics.getHeight() - 70);
         back.setPosition(20, Gdx.graphics.getHeight() - 70);
         save.setPosition(100, Gdx.graphics.getHeight() - 70);
         help.setPosition(180, Gdx.graphics.getHeight() - 70);
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
+        clear.setPosition(340, Gdx.graphics.getHeight() - 70);
         if(propertiesBox.isVisible()) {
             propertiesBox.hide();
             propertiesBox.show();
@@ -569,7 +580,7 @@ public class CircuitGUIManager {
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp5, 300, 0.2f, filters, container);
         Tools.slideIn(simulate, "left", 1f, Interpolation.exp5, -150);
         Tools.slideIn(hidePanel, "left", 1f, Interpolation.exp5, -20);
-        Tools.sequenceSlideIn("left", 1f, Interpolation.exp5, 300, 0.2f, options, help, save, back);
+        Tools.sequenceSlideIn("left", 1f, Interpolation.exp5, 300, 0.2f, clear, options, help, save, back);
     }
 
     public void update(float delta) {
