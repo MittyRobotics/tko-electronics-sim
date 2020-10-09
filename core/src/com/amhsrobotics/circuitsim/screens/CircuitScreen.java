@@ -27,6 +27,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import java.util.ArrayList;
 
@@ -53,7 +55,6 @@ public class CircuitScreen implements Screen {
 
 
     public CircuitScreen(final Game game) {
-
 
         this.game = game;
         this.batch = new SpriteBatch();
@@ -201,7 +202,8 @@ public class CircuitScreen implements Screen {
             CableManager.update(renderer, camera);
             HardwareManager.update(renderer, batch, camera);
         } catch (Exception e) {
-            Gdx.app.log(e+"", "");
+            JOptionPane.showMessageDialog(new JFrame(), e+"", "Error (report to your lead)",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
         if(CableManager.currentCable != null) {

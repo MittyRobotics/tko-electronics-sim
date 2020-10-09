@@ -556,7 +556,7 @@ public class CircuitGUIManager {
         panelShown = false;
 
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
-        Tools.sequenceSlideOut("left", 0.5f, Interpolation.exp5, 300, 0.1f, clear, back, save, help, options);
+        Tools.sequenceSlideOut("left", 0.5f, Interpolation.exp5, 300, 0.1f, back, save, help, options, clear);
         Tools.slideOut(hidePanel, "left", 1.5f, Interpolation.exp5, -20);
         Tools.slideOut(simulate, "left", 2f, Interpolation.exp5, -150);
         propertiesBox.hide();
