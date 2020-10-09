@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -88,15 +89,37 @@ public class CircuitScreen implements Screen {
                 } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
                     camera.getCamera().translate(amount > 0 ? 45f : -45f, 0);
                 } else {
-                    camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
+//                    camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
+//                    if(camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
+//                        camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
+//                    } else if(camera.getCamera().zoom < 0.2) {
+//                        camera.getCamera().zoom = 0.2f;
+//                    }
+//                }
+
+                    Vector3 screenCoords = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+                    Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
+
+                    camera.getCamera().zoom += amount * camera.getCamera().zoom * 0.1f;
+                    camera.getCamera().update();
+
+                    Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
+
+                    Vector3 diff = new Vector3(worldCoordsAfter).sub(worldCoordsBefore);
+                    camera.getCamera().position.sub(diff);
+                    camera.getCamera().update();
+
                     if(camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
                         camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
                     } else if(camera.getCamera().zoom < 0.2) {
                         camera.getCamera().zoom = 0.2f;
                     }
+
                 }
 
-                return super.scrolled(amount);
+                return true;
+//                return super.scrolled(amount);
             }
         });
         Gdx.input.setInputProcessor(plexer);
