@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.badlogic.gdx.Gdx;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
-public class PneumaticsControlModule extends Hardware {
+public class PneumaticsControlModule extends Flippable {
 
     public PneumaticsControlModule() {}
 
@@ -35,23 +36,16 @@ public class PneumaticsControlModule extends Hardware {
 
     public Vector2 calculate(int port) {
         if (port == 0 || port == 1) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - 40, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+            return calculateDirection(cur+3, port, 100);
         } else if (port >= 2 && port <= 5) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
+            return calculateDirection(cur+2, port, 100);
         } else if (port >= 6 && port <= 9) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
-        } else if (port >= 10 && port <= 17) {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + 40);
+            return calculateDirection(cur, port, 100);
+        } else if (port >= 10 && port < 18) {
+            return calculateDirection(cur+2, port, 100);
         } else {
-            return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - 40);
+            return calculateDirection(cur, port, 100);
         }
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
-
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2)-7, getPosition().y - (base.getHeight() / 2)-7, base.getWidth()+16, base.getHeight()+13, 25);
-        renderer.end();
-    }
 }

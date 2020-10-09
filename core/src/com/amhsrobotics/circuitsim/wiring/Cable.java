@@ -56,8 +56,8 @@ public class Cable implements Json.Serializable {
 
         coordinates.add(startPoint);
 
-        populateProperties("Cable", true, true, true, ID);
-        CircuitGUIManager.propertiesBox.show();
+        //populateProperties("Cable", true, true, true, ID);
+        //CircuitGUIManager.propertiesBox.show();
     }
 
     public Cable(int count) {
@@ -75,11 +75,16 @@ public class Cable implements Json.Serializable {
         return ID;
     }
 
+    public void populateProperties() {
+        populateProperties("Cable", true, true, true, ID);
+    }
+
     public void populateProperties(String title, boolean enableColor, boolean enableGauge, boolean enableConnections, int ID) {
         this.title = title;
         this.enableColor = enableColor;
         this.enableGauge = enableGauge;
         this.enableConn = enableConnections;
+
         CircuitGUIManager.propertiesBox.clearTable();
 //        if(properties.length > 0 && properties[0] != null) {
 //            CircuitGUIManager.propertiesBox.addElement(new Label(properties[0] + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
@@ -643,7 +648,7 @@ public class Cable implements Json.Serializable {
                     HardwareManager.moveToFront(connection2);
                 }
                 HardwareManager.currentHardware = null;
-                populateProperties(title, enableColor, enableGauge, enableConn, ID);
+                populateProperties();
                 CircuitGUIManager.propertiesBox.show();
             }
         }

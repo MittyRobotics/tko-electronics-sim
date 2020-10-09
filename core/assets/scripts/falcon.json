@@ -16,22 +16,22 @@
     },
     {
       "type": "22",
-      "position": [-12, -152],
+      "position": [-16, -152],
       "dimensions": [8, 8]
     },
     {
       "type": "22",
-      "position": [-4, -152],
+      "position": [-6, -152],
       "dimensions": [8, 8]
     },
     {
       "type": "22",
-      "position": [4, -152],
+      "position": [6, -152],
       "dimensions": [8, 8]
     },
     {
       "type": "22",
-      "position": [12, -152],
+      "position": [16, -152],
       "dimensions": [8, 8]
     }
   ],

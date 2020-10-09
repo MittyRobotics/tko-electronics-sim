@@ -21,7 +21,7 @@ public class Tubing extends Cable {
         color = new Color(0.8f, 0.8f, 0.8f, 0.7f);
         hoverColor = Color.GRAY;
         nodeColor = Color.WHITE;
-        populateProperties();
+        //populateProperties();
     }
 
     public void populateProperties() {

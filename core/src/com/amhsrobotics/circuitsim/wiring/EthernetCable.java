@@ -22,7 +22,7 @@ public class EthernetCable extends Cable {
         gauge = 13;
         color = DeviceUtil.COLORS.get("Orange");
         hoverColor = Color.GRAY;
-        populateProperties();
+        //populateProperties();
     }
 
     public void populateProperties() {
