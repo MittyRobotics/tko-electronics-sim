@@ -34,7 +34,6 @@ public class Flippable extends Hardware  {
                 }
                 temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
                 temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-                System.out.println("here");
                 temp.setSize((Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(0) / 2f, (Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(1) / 2f);
                 connectors.add(temp);
             }

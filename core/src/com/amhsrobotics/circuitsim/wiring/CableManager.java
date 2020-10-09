@@ -218,4 +218,13 @@ public class CableManager {
         cables.removeValue(cable, true);
 //        cables.remove(cable);
     }
+
+    public static void clearCables() {
+        cables.clear();
+        currentCable = null;
+        id = 1;
+        cId = 0;
+        toBeMovedForward = null;
+         movingCable = false;
+    }
 }

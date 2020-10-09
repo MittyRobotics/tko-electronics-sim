@@ -235,4 +235,12 @@ public class HardwareManager {
     public static void removeHardware(Hardware ha) {
         hardwares.removeValue(ha, true);
     }
+
+    public static void clearHardware() {
+        currentHardware = null;
+        movingObject = false;
+        attachWireOnDoubleClick = null;
+        hardwares.clear();
+        toBeMovedForward = null;
+    }
 }
