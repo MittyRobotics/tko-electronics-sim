@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
@@ -22,7 +23,9 @@ public class EthernetCable extends Cable {
         gauge = 13;
         color = DeviceUtil.COLORS.get("Orange");
         hoverColor = Color.GRAY;
-        //populateProperties();
+
+        populateProperties();
+        CircuitGUIManager.propertiesBox.show();
     }
 
     public void populateProperties() {

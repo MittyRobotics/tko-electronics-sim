@@ -12,20 +12,12 @@ public class ClippedCameraController extends CameraController {
 
     public void calculateBounds() {
 
-        float worldWidth = Constants.WORLD_DIM.x;
-        float worldHeight = Constants.WORLD_DIM.y;
         float zoom = getCamera().zoom;
         float zoomedHalfWorldWidth = zoom * getCamera().viewportWidth / 2;
         float zoomedHalfWorldHeight = zoom * getCamera().viewportHeight / 2;
 
-        float minX = zoomedHalfWorldWidth;
-        float maxX = worldWidth - zoomedHalfWorldWidth;
-
-        float minY = zoomedHalfWorldHeight;
-        float maxY = worldHeight - zoomedHalfWorldHeight;
-
-        getCamera().position.x = MathUtils.clamp(getCamera().position.x, minX, maxX);
-        getCamera().position.y = MathUtils.clamp(getCamera().position.y, minY, maxY);
+        getCamera().position.x = MathUtils.clamp(getCamera().position.x, zoomedHalfWorldWidth, Constants.WORLD_DIM.x - zoomedHalfWorldWidth);
+        getCamera().position.y = MathUtils.clamp(getCamera().position.y, zoomedHalfWorldHeight, Constants.WORLD_DIM.y - zoomedHalfWorldHeight);
     }
 
 }

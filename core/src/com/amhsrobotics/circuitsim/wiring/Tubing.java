@@ -1,15 +1,11 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
-import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class Tubing extends Cable {
 
@@ -21,7 +17,9 @@ public class Tubing extends Cable {
         color = new Color(0.8f, 0.8f, 0.8f, 0.7f);
         hoverColor = Color.GRAY;
         nodeColor = Color.WHITE;
-        //populateProperties();
+
+        populateProperties();
+        CircuitGUIManager.propertiesBox.show();
     }
 
     public void populateProperties() {

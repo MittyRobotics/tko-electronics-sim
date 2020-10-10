@@ -21,7 +21,7 @@ public class CurvedCable extends Cable {
         super(startPoint, count);
         color = DeviceUtil.COLORS.get("White");
         hoverColor = Color.GRAY;
-        populateProperties("Curved Cable", true, true, true, ID);
+        //populateProperties("Curved Cable", true, true, true, ID);
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -24,7 +23,6 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import org.json.simple.JSONValue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,8 +55,8 @@ public class Cable implements Json.Serializable {
 
         coordinates.add(startPoint);
 
-        //populateProperties("Cable", true, true, true, ID);
-        //CircuitGUIManager.propertiesBox.show();
+        populateProperties("Cable", true, true, true, ID);
+        CircuitGUIManager.propertiesBox.show();
     }
 
     public Cable(int count) {
@@ -128,7 +126,7 @@ public class Cable implements Json.Serializable {
                 public void changed(ChangeEvent event, Actor actor) {
                     List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
                     if((connection1 != null && !(connection1 instanceof SandCrab) || connection2 != null && !(connection2 instanceof SandCrab))) {
-                        CircuitGUIManager.popup.activateError("Cannot modify gauge with hardware attached");
+                        CircuitGUIManager.popup.activateError("Gauge cannot be modified with hardware attached");
                     } else {
                         for(int gau : gauges) {
                             if(gau == gauge) {
@@ -582,7 +580,7 @@ public class Cable implements Json.Serializable {
             }
         } else {
             if(getConnection(!appendingFromBegin) == clist.get(0) && (appendingFromBegin || appendingFromEnd)) {
-                CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
+                CircuitGUIManager.popup.activateError("A device cannot be connected to itself");
                 appendingFromEnd = false;
                 appendingFromBegin = false;
                 CableManager.currentCable = null;
@@ -597,7 +595,6 @@ public class Cable implements Json.Serializable {
             }
 
         }
-        Gdx.app.log(appendingFromBegin+"", appendingFromEnd+"");
     }
 
     protected void checkForClick(ClippedCameraController camera) {
@@ -659,7 +656,7 @@ public class Cable implements Json.Serializable {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && CableManager.currentCable == this && (appendingFromBegin && hoveringOnEndpoint(camera) == 2 || appendingFromEnd && hoveringOnEndpoint(camera) == 1)) {
             appendingFromEnd = false;
             appendingFromBegin = false;
-            CircuitGUIManager.popup.activateError("Cannot attach cable to itself");
+            CircuitGUIManager.popup.activateError("A cable cannot be attached to itself");
             return false;
         }
         return true;
@@ -961,6 +958,5 @@ public class Cable implements Json.Serializable {
         parseColor(this.color, jsonData, "color");
         this.nodeColor = new Color();
         parseColor(this.nodeColor, jsonData, "nodeColor");
-        Gdx.app.log(this.ID + " " + this.gauge, this.color.toString());
     }
 }

@@ -44,7 +44,6 @@ public class FileManager {
 
         FileHandle file = Gdx.files.absolute(filename);
         appdata = json.fromJson(AppData.class, file.readString());
-        Gdx.app.log("loaded appdata", "");
         Constants.WORLD_DIM = appdata.getGridSize();
         Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
 

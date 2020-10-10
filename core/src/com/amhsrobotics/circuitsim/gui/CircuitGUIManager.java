@@ -3,7 +3,6 @@ package com.amhsrobotics.circuitsim.gui;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.files.JSONReader;
-import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;

@@ -27,9 +27,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class CircuitScreen implements Screen {

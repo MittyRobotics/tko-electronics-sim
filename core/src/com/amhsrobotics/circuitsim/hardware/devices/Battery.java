@@ -1,15 +1,11 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.hardware.Flippable;
-import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
 public class Battery extends Flippable {

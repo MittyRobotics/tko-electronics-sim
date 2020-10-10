@@ -1,10 +1,6 @@
 package com.amhsrobotics.circuitsim.wiring;
 
-import com.amhsrobotics.circuitsim.hardware.Hardware;
-import com.amhsrobotics.circuitsim.utility.Tools;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import me.rohanbansal.ricochet.camera.CameraController;
 
 
 public class CrimpedCable extends Cable {

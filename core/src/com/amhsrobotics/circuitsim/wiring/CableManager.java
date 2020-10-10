@@ -1,10 +1,8 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -102,13 +100,11 @@ public class CableManager {
         if (cable.getCoordinates().size() > 1) {
             for (int x = 0; x < cables.size; x++) {
                 if (cables.get(x).getID() != cable.getID()) {
-                    if(cables.get(x).gauge == cable.gauge) {
-                        int ans = cables.get(x).hoveringOnEndpoint(camera);
-                        if (ans == 1) {
-                            return new Tuple<>(cables.get(x), 1);
-                        } else if (ans == 2) {
-                            return new Tuple<>(cables.get(x), 2);
-                        }
+                    int ans = cables.get(x).hoveringOnEndpoint(camera);
+                    if (ans == 1) {
+                        return new Tuple<>(cables.get(x), 1);
+                    } else if (ans == 2) {
+                        return new Tuple<>(cables.get(x), 2);
                     }
                 }
             }
@@ -118,33 +114,35 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
-        Gdx.app.log(cable1begin+"", cable2begin+"");
-        Gdx.app.log(cable1.getConnection(cable1begin)+"", cable2.getConnection(cable2begin)+"");
         if(cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID) {
             if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
-                //MERGE TWO CABLES
-                if (cable2 instanceof CrimpedCable) {
-                    if(cable1 instanceof CrimpedCable) {
-                        cable2.color2n = cable2.coordinates.size() - 1;
-                        cable2.mergeCable(cable1, cable1begin, cable2begin);
-                        cable2.color2 = cable1.color;
-                        deleteCable(cable1);
+                if(cable1.gauge == cable2.gauge) {
+                    //MERGE TWO CABLES
+                    if (cable2 instanceof CrimpedCable) {
+                        if (cable1 instanceof CrimpedCable) {
+                            cable2.color2n = cable2.coordinates.size() - 1;
+                            cable2.mergeCable(cable1, cable1begin, cable2begin);
+                            cable2.color2 = cable1.color;
+                            deleteCable(cable1);
+                        } else {
+                            CircuitGUIManager.popup.activateError("A crimped cable cannot be connected to a regular cable");
+                        }
                     } else {
-                        CircuitGUIManager.popup.activateError("Crimped cannot be connected to regular");
+                        if (!(cable1 instanceof CrimpedCable)) {
+                            cable1.mergeCable(cable2, cable2begin, cable1begin);
+                            deleteCable(cable2);
+                        } else {
+                            CircuitGUIManager.popup.activateError("A crimped cable cannot be connected to a regular cable");
+                        }
                     }
                 } else {
-                    if(!(cable1 instanceof CrimpedCable)) {
-                        cable1.mergeCable(cable2, cable2begin, cable1begin);
-                        deleteCable(cable2);
-                    } else {
-                        CircuitGUIManager.popup.activateError("Crimped cannot be connected to regular");
-                    }
+                    CircuitGUIManager.popup.activateError("Only cables with the same gauge may be merged");
                 }
             } else {
-                CircuitGUIManager.popup.activateError("Connection already taken");
+                CircuitGUIManager.popup.activateError("Connection is already taken");
             }
         } else {
-            CircuitGUIManager.popup.activateError("Device cannot be connected to itself");
+            CircuitGUIManager.popup.activateError("A device cannot be connected to itself");
         }
         if(currentCable != null) {
             currentCable.appendingFromEnd = false;
