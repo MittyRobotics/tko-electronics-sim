@@ -173,11 +173,7 @@ public class EPlate extends Hardware {
                     if ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown()) {
                         for (Hardware h : hardwareOnPlate) {
                             h.setPosition(h.getPosition().x + vec.x + diffX - box.x, h.getPosition().y + vec.y + diffY - box.y);
-                            for(Cable c : h.connections) {
-                                if(c != null) {
-                                    c.moveEntireCable(vec.x + diffX - box.x, vec.y + diffY - box.y);
-                                }
-                            }
+
                         }
 
                         box.x = vec.x + diffX;
