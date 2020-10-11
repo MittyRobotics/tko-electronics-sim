@@ -12,10 +12,12 @@ public class HardwareModel {
 
     public HardwareType type;
     public Vector2 position;
+    public int id;
     public DelayedRemovalArray<CableModel> connections;
 
     public void load(Hardware h) {
         type = h.type;
+        id = h.getHardwareID();
         position = h.getPosition();
     }
 

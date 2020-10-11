@@ -7,8 +7,10 @@ import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class FileManager {
@@ -22,12 +24,6 @@ public class FileManager {
         fileName = filename;
         appdata = new AppData();
         ArrayList<Hardware> hardware = new ArrayList<>(HardwareManager.getHardwareAsList());
-        ArrayList<Cable> cables = new ArrayList<>();
-//        for(Cable c : CableManager.getCables()) {
-//            cables.add(c);
-//        }
-//        appdata.setHardware(hardware);
-//        appdata.setCables(cables);
 
         for(Hardware h : hardware) {
             HardwareModel hm = new HardwareModel();
