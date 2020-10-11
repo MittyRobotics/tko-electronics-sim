@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware;
 
+import com.amhsrobotics.circuitsim.files.HardwareModel;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
 import com.amhsrobotics.circuitsim.utility.DeviceUtil;
@@ -244,6 +245,13 @@ public class HardwareManager {
         hardwares.add(temp);
 
         return temp;
+    }
+
+    public static void loadHardware(HardwareModel model) {
+        Hardware temp = switchCaseHardware(model.type, model.position.x, model.position.y, false);
+        temp.populateProperties();
+        CircuitGUIManager.propertiesBox.show();
+        hardwares.add(temp);
     }
 
     public static void removeHardware(Hardware ha) {

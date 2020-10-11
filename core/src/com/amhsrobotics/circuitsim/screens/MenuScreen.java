@@ -233,10 +233,10 @@ public class MenuScreen implements Screen {
             @Override
             public void run() {
                 dispose();
+                game.setScreen(new CircuitScreen(game, fileLocation.getText()));
             }
         });
         Tools.slideOut(importMenu, "down", 1f, Interpolation.exp10, 700);
-        FileManager.load(fileLocation.getText());
     }
 
     @Override

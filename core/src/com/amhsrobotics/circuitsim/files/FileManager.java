@@ -60,6 +60,10 @@ public class FileManager {
         Constants.WORLD_DIM = appdata.getGridSize();
         Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
 
+        for(HardwareModel hm : appdata.getHardware()) {
+            HardwareManager.loadHardware(hm);
+        }
+
         Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
 
     }

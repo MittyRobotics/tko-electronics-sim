@@ -57,7 +57,7 @@ public class CircuitScreen implements Screen {
     }
 
 
-    public CircuitScreen(final Game game) {
+    public CircuitScreen(final Game game, String... loading) {
 
         this.game = game;
         this.batch = new SpriteBatch();
@@ -149,6 +149,10 @@ public class CircuitScreen implements Screen {
             }
         });
         Gdx.input.setInputProcessor(plexer);
+
+        if(loading.length > 0) {
+            FileManager.load(loading[0]);
+        }
     }
 
     @Override
