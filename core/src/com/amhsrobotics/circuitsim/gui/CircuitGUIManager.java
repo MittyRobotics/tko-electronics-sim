@@ -16,6 +16,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -57,6 +58,9 @@ public class CircuitGUIManager {
     private boolean filterChanged = false;
     private boolean addAll = true;
 
+    private Image easter;
+    private boolean easterOn = false;
+
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
 
@@ -64,6 +68,9 @@ public class CircuitGUIManager {
 
         propertiesBox = new PropertiesBox(stage);
         popup = new Message(stage);
+
+        easter = new Image(new Texture(Gdx.files.internal("img/logo/robot.png")));
+        easter.setPosition(100, -200);
 
         tStyle = new TextButton.TextButtonStyle();
         tStyle.font = Constants.FONT_SMALL;
@@ -313,7 +320,7 @@ public class CircuitGUIManager {
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate, clear);
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, simulate, clear, easter);
     }
 
     public static void saveMenu() {
@@ -589,6 +596,19 @@ public class CircuitGUIManager {
                 // temporary, replace this with actual error later
                 popup.activateError("Simulation Error");
                 sim.getErrors().clear();
+            }
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.K) && Gdx.input.isKeyPressed(Input.Keys.O)) {
+            easter.setPosition(100, 0);
+            if(!easterOn) {
+                Tools.slideIn(easter, "down", 1f, Interpolation.smooth, 165);
+                easterOn = true;
+            }
+        } else {
+            if(easterOn) {
+                Tools.slideOut(easter, "down", 1f, Interpolation.smooth, 165);
+                easterOn = false;
             }
         }
 
