@@ -186,6 +186,9 @@ public class CircuitScreen implements Screen {
             if(selectMultiple && !(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
                 selectMultiple = false;
                 selectedMultiple = true;
+
+                selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
+                CircuitGUIManager.popup.activatePrompt(selected.size() + " objects selected. DELETE to remove, ESC to deselect.", 5);
             }
 
             /*if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -199,7 +202,7 @@ public class CircuitScreen implements Screen {
             if(selectedMultiple) {
                 selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
 
-                if(Gdx.input.isKeyPressed(Input.Keys.DEL)) {
+                if(Gdx.input.isKeyPressed(Input.Keys.DEL) || Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
                     for(Hardware h : selected) {
                         h.delete();
                     }

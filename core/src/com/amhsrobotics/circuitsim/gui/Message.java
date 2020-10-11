@@ -61,6 +61,16 @@ public class Message {
         LinkTimer.init(3, this::hide);
     }
 
+    public void activatePrompt(String text, int time) {
+        label.getStyle().fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
+        label.setText(text);
+        table.setWidth(label.getWidth());
+        table.pack();
+        show();
+
+        LinkTimer.init(time, this::hide);
+    }
+
     public void show() {
         table.setPosition((float) Gdx.graphics.getWidth() / 2 - table.getWidth() / 2 - 100, 10);
         Tools.slideIn(table, "down", 0.8f, Interpolation.exp10, 200);
