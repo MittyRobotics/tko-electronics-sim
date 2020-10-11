@@ -7,11 +7,13 @@ import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +54,18 @@ public class HardwareManager {
                 h.update(batch, renderer, cam);
             }
         }
+    }
+
+    public static ArrayList<Hardware> getSelectedHardware(Vector2 vec1, Vector2 vec2) {
+        ArrayList<Hardware> ans = new ArrayList<>();
+
+        for(Hardware h : hardwares) {
+            if(h.intersect(vec1, vec2)) {
+                ans.add(h);
+            }
+        }
+
+        return ans;
     }
 
     public static DelayedRemovalArray<Hardware> getHardware() {

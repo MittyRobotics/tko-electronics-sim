@@ -421,10 +421,10 @@ public abstract class Hardware implements Json.Serializable {
 
     public boolean checkGood() {
         if(canMove) {
-            return !CableManager.movingCable && Gdx.input.getX() >= 0 && Gdx.input.getX() <= Gdx.graphics.getWidth() && Gdx.input.getY() >= 0 && Gdx.input.getY() <= Gdx.graphics.getHeight();
+            return !CableManager.movingCable && Gdx.input.getX() >= 0 && Gdx.input.getX() <= Gdx.graphics.getWidth() && Gdx.input.getY() >= 0 && Gdx.input.getY() <= Gdx.graphics.getHeight() && (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple);
         }
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable);
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple));
     }
 
     public void processFlip() {}
@@ -436,6 +436,14 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
+    }
+
+    public boolean intersect(Vector2 v1, Vector2 v2) {
+        Rectangle b = base.getBoundingRectangle();
+        Gdx.app.log(v1+"", v2+"");
+        Gdx.app.log(new Vector2(b.x, b.y)+"", new Vector2(b.x+b.width, b.y+b.height)+"");
+        return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
+        //return base.getBoundingRectangle().overlaps(new Rectangle(v1.x, v1.y, v2.x, v2.y));
     }
 
     public Sprite getConnector(int conn) {
