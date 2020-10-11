@@ -214,7 +214,6 @@ public class CableManager {
 
     public static void deleteCable(Cable cable) {
         cables.removeValue(cable, true);
-//        cables.remove(cable);
     }
 
     public static void clearCables() {

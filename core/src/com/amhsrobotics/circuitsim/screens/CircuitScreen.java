@@ -90,10 +90,17 @@ public class CircuitScreen implements Screen {
                         selectMultiple2 = vec2;
                     }
                 } else {
-                    if (Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null && HardwareManager.currentHardware == null) {
-                        float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
-                        float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
+                    float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
+                    float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
+                    if(selectedMultiple) {
+                        selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
+                        for(Hardware h : selected) {
+                            h.move(x, -y);
+                        }
+                        selectMultiple1.add(x, -y);
+                        selectMultiple2.add(x, -y);
 
+                    } else if (Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null && HardwareManager.currentHardware == null) {
                         camera.getCamera().translate(-x, y);
                     }
                 }
@@ -181,12 +188,12 @@ public class CircuitScreen implements Screen {
                 selectedMultiple = true;
             }
 
-            if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            /*if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 selectedMultiple = false;
-            }
+            }*/
 
             renderer.begin(ShapeRenderer.ShapeType.Filled);
-            renderer.setColor(1,1,1,0.3f);
+            renderer.setColor(new Color(156/255f,1f,150/255f,0.3f));
             renderer.rect(selectMultiple1.x, selectMultiple1.y, selectMultiple2.x- selectMultiple1.x, selectMultiple2.y- selectMultiple1.y);
             renderer.end();
             if(selectedMultiple) {
@@ -194,7 +201,7 @@ public class CircuitScreen implements Screen {
 
                 if(Gdx.input.isKeyPressed(Input.Keys.DEL)) {
                     for(Hardware h : selected) {
-                        HardwareManager.removeHardware(h);
+                        h.delete();
                     }
                     selectedMultiple = false;
                 } else {
