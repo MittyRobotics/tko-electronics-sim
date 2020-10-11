@@ -23,11 +23,28 @@ public class FileManager {
         appdata = new AppData();
         ArrayList<Hardware> hardware = new ArrayList<>(HardwareManager.getHardwareAsList());
         ArrayList<Cable> cables = new ArrayList<>();
-        for(Cable c : CableManager.getCables()) {
-            cables.add(c);
+//        for(Cable c : CableManager.getCables()) {
+//            cables.add(c);
+//        }
+//        appdata.setHardware(hardware);
+//        appdata.setCables(cables);
+
+        for(Hardware h : hardware) {
+            HardwareModel hm = new HardwareModel();
+            hm.load(h);
+
+            for(Cable c : h.connections) {
+                if(c == null) {
+                    hm.loadCableConnection(null);
+                } else {
+                    CableModel cm = new CableModel();
+                    cm.load(c);
+                    hm.loadCableConnection(cm);
+                }
+            }
+            appdata.addHardware(hm);
         }
-        appdata.setHardware(hardware);
-        appdata.setCables(cables);
+
         appdata.setGridSize(Constants.WORLD_DIM);
         appdata.setGridSpacing(Constants.GRID_SIZE);
 

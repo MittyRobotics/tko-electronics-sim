@@ -1,31 +1,37 @@
 package com.amhsrobotics.circuitsim.files;
 
-import com.amhsrobotics.circuitsim.hardware.Hardware;
-import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
 public class AppData {
 
-    private ArrayList<Hardware> hardware;
-    private ArrayList<Cable> cables;
+    private ArrayList<HardwareModel> hardware = new ArrayList<>();
+    private ArrayList<CableModel> cables = new ArrayList<>();
     private float gridSpacing;
     private Vector2 gridSize;
 
-    public ArrayList<Hardware> getHardware() {
+    public ArrayList<HardwareModel> getHardware() {
         return hardware;
     }
 
-    public void setHardware(ArrayList<Hardware> hardware) {
+    public void setHardware(ArrayList<HardwareModel> hardware) {
         this.hardware = hardware;
     }
 
-    public ArrayList<Cable> getCables() {
+    public void addHardware(HardwareModel model) {
+        hardware.add(model);
+    }
+
+    public void addCable(CableModel model) {
+        cables.add(model);
+    }
+
+    public ArrayList<CableModel> getCables() {
         return cables;
     }
 
-    public void setCables(ArrayList<Cable> cables) {
+    public void setCables(ArrayList<CableModel> cables) {
         this.cables = cables;
     }
 
