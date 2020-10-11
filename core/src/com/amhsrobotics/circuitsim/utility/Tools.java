@@ -34,6 +34,13 @@ public class Tools {
         return new Vector2(vec.x, vec.y);
     }
 
+    public static boolean collide(Vector2 r1p1, Vector2 r1p2, Vector2 r2p1, Vector2 r2p2) {
+        return !(r1p2.x <= r2p1.x ||
+                r1p2.y <= r2p1.y ||
+                r1p1.x >= r2p2.x ||
+                r1p1.y >= r2p2.y);
+    }
+
     public static void slideIn(Actor actor, String location, float duration, Interpolation interp, int offset, Runnable... runnable) {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
