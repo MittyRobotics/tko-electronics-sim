@@ -391,9 +391,11 @@ public class CircuitGUIManager {
         helpTable.row();
         helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center).padBottom(5);
 
-        for(Object o : JSONReader.getCurrentConfig().keySet()) {
+        String[] s = new String[]{"DELETE", "LSHIFT", "SCROLL", "SCROLL + LSHIFT", "SCROLL + LALT", "ESCAPE", "GRID CLICK", "CTRL-DRAG", "[", "]", "SHIFT + [", "SHIFT + ]", "CTRL + SHIFT + /", "CTRL + SHIFT + .", "SELECT DEVICE + R", "DOUBLE CLICK PORT", "CTRL + S", "CTRL + SHIFT + S"};
+
+        for(String o : s) {
             helpTable.row();
-            helpTable.add(new Label(((String) o), l2Style)).width(180).align(Align.center);
+            helpTable.add(new Label(o, l2Style)).width(180).align(Align.center);
             helpTable.add(new Label(((String) JSONReader.getCurrentConfig().get(o)), lStyle)).width(180).align(Align.center);
         }
 
