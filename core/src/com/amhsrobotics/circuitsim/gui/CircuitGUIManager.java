@@ -174,6 +174,16 @@ public class CircuitGUIManager {
         table2 = new Table();
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
         scrollFilters.setScrollingDisabled(true,false);
+        scrollFilters.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setScrollFocus(scrollFilters);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setScrollFocus(null);
+            }
+        });
         table2.pad(5).defaults().expandX().space(6);
         fil1 = new TextButton("Wires", tStyle);
         table2.add(fil1).width(70);
@@ -367,11 +377,17 @@ public class CircuitGUIManager {
         helpMenu.setKeepWithinStage(false);
         helpMenu.setMovable(false);
         helpMenu.setPosition(-700, -700);
+        helpMenu.row();
+        helpMenu.add(new Label("", l2Style));
+        helpMenu.row();
 
         JSONReader.loadConfig("scripts/gui/keybinds.json");
 
+
         Table helpTable = new Table();
-        helpMenu.add(helpTable).expand().fill();
+
+        helpMenu.add(helpTable);
+
         helpTable.row();
         helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center).padBottom(5);
 
