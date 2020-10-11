@@ -24,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -393,7 +392,6 @@ public class CircuitGUIManager {
         helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center).padBottom(5);
 
         JSONArray elementList = (JSONArray) JSONReader.getCurrentConfig().get("binds");
-        System.out.println();
 
         for(Object o : elementList) {
             helpTable.row();

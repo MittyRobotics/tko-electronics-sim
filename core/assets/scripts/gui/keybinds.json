@@ -22,7 +22,7 @@
       "GRID CLICK": "Remove focus from device"
     },
     {
-      "CTRL-DRAG": "Selection box"
+      "CTRL + DRAG MOUSE": "Selection box"
     },
     {
       "[": "move hardware forward"
