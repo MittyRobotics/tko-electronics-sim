@@ -31,17 +31,18 @@ public class FileManager {
 
         for(Hardware h : hardware) {
             HardwareModel hm = new HardwareModel();
-            hm.type = h.type;
-            hm.position = h.getPosition();
+            hm.load(h);
+
             for(Cable c : h.connections) {
-                CableModel cm = new CableModel();
-                cm.coordinates = c.coordinates;
-                cm.appendingFromBegin = c.appendingFromBegin;
-                cm.appendingFromEnd = c.appendingFromEnd;
-                cm.disableBegin = c.disableBegin;
-                cm.disableEnd = c.disableEnd;
-                cm.gauge = c.gauge;
+                if(c == null) {
+                    hm.loadCableConnection(null);
+                } else {
+                    CableModel cm = new CableModel();
+                    cm.load(c);
+                    hm.loadCableConnection(cm);
+                }
             }
+            appdata.addHardware(hm);
         }
 
         appdata.setGridSize(Constants.WORLD_DIM);
