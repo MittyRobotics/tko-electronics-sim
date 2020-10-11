@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.JsonValue;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -391,10 +392,17 @@ public class CircuitGUIManager {
         helpTable.row();
         helpTable.add(new Label("Keybinds & Behaviors", l2Style)).width(180).colspan(2).align(Align.center).padBottom(5);
 
-        for(Object o : JSONReader.getCurrentConfig().keySet()) {
+        JSONArray elementList = (JSONArray) JSONReader.getCurrentConfig().get("binds");
+        System.out.println();
+
+        for(Object o : elementList) {
             helpTable.row();
-            helpTable.add(new Label(((String) o), l2Style)).width(180).align(Align.center);
-            helpTable.add(new Label(((String) JSONReader.getCurrentConfig().get(o)), lStyle)).width(180).align(Align.center);
+            String id = null;
+            for(Object g : ((JSONObject) o).keySet()) {
+                id = (String) g;
+            }
+            helpTable.add(new Label(id, l2Style)).width(180).align(Align.center);
+            helpTable.add(new Label((String) ((JSONObject) o).get(id), lStyle)).width(180).align(Align.center);
         }
 
         helpMenu.row();
