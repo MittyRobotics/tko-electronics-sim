@@ -288,7 +288,6 @@ public class CableManager {
                 HardwareManager.getHardwareByID(cm.hardware1ID).reattachWire(c, cm.port1, false);
                 HardwareManager.getHardwareByID(cm.hardware2ID).reattachWire(c, cm.port2, true);
             } else {
-                System.out.println(HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1) + " " + HardwareManager.getHardwareByID(cm.hardware2ID).getCrimpedCableByPort(cm.port2));
                 HardwareManager.getHardwareByID(cm.hardware1ID).checkCrimpedCables();
                 HardwareManager.getHardwareByID(cm.hardware2ID).checkCrimpedCables();
                 mergeCables(
