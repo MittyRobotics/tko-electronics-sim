@@ -13,6 +13,7 @@ import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.input.InputManager;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
@@ -50,7 +51,8 @@ public class CircuitScreen implements Screen {
 
     public static boolean selectMultiple, selectedMultiple;
     public Vector2 selectMultiple1, selectMultiple2;
-    private ArrayList<Hardware> selected;
+    public static ArrayList<Hardware> selected;
+    public static ArrayList<Cable> selectedC;
 
     static {
         hoverFont.setColor(Color.SALMON);
@@ -85,6 +87,11 @@ public class CircuitScreen implements Screen {
                     if(selectMultiple) {
                         selectMultiple2 = vec2;
                     } else {
+                        CableManager.currentCable = null;
+                        HardwareManager.currentHardware = null;
+                        Constants.placing_object = null;
+                        CircuitGUIManager.propertiesBox.hide();
+
                         selectMultiple = true;
                         selectMultiple1 = vec2;
                         selectMultiple2 = vec2;
@@ -94,6 +101,12 @@ public class CircuitScreen implements Screen {
                     float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
                     if(selectedMultiple) {
                         selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
+                        selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
+                        for(Cable c : selectedC) {
+                            if(!selected.contains(c.connection1) && !selected.contains(c.connection2)) {
+                                c.moveEntireCable(x, -y);
+                            }
+                        }
                         for(Hardware h : selected) {
                             h.move(x, -y);
                         }
@@ -192,7 +205,8 @@ public class CircuitScreen implements Screen {
                 selectedMultiple = true;
 
                 selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
-                CircuitGUIManager.popup.activatePrompt(selected.size() + " objects selected. DELETE to remove, ESC to deselect.", 5);
+                selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
+                CircuitGUIManager.popup.activatePrompt(selected.size() + " devices and " + selectedC.size() + " cables selected. DELETE to remove, ESC to deselect.", 5);
             }
 
             /*if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -205,8 +219,14 @@ public class CircuitScreen implements Screen {
             renderer.end();
             if(selectedMultiple) {
                 selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
+                selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
 
                 if(Gdx.input.isKeyPressed(Input.Keys.DEL) || Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
+                    for(Cable c : selectedC) {
+                        HardwareManager.removeCableFromHardware(c, c.connection1);
+                        HardwareManager.removeCableFromHardware(c, c.connection2);
+                        CableManager.deleteCable(c);
+                    }
                     for(Hardware h : selected) {
                         h.delete();
                     }

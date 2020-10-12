@@ -15,6 +15,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -832,6 +834,15 @@ public class Cable implements Json.Serializable {
         appendingFromEnd = false;
         movingNode = null;
         backupNode = null;
+    }
+
+    public boolean intersect(Vector2 vec1, Vector2 vec2) {
+        for(int i = 0; i < coordinates.size()-1; ++i) {
+            if(Intersector.intersectLinePolygon(coordinates.get(i), coordinates.get(i+1), new Polygon(new float[]{vec1.x, vec1.y, vec1.x, vec2.y, vec2.x, vec2.y, vec2.x, vec1.y}))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hoveringMouse(CameraController cameraController) {
