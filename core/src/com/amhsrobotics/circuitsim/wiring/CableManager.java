@@ -2,11 +2,9 @@ package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.files.CableModel;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.hardware.HardwareManager;
-
 import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
-
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.graphics.Color;
