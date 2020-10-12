@@ -444,7 +444,7 @@ public abstract class Hardware implements Json.Serializable {
 
     public boolean intersect(Vector2 v1, Vector2 v2) {
         Rectangle b = base.getBoundingRectangle();
-        return Tools.collide(new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y)), new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y)), new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
+        return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
     }
 
     public Sprite getConnector(int conn) {

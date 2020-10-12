@@ -206,21 +206,26 @@ public class CircuitScreen implements Screen {
 
                 selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
                 selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
-                CircuitGUIManager.popup.activatePrompt(selected.size() + " devices and " + selectedC.size() + " cables selected. DELETE to remove, ESC to deselect.", 5);
+                CircuitGUIManager.popup.activatePrompt(selected.size() + " devices and " + selectedC.size() + " cables selected. DELETE to remove, ESC to deselect, DRAG to move.", 5);
             }
-
-            /*if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                selectedMultiple = false;
-            }*/
 
             renderer.begin(ShapeRenderer.ShapeType.Filled);
             renderer.setColor(new Color(156/255f,1f,150/255f,0.3f));
             renderer.rect(selectMultiple1.x, selectMultiple1.y, selectMultiple2.x- selectMultiple1.x, selectMultiple2.y- selectMultiple1.y);
             renderer.end();
-            if(selectedMultiple) {
-                selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
-                selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
 
+            selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
+            selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
+
+            for (Hardware h : selected) {
+                h.drawHover(renderer);
+            }
+
+            for(Cable c : selectedC) {
+                c.hover = true;
+            }
+
+            if(selectedMultiple) {
                 if(Gdx.input.isKeyPressed(Input.Keys.DEL) || Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
                     for(Cable c : selectedC) {
                         HardwareManager.removeCableFromHardware(c, c.connection1);
@@ -231,15 +236,8 @@ public class CircuitScreen implements Screen {
                         h.delete();
                     }
                     selectedMultiple = false;
-                } else {
-
-                    for (Hardware h : selected) {
-                        h.drawHover(renderer);
-                    }
-
-                    if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-                        selectedMultiple = false;
-                    }
+                } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                    selectedMultiple = false;
                 }
             }
         }

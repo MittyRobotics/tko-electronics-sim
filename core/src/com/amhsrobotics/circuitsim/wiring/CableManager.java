@@ -39,7 +39,11 @@ public class CableManager {
 
         Iterator<Cable> iterator = cables.iterator();
         while(iterator.hasNext()) {
-            iterator.next().update(renderer, cam);
+            Cable temp = iterator.next();
+            temp.update(renderer, cam);
+
+            temp.hover = false;
+
         }
     }
 

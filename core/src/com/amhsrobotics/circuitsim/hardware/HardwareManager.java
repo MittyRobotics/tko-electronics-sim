@@ -57,8 +57,11 @@ public class HardwareManager {
         }
     }
 
-    public static ArrayList<Hardware> getSelectedHardware(Vector2 vec1, Vector2 vec2) {
+    public static ArrayList<Hardware> getSelectedHardware(Vector2 v1, Vector2 v2) {
         ArrayList<Hardware> ans = new ArrayList<>();
+
+        Vector2 vec1 = new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y));
+        Vector2 vec2 = new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
 
         for(Hardware h : hardwares) {
             if(h.intersect(vec1, vec2)) {

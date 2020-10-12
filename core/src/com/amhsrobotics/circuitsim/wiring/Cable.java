@@ -40,7 +40,7 @@ public class Cable implements Json.Serializable {
     public ArrayList<Vector2> coordinates;
     public Hardware connection1, connection2;
 
-    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false, enableGauge, enableConn, enableColor;
+    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged, enableGauge, enableConn, enableColor, hover;
     public Vector2 movingNode, backupNode, prevPos;
 
     public int ID, color2n;
@@ -221,7 +221,7 @@ public class Cable implements Json.Serializable {
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             }
-            if(hoveringMouse(camera)) {
+            if(hoveringMouse(camera) || hover) {
                 // draw hovering on cable
                 renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
@@ -282,7 +282,7 @@ public class Cable implements Json.Serializable {
         renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
 
-        if(hoveringMouse(camera)) {
+        if(hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
         }
 
@@ -327,7 +327,7 @@ public class Cable implements Json.Serializable {
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             }
-            if(hoveringMouse(camera)) {
+            if(hoveringMouse(camera) || hover) {
                 // draw hovering on cable
                 renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
@@ -527,7 +527,7 @@ public class Cable implements Json.Serializable {
         // HOVERING OVER CABLE
         // ---------------------------------------------------------------------
 
-        if(hoveringMouse(camera)) {
+        if(hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
             if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
