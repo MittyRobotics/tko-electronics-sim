@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FileManager {
 
@@ -39,6 +38,12 @@ public class FileManager {
             if((c.connection1port != -1 && c.connection2port != -1) && !(c instanceof CrimpedCable)) {
                 cm.load(c);
                 appdata.addCable(cm);
+            }
+            if(c instanceof CrimpedCable) {
+                if(c.getConnection1() != null && c.getConnection2() != null) {
+                    cm.load(c);
+                    appdata.addCable(cm);
+                }
             }
         }
 
