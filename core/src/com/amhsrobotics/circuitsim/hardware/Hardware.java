@@ -468,6 +468,7 @@ public abstract class Hardware implements Json.Serializable {
         cable.addCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), true);
 
         cable.setConnection1(this);
+        cable.connection1port = port;
 
         cable.appendingFromEnd = false;
         cable.appendingFromBegin = false;
@@ -544,8 +545,10 @@ public abstract class Hardware implements Json.Serializable {
 
         if (endOfWire) {
             cable.setConnection2(this);
+            cable.connection2port = port;
         } else {
             cable.setConnection1(this);
+            cable.connection1port = port;
         }
         if (CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;
@@ -627,8 +630,10 @@ public abstract class Hardware implements Json.Serializable {
                     CableManager.deleteCable(cable);
                 } else if(ends.get(connections.indexOf(cable, true))) {
                     cable.setConnection2(null);
+                    cable.connection2port = -1;
                 } else {
                     cable.setConnection1(null);
+                    cable.connection1port = -1;
                 }
             }
         }
@@ -669,8 +674,10 @@ public abstract class Hardware implements Json.Serializable {
         ends.set(port, endOfWire);
         if(endOfWire) {
             cable.setConnection2(this);
+            cable.connection2port = port;
         } else {
             cable.setConnection1(this);
+            cable.connection1port = port;
         }
     }
 
@@ -703,15 +710,9 @@ public abstract class Hardware implements Json.Serializable {
     @Override
     public void read(Json json, JsonValue jsonData) {
         this.hardwareID = jsonData.get("hardware").getInt("id");
-//        this.connNum = jsonData.get("hardware").getInt("id");
-//        this.hardwareID = jsonData.get("hardware").getInt("id");
-//        this.hardwareID = jsonData.get("hardware").getInt("id");
+    }
 
-//        this.position = jsonData.child().getInt("id");
-//        this.ends = jsonData.child().getInt("id");
-//        this.hardwareID = jsonData.child().getInt("id");
-//        this.hardwareID = jsonData.child().getInt("id");
-//        this.hardwareID = jsonData.child().getInt("id");
-//        this.hardwareID = jsonData.child().getInt("id");
+    public void setHardwareID(int id) {
+        this.hardwareID = id;
     }
 }

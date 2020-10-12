@@ -37,6 +37,7 @@ public class Cable implements Json.Serializable {
     public Color color, nodeColor, hoverColor = Color.WHITE, color2 = null;
     public ArrayList<Vector2> coordinates;
     public Hardware connection1, connection2;
+    public int connection1port = -1, connection2port = -1;
 
     public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false, enableGauge, enableConn, enableColor;
     public Vector2 movingNode, backupNode, prevPos;

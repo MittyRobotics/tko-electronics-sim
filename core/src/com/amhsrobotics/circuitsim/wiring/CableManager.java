@@ -1,8 +1,12 @@
 package com.amhsrobotics.circuitsim.wiring;
 
+import com.amhsrobotics.circuitsim.files.CableModel;
+import com.amhsrobotics.circuitsim.files.HardwareModel;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -223,5 +227,28 @@ public class CableManager {
         cId = 0;
         toBeMovedForward = null;
          movingCable = false;
+    }
+
+    private static Cable loadHardwareCableType(String type, Vector2 coord, int id) {
+        if(type.equals("ethernet")) {
+            return new EthernetCable(coord, id);
+        } else if(type.equals("tubing")) {
+            return new Tubing(coord, id);
+        } else if(type.equals("regular")) {
+            return new Cable(coord, id);
+        }
+        return null;
+    }
+
+    public static void loadCable(CableModel cm) {
+        if(!cm.cableType.equals("crimped")) {
+            Cable c = loadHardwareCableType(cm.cableType, new Vector2(0, 0), cm.id);
+            addCable(c);
+            HardwareManager.getHardwareByID(cm.hardware1ID).attachWire(c, cm.port1, false);
+            HardwareManager.getHardwareByID(cm.hardware2ID).attachWire(c, cm.port2, true);
+            c.coordinates = cm.coordinates;
+            c.gauge = cm.gauge;
+            c.color = new Color(cm.r, cm.g, cm.b, cm.a);
+        }
     }
 }

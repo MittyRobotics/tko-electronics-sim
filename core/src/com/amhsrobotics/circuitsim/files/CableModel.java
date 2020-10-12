@@ -14,18 +14,18 @@ public class CableModel {
 
     public float gauge;
     public int id;
+    public int hardware1ID, hardware2ID;
     public float r, g, b, a;
-    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin;
     public ArrayList<Vector2> coordinates;
+    public int port1, port2;
     public String cableType;
 
     public void load(Cable c) {
         coordinates = c.coordinates;
-        appendingFromBegin = c.appendingFromBegin;
-        appendingFromEnd = c.appendingFromEnd;
-        disableBegin = c.disableBegin;
-        disableEnd = c.disableEnd;
         gauge = c.gauge;
+
+        hardware1ID = c.getConnection1().getHardwareID();
+        port1 = c.connection1port;
 
         r = c.color.r;
         g = c.color.g;
@@ -34,12 +34,19 @@ public class CableModel {
 
         if(c instanceof EthernetCable) {
             cableType = "ethernet";
+            hardware2ID = c.getConnection2().getHardwareID();
+            port2 = c.connection2port;
         } else if(c instanceof Tubing) {
             cableType = "tubing";
+            hardware2ID = c.getConnection2().getHardwareID();
+            port2 = c.connection2port;
         } else if(c instanceof CrimpedCable) {
             cableType = "crimped";
+            hardware2ID = 0;
         } else {
             cableType = "regular";
+            hardware2ID = c.getConnection2().getHardwareID();
+            port2 = c.connection2port;
         }
 
         id = c.getID();

@@ -5,13 +5,14 @@ import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
+import com.amhsrobotics.circuitsim.wiring.CrimpedCable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 
-import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FileManager {
 
@@ -24,21 +25,21 @@ public class FileManager {
         fileName = filename;
         appdata = new AppData();
         ArrayList<Hardware> hardware = new ArrayList<>(HardwareManager.getHardwareAsList());
+        DelayedRemovalArray<Cable> cables = CableManager.getCables();
 
         for(Hardware h : hardware) {
             HardwareModel hm = new HardwareModel();
             hm.load(h);
 
-            for(Cable c : h.connections) {
-                if(c == null) {
-                    hm.loadCableConnection(null);
-                } else {
-                    CableModel cm = new CableModel();
-                    cm.load(c);
-                    hm.loadCableConnection(cm);
-                }
-            }
             appdata.addHardware(hm);
+        }
+
+        for(Cable c : cables) {
+            CableModel cm = new CableModel();
+            if(c.connection1port != -1 && c.connection2port != -1 || !(c instanceof CrimpedCable)) {
+                cm.load(c);
+            }
+            appdata.addCable(cm);
         }
 
         appdata.setGridSize(Constants.WORLD_DIM);
@@ -53,7 +54,7 @@ public class FileManager {
     }
 
     public static void load(String filename) {
-        fileName = filename;
+//        fileName = filename;
 
         FileHandle file = Gdx.files.absolute(filename);
         appdata = json.fromJson(AppData.class, file.readString());
@@ -62,6 +63,10 @@ public class FileManager {
 
         for(HardwareModel hm : appdata.getHardware()) {
             HardwareManager.loadHardware(hm);
+        }
+
+        for(CableModel cm : appdata.getCables()) {
+            CableManager.loadCable(cm);
         }
 
         Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
