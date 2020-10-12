@@ -368,7 +368,7 @@ public abstract class Hardware implements Json.Serializable {
                 this.delete();
             }
 
-            if (Gdx.input.isTouched() && canMove && checkGood()) {
+            if (Gdx.input.isTouched() && (canMove || HardwareManager.getCurrentlyHovering(camera) == this) && checkGood()) {
                 if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     if(SnapGrid.renderGridB) {
                         SnapGrid.calculateSnap(vec);
