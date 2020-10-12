@@ -251,6 +251,8 @@ public class CableManager {
                 c.coordinates = cm.coordinates;
                 c.gauge = cm.gauge;
                 c.color = new Color(cm.r, cm.g, cm.b, cm.a);
+                HardwareManager.getHardwareByID(cm.hardware1ID).reattachWire(c, cm.port1, false);
+                HardwareManager.getHardwareByID(cm.hardware2ID).reattachWire(c, cm.port2, true);
             }
         }
 

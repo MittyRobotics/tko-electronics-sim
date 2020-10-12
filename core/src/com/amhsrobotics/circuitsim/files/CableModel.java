@@ -43,6 +43,7 @@ public class CableModel {
         } else if(c instanceof CrimpedCable) {
             cableType = "crimped";
             hardware2ID = 0;
+            port2 = 0;
         } else {
             cableType = "regular";
             hardware2ID = c.getConnection2().getHardwareID();
