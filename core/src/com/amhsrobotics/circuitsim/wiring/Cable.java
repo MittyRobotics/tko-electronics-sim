@@ -15,6 +15,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -39,7 +41,7 @@ public class Cable implements Json.Serializable {
     public Hardware connection1, connection2;
     public int connection1port = -1, connection2port = -1;
 
-    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged = false, enableGauge, enableConn, enableColor;
+    public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged, enableGauge, enableConn, enableColor, hover;
     public Vector2 movingNode, backupNode, prevPos;
 
     public int ID, color2n;
@@ -220,7 +222,7 @@ public class Cable implements Json.Serializable {
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             }
-            if(hoveringMouse(camera)) {
+            if(hoveringMouse(camera) || hover) {
                 // draw hovering on cable
                 renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
@@ -281,7 +283,7 @@ public class Cable implements Json.Serializable {
         renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
 
-        if(hoveringMouse(camera)) {
+        if(hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
         }
 
@@ -326,7 +328,7 @@ public class Cable implements Json.Serializable {
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             }
-            if(hoveringMouse(camera)) {
+            if(hoveringMouse(camera) || hover) {
                 // draw hovering on cable
                 renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
@@ -526,7 +528,7 @@ public class Cable implements Json.Serializable {
         // HOVERING OVER CABLE
         // ---------------------------------------------------------------------
 
-        if(hoveringMouse(camera)) {
+        if(hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
             if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
@@ -833,6 +835,15 @@ public class Cable implements Json.Serializable {
         appendingFromEnd = false;
         movingNode = null;
         backupNode = null;
+    }
+
+    public boolean intersect(Vector2 vec1, Vector2 vec2) {
+        for(int i = 0; i < coordinates.size()-1; ++i) {
+            if(Intersector.intersectLinePolygon(coordinates.get(i), coordinates.get(i+1), new Polygon(new float[]{vec1.x, vec1.y, vec1.x, vec2.y, vec2.x, vec2.y, vec2.x, vec1.y}))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean hoveringMouse(CameraController cameraController) {

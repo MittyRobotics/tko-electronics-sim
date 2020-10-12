@@ -1,9 +1,12 @@
 package com.amhsrobotics.circuitsim.wiring;
 
 import com.amhsrobotics.circuitsim.files.CableModel;
-import com.amhsrobotics.circuitsim.files.HardwareModel;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
+
+import com.amhsrobotics.circuitsim.hardware.Hardware;
+import com.amhsrobotics.circuitsim.screens.CircuitScreen;
+
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CableManager {
@@ -40,7 +44,11 @@ public class CableManager {
 
         Iterator<Cable> iterator = cables.iterator();
         while(iterator.hasNext()) {
-            iterator.next().update(renderer, cam);
+            Cable temp = iterator.next();
+            temp.update(renderer, cam);
+
+            temp.hover = false;
+
         }
     }
 
@@ -210,6 +218,31 @@ public class CableManager {
     public static void addTubing(float startX, float startY) {
         addCableLib(2, startX, startY);
 
+    }
+
+    public static ArrayList<Cable> getSelectedCables(Vector2 v1, Vector2 v2) {
+        ArrayList<Cable> ans = new ArrayList<>();
+
+        ArrayList<Hardware> temp = CircuitScreen.selected;
+
+        Vector2 vec1 = new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y));
+        Vector2 vec2 = new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
+
+        for(Hardware h : temp) {
+            for(Cable c : h.connections) {
+                if(c != null) {
+                    ans.add(c);
+                }
+            }
+        }
+
+        for(Cable c : cables) {
+            if(c.intersect(vec1, vec2) && !ans.contains(c)) {
+                ans.add(c);
+            }
+        }
+
+        return ans;
     }
 
     public static void addCurvedCable(float x, float y) {

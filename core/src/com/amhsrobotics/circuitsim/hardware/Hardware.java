@@ -368,7 +368,7 @@ public abstract class Hardware implements Json.Serializable {
                 this.delete();
             }
 
-            if (Gdx.input.isTouched() && canMove && checkGood()) {
+            if (Gdx.input.isTouched() && (canMove || HardwareManager.getCurrentlyHovering(camera) == this) && checkGood()) {
                 if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     if(SnapGrid.renderGridB) {
                         SnapGrid.calculateSnap(vec);
@@ -444,7 +444,7 @@ public abstract class Hardware implements Json.Serializable {
 
     public boolean intersect(Vector2 v1, Vector2 v2) {
         Rectangle b = base.getBoundingRectangle();
-        return Tools.collide(new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y)), new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y)), new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
+        return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
     }
 
     public Sprite getConnector(int conn) {
