@@ -255,6 +255,10 @@ public class HardwareManager {
         Hardware temp = switchCaseHardware(model.type, model.position.x, model.position.y, false);
         temp.setHardwareID(model.id);
 
+        if(temp instanceof EPlate) {
+            ((EPlate) temp).setBox(model.box);
+        }
+
         temp.populateProperties();
 //        CircuitGUIManager.propertiesBox.show();
         hardwares.add(temp);

@@ -288,6 +288,9 @@ public class EPlate extends Hardware {
         }
     }
 
+    public void setBox(Box box) {
+        this.box = box;
+    }
 
     @Override
     public void drawHover(ModifiedShapeRenderer renderer) {

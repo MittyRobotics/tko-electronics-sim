@@ -7,6 +7,8 @@ public class Box {
     public float x, y, width, height;
     private Vector2[] resizePoints;
 
+    public Box() {}
+
     public Box(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;

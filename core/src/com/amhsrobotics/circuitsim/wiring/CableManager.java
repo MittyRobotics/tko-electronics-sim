@@ -241,14 +241,18 @@ public class CableManager {
     }
 
     public static void loadCable(CableModel cm) {
-        if(!cm.cableType.equals("crimped")) {
-            Cable c = loadHardwareCableType(cm.cableType, new Vector2(0, 0), cm.id);
-            addCable(c);
-            HardwareManager.getHardwareByID(cm.hardware1ID).attachWire(c, cm.port1, false);
-            HardwareManager.getHardwareByID(cm.hardware2ID).attachWire(c, cm.port2, true);
-            c.coordinates = cm.coordinates;
-            c.gauge = cm.gauge;
-            c.color = new Color(cm.r, cm.g, cm.b, cm.a);
+        if(cm != null) {
+            if(!cm.cableType.equals("crimped")) {
+                Cable c = loadHardwareCableType(cm.cableType, new Vector2(0, 0), cm.id);
+                assert c != null;
+                addCable(c);
+                HardwareManager.getHardwareByID(cm.hardware1ID).attachWire(c, cm.port1, false);
+                HardwareManager.getHardwareByID(cm.hardware2ID).attachWire(c, cm.port2, true);
+                c.coordinates = cm.coordinates;
+                c.gauge = cm.gauge;
+                c.color = new Color(cm.r, cm.g, cm.b, cm.a);
+            }
         }
+
     }
 }
