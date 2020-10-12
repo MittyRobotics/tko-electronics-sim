@@ -456,9 +456,8 @@ public class CircuitGUIManager {
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!fileLocation.getText().contains(".")) {
-                    popup.activateError("No File Given");
-                } else {
+                if(!fileLocation.getText().contains(".tko")) {
+                    fileLocation.setText(fileLocation.getText() + ".tko");
                     FileManager.save(fileLocation.getText());
                     popup.activatePrompt("Successfully Saved!");
                     hideSaveMenu();
