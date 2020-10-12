@@ -255,7 +255,7 @@ public class HardwareManager {
     }
 
     public static void loadHardware(HardwareModel model) {
-        Hardware temp = switchCaseHardware(model.type, model.position.x, model.position.y, false);
+        Hardware temp = switchCaseHardware(model.type, model.position.x, model.position.y, true);
         temp.setHardwareID(model.id);
 
         if(temp instanceof EPlate) {

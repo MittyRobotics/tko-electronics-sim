@@ -135,6 +135,7 @@ public class CableManager {
                             cable2.color2n = cable2.coordinates.size() - 1;
                             cable2.mergeCable(cable1, cable1begin, cable2begin);
                             cable2.color2 = cable1.color;
+                            System.out.println(cable1.connection1port + " " + cable2.connection1port);
                             deleteCable(cable1);
                         } else {
                             CircuitGUIManager.popup.activateError("A crimped cable cannot be connected to a regular cable");
@@ -286,6 +287,19 @@ public class CableManager {
                 c.color = new Color(cm.r, cm.g, cm.b, cm.a);
                 HardwareManager.getHardwareByID(cm.hardware1ID).reattachWire(c, cm.port1, false);
                 HardwareManager.getHardwareByID(cm.hardware2ID).reattachWire(c, cm.port2, true);
+            } else {
+                System.out.println(HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1) + " " + HardwareManager.getHardwareByID(cm.hardware2ID).getCrimpedCableByPort(cm.port2));
+                HardwareManager.getHardwareByID(cm.hardware1ID).checkCrimpedCables();
+                HardwareManager.getHardwareByID(cm.hardware2ID).checkCrimpedCables();
+                mergeCables(
+                        HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1),
+                        HardwareManager.getHardwareByID(cm.hardware2ID).getCrimpedCableByPort(cm.port2),
+                        false,
+                        false
+                        );
+                HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1).coordinates = cm.coordinates;
+                HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1).color = new Color(cm.r, cm.g, cm.b, cm.a);
+
             }
         }
 

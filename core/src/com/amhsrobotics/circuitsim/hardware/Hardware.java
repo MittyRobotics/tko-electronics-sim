@@ -442,6 +442,10 @@ public abstract class Hardware implements Json.Serializable {
 
     }
 
+    public CrimpedCable getCrimpedCableByPort(int port) {
+        return (CrimpedCable) connections.get(port);
+    }
+
     public boolean intersect(Vector2 v1, Vector2 v2) {
         Rectangle b = base.getBoundingRectangle();
         return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
