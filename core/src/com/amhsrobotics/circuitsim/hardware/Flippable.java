@@ -94,7 +94,7 @@ public class Flippable extends Hardware  {
         cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
     }
 
-    private void rotateThis() {
+    public void rotateThis() {
         base.rotate(90);
         if(this instanceof SandCrab) {
             for (Sprite s : connectors) {
@@ -110,6 +110,14 @@ public class Flippable extends Hardware  {
         }
 
         rotated = true;
+    }
+
+    public int getRotation() {
+        float x = base.getRotation() % 360;
+        if(x < 0) {
+            x += 360;
+        }
+        return Math.round(x);
     }
 
     @Override

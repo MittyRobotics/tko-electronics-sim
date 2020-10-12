@@ -258,6 +258,11 @@ public class HardwareManager {
         if(temp instanceof EPlate) {
             ((EPlate) temp).setBox(model.box);
         }
+        if(temp instanceof Flippable) {
+            for(int x = 0; x < model.rotation / 90; x++) {
+                ((Flippable) temp).rotateThis();
+            }
+        }
 
         temp.populateProperties();
 //        CircuitGUIManager.propertiesBox.show();

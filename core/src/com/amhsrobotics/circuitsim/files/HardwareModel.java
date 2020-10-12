@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.files;
 
 
 import com.amhsrobotics.circuitsim.hardware.EPlate;
+import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.utility.Box;
@@ -17,13 +18,19 @@ public class HardwareModel {
     public int id;
     public DelayedRemovalArray<CableModel> connections;
     public Box box;
+    public int rotation;
 
     public void load(Hardware h) {
         type = h.type;
         id = h.getHardwareID();
         position = h.getPosition();
+
         if(h instanceof EPlate) {
             box = ((EPlate) h).getBox();
+        }
+
+        if(h instanceof Flippable) {
+            rotation = ((Flippable) h).getRotation();
         }
     }
 }
