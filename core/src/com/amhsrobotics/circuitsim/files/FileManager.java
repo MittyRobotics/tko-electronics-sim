@@ -36,10 +36,10 @@ public class FileManager {
 
         for(Cable c : cables) {
             CableModel cm = new CableModel();
-            if(c.connection1port != -1 && c.connection2port != -1 || !(c instanceof CrimpedCable)) {
+            if((c.connection1port != -1 && c.connection2port != -1) && !(c instanceof CrimpedCable)) {
                 cm.load(c);
+                appdata.addCable(cm);
             }
-            appdata.addCable(cm);
         }
 
         appdata.setGridSize(Constants.WORLD_DIM);
