@@ -185,6 +185,7 @@ public class MenuScreen implements Screen {
                     f.setVisible(false);
                     int res = chooser.showOpenDialog(f);
                     chooser.setDialogTitle("Import");
+                    chooser.setAcceptAllFileFilterUsed(true);
                     f.dispose();
                     if (res == JFileChooser.APPROVE_OPTION) {
                         fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
