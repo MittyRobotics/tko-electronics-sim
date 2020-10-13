@@ -183,7 +183,7 @@ public class MenuScreen implements Screen {
                     f.setVisible(true);
                     f.toFront();
                     f.setVisible(false);
-                    int res = chooser.showSaveDialog(f);
+                    int res = chooser.showOpenDialog(f);
                     chooser.setDialogTitle("Import");
                     f.dispose();
                     if (res == JFileChooser.APPROVE_OPTION) {
