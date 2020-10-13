@@ -28,6 +28,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.net.URL;
 
@@ -185,6 +187,9 @@ public class MenuScreen implements Screen {
                     f.setVisible(false);
                     int res = chooser.showOpenDialog(f);
                     chooser.setDialogTitle("Import");
+                    FileFilter filter = new FileNameExtensionFilter("TKO Simulator File", "tko");
+                    chooser.setAcceptAllFileFilterUsed(true);
+                    chooser.setFileFilter(filter);
                     f.dispose();
                     if (res == JFileChooser.APPROVE_OPTION) {
                         fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
