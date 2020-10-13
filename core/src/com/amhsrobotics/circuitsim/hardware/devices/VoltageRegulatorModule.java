@@ -41,5 +41,17 @@ public class VoltageRegulatorModule extends Flippable {
         }
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1)) {
+            return "VRM is not connected to PDP";
+        }
+
+        if(!((getNum(0) == 0 && getNum(1) == 1) || (getNum(0) == 2 && getNum(1) == 3))) {
+            return "VRM is improperly connected to PDP";
+        }
+
+        return null;
+    }
+
 
 }
