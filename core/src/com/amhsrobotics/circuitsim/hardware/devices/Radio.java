@@ -37,11 +37,23 @@ public class Radio extends Flippable {
         return calculateDirection(cur, port);
     }
 
-    public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+    public String check() {
+        if(getAllNull(0, 2)) {
+            return "Radio is not connected";
+        }
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getSpriteBox().x - 9, getSpriteBox().y - 9, getSpriteBox().getWidth() + 14, getSpriteBox().getHeight() + 14, 55);
-        renderer.end();
+        if(getNull(2) || !(getOther(2) instanceof RoboRio)) {
+            return "Radio is not connected to RoboRIO";
+        }
+
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof VoltageRegulatorModule) || !(getOther(1) instanceof VoltageRegulatorModule)) {
+            return "Radio is not connected to VRM";
+        }
+
+        if(!((getNum(0) == 4 || getNum(0) == 2) && (getNum(1) == 5 || getNum(1) == 3))) {
+            return "Radio should be connected to 12V/2A on VRM";
+        }
+
+        return null;
     }
 }

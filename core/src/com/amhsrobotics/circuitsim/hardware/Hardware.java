@@ -285,7 +285,7 @@ public abstract class Hardware implements Json.Serializable {
             if(connections.get(connectors.indexOf(s)) == null) {
                 if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this && checkGood()) {
                     if(!(this instanceof SandCrab)) {
-                        CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g)");
+                        CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + " (" + portTypes.get(connectors.indexOf(s)) + "g) " + connectors.indexOf(s));
                     } else {
                         CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
                     }
