@@ -323,6 +323,11 @@ public class CircuitGUIManager {
                     simulate.setText("Simulate");
                     sim.isRunning = false;
                 } else {
+
+                    if(HardwareManager.getHardware() == null || HardwareManager.getHardware().size == 0) {
+                        CircuitGUIManager.popup.activateError("Nothing to simulate");
+                        return;
+                    }
                     simulate.setText("Stop");
                     sim.simulate();
                 }
@@ -513,6 +518,9 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SnapGrid.renderGridB = !SnapGrid.renderGridB;
+                gridSpacing.setDisabled(!gridSpacing.isDisabled());
+                gridSizingX.setDisabled(!gridSizingX.isDisabled());
+                gridSizingY.setDisabled(!gridSizingY.isDisabled());
             }
         });
 
