@@ -1,18 +1,22 @@
 # TKO 1351 Circuit Simulator
 <!--- ![TKO 1351 Circuit Simulator](core/assets/img/circuitsim.png) --->
 
-*An FRC circuit simulator used by our electronics department.*
+An FRC circuit simulator used by our electronics department for rookie training and EPlate diagraming. Current features include a 2D interface similar to CAD which allows the user to create, move, and edit devices and cables. Circuits can also be saved as files and imported.
+
+Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23) with help from [Ashvin Iyer](https://github.com/ashviniyer21).
 
 ### Features
 
+- 2D CAD-inspired interface
+- Creating, moving, editing devices and cables
+- Saving/importing circuits as files
+- Accurate circuit building using real FRC parts: batteries, breakerers, compressors, falcon motors, manifolds, 775 motors, NEOs, pistons, PCMs, PDPs, pressure switches, radios, RoboRIOs, WAGO connectors, solenoids, sparks, talons, air tanks, VRMs, cables (Ethernet, tubing, all gauges used in FRC), EPlates
 - Native, can be run anywhere
-- Accurate circuit builder using real FRC parts
-- CPU-efficient
 
-### Near Future
+### Currently WIP
 
-- Real-time simulation
-- Importing circuits
+- Automated debugging and LED simulation
+- Accurate scaling of parts on a blocks-per-inch grid
 
 ### Installation
 
