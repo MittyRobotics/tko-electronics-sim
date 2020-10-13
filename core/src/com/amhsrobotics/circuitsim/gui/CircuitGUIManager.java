@@ -637,6 +637,9 @@ public class CircuitGUIManager {
         }
 
         if(sim.isRunning) {
+            for(Hardware h : HardwareManager.getHardware()) {
+                h.stopDrawErrorHover();
+            }
             popup.removeLabels();
             sim.simulate();
         }

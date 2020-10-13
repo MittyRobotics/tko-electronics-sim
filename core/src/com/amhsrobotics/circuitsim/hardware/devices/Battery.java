@@ -37,10 +37,17 @@ public class Battery extends Flippable {
     }
 
     public String check() {
-        //Gdx.app.log(connections.get(0).getOtherConnectionNum(this)+"", connections.get(1).getOtherConnectionNum(this)+"");
 
-        if(connections.get(0) == null || connections.get(1) == null || connections.get(0).getOtherConnection(this) == null || connections.get(1).getOtherConnection(this) == null) {
+        if((connections.get(0) == null || connections.get(0).getOtherConnection(this) == null) && (connections.get(1) == null || connections.get(1).getOtherConnection(this) == null)) {
             return "Battery is not connected";
+        }
+
+        if(connections.get(0) == null || connections.get(0).getOtherConnection(this) == null) {
+            return "Battery is not connected to main breaker";
+        }
+
+        if(connections.get(1) == null || connections.get(1).getOtherConnection(this) == null) {
+            return "Battery is not connected to PDP";
         }
 
         if(!(connections.get(0).getOtherConnection(this) instanceof Breaker)) {

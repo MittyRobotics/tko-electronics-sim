@@ -51,7 +51,7 @@ public class Message {
 
         Table t = new Table();
         t.setBackground(Constants.SKIN.getDrawable("textbox_01"));
-        t.add(l).pad(5);
+        t.add(l);
         t.pack();
 
         t.setPosition(pos.x-t.getWidth()/2, pos.y);
