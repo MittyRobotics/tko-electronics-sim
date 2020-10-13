@@ -67,6 +67,7 @@ public class CircuitGUIManager {
         this.stage = stage;
 
         sim = new Simulation();
+        ConfirmDialog.init(stage);
 
         propertiesBox = new PropertiesBox(stage);
         popup = new Message(stage);
@@ -248,18 +249,25 @@ public class CircuitGUIManager {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
-                camera.attachCameraSequence(new ArrayList<CameraAction>() {{
-                    add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
-                }});
-                Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.07f, simulate, hidePanel, clear, options, help, save);
-                Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
+                ConfirmDialog.createWindow(new Runnable() {
                     @Override
                     public void run() {
-                        game.setScreen(new MenuScreen(game));
+                        camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
+                        camera.attachCameraSequence(new ArrayList<CameraAction>() {{
+                            add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
+                        }});
+                        Tools.sequenceSlideOut("top", 0.5f, Interpolation.exp10, 100, 0.07f, simulate, hidePanel, clear, options, help, save);
+                        Tools.slideOut(back, "left", 0.5f, Interpolation.exp10, 100, new Runnable() {
+                            @Override
+                            public void run() {
+                                HardwareManager.clearHardware();
+                                CableManager.clearCables();
+                                game.setScreen(new MenuScreen(game));
+                            }
+                        });
+                        Tools.sequenceSlideOut("right", 0.5f, Interpolation.exp10, 100, 0.2f, filters, container);
                     }
                 });
-                Tools.sequenceSlideOut("right", 0.5f, Interpolation.exp10, 100, 0.2f, filters, container);
             }
         });
         help.addListener(new ChangeListener() {
@@ -337,8 +345,14 @@ public class CircuitGUIManager {
         clear.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                HardwareManager.clearHardware();
-                CableManager.clearCables();
+
+                ConfirmDialog.createWindow(new Runnable() {
+                    @Override
+                    public void run() {
+                        HardwareManager.clearHardware();
+                        CableManager.clearCables();
+                    }
+                });
             }
         });
 
@@ -378,17 +392,11 @@ public class CircuitGUIManager {
         if(filtersMap.get(fil)) {
             filtersMap.put(fil, false);
             fil.setStyle(tStyle);
-            processChangedFilter();
         } else {
             filtersMap.put(fil, true);
             fil.setStyle(t2Style);
-            processChangedFilter();
         }
         filterChanged = true;
-    }
-
-    private void processChangedFilter() {
-
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
