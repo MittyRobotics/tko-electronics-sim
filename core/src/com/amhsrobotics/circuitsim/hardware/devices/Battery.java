@@ -38,26 +38,19 @@ public class Battery extends Flippable {
 
     public String check() {
 
-        if((connections.get(0) == null || connections.get(0).getOtherConnection(this) == null) && (connections.get(1) == null || connections.get(1).getOtherConnection(this) == null)) {
+        if(getNull(0) && getNull(1)) {
             return "Battery is not connected";
         }
 
-        if(connections.get(0) == null || connections.get(0).getOtherConnection(this) == null) {
-            return "Battery is not connected to main breaker";
+        if(getNull(0) || !(getOther(0) instanceof Breaker)) {
+            return "Positive terminal is not connected to main breaker";
         }
 
-        if(connections.get(1) == null || connections.get(1).getOtherConnection(this) == null) {
-            return "Battery is not connected to PDP";
+        if(getNull(1)  || !(getOther(1) instanceof PowerDistributionPanel)) {
+            return "Negative terminal is not connected to PDP";
         }
 
-        if(!(connections.get(0).getOtherConnection(this) instanceof Breaker)) {
-            return "Positive terminal should be connected to the main breaker";
-        }
-        if(!(connections.get(1).getOtherConnection(this) instanceof PowerDistributionPanel)) {
-            return "Negative terminal should be connected to the PDP";
-        }
-
-        if(connections.get(1).getOtherConnectionNum(this) != 43) {
+        if(getNum(1) != 43) {
             return "Negative terminal should be connected to the negative port on the PDP";
         }
 

@@ -133,6 +133,10 @@ public class Flippable extends Hardware  {
             renderer.setColor(Color.RED);
         }
 
+        if(drawGood) {
+            renderer.setColor(Color.GREEN);
+        }
+
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.roundedRect(getSpriteBox().x - 7, getSpriteBox().y - 7, getSpriteBox().getWidth() + 14, getSpriteBox().getHeight() + 14, 5);
         renderer.end();

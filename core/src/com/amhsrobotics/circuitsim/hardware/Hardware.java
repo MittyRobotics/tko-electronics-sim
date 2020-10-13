@@ -46,7 +46,7 @@ public abstract class Hardware implements Json.Serializable {
     public HardwareType type;
     public String name;
     public boolean rotated = false;
-    public boolean drawError = false;
+    public boolean drawError = false, drawGood = false;
 
     public ClippedCameraController camera;
 
@@ -177,6 +177,40 @@ public abstract class Hardware implements Json.Serializable {
         return new Vector2(base.getWidth(), base.getHeight());
     }
 
+    public boolean getNull(int conn) {
+        return connections.get(conn) == null || connections.get(conn).getOtherConnection(this) == null;
+    }
+
+    public boolean getNotNull(int conn) {
+        return !getNull(conn);
+    }
+
+    public boolean getAllNull(int conn1, int conn2) {
+        for(int i = conn1; i <= conn2; ++i) {
+            if(!getNull(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public Hardware getOther(int conn) {
+        return connections.get(conn).getOtherConnection(this);
+    }
+
+    public int getNum(int conn) {
+        return connections.get(conn).getOtherConnectionNum(this);
+    }
+
+    public boolean getAllNotNull(int conn1, int conn2) {
+        for(int i = conn1; i <= conn2; ++i) {
+            if(getNull(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         this.camera = camera;
 
@@ -185,7 +219,7 @@ public abstract class Hardware implements Json.Serializable {
 
         if(type == HardwareType.EPLATE) return;
 
-        if(drawError) {
+        if(drawError || drawGood) {
             drawHover(renderer);
         }
 
@@ -690,6 +724,14 @@ public abstract class Hardware implements Json.Serializable {
 
     public void stopDrawErrorHover() {
         drawError = false;
+    }
+
+    public void drawGoodHover() {
+        drawGood = true;
+    }
+
+    public void stopDrawGoodHover() {
+        drawGood = false;
     }
 
     public int getTotalConnectors() {

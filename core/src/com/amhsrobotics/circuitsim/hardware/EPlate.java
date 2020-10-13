@@ -84,7 +84,7 @@ public class EPlate extends Hardware {
             SnapGrid.calculateSnap(vec);
         }
 
-        if(drawError) {
+        if(drawError || drawGood) {
             drawHover(renderer);
         }
 
@@ -300,6 +300,9 @@ public class EPlate extends Hardware {
         renderer.setColor(255/255f, 255/255f, 255/255f, 0.2f);
         if(drawError) {
             renderer.setColor(Color.RED);
+        }
+        if(drawGood) {
+            renderer.setColor(Color.GREEN);
         }
 
         Gdx.gl.glLineWidth(5);

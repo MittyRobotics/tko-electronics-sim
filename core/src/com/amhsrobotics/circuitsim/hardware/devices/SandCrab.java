@@ -54,6 +54,14 @@ public class SandCrab extends Flippable {
         batch.end();
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1)) {
+            return "Sandcrab is not connected";
+        }
+
+        return null;
+    }
+
 
     public Vector2 calculate(int port) {
         return calculateDirection(cur, port, 120);

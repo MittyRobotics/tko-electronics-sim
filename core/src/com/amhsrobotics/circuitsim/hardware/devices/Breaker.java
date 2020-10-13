@@ -39,4 +39,29 @@ public class Breaker extends Flippable {
         }
     }
 
+    public String check() {
+
+        if(getNull(0) && getNull(1)) {
+            return "Breaker is not connected";
+        }
+
+        if(!(getNotNull(0) && getOther(0) instanceof PowerDistributionPanel || getNotNull(1) && getOther(1) instanceof PowerDistributionPanel)) {
+            return "Breaker is not connected to PDP";
+        }
+
+        if(!(getNotNull(0) && getOther(0) instanceof Battery || getNotNull(1) && getOther(1) instanceof Battery)) {
+            return "Breaker is not connected to battery";
+        }
+
+        if(getNotNull(0) && getNum(0) != 42 && getNotNull(1) && getNum(1) != 42) {
+            return "Breaker connected to wrong PDP port";
+        }
+
+        if(getNotNull(0) && getNum(0) != 0 && getNotNull(1) && getNum(1) != 0) {
+            return "Breaker connected to wrong battery port";
+        }
+
+        return null;
+    }
+
 }

@@ -314,8 +314,12 @@ public class CircuitGUIManager {
                 if(sim.isRunning) {
                     for(Hardware h : HardwareManager.getHardware()) {
                         h.stopDrawErrorHover();
+                        h.stopDrawGoodHover();
                     }
                     popup.removeLabels();
+                    HardwareManager.currentHardware = null;
+                    CableManager.currentCable = null;
+                    propertiesBox.hide();
                     simulate.setText("Simulate");
                     sim.isRunning = false;
                 } else {
@@ -639,6 +643,7 @@ public class CircuitGUIManager {
         if(sim.isRunning) {
             for(Hardware h : HardwareManager.getHardware()) {
                 h.stopDrawErrorHover();
+                h.stopDrawGoodHover();
             }
             popup.removeLabels();
             sim.simulate();
