@@ -5,6 +5,7 @@ import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.devices.Battery;
 import com.amhsrobotics.circuitsim.wiring.Cable;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class Simulation {
         return isRunning;
     }
 
-    public HashMap<Object, String> simulate() {
+    public void simulate() {
         error.clear();
         isRunning = true;
         battery = null;
@@ -37,13 +38,17 @@ public class Simulation {
         h = HardwareManager.getHardware();
 
         for(Hardware ha : h) {
-            //if(!(h.check() == null) {
-            //  error.put(h, h.check());
-            //}
+            if(ha.check() != null) {
+              error.put(ha, ha.check());
+            }
         }
 
-        CircuitGUIManager.popup.activateError("Simulation Not Implemented");
+        //CircuitGUIManager.popup.activateError("Simulation Not Implemented");
         isRunning = false;
-        return error;
+
+        for(Object o : error.keySet()) {
+            Gdx.app.log(error.get(o), "");
+        }
+        //return error;
     }
 }

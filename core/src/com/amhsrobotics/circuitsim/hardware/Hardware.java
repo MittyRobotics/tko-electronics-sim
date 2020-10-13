@@ -463,6 +463,10 @@ public abstract class Hardware implements Json.Serializable {
         return name;
     }
 
+    public int getConnNum(Cable c) {
+        return connections.indexOf(c, true);
+    }
+
     public void attachCrimpedCable(Cable cable, int port) {
         connections.set(port, cable);
 

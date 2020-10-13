@@ -770,6 +770,13 @@ public class Cable implements Json.Serializable {
         return connection1 == h ? connection2 : connection1;
     }
 
+    public int getOtherConnectionNum(Hardware h) {
+        if(connection1 == h) {
+            return connection2.getConnNum(this);
+        }
+        return connection1.getConnNum(this);
+    }
+
     public Hardware getConnection(boolean begin) {
         return begin ? connection1 : connection2;
     }
