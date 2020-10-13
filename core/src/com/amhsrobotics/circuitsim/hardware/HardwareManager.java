@@ -68,7 +68,7 @@ public class HardwareManager {
         Vector2 vec2 = new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
 
         for(Hardware h : hardwares) {
-            if(h.intersect(vec1, vec2)) {
+            if(!(h instanceof EPlate) && h.intersect(vec1, vec2)) {
                 ans.add(h);
             }
         }
