@@ -43,7 +43,7 @@ public class Simulation {
         }
 
         CircuitGUIManager.popup.activateError("Simulation Not Implemented");
-
+        isRunning = false;
         return error;
     }
 }

@@ -719,4 +719,8 @@ public abstract class Hardware implements Json.Serializable {
     public void setHardwareID(int id) {
         this.hardwareID = id;
     }
+
+    public String check() {
+        return null;
+    }
 }
