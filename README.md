@@ -10,7 +10,8 @@ Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https:/
 - 2D CAD-inspired interface
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
-- Accurate circuit building using real FRC parts: batteries, breakerers, compressors, falcon motors, manifolds, 775 motors, NEOs, pistons, PCMs, PDPs, pressure switches, radios, RoboRIOs, WAGO connectors, solenoids, sparks, talons, air tanks, VRMs, cables (Ethernet, tubing, all gauges used in FRC), EPlates
+- Accurate circuit diagramming using real FRC parts: 
+  - batteries, breakerers, compressors, falcon motors, manifolds, 775 motors, NEOs, pistons, PCMs, PDPs, pressure switches, radios, RoboRIOs, WAGO connectors, solenoids, sparks, talons, air tanks, VRMs, cables (Ethernet, tubing, all gauges used in FRC), EPlates
 - Native, can be run anywhere
 
 ### Currently WIP
