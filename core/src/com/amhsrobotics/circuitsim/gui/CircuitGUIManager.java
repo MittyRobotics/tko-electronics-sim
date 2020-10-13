@@ -365,7 +365,7 @@ public class CircuitGUIManager {
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
 
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter);
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
     }
 
     public static void saveMenu() {
