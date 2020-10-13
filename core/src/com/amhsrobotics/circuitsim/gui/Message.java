@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.gui;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.utility.LinkTimer;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.Rumble;
@@ -8,8 +9,11 @@ import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+
+import java.util.ArrayList;
 
 public class Message {
 
@@ -20,7 +24,9 @@ public class Message {
     private Label label;
     private Table table;
 
-    private boolean visible;
+    public boolean visible;
+
+    private ArrayList<Table> tables = new ArrayList<>();
 
     public Message(ModifiedStage stage) {
         this.stage = stage;
@@ -38,6 +44,27 @@ public class Message {
         table.setPosition((float) Gdx.graphics.getWidth() / 2 - table.getWidth() / 2, -100);
 
         stage.addActor(table);
+    }
+
+    public void addLabel(String text, Vector2 pos) {
+        Label l = new Label(text, LABEL);
+
+        Table t = new Table();
+        t.setBackground(Constants.SKIN.getDrawable("textbox_01"));
+        t.add(l).pad(5);
+        t.pack();
+
+        t.setPosition(pos.x-t.getWidth()/2, pos.y);
+
+        tables.add(t);
+
+        stage.addActor(t);
+    }
+
+    public void removeLabels() {
+        for(Table a : tables) {
+            a.remove();
+        }
     }
 
     public void activateError(String text) {

@@ -129,9 +129,13 @@ public class Flippable extends Hardware  {
 
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+        if(drawError) {
+            renderer.setColor(Color.RED);
+        }
 
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         renderer.roundedRect(getSpriteBox().x - 7, getSpriteBox().y - 7, getSpriteBox().getWidth() + 14, getSpriteBox().getHeight() + 14, 5);
         renderer.end();
     }
+
 }

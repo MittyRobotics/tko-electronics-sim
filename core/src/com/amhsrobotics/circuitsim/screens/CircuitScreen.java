@@ -37,7 +37,7 @@ public class CircuitScreen implements Screen {
     private static ModifiedStage stage;
     private final Game game;
     private final SpriteBatch batch;
-    private final ModifiedShapeRenderer renderer;
+    public static ModifiedShapeRenderer renderer;
     private final ModifiedShapeRenderer HUDrenderer;
     private ClippedCameraController camera;
     private static BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40, true);
@@ -331,6 +331,7 @@ public class CircuitScreen implements Screen {
         }
         batch.end();
         drawString = "";
+
     }
 
     public String getError(Exception e) {

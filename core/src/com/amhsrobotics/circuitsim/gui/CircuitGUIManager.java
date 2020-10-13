@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.gui;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.files.JSONReader;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
@@ -27,6 +28,7 @@ import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
+import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -309,7 +311,17 @@ public class CircuitGUIManager {
         simulate.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                sim.simulate();
+                if(sim.isRunning) {
+                    for(Hardware h : HardwareManager.getHardware()) {
+                        h.stopDrawErrorHover();
+                    }
+                    popup.removeLabels();
+                    simulate.setText("Simulate");
+                    sim.isRunning = false;
+                } else {
+                    simulate.setText("Stop");
+                    sim.simulate();
+                }
             }
         });
 
@@ -611,15 +623,6 @@ public class CircuitGUIManager {
     }
 
     public void update(float delta) {
-
-        if(sim.isRunning()) {
-            if(sim.getErrors().size() > 0) {
-                // temporary, replace this with actual error later
-                popup.activateError("Simulation Error");
-                sim.getErrors().clear();
-            }
-        }
-
         if(Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.K) && Gdx.input.isKeyPressed(Input.Keys.O)) {
             easter.setPosition(100, 0);
             if(!easterOn) {
@@ -631,6 +634,11 @@ public class CircuitGUIManager {
                 Tools.slideOut(easter, "down", 1f, Interpolation.smooth, 165);
                 easterOn = false;
             }
+        }
+
+        if(sim.isRunning) {
+            popup.removeLabels();
+            sim.simulate();
         }
 
 

@@ -84,6 +84,10 @@ public class EPlate extends Hardware {
             SnapGrid.calculateSnap(vec);
         }
 
+        if(drawError) {
+            drawHover(renderer);
+        }
+
 
         if(box.contains(vec.x, vec.y)) {
             drawHover(renderer);
@@ -292,9 +296,11 @@ public class EPlate extends Hardware {
         this.box = box;
     }
 
-    @Override
     public void drawHover(ModifiedShapeRenderer renderer) {
         renderer.setColor(255/255f, 255/255f, 255/255f, 0.2f);
+        if(drawError) {
+            renderer.setColor(Color.RED);
+        }
 
         Gdx.gl.glLineWidth(5);
         renderer.begin(ShapeRenderer.ShapeType.Line);
@@ -302,6 +308,7 @@ public class EPlate extends Hardware {
         renderer.end();
         Gdx.gl.glLineWidth(1);
     }
+
 
 
     public Box getBox() {

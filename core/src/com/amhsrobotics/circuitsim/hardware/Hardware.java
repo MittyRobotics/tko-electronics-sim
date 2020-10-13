@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
@@ -45,6 +46,9 @@ public abstract class Hardware implements Json.Serializable {
     public HardwareType type;
     public String name;
     public boolean rotated = false;
+    public boolean drawError = false;
+
+    public ClippedCameraController camera;
 
     public ArrayList<JSONArray> pinSizeDefs = new ArrayList<>();
     public ArrayList<Sprite> connectors = new ArrayList<>();
@@ -174,10 +178,16 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
+        this.camera = camera;
+
         renderer.setProjectionMatrix(camera.getCamera().combined);
         batch.setProjectionMatrix(camera.getCamera().combined);
 
         if(type == HardwareType.EPLATE) return;
+
+        if(drawError) {
+            drawHover(renderer);
+        }
 
         if(this.addCrimped) {
             checkCrimpedCables();
@@ -665,13 +675,22 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(Color.WHITE);
 
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(getPosition().x - (base.getWidth() / 2), getPosition().y - (base.getHeight() / 2), base.getWidth()-1, base.getHeight(), 15);
-        renderer.end();
     }
 
+    public Vector2 getPositionProjected() {
+        Vector3 vec = new Vector3(position.x, position.y, 0);
+        camera.getCamera().project(vec);
+        return new Vector2(vec.x, vec.y);
+    }
+
+    public void drawErrorHover() {
+        drawError = true;
+    }
+
+    public void stopDrawErrorHover() {
+        drawError = false;
+    }
 
     public int getTotalConnectors() {
         return connNum;
