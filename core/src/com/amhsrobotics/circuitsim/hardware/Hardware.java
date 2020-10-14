@@ -163,6 +163,7 @@ public abstract class Hardware implements Json.Serializable {
         int j = 0;
         for(int i : crimpedPorts) {
             if(connections.get(i) == null) {
+                ends.set(i, false);
                 CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)));
                 c.setColor(crimpedPortColors.get(j));
                 CableManager.addCable(c);
