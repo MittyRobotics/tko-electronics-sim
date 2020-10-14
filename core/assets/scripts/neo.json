@@ -1,8 +1,8 @@
 {
   "name": "NEO Motor",
   "totalLeds": 0,
-  "crimpedColors": ["White", "Black", "Red", "Black"],
-  "crimped": [0, 1, 2, 3],
+  "crimpedColors": ["White", "Black", "Red"],
+  "crimped": [0, 1, 2],
   "pins": [
     {
       "type": "12",

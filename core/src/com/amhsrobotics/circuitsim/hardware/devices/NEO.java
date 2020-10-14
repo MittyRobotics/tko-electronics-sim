@@ -35,4 +35,16 @@ public class NEO extends Flippable {
     public Vector2 calculate(int port) {
         return calculateDirection(cur, port);
     }
+
+    public String check() {
+        if(getNull(0) || getNull(1) || getNull(2) || !(getOther(0) instanceof Spark && getOther(1) instanceof Spark && getOther(2) instanceof Spark)) {
+            return "NEO is not connected to SPARK";
+        }
+
+        if(getNum(0) != 2 || getNum(1) != 1 || getNum(2) != 0 ) {
+            return "NEO improperly connected to SPARK";
+        }
+
+        return null;
+    }
 }

@@ -34,4 +34,16 @@ public class Motor775 extends Flippable {
         return calculateDirection(cur, port);
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof Talon && getOther(1) instanceof Talon)) {
+            return "775 Motor is not connected to talon";
+        }
+
+        if(getNum(0) != 3 || getNum(1) != 2) {
+            return "775 Motor improperly connected to talon";
+        }
+
+        return null;
+    }
+
 }

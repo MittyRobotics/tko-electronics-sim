@@ -282,21 +282,19 @@ public abstract class Hardware implements Json.Serializable {
         }
 
         for(Sprite s : connectors) {
-            if(connections.get(connectors.indexOf(s)) == null) {
-                if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this && checkGood()) {
-                    if(!(this instanceof SandCrab)) {
-                        CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
-                    } else {
-                        CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
-                    }
-                    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null) {
-                        HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
-                        Timer timer = new Timer(500, arg0 -> {
-                            HardwareManager.attachWireOnDoubleClick = null;
-                        });
-                        timer.setRepeats(false);
-                        timer.start();
-                    }
+            if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
+                if(!(this instanceof SandCrab)) {
+                    CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
+                } else {
+                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
+                }
+                if (connections.get(connectors.indexOf(s)) == null && Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null && checkGood()) {
+                    HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
+                    Timer timer = new Timer(500, arg0 -> {
+                        HardwareManager.attachWireOnDoubleClick = null;
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
                 }
             }
         }
