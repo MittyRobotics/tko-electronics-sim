@@ -40,4 +40,37 @@ public class Falcon extends Flippable {
             return calculateDirection(cur, port);
         }
     }
+
+    public String check() {
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            return "Falcon is not connected to PDP";
+        }
+
+        if(getNum(0) <= 41 && getNum(0) >= 34) {
+            if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
+                return "Falcon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(0) <= 17 && getNum(0) >= 10) {
+            if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
+                return "Falcon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(0) <= 33 && getNum(0) >= 26) {
+            if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
+                return "Falcon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(0) <= 25 && getNum(0) >= 18) {
+            if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
+                return "Falcon incorrectly connected to PDP";
+            }
+        }
+
+
+        return null;
+    }
 }

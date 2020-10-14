@@ -40,4 +40,37 @@ public class Spark extends Flippable {
             return calculateDirection(cur+3, port);
         }
     }
+
+    public String check() {
+        if(getNull(4) || getNull(3) || !(getOther(4) instanceof PowerDistributionPanel && getOther(3) instanceof PowerDistributionPanel)) {
+            return "SPARK is not connected to PDP";
+        }
+
+        if(getNum(3) <= 41 && getNum(3) >= 34) {
+            if(getNum(3) % 2 != 1 || getNum(4) != getNum(3) - 1) {
+                return "SPARK incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(3) <= 17 && getNum(3) >= 10) {
+            if(getNum(3) % 2 != 1 || getNum(4) != getNum(3) - 1) {
+                return "SPARK incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(3) <= 33 && getNum(3) >= 26) {
+            if(getNum(3) % 2 != 0 || getNum(4) != getNum(3) + 1) {
+                return "SPARK incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(3) <= 25 && getNum(3) >= 18) {
+            if(getNum(3) % 2 != 0 || getNum(4) != getNum(3) + 1) {
+                return "SPARK incorrectly connected to PDP";
+            }
+        }
+
+
+        return null;
+    }
 }

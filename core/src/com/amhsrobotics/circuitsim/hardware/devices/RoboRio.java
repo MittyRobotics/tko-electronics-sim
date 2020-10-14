@@ -54,10 +54,11 @@ public class RoboRio extends Flippable {
         if(getNum(0) != 4 || getNum(1) != 5) {
             return "RoboRIO is improperly connected to PDP";
         }
-
+        
+        /*
         if(getNull(36) || !(getOther(36) instanceof Radio)) {
             return "RoboRIO is not connected to radio";
-        }
+        }*/
 
         return null;
     }

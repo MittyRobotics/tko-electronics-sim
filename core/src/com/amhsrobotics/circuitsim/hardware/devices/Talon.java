@@ -38,4 +38,37 @@ public class Talon extends Flippable {
         }
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            return "Talon is not connected to PDP";
+        }
+
+        if(getNum(1) <= 41 && getNum(1) >= 34) {
+            if(getNum(1) % 2 != 1 || getNum(0) != getNum(1) - 1) {
+                return "Talon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(1) <= 17 && getNum(1) >= 10) {
+            if(getNum(1) % 2 != 1 || getNum(0) != getNum(1) - 1) {
+                return "Talon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(1) <= 33 && getNum(1) >= 26) {
+            if(getNum(1) % 2 != 0 || getNum(0) != getNum(1) + 1) {
+                return "Talon incorrectly connected to PDP";
+            }
+        }
+
+        if(getNum(1) <= 25 && getNum(1) >= 18) {
+            if(getNum(1) % 2 != 0 || getNum(0) != getNum(1) + 1) {
+                return "Talon incorrectly connected to PDP";
+            }
+        }
+
+
+        return null;
+    }
+
 }

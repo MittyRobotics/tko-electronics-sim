@@ -68,13 +68,13 @@ public class PowerDistributionPanel extends Flippable {
             return "PDP is connected to the wrong battery terminal";
         }
 
-        if(getNull(4) || getNull(5) || !(getOther(4) instanceof RoboRio && getOther(5) instanceof RoboRio)) {
+        /*if(getNull(4) || getNull(5) || !(getOther(4) instanceof RoboRio && getOther(5) instanceof RoboRio)) {
             return "Ports 4 and 5 should be connected to RoboRIO";
         }
 
         if(getNum(4) != 0 || getNum(5) != 1) {
             return "PDP is improperly connected to RoboRIO";
-        }
+        }*/
 
 
         return null;
