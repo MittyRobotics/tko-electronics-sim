@@ -77,7 +77,7 @@ public class ConfirmDialog {
     }
 
     private static void openWindow() {
-        window.setPosition((float) Gdx.graphics.getWidth() - 745, Gdx.graphics.getHeight() - 170);
+        window.setPosition(Gdx.graphics.getWidth()/2f - window.getWidth()/2f, Gdx.graphics.getHeight()/2f - window.getHeight()/2f);
         Tools.slideIn(window, "top", 1f, Interpolation.exp10, 600);
         open = true;
     }
