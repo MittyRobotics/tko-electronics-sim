@@ -44,4 +44,16 @@ public class PneumaticsControlModule extends Flippable {
         }
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            return "PCM is not connected to PDP";
+        }
+
+        if(!((getNum(1) == 0 && getNum(0) == 1) || (getNum(1) == 2 && getNum(0) == 3))) {
+            return "PCM is improperly connected to PDP";
+        }
+
+        return null;
+    }
+
 }

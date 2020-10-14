@@ -46,4 +46,20 @@ public class RoboRio extends Flippable {
         }
     }
 
+    public String check() {
+        if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            return "RoboRIO is not connected to PDP";
+        }
+
+        if(getNum(0) != 4 || getNum(1) != 5) {
+            return "RoboRIO is improperly connected to PDP";
+        }
+
+        if(getNull(36) || !(getOther(36) instanceof Radio)) {
+            return "RoboRIO is not connected to radio";
+        }
+
+        return null;
+    }
+
 }

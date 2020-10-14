@@ -48,6 +48,7 @@ public class Message {
 
     public void addLabel(String text, Vector2 pos) {
         Label l = new Label(text, LABEL);
+        l.getStyle().fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
 
         Table t = new Table();
         t.setBackground(Constants.SKIN.getDrawable("textbox_01"));

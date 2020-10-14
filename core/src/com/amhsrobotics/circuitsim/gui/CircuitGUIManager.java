@@ -346,12 +346,9 @@ public class CircuitGUIManager {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
-                ConfirmDialog.createWindow(new Runnable() {
-                    @Override
-                    public void run() {
-                        HardwareManager.clearHardware();
-                        CableManager.clearCables();
-                    }
+                ConfirmDialog.createWindow(() -> {
+                    HardwareManager.clearHardware();
+                    CableManager.clearCables();
                 });
             }
         });
