@@ -78,12 +78,12 @@ public class ConfirmDialog {
 
     private static void openWindow() {
         window.setPosition(Gdx.graphics.getWidth()/2f - window.getWidth()/2f, Gdx.graphics.getHeight()/2f - window.getHeight()/2f);
-        Tools.slideIn(window, "top", 1f, Interpolation.exp10, 600);
+        Tools.slideIn(window, "down", 1f, Interpolation.exp10, 600);
         open = true;
     }
 
     private static void closeWindow() {
-        Tools.slideOut(window, "top", 1f, Interpolation.exp10, 700);
+        Tools.slideOut(window, "down", 1f, Interpolation.exp10, 700);
         open = false;
     }
 

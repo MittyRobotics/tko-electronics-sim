@@ -1,6 +1,7 @@
 ## Java
 
 packaging/jre/
+packaging/windows/windows.zip
 *.class
 *.war
 *.ear
