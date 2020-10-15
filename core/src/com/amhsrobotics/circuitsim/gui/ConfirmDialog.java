@@ -37,7 +37,7 @@ public class ConfirmDialog {
         tbStyle.up = Constants.SKIN.getDrawable("button_03");
         tbStyle.down = Constants.SKIN.getDrawable("button_02");
 
-        window = new Window("Are you sure? Your circuit will be cleared.", wStyle);
+        window = new Window("Are you sure?", wStyle);
         window.setWidth(600);
         window.setHeight(140);
         window.setKeepWithinStage(false);
