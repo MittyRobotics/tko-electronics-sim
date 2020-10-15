@@ -247,7 +247,7 @@ public class CircuitGUIManager {
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
         hidePanel = new TextButton("Toggle Panel", tStyle);
         hidePanel.setPosition(420, Gdx.graphics.getHeight() - 70);
-        simulate = new TextButton("Simulate", tStyle);
+        simulate = new TextButton("Debug", tStyle);
         simulate.setPosition(540, Gdx.graphics.getHeight() - 70);
         clear = new TextButton("Clear", tStyle);
         clear.setPosition(340, Gdx.graphics.getHeight() - 70);
@@ -335,12 +335,12 @@ public class CircuitGUIManager {
                     HardwareManager.currentHardware = null;
                     CableManager.currentCable = null;
                     propertiesBox.hide();
-                    simulate.setText("Simulate");
+                    simulate.setText("Debug");
                     sim.isRunning = false;
                 } else {
 
                     if(HardwareManager.getHardware() == null || HardwareManager.getHardware().size == 0) {
-                        CircuitGUIManager.popup.activateError("Nothing to simulate");
+                        CircuitGUIManager.popup.activateError("Nothing to debug");
                         return;
                     }
                     simulate.setText("Stop");
