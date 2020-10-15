@@ -185,11 +185,11 @@ public class MenuScreen implements Screen {
                     f.setVisible(true);
                     f.toFront();
                     f.setVisible(false);
-                    int res = chooser.showOpenDialog(f);
                     chooser.setDialogTitle("Import");
                     FileFilter filter = new FileNameExtensionFilter("TKO Simulator File", "tko");
-                    chooser.setAcceptAllFileFilterUsed(true);
+                    chooser.setAcceptAllFileFilterUsed(false);
                     chooser.setFileFilter(filter);
+                    int res = chooser.showOpenDialog(f);
                     f.dispose();
                     if (res == JFileChooser.APPROVE_OPTION) {
                         fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());

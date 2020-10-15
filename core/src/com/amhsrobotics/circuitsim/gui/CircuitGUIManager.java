@@ -21,6 +21,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -28,11 +33,13 @@ import com.badlogic.gdx.utils.Align;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -465,6 +472,10 @@ public class CircuitGUIManager {
                         f.setVisible(true);
                         f.toFront();
                         f.setVisible(false);
+                        FileNameExtensionFilter filter = new FileNameExtensionFilter("TKO Simulator File", "tko");
+                        chooser.setAcceptAllFileFilterUsed(false);
+                        chooser.setFileFilter(filter);
+                        chooser.setSelectedFile(new File("defaultsave.tko"));
                         int res = chooser.showSaveDialog(f);
                         f.dispose();
                         if (res == JFileChooser.APPROVE_OPTION) {
