@@ -194,6 +194,11 @@ public abstract class Hardware implements Json.Serializable {
         }
         return true;
     }
+    public String getCAN(Cable c1, Cable c2) {return null;}
+
+    public Cable get(int i) {
+        return connections.get(i);
+    }
 
     public Hardware getOther(int conn) {
         return connections.get(conn).getOtherConnection(this);

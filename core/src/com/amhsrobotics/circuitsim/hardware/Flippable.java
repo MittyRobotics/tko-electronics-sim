@@ -50,7 +50,7 @@ public class Flippable extends Hardware  {
 
         TextButton flip = new TextButton("Rotate", CircuitGUIManager.propertiesBox.TBUTTON);
 
-        CircuitGUIManager.propertiesBox.addElement(new Label(name, CircuitGUIManager.propertiesBox.LABEL), true, 2);
+        CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
         CircuitGUIManager.propertiesBox.addElement(flip, true, 2);
 
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
