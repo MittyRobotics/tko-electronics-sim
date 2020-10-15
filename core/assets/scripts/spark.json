@@ -32,22 +32,22 @@
 
     {
       "type": "22",
-      "position": [-102, 160],
+      "position": [-102, -160],
       "dimensions": [25, 25]
     },
     {
       "type": "22",
-      "position": [-102, 145],
+      "position": [-102, -145],
       "dimensions": [25, 25]
     },
     {
       "type": "22",
-      "position": [-102, 130],
+      "position": [-102, -130],
       "dimensions": [25, 25]
     },
     {
       "type": "22",
-      "position": [-102, 115],
+      "position": [-102, -115],
       "dimensions": [25, 25]
     }
   ],
