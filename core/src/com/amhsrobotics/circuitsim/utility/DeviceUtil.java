@@ -33,10 +33,10 @@ public class DeviceUtil {
         put("22", "CAN / Sensor");
         put("12", "Motor");
         put("4", "Power");
-        put("18", "VRM / PCM");
+        put("18", "Power 2/Pneumatics");
         put("13", "Ethernet");
         put("2", "Tubing");
-        put("all", "Universal");
+        put("all", "22/18");
     }};
 
     public static final String[] HARDWARE_IN_ORDER = new String[]{"WIRE", "DOUBLESANDCRAB", "TRIPLESANDCRAB", "PDP", "VRM", "ROBORIO", "TALON", "PCM", "SPARK", "MOTOR775", "FALCON", "NEO", "BREAKER", "BATTERY", "RADIO", "ETHERNET", "TUBING", "EPLATE", "DOUBLESOLENOID", "SINGLESOLENOID", "PRESSURESWITCH", "PISTON", "MANIFOLD", "TANK", "COMPRESSOR"};

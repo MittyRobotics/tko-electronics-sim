@@ -296,7 +296,7 @@ public abstract class Hardware implements Json.Serializable {
                 if(!(this instanceof SandCrab)) {
                     CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
                 } else {
-                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))));
+                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + "g | port " + connectors.indexOf(s));
                 }
                 if (connections.get(connectors.indexOf(s)) == null && Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null && checkGood()) {
                     HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
@@ -554,7 +554,7 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if(this instanceof SandCrab || cable.getGauge() == Integer.parseInt(portTypes.get(port))) {
+        } else if((this instanceof SandCrab && cable.getGauge() >= 16) || (!(this instanceof SandCrab) && cable.getGauge() == Integer.parseInt(portTypes.get(port)))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
@@ -566,7 +566,11 @@ public abstract class Hardware implements Json.Serializable {
                 CableManager.currentCable = null;
             }
         } else {
-            CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge: " + portTypes.get(port));
+            if(this instanceof SandCrab) {
+                CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge 18/22");
+            } else {
+                CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge " + portTypes.get(port));
+            }
         }
     }
 
