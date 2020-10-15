@@ -204,6 +204,10 @@ public abstract class Hardware implements Json.Serializable {
         return connections.get(conn).getOtherConnection(this);
     }
 
+    public int getONum(int conn) {
+        return getOther(conn).hardwareID;
+    }
+
     public int getNum(int conn) {
         return connections.get(conn).getOtherConnectionNum(this);
     }

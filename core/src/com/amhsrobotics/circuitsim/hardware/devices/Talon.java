@@ -44,11 +44,18 @@ public class Talon extends Flippable {
         if(c1 == get(7) && c2 == get(6)) {
             if(getNull(5) || getNull(4)) {
                 return "CAN chain ends at Talon " + hardwareID2;
-            } else if (getOther(4) instanceof PowerDistributionPanel && getOther(5) instanceof PowerDistributionPanel && ((getNum(4) == 9 && getNum(5) == 8) || (getNum(4) == 7 && getNum(5) == 6))) {
-                return "PDP";
-            } else if (getOther(4) instanceof PneumaticsControlModule && getOther(5) instanceof PneumaticsControlModule && ((getNum(4) == 4 && getNum(5) == 5) || (getNum(4) == 3 && getNum(5) == 2))) {
-                return "PCM";
-            } else if (!(getOther(5) instanceof Talon && getOther(4) instanceof Talon) || (getOther(5) instanceof Spark && getOther(4) instanceof Spark) || (getOther(5) instanceof Falcon && getOther(4) instanceof Falcon)) {
+            } else if (getOther(4) instanceof PowerDistributionPanel && getOther(5) instanceof PowerDistributionPanel) {
+                if((getNum(4) == 9 && getNum(5) == 8) || (getNum(4) == 7 && getNum(5) == 6)) {
+                    return "PDP";
+                } else {
+                    return "Incorrectly wired to PDP";
+                }
+            } else if (getOther(4) instanceof PneumaticsControlModule && getOther(5) instanceof PneumaticsControlModule) {
+                if((getNum(4) == 4 && getNum(5) == 5) || (getNum(4) == 3 && getNum(5) == 2)) {
+                    return "PCM";
+                }
+                return "Incorrectly wired to PCM";
+            } else if (!(((getOther(5) instanceof Talon && getOther(4) instanceof Talon) || (getOther(5) instanceof Spark && getOther(4) instanceof Spark) || (getOther(5) instanceof Falcon && getOther(4) instanceof Falcon)) && getONum(4) == getONum(5))) {
                 return "CAN chain improperly wired at Talon " + hardwareID2;
             } else {
                 return getOther(5).getCAN(get(5), get(4));
@@ -56,11 +63,17 @@ public class Talon extends Flippable {
         } else if (c1 == get(5) && c2 == get(4)) {
             if(getNull(7) || getNull(6)) {
                 return "CAN chain ends at Talon " + hardwareID2;
-            } else if (getOther(6) instanceof PowerDistributionPanel && getOther(7) instanceof PowerDistributionPanel && ((getNum(6) == 9 && getNum(7) == 8) || (getNum(6) == 7 && getNum(7) == 6))) {
-                return "PDP";
-            } else if (getOther(6) instanceof PneumaticsControlModule && getOther(7) instanceof PneumaticsControlModule && ((getNum(6) == 4 && getNum(7) == 5) || (getNum(6) == 3 && getNum(7) == 2))) {
-                return "PCM";
-            } else if (!(getOther(7) instanceof Talon && getOther(6) instanceof Talon) || (getOther(7) instanceof Spark && getOther(6) instanceof Spark) || (getOther(7) instanceof Falcon && getOther(6) instanceof Falcon)) {
+            } else if (getOther(6) instanceof PowerDistributionPanel && getOther(7) instanceof PowerDistributionPanel) {
+                if((getNum(6) == 9 && getNum(7) == 8) || (getNum(6) == 7 && getNum(7) == 6)) {
+                    return "PDP";
+                }
+                return "Incorrectly wired to PDP";
+            } else if (getOther(6) instanceof PneumaticsControlModule && getOther(7) instanceof PneumaticsControlModule) {
+                if((getNum(6) == 4 && getNum(7) == 5) || (getNum(6) == 3 && getNum(7) == 2)) {
+                    return "PCM";
+                }
+                return "Incorrectly wired to PCM";
+            } else if (!(((getOther(7) instanceof Talon && getOther(6) instanceof Talon) || (getOther(7) instanceof Spark && getOther(6) instanceof Spark) || (getOther(7) instanceof Falcon && getOther(6) instanceof Falcon)) && getONum(6) == getONum(7))) {
                 return "CAN chain improperly wired at Talon " + hardwareID2;
             } else {
                 return getOther(7).getCAN(get(7), get(6));
@@ -100,10 +113,30 @@ public class Talon extends Flippable {
         }
 
         if(!((getCAN(get(5), get(4)).equals("PDP") && getCAN(get(7), get(6)).equals("PCM")) || (getCAN(get(5), get(4)).equals("PCM") && getCAN(get(7), get(6)).equals("PDP")))) {
-            return getCAN(get(5), get(4)) + "\n" + getCAN(get(7), get(6));
-        }
+            String ans = "";
+            if(getCAN(get(5), get(4)).equals(getCAN(get(7), get(6)))) {
+                if(getCAN(get(5), get(4)).equals("PDP")) {
+                    return "Both ends of CAN chain are connected to PDP";
+                } else if (getCAN(get(5), get(4)).equals("PCM")) {
+                    return "Both ends of CAN chain are connected to PCM";
+                } else {
+                    ans = getCAN(get(5), get(4));
+                }
+            } else {
+                if(!getCAN(get(5), get(4)).equals("PDP") && !getCAN(get(5), get(4)).equals("PCM")) {
+                    ans += getCAN(get(5), get(4));
+                }
 
-        //return getCAN(get(5), get(4));
+                if(!getCAN(get(7), get(6)).equals("PDP") && !getCAN(get(7), get(6)).equals("PCM")) {
+                    if(ans.length() > 0) {
+                        ans += "\n";
+                    }
+                    ans += getCAN(get(7), get(6));
+                }
+            }
+
+            return ans;
+        }
 
 
         return null;
