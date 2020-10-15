@@ -444,8 +444,8 @@ public abstract class Hardware implements Json.Serializable {
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
                 batch.begin();
-                if(c.getOtherConnection(this) != null) {
-                    c.getOtherConnection(this).getConnector(c.getOtherConnection(this).getConnectionPosition(c)).draw(batch);
+                if(c.getOtherConnectionSimple(this) != null) {
+                    c.getOtherConnectionSimple(this).getConnector(c.getOtherConnectionSimple(this).getConnectionPosition(c)).draw(batch);
                 }
                 batch.end();
             }
@@ -646,11 +646,11 @@ public abstract class Hardware implements Json.Serializable {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             if(connections.get(x) == null) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x).getHardwareAtOtherEnd(this) != null) {
-                if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2).length() > 10) {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+            } else if(connections.get(x).getOtherConnection(this) != null) {
+                if((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
                 } else {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 }
             } else if(connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped " + -connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);

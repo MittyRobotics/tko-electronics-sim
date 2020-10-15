@@ -1,10 +1,12 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.hardware.Flippable;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
+import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -60,6 +62,38 @@ public class SandCrab extends Flippable {
         }
 
         return null;
+    }
+
+    public Hardware getWagoOther(Cable c) {
+        if(c == connections.get(0)) {
+            if (connections.get(1) == null) {
+                return null;
+            } else {
+                return connections.get(1).getOtherConnection(this);
+            }
+        } else {
+            if (connections.get(0) == null) {
+                return null;
+            } else {
+                return connections.get(0).getOtherConnection(this);
+            }
+        }
+    }
+
+    public int getWagoOtherNum(Cable c) {
+        if(c == connections.get(0)) {
+            if (connections.get(1) == null) {
+                return -1;
+            } else {
+                return connections.get(1).getOtherConnection(this).getConnNum(connections.get(1));
+            }
+        } else {
+            if (connections.get(0) == null) {
+                return -1;
+            } else {
+                return connections.get(0).getOtherConnection(this).getConnNum(connections.get(0));
+            }
+        }
     }
 
 

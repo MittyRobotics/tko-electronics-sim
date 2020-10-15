@@ -59,11 +59,11 @@ public class Flippable extends Hardware  {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             if(connections.get(x) == null) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x).getHardwareAtOtherEnd(this) != null) {
-                if((connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2).length() > 10) {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+            } else if(connections.get(x).getOtherConnection(this) != null) {
+                if((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
                 } else {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getHardwareAtOtherEnd(this).getName() + " " + connections.get(x).getHardwareAtOtherEnd(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 }
             } else if(connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped " + -connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
@@ -72,6 +72,7 @@ public class Flippable extends Hardware  {
             } else {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             }
+
         }
 
         flip.addListener(new ChangeListener() {
