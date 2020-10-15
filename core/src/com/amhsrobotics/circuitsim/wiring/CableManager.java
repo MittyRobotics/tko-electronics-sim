@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class CableManager {
@@ -293,12 +294,10 @@ public class CableManager {
                         false,
                         false
                         );
+
+                Collections.reverse(cm.coordinates);
                 HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1).coordinates = cm.coordinates;
                 HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1).color = new Color(cm.r, cm.g, cm.b, cm.a);
-
-                HardwareManager.getHardwareByID(cm.hardware1ID).calculateDirection(HardwareManager.getHardwareByID(cm.hardware1ID).cur, cm.port1);
-                HardwareManager.getHardwareByID(cm.hardware2ID).calculateDirection(HardwareManager.getHardwareByID(cm.hardware1ID).cur, cm.port2);
-
             }
         }
 
