@@ -278,8 +278,12 @@ public abstract class Hardware implements Json.Serializable {
                         c = new Cable(CableManager.id);
                     }
                     CableManager.id++;
-                    if(portTypes.get(HardwareManager.attachWireOnDoubleClick.y).equals("all")) {
-                        c.setGauge(22);
+                    if(this instanceof SandCrab) {
+                        if(((SandCrab) this).getGauge() == -1) {
+                            c.setGauge(22);
+                        } else {
+                            c.setGauge(((SandCrab) this).getGauge());
+                        }
                     } else {
                         c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
                     }
@@ -296,7 +300,7 @@ public abstract class Hardware implements Json.Serializable {
                 if(!(this instanceof SandCrab)) {
                     CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
                 } else {
-                    CircuitScreen.setHoverDraw(vec, DeviceUtil.GAUGETODEVICE.get((portTypes.get(connectors.indexOf(s)))) + "g | port " + connectors.indexOf(s));
+                    CircuitScreen.setHoverDraw(vec, ((SandCrab) this).getGaugeString() + "g | port " + connectors.indexOf(s));
                 }
                 if (connections.get(connectors.indexOf(s)) == null && Gdx.input.isButtonPressed(Input.Buttons.LEFT) && CableManager.currentCable == null && HardwareManager.attachWireOnDoubleClick == null && checkGood()) {
                     HardwareManager.attachWireOnDoubleClick = new Tuple<>(this, connectors.indexOf(s));
@@ -554,7 +558,7 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if((this instanceof SandCrab && cable.getGauge() >= 16) || (!(this instanceof SandCrab) && cable.getGauge() == Integer.parseInt(portTypes.get(port)))) {
+        } else if((this instanceof SandCrab && ((((SandCrab) this).getGauge() == -1 && cable.gauge >= 16) || cable.gauge == ((SandCrab) this).getGauge())) || (!(this instanceof SandCrab) && cable.getGauge() == Integer.parseInt(portTypes.get(port)))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
@@ -567,7 +571,7 @@ public abstract class Hardware implements Json.Serializable {
             }
         } else {
             if(this instanceof SandCrab) {
-                CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge 18/22");
+                CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge " + ((SandCrab) this).getGaugeString());
             } else {
                 CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge " + portTypes.get(port));
             }
@@ -586,11 +590,6 @@ public abstract class Hardware implements Json.Serializable {
         } else if(portTypes.get(port).equals("2") && cable.getGauge() != 2) {
             CircuitGUIManager.popup.activateError("Port requires pneumatics tubing");
         }  else {
-            if(portTypes.get(port).equals("all")) {
-                cable.setGauge(22);
-            } else {
-                cable.setGauge(Integer.parseInt(portTypes.get(port)));
-            }
             connections.set(port, cable);
             ends.set(port, endOfWire);
 

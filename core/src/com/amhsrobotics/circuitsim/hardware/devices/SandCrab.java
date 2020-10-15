@@ -88,6 +88,28 @@ public class SandCrab extends Flippable {
         }
     }
 
+    public int getGauge() {
+        if(connections.get(0) != null) {
+            return (int) connections.get(0).gauge;
+        }
+        if(connections.get(1) != null) {
+            return (int) connections.get(1).gauge;
+        }
+        if(type == HardwareType.TRIPLESANDCRAB) {
+            if(connections.get(2) != null) {
+                return (int) connections.get(2).gauge;
+            }
+        }
+        return -1;
+    }
+
+    public String getGaugeString() {
+        if(getGauge() == -1) {
+            return "18/22";
+        }
+        return ""+getGauge();
+    }
+
     public int getWagoOtherNum(Cable c) {
         if(c == connections.get(0)) {
             if (connections.get(1) == null) {

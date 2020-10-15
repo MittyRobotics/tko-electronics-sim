@@ -125,9 +125,10 @@ public class CableManager {
     }
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
-        if(cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID) {
+        if((cable1.getConnectionSimple(!cable1begin) == null || cable2.getConnectionSimple(!cable2begin) == null || cable1.getConnectionSimple(!cable1begin).hardwareID != cable2.getConnectionSimple(!cable2begin).hardwareID)
+        && (cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID)) {
             if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
-                if(cable1.gauge == cable2.gauge) {
+                if (cable1.gauge == cable2.gauge) {
                     //MERGE TWO CABLES
                     if (cable2 instanceof CrimpedCable) {
                         if (cable1 instanceof CrimpedCable) {

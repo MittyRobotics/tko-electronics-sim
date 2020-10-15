@@ -45,7 +45,7 @@ public class DeviceUtil {
         put(22f, 5f);
         put(18f, 8f);
         put(13f, 15f);
-        put(12f, 16f);
+        put(12f, 19f);
         put(4f, 30f);
         put(2f, 30f);
     }};
@@ -54,7 +54,7 @@ public class DeviceUtil {
         put(22f, 7f);
         put(18f, 12f);
         put(13f, 18f);
-        put(12f, 19f);
+        put(12f, 22f);
         put(4f, 38f);
         put(2f, 30f);
     }};
@@ -63,7 +63,7 @@ public class DeviceUtil {
         put(22f, 6f);
         put(18f, 8f);
         put(13f, 10f);
-        put(12f, 10f);
+        put(12f, 13f);
         put(4f, 25f);
         put(2f, 17f);
     }};

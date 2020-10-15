@@ -583,7 +583,7 @@ public class Cable implements Json.Serializable {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-            if(getConnection(!appendingFromBegin) == clist.get(0) && (appendingFromBegin || appendingFromEnd)) {
+            if((getConnectionSimple(!appendingFromBegin) == clist.get(0) || getConnection(!appendingFromBegin) == clist.get(0)) && (appendingFromBegin || appendingFromEnd)) {
                 CircuitGUIManager.popup.activateError("A device cannot be connected to itself");
                 appendingFromEnd = false;
                 appendingFromBegin = false;
@@ -804,6 +804,10 @@ public class Cable implements Json.Serializable {
 
     public Hardware getConnection(boolean begin) {
         return begin ? getOtherConnection(connection2) : getOtherConnection(connection1);
+    }
+
+    public Hardware getConnectionSimple(boolean begin) {
+        return begin ? getOtherConnectionSimple(connection2) : getOtherConnectionSimple(connection1);
     }
 
     public float getVoltage() {
