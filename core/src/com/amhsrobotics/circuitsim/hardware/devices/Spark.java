@@ -114,26 +114,45 @@ public class Spark extends Flippable {
             }
         }
 
+        if(getAllNull(5, 8)) {
+            return "SPARK not connected to CAN chain";
+        }
+
         if(!((getCAN(get(6), get(5)).equals("PDP") && getCAN(get(8), get(7)).equals("PCM")) || (getCAN(get(6), get(5)).equals("PCM") && getCAN(get(8), get(7)).equals("PDP")))) {
             String ans = "";
-            if(getCAN(get(6), get(5)).equals(getCAN(get(8), get(7)))) {
-                if(getCAN(get(6), get(5)).equals("PDP")) {
-                    return "Both ends of CAN chain are connected to PDP";
-                } else if (getCAN(get(6), get(5)).equals("PCM")) {
-                    return "Both ends of CAN chain are connected to PCM";
-                } else {
-                    ans = getCAN(get(6), get(5));
-                }
-            } else {
-                if(!getCAN(get(6), get(5)).equals("PDP") && !getCAN(get(6), get(5)).equals("PCM")) {
-                    ans += getCAN(get(6), get(5));
-                }
 
-                if(!getCAN(get(8), get(7)).equals("PDP") && !getCAN(get(8), get(7)).equals("PCM")) {
+            if(!getCAN(get(6), get(5)).equals("PDP") && !getCAN(get(6), get(5)).equals("PCM")) {
+                ans += getCAN(get(6), get(5));
+            } else {
+                if(getCAN(get(6), get(5)).equals("PDP")) {
+                    ans += "CAN chain must reach PCM";
+                } else {
+                    ans += "CAN chain must reach PDP";
+                }
+            }
+
+            if(!getCAN(get(8), get(7)).equals("PDP") && !getCAN(get(8), get(7)).equals("PCM")) {
+                if(!getCAN(get(8), get(7)).equals(ans)) {
                     if(ans.length() > 0) {
                         ans += "\n";
                     }
                     ans += getCAN(get(8), get(7));
+                }
+            } else {
+                if(getCAN(get(8), get(7)).equals("PDP")) {
+                    if (!ans.equals("CAN chain must reach PCM")) {
+                        if(ans.length() > 0) {
+                            ans += "\n";
+                        }
+                        ans += "CAN chain must reach PCM";
+                    }
+                } else {
+                    if (!ans.equals("CAN chain must reach PDP")) {
+                        if(ans.length() > 0) {
+                            ans += "\n";
+                        }
+                        ans += "CAN chain must reach PDP";
+                    }
                 }
             }
 

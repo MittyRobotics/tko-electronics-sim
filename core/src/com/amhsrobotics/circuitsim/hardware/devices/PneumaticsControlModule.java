@@ -53,6 +53,16 @@ public class PneumaticsControlModule extends Flippable {
             return "PCM is improperly connected to PDP";
         }
 
+        if(!getAllNull(2, 5)) {
+            if(!getAllNotNull(2, 5)) {
+                return "CAN chain should reach RoboRIO";
+            } else if(getOther(2) instanceof RoboRio && getOther(3) instanceof RoboRio && (getNum(2) != 3 || getNum(3) != 2)) {
+                return "CAN chain improperly connected to RoboRIO";
+            } else if (getOther(5) instanceof RoboRio && getOther(4) instanceof RoboRio && (getNum(5) != 3 || getNum(4) != 2)) {
+                return "CAN chain improperly connected to RoboRIO";
+            }
+        }
+
         return null;
     }
 
