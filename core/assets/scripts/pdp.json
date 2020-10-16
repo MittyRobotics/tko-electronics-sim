@@ -3,6 +3,56 @@
   "totalLeds": 2,
   "crimpedColors": ["Black","Red", "Black","Red", "Black","Red", "Black","Red","Red", "Black", "Red", "Black","Red", "Black","Red", "Black", "Red", "Black","Red", "Black","Red", "Black","Red", "Black", "Black","Red", "Black","Red", "Black","Red", "Black","Red"],
   "crimped": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+  "defaultColors": [
+    {
+      "port": 42,
+      "color": "Red"
+    },
+    {
+      "port": 43,
+      "color": "Black"
+    },
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Red"
+    },
+    {
+      "port": 3,
+      "color": "Black"
+    },
+    {
+      "port": 4,
+      "color": "Red"
+    },
+    {
+      "port": 5,
+      "color": "Black"
+    },
+    {
+      "port": 9,
+      "color": "Green"
+    },
+    {
+      "port": 8,
+      "color": "Yellow"
+    },
+    {
+      "port": 7,
+      "color": "Green"
+    },
+    {
+      "port": 6,
+      "color": "Yellow"
+    }
+  ],
   "pins": [
     {
       "type": "18",

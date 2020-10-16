@@ -2,6 +2,16 @@
   "name": "Main Breaker",
   "totalLeds": 0,
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Red"
+    }
+  ],
   "pins": [
     {
       "type": "4",

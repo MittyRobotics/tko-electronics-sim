@@ -2,6 +2,24 @@
   "name": "roboRIO",
   "totalLeds": 6,
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Green"
+    },
+    {
+      "port": 3,
+      "color": "Yellow"
+    }
+  ],
   "pins": [
     {
       "position": [-260, 413],
@@ -21,179 +39,6 @@
     },
     {
       "position": [-419, 340],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-    {
-      "position": [-425, 266],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-    {
-      "position": [-430, 189],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, 112],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, 61],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, 10],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -42],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -93],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -145],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -195],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -245],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -298],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-430, -349],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-    {
-      "position": [-335, -429],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-    {
-      "position": [-182, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-133, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-81, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [-31, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [38, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [88, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [139, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [190, -421],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-
-    {
-      "position": [295, 391],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-
-
-    {
-      "position": [432, 121],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, 69],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, 17],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -32],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -82],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -133],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -185],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -235],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -287],
-      "dimensions": [15, 15],
-      "type": "22"
-    },
-    {
-      "position": [432, -337],
       "dimensions": [15, 15],
       "type": "22"
     },

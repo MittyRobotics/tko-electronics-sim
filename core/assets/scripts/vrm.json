@@ -2,6 +2,80 @@
   "name": "VRM",
   "totalLeds": 0,
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Red"
+    },
+    {
+      "port": 3,
+      "color": "Black"
+    },
+    {
+      "port": 4,
+      "color": "Red"
+    },
+    {
+      "port": 5,
+      "color": "Black"
+    },
+    {
+      "port": 6,
+      "color": "Red"
+    },
+    {
+      "port": 7,
+      "color": "Black"
+    },
+    {
+      "port": 8,
+      "color": "Red"
+    },
+    {
+      "port": 9,
+      "color": "Black"
+    },
+    {
+      "port": 10,
+      "color": "Black"
+    },
+    {
+      "port": 11,
+      "color": "Red"
+    },
+    {
+      "port": 12,
+      "color": "Black"
+    },
+    {
+      "port": 13,
+      "color": "Red"
+    },
+    {
+      "port": 14,
+      "color": "Black"
+    },
+    {
+      "port": 15,
+      "color": "Red"
+    },
+    {
+      "port": 16,
+      "color": "Black"
+    },
+    {
+      "port": 17,
+      "color": "Red"
+    }
+  ],
   "pins": [
     {
       "type": "18",

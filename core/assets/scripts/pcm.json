@@ -2,6 +2,116 @@
   "name": "PCM",
   "totalLeds": 2,
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Black"
+    },
+    {
+      "port": 1,
+      "color": "Red"
+    },
+    {
+      "port": 2,
+      "color": "Yellow"
+    },
+    {
+      "port": 3,
+      "color": "Green"
+    },
+    {
+      "port": 4,
+      "color": "Yellow"
+    },
+    {
+      "port": 5,
+      "color": "Green"
+    },
+    {
+      "port": 6,
+      "color": "Black"
+    },
+    {
+      "port": 7,
+      "color": "Red"
+    },
+    {
+      "port": 8,
+      "color": "Black"
+    },
+    {
+      "port": 9,
+      "color": "Red"
+    },
+    {
+      "port": 19,
+      "color": "Black"
+    },
+    {
+      "port": 20,
+      "color": "Red"
+    },
+    {
+      "port": 21,
+      "color": "Black"
+    },
+    {
+      "port": 22,
+      "color": "Red"
+    },
+    {
+      "port": 23,
+      "color": "Black"
+    },
+    {
+      "port": 24,
+      "color": "Red"
+    },
+    {
+      "port": 25,
+      "color": "Black"
+    },
+    {
+      "port": 26,
+      "color": "Red"
+    },
+    {
+      "port": 10,
+      "color": "Black"
+    },
+    {
+      "port": 11,
+      "color": "Red"
+    },
+    {
+      "port": 12,
+      "color": "Black"
+    },
+    {
+      "port": 13,
+      "color": "Red"
+    },
+    {
+      "port": 14,
+      "color": "Black"
+    },
+    {
+      "port": 15,
+      "color": "Red"
+    },
+    {
+      "port": 16,
+      "color": "Black"
+    },
+    {
+      "port": 17,
+      "color": "Red"
+    },
+    {
+      "port": 18,
+      "color": "Red"
+    }
+  ],
   "pins": [
     {
       "type": "18",
@@ -25,12 +135,12 @@
     },
     {
       "type": "22",
-      "position": [-52, 104],
+      "position": [-69, 104],
       "dimensions": [7, 7]
     },
     {
       "type": "22",
-      "position": [-69, 104],
+      "position": [-52, 104],
       "dimensions": [7, 7]
     },
     {
@@ -61,11 +171,6 @@
     {
       "type": "18",
       "position": [4, 90],
-      "dimensions": [10, 10]
-    },
-    {
-      "type": "18",
-      "position": [-14, 90],
       "dimensions": [10, 10]
     },
     {
