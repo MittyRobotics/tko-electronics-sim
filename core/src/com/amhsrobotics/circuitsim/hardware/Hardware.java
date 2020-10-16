@@ -462,9 +462,9 @@ public abstract class Hardware implements Json.Serializable {
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
                 batch.begin();
-                if(c.getOtherConnectionSimple(this) != null) {
+                /*if(c.getOtherConnectionSimple(this) != null) {
                     c.getOtherConnectionSimple(this).getConnector(c.getOtherConnectionSimple(this).getConnectionPosition(c)).draw(batch);
-                }
+                }*/
                 batch.end();
             }
         }
@@ -693,6 +693,7 @@ public abstract class Hardware implements Json.Serializable {
         for(Cable cable : connections) {
             if(cable != null) {
                 if(cable instanceof CrimpedCable) {
+                    HardwareManager.removeCableFromHardware(cable, cable.getOtherConnectionSimple(this));
                     CableManager.deleteCable(cable);
                 } else if(ends.get(connections.indexOf(cable, true))) {
                     cable.setConnection2(null);

@@ -57,7 +57,7 @@ public class Falcon extends Flippable {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
-            } else if (!(((getOther(3) instanceof Talon && getOther(2) instanceof Talon) || (getOther(3) instanceof Spark && getOther(4) instanceof Spark) || (getOther(3) instanceof Falcon && getOther(2) instanceof Falcon)) && getONum(2) == getONum(3))) {
+            } else if (!(((getOther(3) instanceof Talon && getOther(2) instanceof Talon) || (getOther(3) instanceof Spark && getOther(2) instanceof Spark) || (getOther(3) instanceof Falcon && getOther(2) instanceof Falcon)) && getONum(2) == getONum(3))) {
                 return "CAN chain improperly wired at Falcon " + hardwareID2;
             } else {
                 return getOther(3).getCAN(get(3), get(2));
