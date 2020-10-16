@@ -6,19 +6,19 @@
   "defaultColors": [
     {
       "port": 4,
-      "color": "Yellow"
+      "color": "Green"
     },
     {
       "port": 5,
-      "color": "Green"
-    },
-    {
-      "port": 6,
       "color": "Yellow"
     },
     {
-      "port": 7,
+      "port": 6,
       "color": "Green"
+    },
+    {
+      "port": 7,
+      "color": "Yellow"
     }
   ],
   "pins": [
