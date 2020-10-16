@@ -55,6 +55,7 @@ public abstract class Hardware implements Json.Serializable {
     public ArrayList<String> portTypes = new ArrayList<>();
     public ArrayList<Tuple<Integer, String>> defaultColors = new ArrayList<>();
     public ArrayList<LED> LEDs = new ArrayList<>();
+    public ArrayList<Integer> crimpedIDs = new ArrayList<>();
 
     public Sprite base;
     public boolean canMove, addCrimped;
@@ -138,6 +139,9 @@ public abstract class Hardware implements Json.Serializable {
 
         if(temp != null) {
             for (Object o : temp) {
+                if(addCrimped) {
+                    crimpedIDs.add(CableManager.getCrimpedID());
+                }
                 crimpedPorts.add(((Long) o).intValue());
             }
         }
@@ -171,7 +175,7 @@ public abstract class Hardware implements Json.Serializable {
         for(int i : crimpedPorts) {
             if(connections.get(i) == null) {
                 ends.set(i, false);
-                CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)));
+                CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)), crimpedIDs.get(j));
                 c.setColor(crimpedPortColors.get(j));
                 CableManager.addCable(c);
                 attachCrimpedCable(c, i);

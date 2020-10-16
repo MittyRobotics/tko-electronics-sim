@@ -5,8 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CrimpedCable extends Cable {
 
-    public CrimpedCable(int gauge) {
-        super(new Vector2(0, 0), CableManager.getCrimpedID());
+    public CrimpedCable(int gauge, int id_) {
+        super(new Vector2(0, 0), id_);
         this.gauge = gauge;
 
         appendingFromBegin = false;
