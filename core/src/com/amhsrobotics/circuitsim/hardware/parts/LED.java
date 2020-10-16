@@ -14,8 +14,12 @@ public class LED {
     private String type;
     private Vector2 position;
     private Vector2 size;
-    private Sprite sprite;
+    public Sprite sprite;
     private Hardware hardware;
+    public boolean blinking;
+    private boolean on;
+    private int speed;
+    private int cnt;
 
     public LED(JSONArray position, Hardware hardware, JSONArray size, String type, String color) {
 
@@ -31,6 +35,19 @@ public class LED {
     }
 
     public void render(SpriteBatch batch) {
+        if(blinking) {
+            cnt--;
+            if(cnt == 0) {
+                cnt = speed;
+                if(on) {
+                    on = false;
+                    setColorTemp("off");
+                } else {
+                    on = true;
+                    setColorTemp(color);
+                }
+            }
+        }
         sprite.draw(batch);
     }
 
@@ -47,9 +64,22 @@ public class LED {
 
     public void setColor(String color) {
         this.color = color;
-        sprite = new Sprite(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
-        setPosition();
-        sprite.setSize(size.x, size.y);
+        sprite.setTexture(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
+    }
+
+    public void setColorTemp(String color) {
+        sprite.setTexture(new Texture(Gdx.files.internal("img/led/" + color + ".png")));
+    }
+
+    public void blink(int speed) {
+        blinking = true;
+        this.speed = speed;
+        on = true;
+        cnt = speed;
+    }
+
+    public void stopBink() {
+        blinking = false;
     }
 
     public String getType() {

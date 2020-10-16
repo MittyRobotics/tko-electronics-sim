@@ -55,6 +55,13 @@ public class Radio extends Flippable {
             return "Radio improperly connected to VRM";
         }
 
+        LEDs.get(0).setColor("blue");
+        if(!LEDs.get(1).blinking) {
+            LEDs.get(1).setColor("blue");
+            LEDs.get(1).blink(20);
+        }
+        LEDs.get(3).setColor("green");
+
         return null;
     }
 }

@@ -331,6 +331,12 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
+        for(LED l : LEDs) {
+            if(l.sprite.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
+                CircuitScreen.setHoverDraw(vec, l.getType());
+            }
+        }
+
 
         if(HardwareManager.getCurrentlyHovering(camera) == this) {
 
@@ -490,11 +496,15 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean getHoveringMouse(ClippedCameraController camera) {
-        Vector2 vec = Tools.mouseScreenToWorld(camera);
-        if(this instanceof EPlate) {
-            return ((EPlate) this).getBox().contains(vec.x, vec.y);
+        if(!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())) {
+            Vector2 vec = Tools.mouseScreenToWorld(camera);
+            if (this instanceof EPlate) {
+                return ((EPlate) this).getBox().contains(vec.x, vec.y);
+            }
+            return base.getBoundingRectangle().contains(vec.x, vec.y);
         }
-        return base.getBoundingRectangle().contains(vec.x, vec.y);
+        return false;
     }
 
     public boolean checkGood() {
