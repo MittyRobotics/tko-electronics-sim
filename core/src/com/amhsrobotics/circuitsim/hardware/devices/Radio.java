@@ -56,11 +56,14 @@ public class Radio extends Flippable {
         }
 
         LEDs.get(0).setColor("blue");
+        LEDs.get(0).setStatus("On");
         if(!LEDs.get(1).blinking) {
             LEDs.get(1).setColor("blue");
-            LEDs.get(1).blink(20);
+            LEDs.get(1).setStatus("Traffic Present");
+            LEDs.get(1).blink(10);
         }
         LEDs.get(3).setColor("green");
+        LEDs.get(3).setStatus("Bridge Mode, Linked");
 
         return null;
     }

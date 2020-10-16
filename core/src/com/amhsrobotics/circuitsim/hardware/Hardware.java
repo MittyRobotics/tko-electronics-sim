@@ -333,7 +333,7 @@ public abstract class Hardware implements Json.Serializable {
 
         for(LED l : LEDs) {
             if(l.sprite.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
-                CircuitScreen.setHoverDraw(vec, l.getType());
+                CircuitScreen.setHoverDraw(vec, l.getType()+l.status);
             }
         }
 
@@ -790,6 +790,12 @@ public abstract class Hardware implements Json.Serializable {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 + useLength);
         } else {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 - useLength, getConnector(port).getY() + getConnector(port).getHeight() / 2);
+        }
+    }
+
+    public void resetLEDs() {
+        for(LED l : LEDs) {
+            l.reset();
         }
     }
 

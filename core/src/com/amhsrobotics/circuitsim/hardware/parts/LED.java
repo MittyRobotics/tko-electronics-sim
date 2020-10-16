@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 
 public class LED {
 
-    private String color;
+    private String color, origColor;
     private String type;
     private Vector2 position;
     private Vector2 size;
@@ -20,6 +20,7 @@ public class LED {
     private boolean on;
     private int speed;
     private int cnt;
+    public String status = " | Off";
 
     public LED(JSONArray position, Hardware hardware, JSONArray size, String type, String color) {
 
@@ -27,11 +28,23 @@ public class LED {
         this.position = new Vector2((long) position.get(0), (long) position.get(1));
         this.size = new Vector2((long) size.get(0), (long) size.get(1));
         this.color = color;
+        this.origColor = color;
         this.type = type;
 
         sprite = new Sprite(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
         setPosition();
         sprite.setSize(this.size.x, this.size.y);
+    }
+
+    public void reset() {
+        blinking = false;
+        this.color = origColor;
+        sprite.setTexture(new Texture(Gdx.files.internal("img/led/" + this.color + ".png")));
+        status = " | Off";
+    }
+
+    public void setStatus(String s) {
+        status = " | " + s;
     }
 
     public void render(SpriteBatch batch) {

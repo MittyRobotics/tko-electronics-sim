@@ -22,6 +22,7 @@ public class Simulation {
             if (ha.check() != null) {
                 ha.drawErrorHover();
                 CircuitGUIManager.popup.addLabel(ha.check(), ha.getPositionProjected());
+                ha.resetLEDs();
             } else {
                 ha.drawGoodHover();
             }
