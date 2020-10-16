@@ -29,18 +29,6 @@ public class DeviceUtil {
         put("Sky", new Color(166/255f, 205/255f, 240/255f, 0.5f));
     }};
 
-    public static final HashMap<String, String> GAUGETODEVICE = new HashMap<String, String>() {{
-        put("22", "CAN / Sensor");
-        put("12", "Motor");
-        put("4", "Power");
-        put("18", "Power 2/Pneumatics");
-        put("13", "Ethernet");
-        put("2", "Tubing");
-        put("all", "22/18");
-    }};
-
-    public static final String[] HARDWARE_IN_ORDER = new String[]{"WIRE", "DOUBLESANDCRAB", "TRIPLESANDCRAB", "PDP", "VRM", "ROBORIO", "TALON", "PCM", "SPARK", "MOTOR775", "FALCON", "NEO", "BREAKER", "BATTERY", "RADIO", "ETHERNET", "TUBING", "EPLATE", "DOUBLESOLENOID", "SINGLESOLENOID", "PRESSURESWITCH", "PISTON", "MANIFOLD", "TANK", "COMPRESSOR"};
-
     public static final HashMap<Float, Float> GAUGETOLIMIT = new HashMap<Float, Float>() {{
         put(22f, 5f);
         put(18f, 8f);

@@ -20,7 +20,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -54,6 +53,7 @@ public abstract class Hardware implements Json.Serializable {
     public ArrayList<Sprite> connectors = new ArrayList<>();
     public ArrayList<JSONArray> pinDefs = new ArrayList<>();
     public ArrayList<String> portTypes = new ArrayList<>();
+    public ArrayList<Tuple<Integer, String>> defaultColors = new ArrayList<>();
     public ArrayList<LED> LEDs = new ArrayList<>();
 
     public Sprite base;
@@ -126,6 +126,13 @@ public abstract class Hardware implements Json.Serializable {
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
             portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
         }
+        JSONArray defCols = (JSONArray) JSONReader.getCurrentConfig().get("defaultColors");
+        if(defCols != null && defCols.size() > 0) {
+            for(int x = 0; x < defCols.size(); x++) {
+                defaultColors.add(new Tuple<>(((Long) ((JSONObject) defCols.get(x)).get("port")).intValue(), (String) ((JSONObject) defCols.get(x)).get("color")));
+            }
+        }
+
 
         JSONArray temp = (JSONArray) JSONReader.getCurrentConfig().get("crimped");
 
@@ -288,6 +295,13 @@ public abstract class Hardware implements Json.Serializable {
                         c.setGauge(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)));
                     }
                     firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);
+
+                    for(Tuple<Integer, String> tup : defaultColors) {
+                        if((int) tup.x == HardwareManager.attachWireOnDoubleClick.y) {
+                            c.setColor(DeviceUtil.COLORS.get(tup.y));
+                        }
+                    }
+
                     CableManager.addCable(c);
                     //CircuitGUIManager.propertiesBox.select(HardwareManager.attachWireOnDoubleClick.y);
                     HardwareManager.attachWireOnDoubleClick = null;
