@@ -1,7 +1,5 @@
 package com.amhsrobotics.circuitsim.hardware;
 
-import com.amhsrobotics.circuitsim.files.CableModel;
-import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.files.HardwareModel;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.devices.*;
@@ -10,9 +8,6 @@ import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.amhsrobotics.circuitsim.wiring.Cable;
 import com.amhsrobotics.circuitsim.wiring.CableManager;
-import com.amhsrobotics.circuitsim.wiring.EthernetCable;
-import com.amhsrobotics.circuitsim.wiring.Tubing;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
