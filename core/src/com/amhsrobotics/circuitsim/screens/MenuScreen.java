@@ -40,7 +40,7 @@ public class MenuScreen implements Screen {
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
 
-    private TextButton new_circuit, import_circuit, credits, contests;
+    private TextButton new_circuit, import_circuit, credits, quit;
     private static TextField fileLocation;
     private static Window importMenu;
     private static TextButton importButton, fileSave;
@@ -99,8 +99,8 @@ public class MenuScreen implements Screen {
         import_circuit.setWidth(200);
         credits = new TextButton("Credits", tStyle);
         credits.setWidth(200);
-        contests = new TextButton("Contests", tStyle);
-        contests.setWidth(200);
+        quit = new TextButton("Quit", tStyle);
+        quit.setWidth(200);
 
         rohan = new Label("Rohan Bansal", lStyle);
         rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, -100);
@@ -114,14 +114,14 @@ public class MenuScreen implements Screen {
 
         new_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - new_circuit.getWidth() / 2, 400);
         import_circuit.setPosition((float) Gdx.graphics.getWidth() / 2 - import_circuit.getWidth() / 2, 330);
-        contests.setPosition((float) Gdx.graphics.getWidth() / 2 - contests.getWidth() / 2, 260);
+        quit.setPosition((float) Gdx.graphics.getWidth() / 2 - quit.getWidth() / 2, 260);
         credits.setPosition((float) Gdx.graphics.getWidth() / 2 - credits.getWidth() / 2, 160);
 
         new_circuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - Unsaved *");
-                Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
+                Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, quit, import_circuit, new_circuit);
                 Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
                 if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
                 Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
@@ -152,6 +152,13 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 importMenu();
+            }
+        });
+
+        quit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
             }
         });
 
@@ -213,11 +220,11 @@ public class MenuScreen implements Screen {
         importMenu.row();
         importMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
 
-        Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit);
+        Tools.sequenceSlideIn("left", 1.0f, Interpolation.exp10, 300, 0.2f, new_circuit, import_circuit, quit);
         Tools.slideIn(credits, "down", 1.0f, Interpolation.exp5, 50);
         Tools.slideIn(title, "top", 0.5f, Interpolation.exp5, 300);
 
-        stage.addActors(new_circuit, import_circuit, credits, title, andy, rohan, importMenu);
+        stage.addActors(new_circuit, import_circuit, quit, credits, title, andy, rohan, importMenu);
     }
 
     public static void importMenu() {
@@ -230,7 +237,7 @@ public class MenuScreen implements Screen {
     }
 
     private void hideAndLoadImportMenu() {
-        Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, contests, import_circuit, new_circuit);
+        Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, quit, import_circuit, new_circuit);
         Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
         if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
         Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
