@@ -31,18 +31,12 @@ public class RoboRio extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(port == 0) {
-            return calculateDirection(cur+2, port, 40);
-        } else if (port == 1) {
-            return calculateDirection(cur+1, port, 40);
-        } else if(port >= 2 && port <= 15) {
+        if(port == 0 || port == 1) {
+            return calculateDirection(cur+3, port, 80);
+        } else if(port == 2 || port == 3) {
             return calculateDirection(cur+3, port, 40);
-        } else if(port >= 16 && port <= 24) {
-            return calculateDirection(cur, port, 40);
-        } else if(port == 36) {
-            return calculateDirection(cur+2, port, 120);
         } else {
-            return calculateDirection(cur+1, port, 40);
+            return calculateDirection(cur + 2, port, 120);
         }
     }
 

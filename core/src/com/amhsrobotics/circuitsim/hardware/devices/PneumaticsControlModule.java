@@ -32,15 +32,15 @@ public class PneumaticsControlModule extends Flippable {
 
     public Vector2 calculate(int port) {
         if (port == 0 || port == 1) {
-            return calculateDirection(cur+3, port, 100);
+            return calculateDirection(cur+3, port, 80);
         } else if (port >= 2 && port <= 5) {
-            return calculateDirection(cur+2, port, 100);
+            return calculateDirection(cur+2, port, 80);
         } else if (port >= 6 && port <= 9) {
-            return calculateDirection(cur, port, 100);
-        } else if (port >= 10 && port < 18) {
-            return calculateDirection(cur+2, port, 100);
+            return calculateDirection(cur, port, 80);
+        } else if (port >= 10 && port <= 17) {
+            return calculateDirection(cur+2, port, 80);
         } else {
-            return calculateDirection(cur, port, 100);
+            return calculateDirection(cur, port, 80);
         }
     }
 

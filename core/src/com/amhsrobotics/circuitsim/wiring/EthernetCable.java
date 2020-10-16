@@ -24,6 +24,9 @@ public class EthernetCable extends Cable {
         color = DeviceUtil.COLORS.get("Orange");
         hoverColor = Color.GRAY;
 
+        appendingFromEnd = false;
+        appendingFromBegin = false;
+
         populateProperties();
         CircuitGUIManager.propertiesBox.show();
     }

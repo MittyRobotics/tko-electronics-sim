@@ -31,7 +31,7 @@ public class Radio extends Flippable {
         initEnds();
     }
     public Vector2 calculate(int port) {
-        return calculateDirection(cur, port);
+        return calculateDirection(cur, port, 60);
     }
 
     public String check() {

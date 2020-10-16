@@ -33,11 +33,11 @@ public class VoltageRegulatorModule extends Flippable {
 
     public Vector2 calculate(int port) {
         if (port < 2) {
-            return calculateDirection(cur+2, port, 40);
+            return calculateDirection(cur+2, port, 80);
         } else if (port < 10) {
-            return calculateDirection(cur+3, port, 40);
+            return calculateDirection(cur+3, port, 80);
         } else {
-            return calculateDirection(cur+1, port, 40);
+            return calculateDirection(cur+1, port, 80);
         }
     }
 
