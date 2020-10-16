@@ -3,6 +3,24 @@
   "totalLeds": 2,
   "crimped": [0, 1, 2, 3, 4],
   "crimpedColors": ["Red", "Black", "White", "Red", "Black"],
+  "defaultColors": [
+    {
+      "port": 5,
+      "color": "Yellow"
+    },
+    {
+      "port": 6,
+      "color": "Green"
+    },
+    {
+      "port": 7,
+      "color": "Yellow"
+    },
+    {
+      "port": 8,
+      "color": "Green"
+    }
+  ],
   "pins": [
     {
       "type": "12",

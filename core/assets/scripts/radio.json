@@ -2,6 +2,16 @@
   "name": "Radio",
   "totalLeds": 4,
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    }
+  ],
   "pins": [
     {
       "type": "18",
