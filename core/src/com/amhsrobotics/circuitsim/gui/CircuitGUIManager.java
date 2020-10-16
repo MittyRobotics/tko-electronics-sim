@@ -346,11 +346,14 @@ public class CircuitGUIManager {
         clear.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
-                ConfirmDialog.createWindow(() -> {
-                    HardwareManager.clearHardware();
-                    CableManager.clearCables();
-                });
+                if(HardwareManager.getHardware().size == 0 && CableManager.getCables().size == 0) {
+                    popup.activateError("Nothing to clear");
+                } else {
+                    ConfirmDialog.createWindow(() -> {
+                        HardwareManager.clearHardware();
+                        CableManager.clearCables();
+                    });
+                }
             }
         });
 
