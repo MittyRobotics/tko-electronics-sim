@@ -21,8 +21,6 @@ public class ConfirmDialog {
     private static final Window.WindowStyle wStyle = new Window.WindowStyle();
     private static final TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle();
 
-    private static boolean open = false;
-
     
     public static void init(Stage stage) {
 
@@ -79,15 +77,9 @@ public class ConfirmDialog {
     private static void openWindow() {
         window.setPosition(Gdx.graphics.getWidth()/2f - window.getWidth()/2f, Gdx.graphics.getHeight()/2f - window.getHeight()/2f);
         Tools.slideIn(window, "down", 1f, Interpolation.exp10, 600);
-        open = true;
     }
 
     private static void closeWindow() {
         Tools.slideOut(window, "down", 1f, Interpolation.exp10, 700);
-        open = false;
-    }
-
-    public static boolean isOpen() {
-        return open;
     }
 }

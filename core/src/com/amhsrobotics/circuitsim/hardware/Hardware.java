@@ -642,17 +642,6 @@ public abstract class Hardware implements Json.Serializable {
         cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
     }
 
-    public void renderConnectors(Batch batch) {
-        batch.begin();
-        for(Sprite s : connectors) {
-            if(s != null) {
-                s.draw(batch);
-            }
-        }
-        batch.end();
-
-    }
-
     public void populateProperties() {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);

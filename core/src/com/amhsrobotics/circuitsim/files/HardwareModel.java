@@ -16,7 +16,6 @@ public class HardwareModel {
     public HardwareType type;
     public Vector2 position;
     public int id;
-    public DelayedRemovalArray<CableModel> connections;
     public Box box;
     public int rotation;
 

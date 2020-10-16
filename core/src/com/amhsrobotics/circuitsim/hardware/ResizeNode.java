@@ -14,7 +14,6 @@ import java.util.HashMap;
 
 public class ResizeNode {
 
-    public float x, y;
     public NodeType type;
     private boolean selected;
     private Circle circle;
@@ -38,8 +37,6 @@ public class ResizeNode {
     }};
 
     public ResizeNode(float x, float y, NodeType type) {
-        this.x = x;
-        this.y = y;
         this.type = type;
 
         circle = new Circle(x, y, 16);

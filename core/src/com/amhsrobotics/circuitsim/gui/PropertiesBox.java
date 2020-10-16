@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Align;
 
 public class PropertiesBox {
 
-    private ModifiedStage stage;
     public Table container;
     private Table table;
     public final TextButton.TextButtonStyle TBUTTON = new TextButton.TextButtonStyle();;
@@ -29,7 +28,6 @@ public class PropertiesBox {
     public boolean hovering;
 
     public PropertiesBox(ModifiedStage stage) {
-        this.stage = stage;
 
         TBUTTON.font = Constants.FONT_SMALL;
         TBUTTON.up = Constants.SKIN.getDrawable("button_03");
@@ -115,10 +113,6 @@ public class PropertiesBox {
         visible = true;
     }
 
-    public void select(int location) {
-        scroll.scrollTo(0, 30 + location * 10, scroll.getWidth(), 40 + location * 10);
-    }
-
     public void shift(int direction) {
         if(direction == 1) {
             container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight()-210);
@@ -132,16 +126,16 @@ public class PropertiesBox {
         visible = false;
     }
 
-    public void hideAndClear() {
-        Tools.slideOut(container, "top", 0.8f, Interpolation.exp10, 200, new Runnable() {
-            @Override
-            public void run() {
-                visible = false;
-                table.clearChildren();
-                table.pack();
-            }
-        });
-    }
+//    public void hideAndClear() {
+//        Tools.slideOut(container, "top", 0.8f, Interpolation.exp10, 200, new Runnable() {
+//            @Override
+//            public void run() {
+//                visible = false;
+//                table.clearChildren();
+//                table.pack();
+//            }
+//        });
+//    }
 
     public boolean isVisible() {
         return visible;
