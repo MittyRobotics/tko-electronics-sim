@@ -51,38 +51,38 @@
   ],
   "leds": [
     {
-      "color": "blue",
-      "type": "power",
+      "color": "off",
+      "type": "Power",
       "position": [468, 385],
       "dimensions": [20, 20]
     },
     {
-      "color": "blue",
-      "type": "status",
+      "color": "off",
+      "type": "Status",
       "position": [468, 352],
       "dimensions": [20, 20]
     },
     {
-      "color": "blue",
-      "type": "radio",
+      "color": "off",
+      "type": "Radio (disabled)",
       "position": [468, 300],
       "dimensions": [20, 20]
     },
     {
-      "color": "blue",
-      "type": "comm",
+      "color": "off",
+      "type": "Comm",
       "position": [468, 268],
       "dimensions": [20, 20]
     },
     {
-      "color": "blue",
-      "type": "mode",
+      "color": "off",
+      "type": "Mode",
       "position": [468, 233],
       "dimensions": [20, 20]
     },
     {
-      "color": "blue",
-      "type": "rsl",
+      "color": "off",
+      "type": "RSL",
       "position": [468, 183],
       "dimensions": [20, 20]
     }

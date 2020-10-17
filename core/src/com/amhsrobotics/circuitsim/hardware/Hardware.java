@@ -45,7 +45,7 @@ public abstract class Hardware implements Json.Serializable {
     public HardwareType type;
     public String name;
     public boolean rotated = false;
-    public boolean drawError = false, drawGood = false;
+    public boolean drawError = false, drawGood = false, simLED;
 
     public ClippedCameraController camera;
 

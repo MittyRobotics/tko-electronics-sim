@@ -325,6 +325,7 @@ public class CircuitGUIManager {
                         h.stopDrawErrorHover();
                         h.stopDrawGoodHover();
                         h.resetLEDs();
+                        h.simLED = false;
                     }
                     popup.removeLabels();
                     HardwareManager.currentHardware = null;

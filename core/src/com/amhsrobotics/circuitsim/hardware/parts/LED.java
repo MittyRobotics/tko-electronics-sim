@@ -19,7 +19,7 @@ public class LED {
     public boolean blinking;
     private boolean on;
     private int speed;
-    private int cnt;
+    private int cnt, et;
     public String status = " | Off";
 
     public LED(JSONArray position, Hardware hardware, JSONArray size, String type, String color) {
@@ -48,7 +48,19 @@ public class LED {
     }
 
     public void render(SpriteBatch batch) {
-        if(blinking) {
+        if(et != 0) {
+            et--;
+            if(et == 0) {
+                if(blinking) {
+                    blinking = false;
+                    setColorTemp(color);
+                } else {
+                    reset();
+                }
+            }
+        }
+
+        if (blinking) {
             cnt--;
             if(cnt == 0) {
                 cnt = speed;
@@ -62,6 +74,10 @@ public class LED {
             }
         }
         sprite.draw(batch);
+    }
+
+    public void endTime(int time) {
+        et = time;
     }
 
     public void setPosition() {
@@ -89,6 +105,14 @@ public class LED {
         this.speed = speed;
         on = true;
         cnt = speed;
+    }
+
+    public void blinkTime(int speed, int time) {
+        blinking = true;
+        this.speed = speed;
+        on = true;
+        cnt = speed;
+        et = time;
     }
 
     public void stopBink() {
