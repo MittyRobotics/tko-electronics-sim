@@ -316,7 +316,13 @@ public abstract class Hardware implements Json.Serializable {
         for(Sprite s : connectors) {
             if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
                 if(!(this instanceof SandCrab)) {
-                    CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
+                    if(portTypes.get(connectors.indexOf(s)).equals("2")) {
+                        CircuitScreen.setHoverDraw(vec, "Tubing | port " + connectors.indexOf(s));
+                    } else if(portTypes.get(connectors.indexOf(s)).equals("13")) {
+                        CircuitScreen.setHoverDraw(vec, "Ethernet | port " + connectors.indexOf(s));
+                    } else {
+                        CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
+                    }
                 } else {
                     CircuitScreen.setHoverDraw(vec, ((SandCrab) this).getGaugeString() + "g | port " + connectors.indexOf(s));
                 }
