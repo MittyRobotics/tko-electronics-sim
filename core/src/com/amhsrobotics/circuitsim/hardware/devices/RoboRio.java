@@ -49,8 +49,19 @@ public class RoboRio extends Flippable {
             return "RoboRIO is improperly connected to PDP";
         }
 
-        LEDs.get(0).setColor("green");
-        LEDs.get(0).setStatus("Power is good");
+        if(!simLED) {
+            simLED = true;
+            LEDs.get(0).setColor("green");
+            LEDs.get(0).setStatus("Power is good");
+            LEDs.get(1).setColor("green");
+            LEDs.get(1).setStatus("On");
+            LEDs.get(1).blinkTime(10, 80);
+        }
+
+        if(getOther(4) instanceof Radio && getOther(4).check() == null) {
+            LEDs.get(3).setColor("green");
+            LEDs.get(3).setStatus("Connected");
+        }
 
         /*
         if(getNull(36) || !(getOther(36) instanceof Radio)) {

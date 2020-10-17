@@ -58,7 +58,7 @@ public class Radio extends Flippable {
         if(!simLED) {
             simLED = true;
             LEDs.get(0).setColor("blue");
-            LEDs.get(0).blinkTime(3, 30);
+            LEDs.get(0).blinkTime(5, 50);
             //LEDs.get(0).endTime(50);
             LEDs.get(0).setStatus("On");
             LEDs.get(1).setColor("blue");
