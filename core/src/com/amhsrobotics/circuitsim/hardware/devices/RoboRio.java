@@ -56,11 +56,15 @@ public class RoboRio extends Flippable {
             LEDs.get(1).setColor("green");
             LEDs.get(1).setStatus("On");
             LEDs.get(1).blinkTime(10, 80);
+            LEDs.get(5).setColor("yellow");
+            LEDs.get(5).setStatus("Robot Enabled");
         }
 
         if(getOther(4) instanceof Radio && getOther(4).check() == null) {
             LEDs.get(3).setColor("green");
             LEDs.get(3).setStatus("Connected");
+            LEDs.get(4).setColor("green");
+            LEDs.get(4).setStatus("Teleop Enabled");
         }
 
         /*

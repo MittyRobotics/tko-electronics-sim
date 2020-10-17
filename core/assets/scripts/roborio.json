@@ -54,37 +54,37 @@
       "color": "off",
       "type": "Power",
       "position": [468, 385],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     },
     {
       "color": "off",
       "type": "Status",
       "position": [468, 352],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     },
     {
       "color": "off",
       "type": "Radio (disabled)",
       "position": [468, 300],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     },
     {
       "color": "off",
       "type": "Comm",
       "position": [468, 268],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     },
     {
       "color": "off",
       "type": "Mode",
       "position": [468, 233],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     },
     {
       "color": "off",
       "type": "RSL",
       "position": [468, 183],
-      "dimensions": [20, 20]
+      "dimensions": [23, 30]
     }
   ]
 }
