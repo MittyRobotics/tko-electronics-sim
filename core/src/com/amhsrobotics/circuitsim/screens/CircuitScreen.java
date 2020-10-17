@@ -128,13 +128,6 @@ public class CircuitScreen implements Screen {
                 } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
                     camera.getCamera().translate(amount > 0 ? 45f : -45f, 0);
                 } else {
-//                    camera.getCamera().zoom *= amount > 0 ? 1.05f : 0.95f;
-//                    if(camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
-//                        camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
-//                    } else if(camera.getCamera().zoom < 0.2) {
-//                        camera.getCamera().zoom = 0.2f;
-//                    }
-//                }
 
                     Vector3 screenCoords = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
@@ -158,7 +151,6 @@ public class CircuitScreen implements Screen {
                 }
 
                 return true;
-//                return super.scrolled(amount);
             }
         });
         Gdx.input.setInputProcessor(plexer);
@@ -418,7 +410,9 @@ public class CircuitScreen implements Screen {
     @Override
     public void show() { }
     @Override
-    public void resize(int width, int height) { }
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
     @Override
     public void pause() { }
     @Override

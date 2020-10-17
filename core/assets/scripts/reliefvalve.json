@@ -1,0 +1,15 @@
+{
+  "name": "Relief Valve",
+  "totalLeds": 0,
+  "crimpedColors": [],
+  "crimped": [],
+  "pins": [
+    {
+      "type": "2",
+      "position": [0, -102],
+      "dimensions": [15, 15]
+    }
+  ],
+  "leds": [
+  ]
+}

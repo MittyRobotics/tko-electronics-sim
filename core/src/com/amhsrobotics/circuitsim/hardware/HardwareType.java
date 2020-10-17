@@ -27,7 +27,7 @@ public enum HardwareType {
     TRIPLESANDCRAB,
     TUBING,
     VRM,
-    WIRE
-
-
+    WIRE,
+    RELIEFVALVE,
+    GAUGE
 }

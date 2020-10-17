@@ -221,6 +221,12 @@ public class HardwareManager {
             case EPLATE:
                 temp = new EPlate(new Vector2(startX, startY));
                 break;
+            case GAUGE:
+                temp = new Gauge(new Vector2(startX, startY));
+                break;
+            case RELIEFVALVE:
+                temp = new ReliefValve(new Vector2(startX, startY));
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
                 break;
