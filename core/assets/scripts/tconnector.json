@@ -1,0 +1,22 @@
+{
+  "name": "T Tubing Connector",
+  "totalLeds": 0,
+  "crimped": [],
+  "pins": [
+    {
+      "type": "2",
+      "position": [0, -65],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "2",
+      "position": [99, 30],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "2",
+      "position": [-99, 30],
+      "dimensions": [25, 25]
+    }
+  ]
+}

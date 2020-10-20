@@ -227,6 +227,9 @@ public class HardwareManager {
             case RELIEFVALVE:
                 temp = new ReliefValve(new Vector2(startX, startY));
                 break;
+            case TCONNECTOR:
+                temp = new TConnector(new Vector2(startX, startY));
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
                 break;

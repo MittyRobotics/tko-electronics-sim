@@ -133,6 +133,12 @@
       "category": "pneumatics"
     },
     {
+      "objectName": "TCONNECTOR",
+      "name": "T Connector",
+      "tooltip": "3-way tubing connector",
+      "category": "pneumatics"
+    },
+    {
       "objectName": "GAUGE",
       "name": "Gauge",
       "tooltip": "Indicates air pressure",

@@ -29,5 +29,6 @@ public enum HardwareType {
     VRM,
     WIRE,
     RELIEFVALVE,
-    GAUGE
+    GAUGE,
+    TCONNECTOR
 }
