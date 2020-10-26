@@ -9,6 +9,7 @@ import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
@@ -315,6 +316,14 @@ public class CircuitGUIManager {
                 } else {
                     FileManager.save(FileManager.fileName);
                 }
+            }
+        });
+
+        simulate.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                popup.activateError("Use with caution: Incomplete and prone to bugs and crashes. Save first.");
             }
         });
         simulate.addListener(new ChangeListener() {

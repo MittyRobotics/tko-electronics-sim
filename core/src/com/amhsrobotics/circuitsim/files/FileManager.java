@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.files;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -61,20 +62,24 @@ public class FileManager {
     public static void load(String filename) {
 //        fileName = filename;
 
-        FileHandle file = Gdx.files.absolute(filename);
-        appdata = json.fromJson(AppData.class, file.readString());
-        Constants.WORLD_DIM = appdata.getGridSize();
-        Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
+        try {
+            FileHandle file = Gdx.files.absolute(filename);
+            appdata = json.fromJson(AppData.class, file.readString());
+            Constants.WORLD_DIM = appdata.getGridSize();
+            Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
 
-        for(HardwareModel hm : appdata.getHardware()) {
-            HardwareManager.loadHardware(hm);
+            for(HardwareModel hm : appdata.getHardware()) {
+                HardwareManager.loadHardware(hm);
+            }
+
+            for(CableModel cm : appdata.getCables()) {
+                CableManager.loadCable(cm);
+            }
+
+            Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        for(CableModel cm : appdata.getCables()) {
-            CableManager.loadCable(cm);
-        }
-
-        Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - " + filename);
 
     }
 }
