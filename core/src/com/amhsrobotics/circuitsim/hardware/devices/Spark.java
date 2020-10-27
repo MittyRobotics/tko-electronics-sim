@@ -114,6 +114,16 @@ public class Spark extends Flippable {
             }
         }
 
+        if(!simLED) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(1).blink(20);
+            LEDs.get(0).setColor("orange");
+            LEDs.get(0).setStatus("CAN chain error");
+            LEDs.get(1).setColor("orange");
+            LEDs.get(1).setStatus("CAN chain error");
+        }
+
         if(getAllNull(5, 8)) {
             return "SPARK not connected to CAN chain";
         }
@@ -159,13 +169,13 @@ public class Spark extends Flippable {
             return ans;
         }
 
-        if(!simLED) {
+        if(!simLED || LEDs.get(0).getColor().equals("orange")) {
             simLED = true;
             LEDs.get(0).blink(20);
             LEDs.get(1).blink(20);
-            LEDs.get(0).setColor("blue");
+            LEDs.get(0).setColor("magenta");
             LEDs.get(0).setStatus("Valid signal");
-            LEDs.get(1).setColor("blue");
+            LEDs.get(1).setColor("magenta");
             LEDs.get(1).setStatus("Valid signal");
         }
 
