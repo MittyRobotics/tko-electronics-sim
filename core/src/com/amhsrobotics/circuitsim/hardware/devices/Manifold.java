@@ -54,6 +54,11 @@ public class Manifold extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-       return calculateDirection(cur, port, 100);
+        if(port == 0) {
+            return calculateDirection(cur+3, port, 100);
+        } else if (port > 8 && (port % 4 == 3 || port % 4 == 2)) {
+            return calculateDirection(cur+2, port, 50);
+        }
+        return calculateDirection(cur, port, 50);
     }
 }

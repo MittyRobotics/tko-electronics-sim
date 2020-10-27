@@ -3,6 +3,120 @@
   "totalLeds": 0,
   "crimpedColors": [],
   "crimped": [],
+  "defaultColors": [
+    {
+      "port": 8,
+      "color": "Black"
+    },
+    {
+      "port": 9,
+      "color": "Red"
+    },
+    {
+      "port": 10,
+      "color": "Black"
+    },
+    {
+      "port": 11,
+      "color": "Red"
+    },
+    {
+      "port": 12,
+      "color": "Black"
+    },
+    {
+      "port": 13,
+      "color": "Red"
+    },
+    {
+      "port": 14,
+      "color": "Black"
+    },
+    {
+      "port": 15,
+      "color": "Red"
+    },
+    {
+      "port": 16,
+      "color": "Black"
+    },
+    {
+      "port": 17,
+      "color": "Red"
+    },
+    {
+      "port": 18,
+      "color": "Black"
+    },
+    {
+      "port": 19,
+      "color": "Red"
+    },
+    {
+      "port": 20,
+      "color": "Black"
+    },
+    {
+      "port": 21,
+      "color": "Red"
+    },
+    {
+      "port": 22,
+      "color": "Black"
+    },
+    {
+      "port": 23,
+      "color": "Red"
+    },
+    {
+      "port": 24,
+      "color": "Black"
+    },
+    {
+      "port": 25,
+      "color": "Red"
+    },
+    {
+      "port": 26,
+      "color": "Black"
+    },
+    {
+      "port": 27,
+      "color": "Red"
+    },
+    {
+      "port": 28,
+      "color": "Black"
+    },
+    {
+      "port": 29,
+      "color": "Red"
+    },
+    {
+      "port": 30,
+      "color": "Black"
+    },
+    {
+      "port": 31,
+      "color": "Red"
+    },
+    {
+      "port": 32,
+      "color": "Black"
+    },
+    {
+      "port": 33,
+      "color": "Red"
+    },
+    {
+      "port": 34,
+      "color": "Black"
+    },
+    {
+      "port": 35,
+      "color": "Red"
+    }
+  ],
   "pins": [
     {
       "type": "2",
