@@ -10,6 +10,7 @@ An FRC circuit simulator used by our electronics department for complex diagramm
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
 - Automated debugging for all errors
+- Partial LED simulation
 - Accurate circuit diagramming with FRC parts (see subsection below)
 - Native, can be run cross-platform
 
@@ -20,6 +21,7 @@ An FRC circuit simulator used by our electronics department for complex diagramm
 - complete LED simulation
 - accurate scaling of parts on a blocks-per-inch grid
 - timed competitive wiring games
+- color themes
 
 ### Installation
 
@@ -43,13 +45,11 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 
 **Compressor**
 
-**Double & Triple WAGO**
+**Double WAGO**
 
 **Falcon**
 
-**Gauge**
-
-**Manifold**
+**Manifold (with double solenoids attached)**
 
 **775 Motor**
 
@@ -73,8 +73,6 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 
 **Relief Valve Complex**
 
-**Single & Double Solenoid**
-
 **Spark**
 
 **Talon**
@@ -84,4 +82,8 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 **T-Connector**
 
 ---
-Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
+Created by: 
+
+[Rohan Bansal](https://github.com/Rohan-Bansal)
+
+[Andy Li](https://github.com/AndyLi23)
