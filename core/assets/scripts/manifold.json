@@ -6,22 +6,7 @@
   "pins": [
     {
       "type": "2",
-      "position": [-153, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [-116, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [-91, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [-62, -140],
+      "position": [-193, 0],
       "dimensions": [15, 15]
     },
     {
@@ -31,42 +16,27 @@
     },
     {
       "type": "2",
-      "position": [-36, -140],
+      "position": [-103, -140],
       "dimensions": [15, 15]
     },
     {
       "type": "2",
-      "position": [-9, -140],
+      "position": [-53, -140],
       "dimensions": [15, 15]
     },
     {
       "type": "2",
-      "position": [-153, -140],
+      "position": [-3, -140],
       "dimensions": [15, 15]
     },
     {
       "type": "2",
-      "position": [15, -140],
+      "position": [47, -140],
       "dimensions": [15, 15]
     },
     {
       "type": "2",
-      "position": [41, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [69, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [95, -140],
-      "dimensions": [15, 15]
-    },
-    {
-      "type": "2",
-      "position": [117, -140],
+      "position": [97, -140],
       "dimensions": [15, 15]
     },
     {
