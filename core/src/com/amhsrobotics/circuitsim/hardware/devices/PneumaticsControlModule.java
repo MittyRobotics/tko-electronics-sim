@@ -72,8 +72,11 @@ public class PneumaticsControlModule extends Flippable {
         }
 
         if(!getAllNull(2, 5)) {
-            LEDs.get(0).setColor("red");
-            LEDs.get(0).setStatus("No Can Comm");
+            if(!LEDs.get(0).blinking) {
+                LEDs.get(0).setColor("red");
+                LEDs.get(0).blink(50);
+                LEDs.get(0).setStatus("No Can Comm");
+            }
 
             if(!getAllNotNull(2, 5)) {
                 return "CAN chain should reach RoboRIO";
@@ -87,8 +90,11 @@ public class PneumaticsControlModule extends Flippable {
             LEDs.get(0).setStatus("No Fault - Robot Enabled");
 
         } else {
-            LEDs.get(0).setColor("red");
-            LEDs.get(0).setStatus("No Can Comm");
+            if(!LEDs.get(0).blinking) {
+                LEDs.get(0).setColor("red");
+                LEDs.get(0).blink(50);
+                LEDs.get(0).setStatus("No Can Comm");
+            }
         }
 
         return null;
