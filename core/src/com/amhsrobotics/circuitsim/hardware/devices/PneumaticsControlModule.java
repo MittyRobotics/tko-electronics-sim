@@ -61,6 +61,16 @@ public class PneumaticsControlModule extends Flippable {
             return "PCM is improperly connected to PDP";
         }
 
+        if(getOther(8) instanceof Compressor && getOther(9) instanceof Compressor) {
+            if(getNum(8) == 2 && getNum(9) == 1 && getOther(9).check() == null) {
+                LEDs.get(1).setColor("green");
+                LEDs.get(1).setStatus("Compressor Connected");
+            } else {
+                LEDs.get(1).setColor("red");
+                LEDs.get(1).setStatus("Compressor Error");
+            }
+        }
+
         if(!getAllNull(2, 5)) {
             LEDs.get(0).setColor("red");
             LEDs.get(0).setStatus("No Can Comm");
@@ -79,16 +89,6 @@ public class PneumaticsControlModule extends Flippable {
         } else {
             LEDs.get(0).setColor("red");
             LEDs.get(0).setStatus("No Can Comm");
-        }
-
-        if(getOther(8) instanceof Compressor && getOther(9) instanceof Compressor) {
-            if(getNum(8) == 2 && getNum(9) == 1 && getOther(9).check() == null) {
-                LEDs.get(1).setColor("green");
-                LEDs.get(1).setStatus("Compressor Connected");
-            } else {
-                LEDs.get(1).setColor("red");
-                LEDs.get(1).setStatus("Compressor Error");
-            }
         }
 
         return null;
