@@ -15,9 +15,11 @@ An FRC circuit simulator used by our electronics department for complex diagramm
 
 ### Future Updates
 
+
+- curved cables
 - complete LED simulation
-- Accurate scaling of parts on a blocks-per-inch grid
-- Timed competitive wiring games
+- accurate scaling of parts on a blocks-per-inch grid
+- timed competitive wiring games
 
 ### Installation
 
