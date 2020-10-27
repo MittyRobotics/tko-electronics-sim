@@ -5,12 +5,12 @@
   "crimped": [],
   "pins": [
     {
-      "type": "22",
+      "type": "18",
       "position": [136, 64],
       "dimensions": [15, 15]
     },
     {
-      "type": "22",
+      "type": "18",
       "position": [136, -64],
       "dimensions": [15, 15]
     }

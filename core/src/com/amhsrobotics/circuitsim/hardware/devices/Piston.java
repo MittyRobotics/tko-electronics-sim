@@ -32,6 +32,6 @@ public class Piston extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        return calculateDirection(3+cur, port, 100);
+        return calculateDirection(cur, port, 100);
     }
 }
