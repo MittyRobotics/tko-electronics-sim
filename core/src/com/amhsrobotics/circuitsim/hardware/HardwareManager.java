@@ -230,6 +230,9 @@ public class HardwareManager {
             case TCONNECTOR:
                 temp = new TConnector(new Vector2(startX, startY));
                 break;
+            case REGULATOR:
+                temp = new Regulator(new Vector2(startX, startY));
+                break;
             default:
                 temp = new SandCrab(new Vector2(startX, startY), type, addCrimped);
                 break;

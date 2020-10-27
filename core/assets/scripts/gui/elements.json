@@ -109,6 +109,12 @@
       "category": "pneumatics"
     },
     {
+      "objectName": "REGULATOR",
+      "name": "Regulator",
+      "tooltip": "Regulates pneumatic pressure",
+      "category": "pneumatics"
+    },
+    {
       "objectName": "RELIEFVALVE",
       "name": "Relief Valve",
       "tooltip": "Release air pressure",
