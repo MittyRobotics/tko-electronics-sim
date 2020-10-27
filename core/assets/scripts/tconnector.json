@@ -5,17 +5,17 @@
   "pins": [
     {
       "type": "2",
-      "position": [0, -65],
+      "position": [0, -55],
       "dimensions": [25, 25]
     },
     {
       "type": "2",
-      "position": [99, 30],
+      "position": [89, 30],
       "dimensions": [25, 25]
     },
     {
       "type": "2",
-      "position": [-99, 30],
+      "position": [-89, 30],
       "dimensions": [25, 25]
     }
   ]
