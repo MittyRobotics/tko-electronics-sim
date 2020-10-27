@@ -1,25 +1,21 @@
 # TKO 1351 Circuit Simulator
 <!--- ![TKO 1351 Circuit Simulator](core/assets/img/circuitsim.png) --->
 
-An FRC circuit simulator used by our electronics department for rookie training and E-Plate diagramming. Current features include a 2D interface similar to CAD which allows the user to create, move, and edit devices and cables, as well as automated error debugging. Circuits can also be saved as files and imported.
+An FRC circuit simulator used by our electronics department for complex diagramming and training.
 
-Created by [Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal).
 
 ### Features
 
-- 2D CAD-inspired interface
+- 2D CAD-inspired GUI
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
-- Automated debugging for errors (pneumatics excluded)
-- Accurate circuit diagramming using real FRC parts: 
-  - batteries, breakerers, compressors, falcon motors, manifolds, 775 motors, NEOs, pistons, PCMs, PDPs, pressure switches, radios, RoboRIOs, WAGO connectors, solenoids, sparks, talons, air tanks, VRMs, cables (Ethernet, tubing, all gauges used in FRC), E-Plates
-- Native, can be run anywhere
+- Automated debugging for all errors
+- Accurate circuit diagramming with FRC parts (see subsection below)
+- Native, can be run cross-platform
 
-### Currently WIP
+### Future Updates
 
-- debugging for pneumatics
-- LED simulation
-- Default cable colors
+- complete LED simulation
 - Accurate scaling of parts on a blocks-per-inch grid
 - Timed competitive wiring games
 
@@ -35,3 +31,55 @@ Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
 
 If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
+
+
+## Device/Component List
+
+**Battery**
+
+**Breaker**
+
+**Compressor**
+
+**Double & Triple WAGO**
+
+**Falcon**
+
+**Gauge**
+
+**Manifold**
+
+**775 Motor**
+
+**NEO**
+
+**Pneumatics Control Module (PCM)**
+
+**Power Distribution Panel (PDP)**
+
+**Voltage Regulator Module (VRM)**
+
+**Piston**
+
+**Pressure Switch**
+
+**Radio**
+
+**RoboRIO**
+
+**Regulator + Gauge**
+
+**Relief Valve Complex**
+
+**Single & Double Solenoid**
+
+**Spark**
+
+**Talon**
+
+**Tank**
+
+**T-Connector**
+
+---
+Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
