@@ -14,7 +14,7 @@ public class DesktopLauncher {
 
 			config.title = "TKO 1351 Circuit Simulator";
 			config.addIcon("img/logo/logo.png", Files.FileType.Internal);
-//			config.resizable = false;
+			config.resizable = false;
 //			config.fullscreen = true;
 			config.width = 1366;
 			config.height = 768;
