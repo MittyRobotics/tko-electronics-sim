@@ -32,7 +32,7 @@ public class ReliefValve extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        return calculateDirection(cur, port, 100);
+        return calculateDirection(cur+1, port, 100);
     }
 
     public String check() {

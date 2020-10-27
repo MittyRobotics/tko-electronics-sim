@@ -121,12 +121,6 @@
       "category": "pneumatics"
     },
     {
-      "objectName": "GAUGE",
-      "name": "Gauge",
-      "tooltip": "Indicates air pressure",
-      "category": "pneumatics"
-    },
-    {
       "objectName": "PISTON",
       "name": "Piston",
       "tooltip": "Pneumatics piston moved with pressured air",
