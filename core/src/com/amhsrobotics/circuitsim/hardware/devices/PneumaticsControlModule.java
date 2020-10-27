@@ -46,20 +46,48 @@ public class PneumaticsControlModule extends Flippable {
 
     public String check() {
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "PCM is not connected to PDP";
         }
 
         if(!((getNum(1) == 0 && getNum(0) == 1) || (getNum(1) == 2 && getNum(0) == 3))) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "PCM is improperly connected to PDP";
         }
 
         if(!getAllNull(2, 5)) {
+            LEDs.get(0).setColor("red");
+            LEDs.get(0).setStatus("No Can Comm");
+
             if(!getAllNotNull(2, 5)) {
                 return "CAN chain should reach RoboRIO";
             } else if(getOther(2) instanceof RoboRio && getOther(3) instanceof RoboRio && (getNum(2) != 3 || getNum(3) != 2)) {
                 return "CAN chain improperly connected to RoboRIO";
             } else if (getOther(5) instanceof RoboRio && getOther(4) instanceof RoboRio && (getNum(5) != 3 || getNum(4) != 2)) {
                 return "CAN chain improperly connected to RoboRIO";
+            }
+
+            LEDs.get(0).setColor("green");
+            LEDs.get(0).setStatus("No Fault - Robot Enabled");
+
+        } else {
+            LEDs.get(0).setColor("red");
+            LEDs.get(0).setStatus("No Can Comm");
+        }
+
+        if(getOther(8) instanceof Compressor && getOther(9) instanceof Compressor) {
+            if(getNum(8) == 2 && getNum(9) == 1 && getOther(9).check() == null) {
+                LEDs.get(1).setColor("green");
+                LEDs.get(1).setStatus("Compressor Connected");
+            } else {
+                LEDs.get(1).setColor("red");
+                LEDs.get(1).setStatus("Compressor Error");
             }
         }
 
