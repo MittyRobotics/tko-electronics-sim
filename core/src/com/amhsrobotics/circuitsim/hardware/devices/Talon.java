@@ -50,7 +50,7 @@ public class Talon extends Flippable {
                     return "Incorrectly wired to PDP";
                 }
             } else if (getOther(4) instanceof PneumaticsControlModule && getOther(5) instanceof PneumaticsControlModule) {
-                if((getNum(4) == 4 && getNum(5) == 5) || (getNum(4) == 3 && getNum(5) == 2)) {
+                if((getNum(4) == 5 && getNum(5) == 4) || (getNum(4) == 3 && getNum(5) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
@@ -83,32 +83,63 @@ public class Talon extends Flippable {
     }
 
     public String check() {
+
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Talon is not connected to PDP";
         }
 
         if(getNum(1) <= 41 && getNum(1) >= 34) {
             if(getNum(1) % 2 != 1 || getNum(0) != getNum(1) - 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Talon incorrectly connected to PDP";
             }
         }
 
         if(getNum(1) <= 17 && getNum(1) >= 10) {
             if(getNum(1) % 2 != 1 || getNum(0) != getNum(1) - 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Talon incorrectly connected to PDP";
             }
         }
 
         if(getNum(1) <= 33 && getNum(1) >= 26) {
             if(getNum(1) % 2 != 0 || getNum(0) != getNum(1) + 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Talon incorrectly connected to PDP";
             }
         }
 
         if(getNum(1) <= 25 && getNum(1) >= 18) {
             if(getNum(1) % 2 != 0 || getNum(0) != getNum(1) + 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Talon incorrectly connected to PDP";
             }
+        }
+
+        if(!simLED) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(1).blink(20);
+            LEDs.get(0).setColor("red");
+            LEDs.get(0).setStatus("CAN chain error");
+            LEDs.get(1).setColor("red");
+            LEDs.get(1).setStatus("CAN chain error");
         }
 
         if(getAllNull(4, 7)) {
@@ -116,6 +147,8 @@ public class Talon extends Flippable {
         }
 
         if(!((getCAN(get(5), get(4)).equals("PDP") && getCAN(get(7), get(6)).equals("PCM")) || (getCAN(get(5), get(4)).equals("PCM") && getCAN(get(7), get(6)).equals("PDP")))) {
+
+
             String ans = "";
 
             if(!getCAN(get(5), get(4)).equals("PDP") && !getCAN(get(5), get(4)).equals("PCM")) {
@@ -154,6 +187,16 @@ public class Talon extends Flippable {
             }
 
             return ans;
+        }
+
+        if(!simLED || LEDs.get(0).getColor().equals("red")) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(1).blink(20);
+            LEDs.get(0).setColor("green");
+            LEDs.get(0).setStatus("Enabled");
+            LEDs.get(1).setColor("green");
+            LEDs.get(1).setStatus("Enabled");
         }
 
 
