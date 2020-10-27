@@ -43,6 +43,156 @@
       "type": "2",
       "position": [147, -140],
       "dimensions": [15, 15]
+    },
+
+
+    {
+      "type": "18",
+      "position": [-143, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-163, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-143, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-163, 225],
+      "dimensions": [10, 10]
+    },
+
+
+    {
+      "type": "18",
+      "position": [-93, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-113, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-93, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-113, 225],
+      "dimensions": [10, 10]
+    },
+
+    {
+      "type": "18",
+      "position": [-43, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-63, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-43, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-63, 225],
+      "dimensions": [10, 10]
+    },
+
+    {
+      "type": "18",
+      "position": [7, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-13, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [7, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-13, 225],
+      "dimensions": [10, 10]
+    },
+
+
+    {
+      "type": "18",
+      "position": [57, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [37, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [57, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [37, 225],
+      "dimensions": [10, 10]
+    },
+
+    {
+      "type": "18",
+      "position": [107, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [87, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [107, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [87, 225],
+      "dimensions": [10, 10]
+    },
+
+    {
+      "type": "18",
+      "position": [157, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [137, -225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [157, 225],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [137, 225],
+      "dimensions": [10, 10]
     }
   ],
   "leds": [

@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.hardware;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.JSONReader;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.hardware.devices.Manifold;
 import com.amhsrobotics.circuitsim.hardware.devices.SandCrab;
 import com.amhsrobotics.circuitsim.hardware.parts.LED;
 import com.amhsrobotics.circuitsim.screens.CircuitScreen;
@@ -419,18 +420,18 @@ public abstract class Hardware implements Json.Serializable {
                 CircuitGUIManager.propertiesBox.hide();
             }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
                     HardwareManager.moveToFront(this);
-                    for(Cable c : connections) {
-                        if(c != null) {
+                    for (Cable c : connections) {
+                        if (c != null) {
                             CableManager.moveToFront(c);
                         }
                     }
                 } else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                     HardwareManager.moveToBack(this);
-                    for(Cable c : connections) {
-                        if(c != null) {
+                    for (Cable c : connections) {
+                        if (c != null) {
                             CableManager.moveToBack(c);
                         }
                     }
@@ -438,15 +439,15 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT_BRACKET)) {
                     HardwareManager.moveBack(this);
-                    for(Cable c : connections) {
-                        if(c != null) {
+                    for (Cable c : connections) {
+                        if (c != null) {
                             CableManager.moveBack(c);
                         }
                     }
-                } else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT_BRACKET)) {
                     HardwareManager.moveForward(this);
-                    for(Cable c : connections) {
-                        if(c != null) {
+                    for (Cable c : connections) {
+                        if (c != null) {
                             CableManager.moveForward(c);
                         }
                     }
@@ -459,7 +460,7 @@ public abstract class Hardware implements Json.Serializable {
 
             if (Gdx.input.isTouched() && (canMove || HardwareManager.getCurrentlyHovering(camera) == this) && checkGood()) {
                 if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    if(SnapGrid.renderGridB) {
+                    if (SnapGrid.renderGridB) {
                         SnapGrid.calculateSnap(vec);
                     }
                 }
@@ -472,6 +473,16 @@ public abstract class Hardware implements Json.Serializable {
 
 
         batch.begin();
+        if(this instanceof Manifold) {
+            for (Sprite temp : ((Manifold) this).solenoids) {
+                temp.setCenter(getPosition().x + (Long) pinDefs.get(((Manifold) this).solenoids.indexOf(temp) + 1).get(0), getPosition().y);
+                Vector2 pos = new Vector2(temp.getX() + temp.getWidth() / 2, temp.getY() + temp.getHeight() / 2);
+                pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
+                temp.setCenter(pos.x, pos.y);
+                temp.draw(batch);
+            }
+        }
+
         base.draw(batch);
         batch.end();
 
@@ -480,11 +491,7 @@ public abstract class Hardware implements Json.Serializable {
                 Gdx.gl.glEnable(GL20.GL_BLEND);
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
-                /*batch.begin();
-                if(c.getOtherConnectionSimple(this) != null) {
-                    c.getOtherConnectionSimple(this).getConnector(c.getOtherConnectionSimple(this).getConnectionPosition(c)).draw(batch);
-                }
-                batch.end();*/
+
             }
         }
 

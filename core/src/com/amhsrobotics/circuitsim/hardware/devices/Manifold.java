@@ -36,6 +36,7 @@ public class Manifold extends Flippable {
             }
         }
 
+
         initConnections();
         initEnds();
     }
@@ -49,15 +50,6 @@ public class Manifold extends Flippable {
 
 
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
-        batch.begin();
-        for(Sprite temp : solenoids) {
-            temp.setCenter(getPosition().x + (Long) pinDefs.get(solenoids.indexOf(temp)+1).get(0), getPosition().y);
-            Vector2 pos = new Vector2(temp.getX() + temp.getWidth()/2, temp.getY() + temp.getHeight()/2);
-            pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
-            temp.setCenter(pos.x, pos.y);
-            temp.draw(batch);
-        }
-        batch.end();
         super.update(batch, renderer, camera);
     }
 
