@@ -23,6 +23,7 @@ Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https:/
 - accurate scaling of parts on a blocks-per-inch grid
 - timed competitive wiring games
 - color themes
+- commented code
 
 ### Installation
 
