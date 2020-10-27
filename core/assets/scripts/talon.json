@@ -66,16 +66,16 @@
   ],
   "leds": [
     {
-      "color": "green",
-      "type": "sensor-indicator",
-      "position": [-90, -1],
-      "dimensions": [8, 8]
+      "color": "off",
+      "type": "Status",
+      "position": [-87, -1],
+      "dimensions": [15, 15]
     },
     {
-      "color": "green",
-      "type": "sensor-indicator",
+      "color": "off",
+      "type": "Status",
       "position": [90, -1],
-      "dimensions": [8, 8]
+      "dimensions": [15, 15]
     }
   ]
 }

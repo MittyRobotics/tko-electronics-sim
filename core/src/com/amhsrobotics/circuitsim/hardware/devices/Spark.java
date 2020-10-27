@@ -53,7 +53,7 @@ public class Spark extends Flippable {
                     return "Incorrectly wired to PDP";
                 }
             } else if (getOther(5) instanceof PneumaticsControlModule && getOther(6) instanceof PneumaticsControlModule) {
-                if((getNum(5) == 4 && getNum(6) == 5) || (getNum(5) == 3 && getNum(6) == 2)) {
+                if((getNum(5) == 5 && getNum(6) == 4) || (getNum(5) == 3 && getNum(6) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
