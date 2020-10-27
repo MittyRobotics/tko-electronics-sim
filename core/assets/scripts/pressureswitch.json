@@ -13,6 +13,26 @@
       "type": "18",
       "position": [136, -64],
       "dimensions": [15, 15]
+    },
+    {
+      "type": "2",
+      "position": [-50, -56],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "2",
+      "position": [-50, 56],
+      "dimensions": [15, 15]
+    }
+  ],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
     }
   ],
   "leds": [
