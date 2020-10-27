@@ -1,6 +1,6 @@
 {
   "name": "VRM",
-  "totalLeds": 0,
+  "totalLeds": 2,
   "crimped": [],
   "defaultColors": [
     {
@@ -167,6 +167,20 @@
       "type": "18",
       "position": [120, -74],
       "dimensions": [10, 10]
+    }
+  ],
+  "leds": [
+    {
+      "color": "off",
+      "type": "5V",
+      "position": [42, -110],
+      "dimensions": [25, 25]
+    },
+    {
+      "color": "off",
+      "type": "12V",
+      "position": [-44, -110],
+      "dimensions": [25, 25]
     }
   ]
 }
