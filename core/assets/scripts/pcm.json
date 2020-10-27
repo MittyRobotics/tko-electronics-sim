@@ -246,14 +246,14 @@
   ],
   "leds": [
     {
-      "color": "white",
-      "type": "status",
+      "color": "off",
+      "type": "Status",
       "position": [6, 24],
       "dimensions": [15, 8]
     },
     {
-      "color": "white",
-      "type": "comp",
+      "color": "off",
+      "type": "Comp",
       "position": [6, -24],
       "dimensions": [15, 8]
     }

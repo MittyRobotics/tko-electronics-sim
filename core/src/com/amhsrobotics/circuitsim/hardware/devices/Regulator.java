@@ -38,4 +38,25 @@ public class Regulator extends Flippable {
             return calculateDirection(cur+1, port, 80);
         }
     }
+
+    public String check() {
+
+        if(!(getOther(0) instanceof Manifold || getOther(1) instanceof Manifold)) {
+            return "Regulator not connected to manifold";
+        }
+
+        if(getOther(0) instanceof Manifold && getNum(0) != 0 || getOther(1) instanceof Manifold && getNum(1) != 0) {
+            return "Regulator incorrectly connected to manifold";
+        }
+
+        if(!(getOther(0) instanceof TConnector || getOther(1) instanceof TConnector)) {
+            return "Regulator not connected to T Connector for relief valve";
+        }
+
+        if((getOther(0) instanceof TConnector && (getNum(0) == 0 || !((TConnector) getOther(0)).checkPS())) || (getOther(1) instanceof TConnector && (getNum(1) == 0 || !((TConnector) getOther(1)).checkPS()))) {
+            return "Regulator incorrectly connected to T Connector for relief valve";
+        }
+
+        return null;
+    }
 }

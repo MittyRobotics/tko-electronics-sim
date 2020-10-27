@@ -78,6 +78,10 @@ public class Manifold extends Flippable {
     }
 
     public String check() {
+        if(!(getOther(0) instanceof Regulator)) {
+            return "Manifold not connected to regulator";
+        }
+
         for(int i = 1; i < 8; ++i) {
             if(getOther(i) != null && !(getOther(i) instanceof TConnector && getOther(i).getOther(1) instanceof Piston && getOther(i).getOther(2) instanceof Piston)) {
                 return "Manifold port " + i + " not connected to piston";

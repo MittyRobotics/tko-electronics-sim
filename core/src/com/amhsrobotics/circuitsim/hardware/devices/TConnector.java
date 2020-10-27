@@ -50,6 +50,10 @@ public class TConnector extends Flippable {
         return getNum(0);
     }
 
+    public boolean checkPS() {
+        return getOther(0) instanceof PressureSwitch;
+    }
+
     public String check() {
         if(getNull(0) || getNull(1) || getNull(2)) {
             return "T Connector not connected";

@@ -59,6 +59,11 @@ public class Tank extends Flippable {
             return "Tank not connected to compressor";
         }
 
+        if(!((getOther(0) instanceof TConnector || (getOther(0) instanceof Tank && ((Tank) getOther(0)).getOtherTankConn(this) instanceof TConnector)) ||
+                getOther(1) instanceof TConnector || (getOther(1) instanceof Tank && ((Tank) getOther(1)).getOtherTankConn(this) instanceof TConnector))) {
+            return "Tank not connected to T Connector for relief valve";
+        }
+
         return null;
     }
 }
