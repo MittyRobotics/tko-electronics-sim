@@ -1,8 +1,26 @@
 {
   "name": "Double Solenoid",
   "totalLeds": 0,
-  "crimpedColors": ["Black", "Black", "Black", "Black"],
-  "crimped": [0, 1, 2, 3],
+  "crimpedColors": [],
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Red"
+    },
+    {
+      "port": 3,
+      "color": "Black"
+    }
+  ],
   "pins": [
     {
       "type": "18",

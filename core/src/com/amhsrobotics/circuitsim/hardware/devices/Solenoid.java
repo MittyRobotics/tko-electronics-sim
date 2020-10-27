@@ -32,14 +32,25 @@ public class Solenoid extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(type == HardwareType.DOUBLESOLENOID) {
-            if (port == 0 || port == 1) {
-                return calculateDirection(3+cur, port, 100);
-            } else {
-                return calculateDirection(1+cur, port, 100);
-            }
-        } else {
+        if (port == 0 || port == 1) {
             return calculateDirection(3+cur, port, 100);
+        } else {
+            return calculateDirection(1+cur, port, 100);
         }
+
+
+    }
+
+    public String check() {
+        if(!(getOther(0) instanceof PneumaticsControlModule && getOther(1) instanceof PneumaticsControlModule && getOther(2) instanceof PneumaticsControlModule && getOther(3) instanceof PneumaticsControlModule)) {
+            return "Double solenoid not connected to PCM";
+        }
+
+        if(!((18 <= getNum(0) && getNum(0) <= 25 && getNum(0) % 2 == 0 && getNum(1) == getNum(0) + 1 && 10 <= getNum(2) && getNum(2) <= 17 && getNum(2) % 2 == 1 && getNum(3) == getNum(2) - 1 && getNum(0) == getNum(3) + 8)
+                ||(18 <= getNum(2) && getNum(2) <= 25 && getNum(2) % 2 == 0 && getNum(3) == getNum(2) + 1 && 10 <= getNum(0) && getNum(0) <= 17 && getNum(0) % 2 == 1 && getNum(1) == getNum(0) - 1 && getNum(0) == getNum(3) - 8))) {
+            return "Double solenoid incorrectly connected to PCM";
+        }
+
+        return null;
     }
 }
