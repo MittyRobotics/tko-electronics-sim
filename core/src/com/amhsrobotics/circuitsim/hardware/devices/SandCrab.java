@@ -65,11 +65,13 @@ public class SandCrab extends Flippable {
     }
 
     public Hardware getWagoOther(Cable c) {
+
         if(c == connections.get(0)) {
             if (connections.get(1) == null) {
                 return null;
             } else {
-                if(connections.get(1).getOtherConnectionSimple(this) != this && connections.get(1).getOtherConnectionSimple(this) != connections.get(0).getOtherConnectionSimple(this)) {
+                if(!seen && connections.get(1).getOtherConnectionSimple(this) != this) {
+                    seen = true;
                     return connections.get(1).getOtherConnection(this);
                 } else {
                     return this;
@@ -79,7 +81,8 @@ public class SandCrab extends Flippable {
             if (connections.get(0) == null) {
                 return null;
             } else {
-                if(connections.get(0).getOtherConnectionSimple(this) != this && connections.get(1).getOtherConnectionSimple(this) != connections.get(0).getOtherConnectionSimple(this)) {
+                if(!seen && connections.get(0).getOtherConnectionSimple(this) != this) {
+                    seen = true;
                     return connections.get(0).getOtherConnection(this);
                 } else {
                     return this;
@@ -115,13 +118,19 @@ public class SandCrab extends Flippable {
             if (connections.get(1) == null) {
                 return -1;
             } else {
-                return connections.get(1).getOtherConnection(this).getConnNum(connections.get(1));
+                if(connections.get(1).getOtherConnectionSimple(this) instanceof SandCrab) {
+                    return ((SandCrab) connections.get(1).getOtherConnectionSimple(this)).getWagoOtherNum(connections.get(1));
+                }
+                return connections.get(1).getOtherConnectionSimple(this).getConnNum(connections.get(1));
             }
         } else {
             if (connections.get(0) == null) {
                 return -1;
             } else {
-                return connections.get(0).getOtherConnection(this).getConnNum(connections.get(0));
+                if(connections.get(0).getOtherConnectionSimple(this) instanceof SandCrab) {
+                    return ((SandCrab) connections.get(0).getOtherConnectionSimple(this)).getWagoOtherNum(connections.get(0));
+                }
+                return connections.get(0).getOtherConnectionSimple(this).getConnNum(connections.get(0));
             }
         }
     }

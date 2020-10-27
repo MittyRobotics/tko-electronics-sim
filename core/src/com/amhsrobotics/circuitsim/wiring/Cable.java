@@ -769,13 +769,18 @@ public class Cable implements Json.Serializable {
     public Hardware getOtherConnection(Hardware h) {
         if(connection1 == h) {
             if(connection2 instanceof SandCrab) {
-                return ((SandCrab) connection2).getWagoOther(this);
+                Hardware temp =  ((SandCrab) connection2).getWagoOther(this);
+                ((SandCrab) connection2).seen = false;
+                return temp;
+
             } else {
                 return connection2;
             }
         } else {
             if(connection1 instanceof SandCrab) {
-                return ((SandCrab) connection1).getWagoOther(this);
+                Hardware temp =  ((SandCrab) connection1).getWagoOther(this);
+                ((SandCrab) connection1).seen = false;
+                return temp;
             } else {
                 return connection1;
             }
@@ -789,13 +794,17 @@ public class Cable implements Json.Serializable {
     public int getOtherConnectionNum(Hardware h) {
         if(connection1 == h) {
             if(connection2 instanceof SandCrab) {
-                return ((SandCrab) connection2).getWagoOtherNum(this);
+                connection2.seen = false;
+                int i = ((SandCrab) connection2).getWagoOtherNum(this);
+                return i;
             } else {
                 return connection2.getConnNum(this);
             }
         } else {
             if(connection1 instanceof SandCrab) {
-                return ((SandCrab) connection1).getWagoOtherNum(this);
+                connection1.seen = false;
+                int i = ((SandCrab) connection1).getWagoOtherNum(this);
+                return i;
             } else {
                 return connection1.getConnNum(this);
             }

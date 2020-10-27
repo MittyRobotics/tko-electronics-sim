@@ -59,7 +59,7 @@ public abstract class Hardware implements Json.Serializable {
     public ArrayList<Integer> crimpedIDs = new ArrayList<>();
 
     public Sprite base;
-    public boolean canMove, addCrimped;
+    public boolean canMove, addCrimped, seen;
     public EPlate attached;
 
     public float diffX, diffY, cableDX, cableDY;
