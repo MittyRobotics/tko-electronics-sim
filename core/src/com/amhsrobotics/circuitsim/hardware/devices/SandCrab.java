@@ -69,7 +69,7 @@ public class SandCrab extends Flippable {
             if (connections.get(1) == null) {
                 return null;
             } else {
-                if(connections.get(1).getOtherConnectionSimple(this) != this) {
+                if(connections.get(1).getOtherConnectionSimple(this) != this && connections.get(1).getOtherConnectionSimple(this) != connections.get(0).getOtherConnectionSimple(this)) {
                     return connections.get(1).getOtherConnection(this);
                 } else {
                     return this;
@@ -79,7 +79,7 @@ public class SandCrab extends Flippable {
             if (connections.get(0) == null) {
                 return null;
             } else {
-                if(connections.get(0).getOtherConnectionSimple(this) != this) {
+                if(connections.get(0).getOtherConnectionSimple(this) != this && connections.get(1).getOtherConnectionSimple(this) != connections.get(0).getOtherConnectionSimple(this)) {
                     return connections.get(0).getOtherConnection(this);
                 } else {
                     return this;

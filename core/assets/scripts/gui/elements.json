@@ -13,12 +13,6 @@
       "category": "wiring"
     },
     {
-      "objectName": "TRIPLESANDCRAB",
-      "name": "Triple WAGO",
-      "tooltip": "A connector with 1 input and 2 outputs",
-      "category": "wiring"
-    },
-    {
       "objectName": "PDP",
       "name": "PDP",
       "tooltip": "Power Distribution Panel to distribute power to various components",

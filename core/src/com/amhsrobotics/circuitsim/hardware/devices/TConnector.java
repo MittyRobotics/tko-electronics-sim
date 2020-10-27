@@ -49,4 +49,11 @@ public class TConnector extends Flippable {
     public int getNumPiston() {
         return getNum(0);
     }
+
+    public String check() {
+        if(getNull(0) || getNull(1) || getNull(2)) {
+            return "T Connector not connected";
+        }
+        return null;
+    }
 }
