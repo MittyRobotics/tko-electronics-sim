@@ -1,5 +1,5 @@
-# TKO 1351 Circuit Simulator
-<!--- ![TKO 1351 Circuit Simulator](core/assets/img/circuitsim.png) --->
+![TKO Circuit Simulator](https://github.com/MittyRobotics/tko-electronics-sim/blob/master/core/assets/img/logo/circuitsim.png)
+---
 
 An FRC circuit simulator used by our electronics department for complex diagramming and training.
 
