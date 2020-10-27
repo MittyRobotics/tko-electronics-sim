@@ -123,7 +123,7 @@ public class Flippable extends Hardware  {
 
     @Override
     public void processFlip() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if(HardwareManager.currentHardware == this && Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             rotateThis();
         }
     }
