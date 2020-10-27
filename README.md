@@ -5,7 +5,7 @@ An FRC circuit simulator used by our electronics department for complex diagramm
 
 Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
 
-### Features
+## Features
 
 - 2D CAD-inspired GUI
 - Creating, moving, editing devices and cables
@@ -15,7 +15,7 @@ Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https:/
 - Accurate circuit diagramming with FRC parts (see subsection below)
 - Native, can be run cross-platform
 
-### Future Updates
+## Future Updates
 
 
 - curved cables
@@ -24,7 +24,7 @@ Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https:/
 - color themes
 - commented code
 
-### Installation
+## Installation
 
 #### Releases
 
