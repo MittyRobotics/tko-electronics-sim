@@ -30,5 +30,6 @@ public enum HardwareType {
     WIRE,
     RELIEFVALVE,
     GAUGE,
-    TCONNECTOR
+    TCONNECTOR,
+    REGULATOR
 }

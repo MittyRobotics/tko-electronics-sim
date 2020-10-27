@@ -1,0 +1,27 @@
+{
+  "name": "Regulator",
+  "totalLeds": 0,
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    }
+  ],
+  "pins": [
+    {
+      "type": "4",
+      "position": [-245, 270],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "4",
+      "position": [245, 270],
+      "dimensions": [25, 25]
+    }
+  ]
+}
