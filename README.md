@@ -5,27 +5,26 @@ An FRC circuit simulator used by our electronics department for complex diagramm
 
 Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
 
-### Features
+## Features
 
 - 2D CAD-inspired GUI
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
-- Automated debugging for all errors
-- Partial LED simulation
+- Automated debugging for all errors (might have bugs)
+- Complete LED simulation (might have bugs)
 - Accurate circuit diagramming with FRC parts (see subsection below)
 - Native, can be run cross-platform
 
-### Future Updates
+## Future Updates
 
 
 - curved cables
-- complete LED simulation
 - accurate scaling of parts on a blocks-per-inch grid
 - timed competitive wiring games
 - color themes
 - commented code
 
-### Installation
+## Installation
 
 #### Releases
 

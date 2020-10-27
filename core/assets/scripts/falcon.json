@@ -55,10 +55,10 @@
   ],
   "leds": [
     {
-      "color": "green",
-      "type": "motor-indicator",
+      "color": "off",
+      "type": "Status",
       "position": [55, -188],
-      "dimensions": [8, 8]
+      "dimensions": [20, 20]
     }
   ]
 }
