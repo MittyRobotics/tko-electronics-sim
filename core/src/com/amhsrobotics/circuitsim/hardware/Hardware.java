@@ -480,11 +480,11 @@ public abstract class Hardware implements Json.Serializable {
                 Gdx.gl.glEnable(GL20.GL_BLEND);
                 Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
                 c.render(renderer, camera);
-                batch.begin();
-                /*if(c.getOtherConnectionSimple(this) != null) {
+                /*batch.begin();
+                if(c.getOtherConnectionSimple(this) != null) {
                     c.getOtherConnectionSimple(this).getConnector(c.getOtherConnectionSimple(this).getConnectionPosition(c)).draw(batch);
-                }*/
-                batch.end();
+                }
+                batch.end();*/
             }
         }
 

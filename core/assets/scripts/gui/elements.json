@@ -109,12 +109,6 @@
       "category": "control"
     },
     {
-      "objectName": "DOUBLESOLENOID",
-      "name": "Double Solenoid",
-      "tooltip": "Electronic air control for two pistons",
-      "category": "pneumatics"
-    },
-    {
       "objectName": "PRESSURESWITCH",
       "name": "Pressure Switch",
       "tooltip": "Pneumatics pressure switch to adjust air pressure",

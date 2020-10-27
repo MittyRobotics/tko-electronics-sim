@@ -275,14 +275,14 @@ public class CircuitScreen implements Screen {
         }
 
 
-        try {
+        //try {
             HardwareManager.updateEplates(renderer, batch, camera);
             CableManager.update(renderer, camera);
             HardwareManager.update(renderer, batch, camera);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(new JFrame(), getError(e) + "\nPlease screenshot this and send it to your lead.", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        //} catch (Exception e) {
+            //JOptionPane.showMessageDialog(new JFrame(), getError(e) + "\nPlease screenshot this and send it to your lead.", "Error",
+                    //JOptionPane.ERROR_MESSAGE);
+        //}
 
         if(CableManager.currentCable != null) {
             if(!CircuitGUIManager.propertiesBox.isVisible()) {
