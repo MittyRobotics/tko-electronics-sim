@@ -40,4 +40,28 @@ public class PressureSwitch extends Flippable {
             return calculateDirection(cur+2, port, 100);
         }
     }
+
+    public String check() {
+        if(!(getOther(0) instanceof PneumaticsControlModule && getOther(1) instanceof PneumaticsControlModule)) {
+            return "Pressure switch not connected to PCM";
+        }
+
+        if(!(getNum(0) == 7 && getNum(1) == 6)) {
+            return "Pressure switch incorrectly connected to PCM";
+        }
+
+        if(!(getOther(2) instanceof ReliefValve || getOther(3) instanceof ReliefValve)) {
+            return "Pressure switch not connected to manual relief valve";
+        }
+
+        if(!(getOther(2) instanceof TConnector || getOther(3) instanceof TConnector)) {
+            return "Pressure switch not connected to T Connector";
+        }
+
+        if(!(getNum(2) == 0 && getNum(3) == 0)) {
+            return "Pressure switch incorrectly connected to T Connector";
+        }
+
+        return null;
+    }
 }

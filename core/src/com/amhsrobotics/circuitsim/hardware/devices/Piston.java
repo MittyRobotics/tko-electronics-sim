@@ -44,11 +44,11 @@ public class Piston extends Flippable {
             return "Piston incorrectly connected to T connector";
         }
 
-        if(((TConnector) getOther(0)).getOtherPiston() instanceof Manifold) {
+        if(!(((TConnector) getOther(0)).getOtherPiston() instanceof Manifold)) {
             return "Piston not connected to manifold";
         }
 
-        if(((TConnector) getOther(0)).getNumPiston() == 0) {
+        if((((TConnector) getOther(0)).getNumPiston() == 0)) {
             return "Piston connected to wrong manifold port";
         }
 

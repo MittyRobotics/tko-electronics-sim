@@ -115,12 +115,6 @@
       "category": "pneumatics"
     },
     {
-      "objectName": "SINGLESOLENOID",
-      "name": "Single Solenoid",
-      "tooltip": "Electronic air control for one piston",
-      "category": "pneumatics"
-    },
-    {
       "objectName": "PRESSURESWITCH",
       "name": "Pressure Switch",
       "tooltip": "Pneumatics pressure switch to adjust air pressure",

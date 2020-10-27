@@ -34,4 +34,12 @@ public class ReliefValve extends Flippable {
     public Vector2 calculate(int port) {
         return calculateDirection(cur, port, 100);
     }
+
+    public String check() {
+        if(!(getOther(0) instanceof PressureSwitch)) {
+            return "Manual relief valve not conected to pressure switch";
+        }
+
+        return null;
+    }
 }
