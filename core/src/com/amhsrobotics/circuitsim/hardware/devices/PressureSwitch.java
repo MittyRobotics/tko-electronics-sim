@@ -46,7 +46,7 @@ public class PressureSwitch extends Flippable {
             return "Pressure switch not connected to PCM";
         }
 
-        if(!(getNum(0) == 7 && getNum(1) == 6)) {
+        if(!(getNum(0) == 6 && getNum(1) == 7)) {
             return "Pressure switch incorrectly connected to PCM";
         }
 
