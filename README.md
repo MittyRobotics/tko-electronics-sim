@@ -32,11 +32,8 @@ Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim
 
 If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
 
-Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
 
-
-
-## Parts List
+## Device/Component List
 
 **Battery**
 
@@ -83,3 +80,5 @@ Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https:/
 **Tank**
 
 **T-Connector**
+
+Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
