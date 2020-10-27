@@ -114,6 +114,14 @@ public class Falcon extends Flippable {
             }
         }
 
+        if(!simLED) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(0).setColor("red");
+            LEDs.get(0).setStatus("CAN chain error");
+
+        }
+
         if(getAllNull(2, 5)) {
             return "Falcon not connected to CAN chain";
         }
@@ -157,6 +165,13 @@ public class Falcon extends Flippable {
             }
 
             return ans;
+        }
+
+        if(!simLED || LEDs.get(0).getColor().equals("red")) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(0).setColor("green");
+            LEDs.get(0).setStatus("Enabled");
         }
 
 

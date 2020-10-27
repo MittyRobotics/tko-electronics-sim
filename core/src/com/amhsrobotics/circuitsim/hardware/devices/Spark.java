@@ -159,6 +159,16 @@ public class Spark extends Flippable {
             return ans;
         }
 
+        if(!simLED) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(1).blink(20);
+            LEDs.get(0).setColor("blue");
+            LEDs.get(0).setStatus("Valid signal");
+            LEDs.get(1).setColor("blue");
+            LEDs.get(1).setStatus("Valid signal");
+        }
+
 
         return null;
     }
