@@ -212,6 +212,9 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public Hardware getOther(int conn) {
+        if(connections.get(conn) == null) {
+            return null;
+        }
         return connections.get(conn).getOtherConnection(this);
     }
 

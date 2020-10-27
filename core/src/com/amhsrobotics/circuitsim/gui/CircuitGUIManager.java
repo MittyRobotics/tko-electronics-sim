@@ -319,13 +319,6 @@ public class CircuitGUIManager {
             }
         });
 
-        simulate.addListener(new ClickListener() {
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                popup.activateError("Use with caution: Incomplete and prone to bugs and crashes. Save first.");
-            }
-        });
         simulate.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
