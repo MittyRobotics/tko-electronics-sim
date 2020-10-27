@@ -70,7 +70,6 @@ public class Cable implements Json.Serializable {
         this.color = DeviceUtil.COLORS.get("Green");
         this.ID = count;
 
-//        populateProperties();
         CircuitGUIManager.propertiesBox.show();
     }
 
@@ -89,11 +88,6 @@ public class Cable implements Json.Serializable {
         this.enableConn = enableConnections;
 
         CircuitGUIManager.propertiesBox.clearTable();
-//        if(properties.length > 0 && properties[0] != null) {
-//            CircuitGUIManager.propertiesBox.addElement(new Label(properties[0] + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-//        } else {
-//            CircuitGUIManager.propertiesBox.addElement(new Label("Cable - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
-//        }
         CircuitGUIManager.propertiesBox.addElement(new Label(title + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
 
         if(enableColor) {

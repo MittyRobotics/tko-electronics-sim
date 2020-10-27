@@ -126,17 +126,6 @@ public class PropertiesBox {
         visible = false;
     }
 
-//    public void hideAndClear() {
-//        Tools.slideOut(container, "top", 0.8f, Interpolation.exp10, 200, new Runnable() {
-//            @Override
-//            public void run() {
-//                visible = false;
-//                table.clearChildren();
-//                table.pack();
-//            }
-//        });
-//    }
-
     public boolean isVisible() {
         return visible;
     }
