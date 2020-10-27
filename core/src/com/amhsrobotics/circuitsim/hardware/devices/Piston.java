@@ -34,4 +34,24 @@ public class Piston extends Flippable {
     public Vector2 calculate(int port) {
         return calculateDirection(cur, port, 100);
     }
+
+    public String check() {
+        if(!(getOther(0) instanceof TConnector && getOther(1) instanceof TConnector)) {
+            return "Piston not connected to T connector";
+        }
+
+        if(getNum(0) == 0 || getNum(1) == 0) {
+            return "Piston incorrectly connected to T connector";
+        }
+
+        if(((TConnector) getOther(0)).getOtherPiston() instanceof Manifold) {
+            return "Piston not connected to manifold";
+        }
+
+        if(((TConnector) getOther(0)).getNumPiston() == 0) {
+            return "Piston connected to wrong manifold port";
+        }
+
+        return null;
+    }
 }

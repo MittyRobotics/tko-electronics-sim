@@ -1,6 +1,7 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
 import com.amhsrobotics.circuitsim.hardware.Flippable;
+import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,5 +40,13 @@ public class TConnector extends Flippable {
         } else {
             return calculateDirection(cur+3, port, 100);
         }
+    }
+
+    public Hardware getOtherPiston() {
+        return getOther(0);
+    }
+
+    public int getNumPiston() {
+        return getNum(0);
     }
 }
