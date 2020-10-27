@@ -13,15 +13,20 @@ public class Constants {
     public static final BitmapFont FONT = Tools.renderFont("font/Abel-Regular.ttf", 30);
     public static final BitmapFont FONT_MEDIUM = Tools.renderFont("font/Abel-Regular.ttf", 25);
     public static final BitmapFont FONT_SMALL = Tools.renderFont("font/Abel-Regular.ttf", 20);
-    public static final TextureAtlas ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
-    public static final TextureAtlas ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
-    public static final Skin SKIN = new Skin(ATLAS);
-    public static final Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
+    public static TextureAtlas ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
+    public static TextureAtlas ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
+    public static Skin SKIN = new Skin(ATLAS);
+    public static Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
     public static HardwareType placing_object = null;
 
     public static Vector2 WORLD_DIM = new Vector2(8000, 8000);
     public static int GRID_SIZE = 60;
+
+    public static void reloadAssets() {
+        SKIN = new Skin(ATLAS);
+        SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
+    }
 
     public static void disposeAll() {
         FONT.dispose();

@@ -9,7 +9,6 @@ import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
-import com.amhsrobotics.circuitsim.utility.camera.Rumble;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Disposable;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -35,12 +36,9 @@ import org.json.simple.JSONObject;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
-public class CircuitGUIManager {
+public class CircuitGUIManager implements Disposable {
 
     public static Table container, table, table2, filters;
     public static PropertiesBox propertiesBox;
@@ -50,26 +48,58 @@ public class CircuitGUIManager {
     private static Window saveMenu;
     private final ModifiedStage stage;
     private final Simulation sim;
-    private final TextButton simulate, back, help, options, hidePanel, save, clear;
-    private final TextButton.TextButtonStyle tStyle, t2Style;
-    private final TextButton fil1, fil2, fil3, fil4;
+    private TextButton simulate;
+    private TextButton back;
+    private TextButton help;
+    private TextButton options;
+    private TextButton hidePanel;
+    private TextButton save;
+    private TextButton clear;
+    private TextButton.TextButtonStyle tStyle, t2Style;
+    private TextButton fil1;
+    private TextButton fil2;
+    private TextButton fil3;
+    private TextButton fil4;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     public boolean helpMenuShown, optionsMenuShown;
     private Window helpMenu, optionsMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
-    private TextButton saveButton, fileSave, togGridButton;
+    private TextButton saveButton, fileSave, togGridButton, mColor, sColor;
     private boolean filterChanged = false;
     private boolean addAll = true;
 
     private Image easter;
     private boolean easterOn = false;
 
+    private CameraController camera;
+    private Game game;
+
+    private static final LinkedHashMap<String, String> UI_COLORS = new LinkedHashMap<String, String>() {{
+        put("Blue", "skin/ui-blue.atlas");
+        put("Gray", "skin/ui-gray.atlas");
+        put("Green", "skin/ui-green.atlas");
+        put("Orange", "skin/ui-orange.atlas");
+        put("Red", "skin/ui-red.atlas");
+        put("White", "skin/ui-white.atlas");
+        put("Yellow", "skin/ui-yellow.atlas");
+    }};
+
+
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
         this.stage = stage;
 
         sim = new Simulation();
         ConfirmDialog.init(stage);
+
+        this.camera = camera;
+        this.game = game;
+        loadThis();
+
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
+    }
+
+    private void loadThis() {
 
         propertiesBox = new PropertiesBox(stage);
         popup = new Message(stage);
@@ -369,8 +399,6 @@ public class CircuitGUIManager {
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
-
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
     }
 
     public static void saveMenu() {
@@ -526,10 +554,26 @@ public class CircuitGUIManager {
         optionsTable.row();
         Label togglegrid = new Label("View Grid", l2Style);
         togglegrid.setAlignment(Align.center);
-        optionsTable.add(togglegrid).width(180).padBottom(20);
+        optionsTable.add(togglegrid).width(180).padBottom(10);
 
         togGridButton = new TextButton("Toggle", tbStyle);
-        optionsTable.add(togGridButton).width(180).padBottom(20);
+        optionsTable.add(togGridButton).width(180).padBottom(10);
+
+        optionsTable.row();
+        Label mainColor = new Label("Main Color", l2Style);
+        mainColor.setAlignment(Align.center);
+        optionsTable.add(mainColor).width(180).padBottom(10);
+
+        mColor = new TextButton("Gray", tbStyle);
+        optionsTable.add(mColor).width(180).padBottom(10);
+
+        optionsTable.row();
+        Label alternateColor = new Label("Second Color", l2Style);
+        alternateColor.setAlignment(Align.center);
+        optionsTable.add(alternateColor).width(180).padBottom(20);
+
+        sColor = new TextButton("Blue", tbStyle);
+        optionsTable.add(sColor).width(180).padBottom(20);
 
         togGridButton.addListener(new ChangeListener() {
             @Override
@@ -538,6 +582,50 @@ public class CircuitGUIManager {
                 gridSpacing.setDisabled(!gridSpacing.isDisabled());
                 gridSizingX.setDisabled(!gridSizingX.isDisabled());
                 gridSizingY.setDisabled(!gridSizingY.isDisabled());
+            }
+        });
+
+        mColor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ArrayList<String> keys = new ArrayList<>(UI_COLORS.keySet());
+                for(String str : keys) {
+                    if(str.contentEquals(mColor.getText())) {
+                        if(keys.indexOf(str) == keys.size() - 1) {
+                            mColor.setText(keys.get(0));
+                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+                        } else {
+                            mColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+                        }
+                        Constants.reloadAssets();
+                        removeThis();
+                        loadThis();
+                        break;
+                    }
+                }
+            }
+        });
+
+        sColor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                ArrayList<String> keys = new ArrayList<>(UI_COLORS.keySet());
+                for(String str : keys) {
+                    if(str.contentEquals(sColor.getText())) {
+                        if(keys.indexOf(str) == keys.size() - 1) {
+                            sColor.setText(keys.get(0));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+                        } else {
+                            sColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+                        }
+                        Constants.reloadAssets();
+                        removeThis();
+                        loadThis();
+                        break;
+                    }
+                }
             }
         });
 
@@ -570,6 +658,37 @@ public class CircuitGUIManager {
 
         optionsMenu.row();
         optionsMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
+    }
+
+    private void removeThis() {
+        container.remove();
+        table.remove();
+        table2.remove();
+        filters.remove();
+        saveMenu.remove();
+        simulate.remove();
+        back.remove();
+        help.remove();
+        options.remove();
+        hidePanel.remove();
+        save.remove();
+        clear.remove();
+        fil1.remove();
+        fil2.remove();
+        fil3.remove();
+        fil4.remove();
+        helpMenu.remove();
+        optionsMenu.remove();
+        gridSizingX.remove();
+        gridSizingY.remove();
+        gridSpacing.remove();
+        fileLocation.remove();
+        saveButton.remove();
+        fileSave.remove();
+        togGridButton.remove();
+        mColor.remove();
+        sColor.remove();
+        easter.remove();
     }
 
     private void showHelpMenu() {
@@ -776,5 +895,10 @@ public class CircuitGUIManager {
             table.add(t).width(150);
         }
         table.row();
+    }
+
+    @Override
+    public void dispose() {
+
     }
 }
