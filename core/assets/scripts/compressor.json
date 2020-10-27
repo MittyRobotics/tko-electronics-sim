@@ -10,14 +10,24 @@
       "dimensions": [20, 20]
     },
     {
-      "type": "22",
-      "position": [-237, 45],
+      "type": "18",
+      "position": [240, 25],
       "dimensions": [20, 20]
     },
     {
-      "type": "22",
-      "position": [-237, -45],
+      "type": "18",
+      "position": [240, -25],
       "dimensions": [8, 8]
+    }
+  ],
+  "defaultColors": [
+    {
+      "port": 1,
+      "color": "Red"
+    },
+    {
+      "port": 2,
+      "color": "Black"
     }
   ],
   "leds": [
