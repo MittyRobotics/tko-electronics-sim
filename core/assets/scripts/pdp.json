@@ -289,16 +289,16 @@
   ],
   "leds": [
     {
-      "color": "white",
-      "type": "stat",
+      "color": "off",
+      "type": "Status",
       "position": [607, 151],
-      "dimensions": [8, 8]
+      "dimensions": [30, 30]
     },
     {
-      "color": "white",
-      "type": "comm",
+      "color": "off",
+      "type": "Comms",
       "position": [707, 151],
-      "dimensions": [8, 8]
+      "dimensions": [30, 30]
     }
   ]
 }

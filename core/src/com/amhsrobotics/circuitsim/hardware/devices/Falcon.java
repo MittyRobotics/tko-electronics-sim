@@ -71,7 +71,7 @@ public class Falcon extends Flippable {
                 }
                 return "Incorrectly wired to PDP";
             } else if (getOther(4) instanceof PneumaticsControlModule && getOther(5) instanceof PneumaticsControlModule) {
-                if((getNum(4) == 4 && getNum(5) == 5) || (getNum(4) == 3 && getNum(5) == 2)) {
+                if((getNum(4) == 5 && getNum(5) == 4) || (getNum(4) == 3 && getNum(5) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";

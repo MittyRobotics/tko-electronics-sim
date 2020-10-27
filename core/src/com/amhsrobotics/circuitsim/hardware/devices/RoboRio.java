@@ -42,10 +42,18 @@ public class RoboRio extends Flippable {
 
     public String check() {
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "RoboRIO is not connected to PDP";
         }
 
         if(getNum(0) != 4 || getNum(1) != 5) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "RoboRIO is improperly connected to PDP";
         }
 
@@ -58,13 +66,19 @@ public class RoboRio extends Flippable {
             LEDs.get(1).blinkTime(10, 80);
             LEDs.get(5).setColor("yellow");
             LEDs.get(5).setStatus("Robot Enabled");
+
         }
 
-        if(getOther(4) instanceof Radio && getOther(4).check() == null) {
+        if(getOther(4) instanceof Radio) {
             LEDs.get(3).setColor("green");
             LEDs.get(3).setStatus("Connected");
             LEDs.get(4).setColor("green");
             LEDs.get(4).setStatus("Teleop Enabled");
+        } else {
+            LEDs.get(3).setColor("off");
+            LEDs.get(3).setStatus("No Comms");
+            LEDs.get(4).setColor("off");
+            LEDs.get(4).setStatus("No Comms");
         }
 
         /*

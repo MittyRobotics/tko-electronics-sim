@@ -36,22 +36,42 @@ public class Radio extends Flippable {
 
     public String check() {
         if(getAllNull(0, 2)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Radio is not connected";
         }
 
         if(getNull(2) || !(getOther(2) instanceof RoboRio)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Radio is not connected to RoboRIO";
         }
 
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof VoltageRegulatorModule) || !(getOther(1) instanceof VoltageRegulatorModule)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Radio is not connected to VRM";
         }
 
         if(getNum(0) < 2 || getNum(0) > 5 || getNum(1) < 2 || getNum(1) > 5) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Radio should be connected to 12V/2A on VRM";
         }
 
         if(!((getNum(0) == 4 && getNum(1) == 5) || (getNum(0) == 2 || getNum(1) == 3))) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Radio improperly connected to VRM";
         }
 

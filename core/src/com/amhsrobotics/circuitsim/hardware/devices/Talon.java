@@ -68,7 +68,7 @@ public class Talon extends Flippable {
                 }
                 return "Incorrectly wired to PDP";
             } else if (getOther(6) instanceof PneumaticsControlModule && getOther(7) instanceof PneumaticsControlModule) {
-                if((getNum(6) == 4 && getNum(7) == 5) || (getNum(6) == 3 && getNum(7) == 2)) {
+                if((getNum(6) == 5 && getNum(7) == 4) || (getNum(6) == 3 && getNum(7) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
