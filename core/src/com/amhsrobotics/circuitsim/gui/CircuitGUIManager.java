@@ -125,6 +125,10 @@ public class CircuitGUIManager implements Disposable {
         l2Style.font = Constants.FONT_SMALL;
         l2Style.fontColor = Color.BLACK;
 
+        Label.LabelStyle l3Style = new Label.LabelStyle();
+        l3Style.font = Constants.FONT_SMALL;
+        l3Style.fontColor = Color.RED;
+
         TextTooltip.TextTooltipStyle ttStyle = new TextTooltip.TextTooltipStyle();
         ttStyle.background = Constants.SKIN.getDrawable("button_01");
         ttStyle.wrapWidth = 150;
@@ -394,7 +398,7 @@ public class CircuitGUIManager implements Disposable {
 
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
-        buildOptionsMenu(wStyle, l2Style, textFieldStyle, tStyle);
+        buildOptionsMenu(wStyle, l2Style, l3Style, textFieldStyle, tStyle);
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
@@ -540,7 +544,7 @@ public class CircuitGUIManager implements Disposable {
         saveMenuShown = false;
     }
 
-    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, TextField.TextFieldStyle textFieldStyle, TextButton.TextButtonStyle tbStyle) {
+    private void buildOptionsMenu(Window.WindowStyle wStyle, Label.LabelStyle l2Style, Label.LabelStyle l3Style, TextField.TextFieldStyle textFieldStyle, TextButton.TextButtonStyle tbStyle) {
         optionsMenu = new Window("Options", wStyle);
         optionsMenu.setWidth(500);
         optionsMenu.setHeight(600);
@@ -558,6 +562,11 @@ public class CircuitGUIManager implements Disposable {
 
         togGridButton = new TextButton("Toggle", tbStyle);
         optionsTable.add(togGridButton).width(180).padBottom(10);
+
+        optionsTable.row();
+        Label warning = new Label("Color schemes are experimental", l3Style);
+        warning.setAlignment(Align.center);
+        optionsTable.add(warning).width(180).padBottom(10).colspan(2);
 
         optionsTable.row();
         Label mainColor = new Label("Main Color", l2Style);
@@ -593,14 +602,14 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(mColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             mColor.setText(keys.get(0));
-                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+//                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             mColor.setText(keys.get(keys.indexOf(str) + 1));
-                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+//                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
-                        Constants.reloadAssets();
-                        removeThis();
-                        loadThis();
+//                        Constants.reloadAssets();
+//                        removeThis();
+//                        loadThis();
                         break;
                     }
                 }
@@ -615,14 +624,14 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(sColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             sColor.setText(keys.get(0));
-                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             sColor.setText(keys.get(keys.indexOf(str) + 1));
-                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
-                        Constants.reloadAssets();
-                        removeThis();
-                        loadThis();
+//                        Constants.reloadAssets();
+//                        removeThis();
+//                        loadThis();
                         break;
                     }
                 }
