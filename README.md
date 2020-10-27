@@ -81,4 +81,5 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 
 **T-Connector**
 
+---
 Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
