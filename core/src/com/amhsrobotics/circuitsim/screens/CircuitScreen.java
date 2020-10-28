@@ -72,7 +72,6 @@ public class CircuitScreen implements Screen {
         }});
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
-        manager = new CircuitGUIManager(stage, camera, game);
 
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
@@ -157,6 +156,7 @@ public class CircuitScreen implements Screen {
         if(loading.length > 0) {
             FileManager.load(loading[0]);
         }
+        manager = new CircuitGUIManager(stage, camera, game);
     }
 
     @Override
@@ -399,6 +399,7 @@ public class CircuitScreen implements Screen {
     public void dispose() {
         renderer.dispose();
         stage.dispose();
+        HUDrenderer.dispose();
     }
 
     @Override

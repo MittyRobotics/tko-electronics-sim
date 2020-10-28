@@ -18,6 +18,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -67,6 +68,7 @@ public class CircuitGUIManager implements Disposable {
     private TextButton saveButton, fileSave, togGridButton, mColor, sColor;
     private boolean filterChanged = false;
     private boolean addAll = true;
+    private boolean mColorChanged = false, sColorChanged = false;
 
     private Image easter;
     private boolean easterOn = false;
@@ -297,6 +299,8 @@ public class CircuitGUIManager implements Disposable {
                             public void run() {
                                 HardwareManager.clearHardware();
                                 CableManager.clearCables();
+                                Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
+                                Constants.ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
                                 game.setScreen(new MenuScreen(game));
                             }
                         });
@@ -563,7 +567,7 @@ public class CircuitGUIManager implements Disposable {
         optionsTable.add(togGridButton).width(180).padBottom(10);
 
         optionsTable.row();
-        Label warning = new Label("Color schemes are experimental", l3Style);
+        Label warning = new Label("Color schemes are highly experimental", l3Style);
         warning.setAlignment(Align.center);
         optionsTable.add(warning).width(180).padBottom(10).colspan(2);
 
@@ -601,14 +605,12 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(mColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             mColor.setText(keys.get(0));
-//                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             mColor.setText(keys.get(keys.indexOf(str) + 1));
-//                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+                            Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
-//                        Constants.reloadAssets();
-//                        removeThis();
-//                        loadThis();
+                        mColorChanged = true;
                         break;
                     }
                 }
@@ -623,14 +625,12 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(sColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             sColor.setText(keys.get(0));
-//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             sColor.setText(keys.get(keys.indexOf(str) + 1));
-//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
-//                        Constants.reloadAssets();
-//                        removeThis();
-//                        loadThis();
+                        mColorChanged = true;
                         break;
                     }
                 }
@@ -666,37 +666,6 @@ public class CircuitGUIManager implements Disposable {
 
         optionsMenu.row();
         optionsMenu.add(new Label("'Escape' to close window", l2Style)).align(Align.bottom);
-    }
-
-    private void removeThis() {
-        container.remove();
-        table.remove();
-        table2.remove();
-        filters.remove();
-        saveMenu.remove();
-        simulate.remove();
-        back.remove();
-        help.remove();
-        options.remove();
-        hidePanel.remove();
-        save.remove();
-        clear.remove();
-        fil1.remove();
-        fil2.remove();
-        fil3.remove();
-        fil4.remove();
-        helpMenu.remove();
-        optionsMenu.remove();
-        gridSizingX.remove();
-        gridSizingY.remove();
-        gridSpacing.remove();
-        fileLocation.remove();
-        saveButton.remove();
-        fileSave.remove();
-        togGridButton.remove();
-        mColor.remove();
-        sColor.remove();
-        easter.remove();
     }
 
     private void showHelpMenu() {
@@ -812,6 +781,13 @@ public class CircuitGUIManager implements Disposable {
         if(optionsMenuShown) {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideOptionsMenu();
+                if(mColorChanged || sColorChanged) {
+                    Constants.reloadAssets();
+                    game.getScreen().dispose();
+                    game.setScreen(new MenuScreen(game, true));
+                    mColorChanged = false;
+                    sColorChanged = false;
+                }
             }
         }
 

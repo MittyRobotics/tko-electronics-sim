@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import org.lwjgl.Sys;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -50,8 +51,14 @@ public class MenuScreen implements Screen {
     private GlyphLayout rohanL = new GlyphLayout(), andyL = new GlyphLayout();
 
     private boolean creditsShown = false;
+    private boolean colorSchemeChange = false;
 
-    public MenuScreen(final Game game) {
+    public MenuScreen(final Game game, boolean... colorSchemeChange) {
+
+        if(colorSchemeChange.length > 0) {
+            this.colorSchemeChange = true;
+        }
+
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
@@ -255,6 +262,10 @@ public class MenuScreen implements Screen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             hideImportMenu();
+        }
+
+        if(colorSchemeChange) {
+            game.setScreen(new CircuitScreen(game));
         }
 
         SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
