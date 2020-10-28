@@ -23,7 +23,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
@@ -684,10 +686,31 @@ public abstract class Hardware implements Json.Serializable {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else if(connections.get(x).getOtherConnection(this) != null) {
                 if((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
+                    Label lab = new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL);
+                    Hardware h = connections.get(x).getOtherConnection(this);
+                    lab.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            HardwareManager.currentHardware = h;
+                            CableManager.currentCable = null;
+                            h.populateProperties();
+                            CircuitGUIManager.propertiesBox.show();
+                        }
+                    });
+                    CircuitGUIManager.propertiesBox.addElement(lab, true, 2);
                 } else {
-                    CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-                }
+                    Label lab = new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL);
+                    Hardware h = connections.get(x).getOtherConnection(this);
+                    lab.addListener(new ClickListener() {
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            HardwareManager.currentHardware = h;
+                            CableManager.currentCable = null;
+                            h.populateProperties();
+                            CircuitGUIManager.propertiesBox.show();
+                        }
+                    });
+                    CircuitGUIManager.propertiesBox.addElement(lab, false, 1);                }
             } else if(connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped " + -connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else if(connections.get(x) instanceof EthernetCable) {
