@@ -7,6 +7,7 @@ import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.screens.MenuScreen;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
 import com.amhsrobotics.circuitsim.utility.Simulation;
 import com.amhsrobotics.circuitsim.utility.Tools;
 import com.amhsrobotics.circuitsim.utility.input.DigitFilter;
@@ -65,7 +66,7 @@ public class CircuitGUIManager implements Disposable {
     private Window helpMenu, optionsMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
-    private TextButton saveButton, fileSave, togGridButton, mColor, sColor;
+    private TextButton saveButton, fileSave, togGridButton, mColor, sColor, bColor;
     private boolean filterChanged = false;
     private boolean addAll = true;
     private boolean mColorChanged = false, sColorChanged = false;
@@ -587,6 +588,14 @@ public class CircuitGUIManager implements Disposable {
         sColor = new TextButton("Blue", tbStyle);
         optionsTable.add(sColor).width(180).padBottom(20);
 
+        optionsTable.row();
+        Label backgroundColors = new Label("Background Color", l2Style);
+        backgroundColors.setAlignment(Align.center);
+        optionsTable.add(backgroundColors).width(180).padBottom(20);
+
+        bColor = new TextButton(Constants.CURRENT_COLOR, tbStyle);
+        optionsTable.add(bColor).width(180).padBottom(20);
+
         togGridButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -631,6 +640,24 @@ public class CircuitGUIManager implements Disposable {
                             Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
                         mColorChanged = true;
+                        break;
+                    }
+                }
+            }
+        });
+
+        bColor.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                ArrayList<String> keys = new ArrayList<>(DeviceUtil.BACKGROUND_COLORS.keySet());
+                for(String str : keys) {
+                    if(str.contentEquals(bColor.getText())) {
+                        if(keys.indexOf(str) == keys.size() - 1) {
+                            bColor.setText(keys.get(0));
+                            Constants.CURRENT_COLOR = keys.get(0);
+                        } else {
+                            bColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.CURRENT_COLOR = keys.get(keys.indexOf(str) + 1);
+                        }
                         break;
                     }
                 }

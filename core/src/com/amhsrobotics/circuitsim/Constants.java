@@ -18,6 +18,8 @@ public class Constants {
     public static Skin SKIN = new Skin(ATLAS);
     public static Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
+    public static String CURRENT_COLOR = "Nord";
+
     public static HardwareType placing_object = null;
 
     public static Vector2 WORLD_DIM = new Vector2(8000, 8000);

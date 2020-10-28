@@ -1,6 +1,8 @@
 package com.amhsrobotics.circuitsim.utility.scene;
 
 import com.amhsrobotics.circuitsim.Constants;
+import com.amhsrobotics.circuitsim.utility.DeviceUtil;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +13,12 @@ public class SnapGrid {
     public static boolean renderGridB = true;
 
     public static void renderGrid(ModifiedShapeRenderer renderer, Color color, Vector2 dimensions, int gap, int startSpace) {
+        renderer.begin(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(DeviceUtil.BACKGROUND_COLORS.get(Constants.CURRENT_COLOR));
+        renderer.rect(0, 0, Constants.WORLD_DIM.x, Constants.WORLD_DIM.y);
+        renderer.end();
         if(renderGridB) {
-            renderer.setColor(color);
+            renderer.setColor(DeviceUtil.SNAPGRID_COLORS.get(Constants.CURRENT_COLOR));
             for(int i = startSpace; i < dimensions.x; i += gap) {
                 renderer.begin(ShapeRenderer.ShapeType.Line);
                 for (int j = startSpace; j < dimensions.y; j += gap) {
