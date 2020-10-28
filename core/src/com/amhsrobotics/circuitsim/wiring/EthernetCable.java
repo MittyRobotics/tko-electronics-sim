@@ -10,11 +10,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class EthernetCable extends Cable {
+
+    boolean tempBugFix = false;
 
     public EthernetCable() {}
 
@@ -24,11 +27,14 @@ public class EthernetCable extends Cable {
         color = DeviceUtil.COLORS.get("Orange");
         hoverColor = Color.GRAY;
 
-        appendingFromEnd = false;
-        appendingFromBegin = false;
+        //appendingFromEnd = false;
+        //appendingFromBegin = false;
 
         populateProperties();
         CircuitGUIManager.propertiesBox.show();
+
+        //coordinates.remove(startPoint);
+
     }
 
     public void populateProperties() {
@@ -53,13 +59,40 @@ public class EthernetCable extends Cable {
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 5f);
+
+                float angle, dx, dy;
+
+                if(coordinates.size() == 1) {
+                    angle = 0;
+                } else {
+                    angle = (float) Math.atan2(coordinates.get(coordinates.size() - 1).x - vec2.x, vec2.y - coordinates.get(coordinates.size() - 1).y);
+                }
+
+                dx = 40*(float) Math.cos(angle);
+                dy = 40*(float) Math.sin(angle);
+
+                renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 50);
+                //renderer.circle(vec2.x, vec2.y, limit + 5f);
             } else if (appendingFromBegin && !disableBegin) {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(Color.WHITE);
-                renderer.circle(vec2.x, vec2.y, limit + 5f);
+
+
+                float angle, dx, dy;
+
+                if(coordinates.size() == 1) {
+                    angle = 0;
+                } else {
+                    angle = (float) Math.atan2(coordinates.get(0).x - vec2.x, vec2.y - coordinates.get(0).y);
+                }
+
+                dx = 40*(float) Math.cos(angle);
+                dy = 40*(float) Math.sin(angle);
+
+                renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 50);
+                //renderer.circle(vec2.x, vec2.y, limit + 5f);
             }
 
             renderer.end();
@@ -76,6 +109,11 @@ public class EthernetCable extends Cable {
     @Override
     public void update(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(renderer, camera);
+        if(!tempBugFix) {
+            tempBugFix = true;
+            coordinates.remove(0);
+        }
+
         renderer.begin(ShapeRenderer.ShapeType.Filled);
         drawEndpoints(renderer);
         renderer.end();
@@ -85,12 +123,38 @@ public class EthernetCable extends Cable {
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
+
+        float angle, dx, dy;
+
         if(!appendingFromBegin) {
-            renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 5f);
+            if (coordinates.size() == 1) {
+                angle = 0;
+            } else {
+                angle = (float) Math.atan2(coordinates.get(1).x - coordinates.get(0).x, coordinates.get(0).y - coordinates.get(1).y);
+            }
+
+            Gdx.app.log(angle+"", coordinates.size()+"");
+
+            dx = 40 * (float) Math.cos(angle);
+            dy = 40 * (float) Math.sin(angle);
+
+            renderer.rectLine(coordinates.get(0).x + dx, coordinates.get(0).y + dy, coordinates.get(0).x - dx, coordinates.get(0).y - dy, 50);
         }
+
         if(!appendingFromEnd) {
-            renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 5f);
+
+            if (coordinates.size() == 1) {
+                angle = 0;
+            } else {
+                angle = (float) Math.atan2(coordinates.get(coordinates.size() - 2).x - coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y - coordinates.get(coordinates.size() - 2).y);
+            }
+
+            dx = 40 * (float) Math.cos(angle);
+            dy = 40 * (float) Math.sin(angle);
+
+            renderer.rectLine(coordinates.get(coordinates.size() - 1).x + dx, coordinates.get(coordinates.size() - 1).y + dy, coordinates.get(coordinates.size() - 1).x - dx, coordinates.get(coordinates.size() - 1).y - dy, 50);
         }
+
 
     }
 
