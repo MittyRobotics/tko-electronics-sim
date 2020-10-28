@@ -19,8 +19,13 @@ public class DeviceUtil {
         put("White", new Color(243/255f, 237/255f, 236/255f, 1));
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
         put("Orange", new Color(255/255f, 130/255f, 0/255f, 1));
-        put("Plastic", new Color(255f/255f, 255f/255f, 255f/255f, 0.7f));
-        put("SelectedPlastic", new Color(150f/255f, 150f/255f, 150f/255f, 0.7f));
+    }};
+
+    public static final LinkedHashMap<String, Color> END_COLORS = new LinkedHashMap<String, Color>() {{
+        put("Plastic", new Color(200f / 255f, 200f / 255f, 200f / 255f, 1f));
+        put("SelectedPlastic", new Color(150f / 255f, 150f / 255f, 150f / 255f, 1f));
+        put("DarkPlastic", new Color(20f / 255f, 20f / 255f, 20f / 255f, 1f));
+        put("SelectedDarkPlastic", new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f));
     }};
 
     public static final LinkedHashMap<String, Color> COLORS_EPLATE = new LinkedHashMap<String, Color>() {{

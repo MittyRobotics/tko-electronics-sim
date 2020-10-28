@@ -44,7 +44,7 @@ public class Cable implements Json.Serializable {
     public boolean appendingFromEnd, appendingFromBegin, disableEnd, disableBegin, canMove, nodeChanged, enableGauge, enableConn, enableColor, hover;
     public Vector2 movingNode, backupNode, prevPos;
 
-    public int ID, color2n;
+    public int ID, color2n = -1;
 
     private String title;
 

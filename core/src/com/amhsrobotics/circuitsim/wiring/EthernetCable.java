@@ -62,7 +62,7 @@ public class EthernetCable extends Cable {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(DeviceUtil.COLORS.get("Plastic"));
+                renderer.setColor(DeviceUtil.END_COLORS.get("Plastic"));
                 float angle, dx, dy;
 
                 angle = (float) Math.atan2(coordinates.get(coordinates.size() - 1).x - vec2.x, vec2.y - coordinates.get(coordinates.size() - 1).y);
@@ -76,7 +76,7 @@ public class EthernetCable extends Cable {
                 // draw potential cable wire
                 renderer.setColor(color);
                 renderer.rectLine(coordinates.get(0), new Vector2(vec2.x, vec2.y), limit);
-                renderer.setColor(DeviceUtil.COLORS.get("Plastic"));
+                renderer.setColor(DeviceUtil.END_COLORS.get("Plastic"));
 
                 float angle, dx, dy;
 
@@ -112,14 +112,14 @@ public class EthernetCable extends Cable {
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         if(canDraw) {
-            renderer.setColor(DeviceUtil.COLORS.get("Plastic"));
+            renderer.setColor(DeviceUtil.END_COLORS.get("Plastic"));
 
             float angle, dx, dy;
 
             if (!appendingFromBegin) {
 
                 if (hoveringOnEndpoint(CircuitScreen.camera) == 1) {
-                    renderer.setColor(DeviceUtil.COLORS.get("SelectedPlastic"));
+                    renderer.setColor(DeviceUtil.END_COLORS.get("SelectedPlastic"));
                 }
 
                 if (coordinates.size() == 1) {
@@ -134,12 +134,12 @@ public class EthernetCable extends Cable {
                 renderer.rectLine(coordinates.get(0).x + dx, coordinates.get(0).y + dy, coordinates.get(0).x - dx, coordinates.get(0).y - dy, 50);
             }
 
-            renderer.setColor(DeviceUtil.COLORS.get("Plastic"));
+            renderer.setColor(DeviceUtil.END_COLORS.get("Plastic"));
 
             if (!appendingFromEnd) {
 
                 if (hoveringOnEndpoint(CircuitScreen.camera) == 2) {
-                    renderer.setColor(DeviceUtil.COLORS.get("SelectedPlastic"));
+                    renderer.setColor(DeviceUtil.END_COLORS.get("SelectedPlastic"));
                 }
 
                 if (coordinates.size() == 1) {
