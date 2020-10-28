@@ -150,11 +150,47 @@ public class Cable implements Json.Serializable {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             }
 
+            if(!(this instanceof CrimpedCable)) {
+
+                final TextButton dis = new TextButton("Remove", CircuitGUIManager.propertiesBox.TBUTTON);
+                Cable cable = this;
+                CircuitGUIManager.propertiesBox.addElement(dis, true, 2);
+                dis.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        if (connection1 != null) {
+                            coordinates.remove(0);
+                            HardwareManager.removeCableFromHardware(cable, connection1);
+                            connection1 = null;
+                            populateProperties();
+                        }
+                    }
+                });
+            }
+
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 2", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            if((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
+            if ((connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2).length() > 10) {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
             } else {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+            }
+
+            if(!(this instanceof CrimpedCable)) {
+
+                final TextButton dis2 = new TextButton("Remove", CircuitGUIManager.propertiesBox.TBUTTON);
+                Cable cable = this;
+                CircuitGUIManager.propertiesBox.addElement(dis2, true, 2);
+                dis2.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        if (connection2 != null) {
+                            coordinates.remove(coordinates.size()-1);
+                            HardwareManager.removeCableFromHardware(cable, connection2);
+                            connection2 = null;
+                            populateProperties();
+                        }
+                    }
+                });
             }
         }
     }
@@ -522,6 +558,7 @@ public class Cable implements Json.Serializable {
         // HOVERING OVER CABLE
         // ---------------------------------------------------------------------
 
+
         if(hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
@@ -561,7 +598,8 @@ public class Cable implements Json.Serializable {
 
     public boolean checkGood() {
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple));
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
+                && !CircuitGUIManager.helpMenuShown && !CircuitGUIManager.optionsMenuShown && !CircuitGUIManager.saveMenuShown;
     }
 
 
@@ -647,6 +685,8 @@ public class Cable implements Json.Serializable {
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
             }
+
+            populateProperties();
         }
     }
 

@@ -28,11 +28,11 @@
   "defaultColors": [
     {
       "port": 0,
-      "color": "Red"
+      "color": "Black"
     },
     {
       "port": 1,
-      "color": "Black"
+      "color": "Red"
     }
   ],
   "leds": [
