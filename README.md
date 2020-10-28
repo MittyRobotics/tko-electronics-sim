@@ -1,28 +1,30 @@
 ![TKO Circuit Simulator](https://github.com/MittyRobotics/tko-electronics-sim/blob/master/core/assets/img/logo/circuitsim.png)
 ---
 
-An FRC circuit simulator used by our electronics department for complex diagramming and training.
+FRC circuit simulator for electronics diagramming and rookie training.<br>
+Created by TKO Programming for the TKO electronics department.
 
-Created by [Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23).
+Created by [Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal).
 
 ## Features
 
 - 2D CAD-inspired GUI
+- Accurate circuit diagramming with FRC parts (see subsection below)
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
 - Automated debugging for all errors (might have bugs)
 - Complete LED simulation (might have bugs)
-- Accurate circuit diagramming with FRC parts (see subsection below)
+- Keybinds, help menu, options menu, and other QOL features
 - Native, can be run cross-platform
 
 ## Future Updates
 
-
-- curved cables
-- accurate scaling of parts on a blocks-per-inch grid
-- timed competitive wiring games
-- color themes
-- commented code
+- Curved cables
+- Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagrams
+- Timed competitive wiring games
+- Color themes
+- Commented code
+- Debug debugging :)
 
 ## Installation
 
@@ -40,46 +42,26 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 
 ## Device/Component List
 
-**Battery**
-
-**Breaker**
-
-**Compressor**
-
-**Double WAGO**
-
-**Falcon**
-
-**Manifold (with double solenoids attached)**
-
-**775 Motor**
-
-**NEO**
-
-**Pneumatics Control Module (PCM)**
-
-**Power Distribution Panel (PDP)**
-
-**Voltage Regulator Module (VRM)**
-
-**Piston**
-
-**Pressure Switch**
-
-**Radio**
-
-**RoboRIO**
-
-**Regulator + Gauge**
-
-**Relief Valve Complex**
-
-**Spark**
-
-**Talon**
-
-**Tank**
-
-**T-Connector**
+- Battery<br>
+- Breaker<br>
+- Compressor<br>
+- Double WAGO<br>
+- Falcon<br>
+- Manifold (with double solenoids attached)<br>
+- 775 Motor<br>
+- NEO<br>
+- Pneumatics Control Module (PCM)<br>
+- Power Distribution Panel (PDP)<br>
+- Voltage Regulator Module (VRM)<br>
+- Piston<br>
+- Pressure Switch<br>
+- Radio<br>
+- RoboRIO<br>
+- Regulator + Gauge<br>
+- Relief Valve Complex<br>
+- Spark<br>
+- Talon<br>
+- Tank<br>
+- T-Connector<br>
 
 ---
