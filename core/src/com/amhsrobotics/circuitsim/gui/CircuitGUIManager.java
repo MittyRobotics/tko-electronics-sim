@@ -614,9 +614,11 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(mColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             mColor.setText(keys.get(0));
+                            Constants.ATLAS_STR = UI_COLORS.get(keys.get(0));
                             Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             mColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS_STR = UI_COLORS.get(keys.get(keys.indexOf(str) + 1));
                             Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
                         mColorChanged = true;
@@ -634,9 +636,11 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(sColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             sColor.setText(keys.get(0));
+                            Constants.ATLAS_ALTERNATE_STR = UI_COLORS.get(keys.get(0));
                             Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             sColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS_ALTERNATE_STR = UI_COLORS.get(keys.get(keys.indexOf(str) + 1));
                             Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
                         mColorChanged = true;

@@ -1,0 +1,6 @@
+skin/ui-gray.atlas
+skin/ui-blue.atlas
+Light Gray
+8000.0
+8000.0
+60
