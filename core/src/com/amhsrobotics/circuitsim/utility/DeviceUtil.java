@@ -97,7 +97,7 @@ public class DeviceUtil {
 
     public static final LinkedHashMap<String, Color> BACKGROUND_COLORS = new LinkedHashMap<String, Color>() {{
         //WIRE COLORS
-        put("Nord", new Color(46 / 255f, 46 / 255f, 64 / 255f,1));
+        put("Nord", new Color(46 / 255f, 52 / 255f, 64 / 255f,1));
         put("Midnight", new Color(5/255f, 5/255f, 10/255f, 1));
         put("Light", new Color(230/255f, 230/255f, 235/255f, 1));
         put("Dark", new Color(30/255f, 30/255f, 35/255f, 1));
