@@ -29,7 +29,6 @@ import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class CircuitScreen implements Screen {
