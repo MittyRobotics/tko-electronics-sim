@@ -598,7 +598,8 @@ public class Cable implements Json.Serializable {
 
     public boolean checkGood() {
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple));
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
+                && !CircuitGUIManager.helpMenuShown && !CircuitGUIManager.optionsMenuShown && !CircuitGUIManager.saveMenuShown;
     }
 
 

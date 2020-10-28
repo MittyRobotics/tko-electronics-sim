@@ -61,7 +61,7 @@ public class CircuitGUIManager implements Disposable {
     private TextButton fil3;
     private TextButton fil4;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
-    public boolean helpMenuShown, optionsMenuShown;
+    public static boolean helpMenuShown, optionsMenuShown;
     private Window helpMenu, optionsMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
