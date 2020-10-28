@@ -10,7 +10,6 @@ import com.amhsrobotics.circuitsim.utility.input.Tuple;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
-import com.badlogic.gdx.utils.Null;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;

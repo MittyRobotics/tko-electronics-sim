@@ -2,29 +2,29 @@
 ---
 
 FRC circuit simulator for electronics diagramming and rookie training.<br>
-Created by TKO Programming for the TKO electronics department.
-
-Created by [Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal).
+Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal)).
 
 ## Features
 
-- 2D CAD-inspired GUI
-- Accurate circuit diagramming with FRC parts (see subsection below)
+- Circuit diagramming with FRC parts** (see subsection below)
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
-- Automated debugging for all errors (might have bugs)
-- Complete LED simulation (might have bugs)
+- Automated debugging for all errors
+- Complete LED simulation
+- 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
 - Native, can be run cross-platform
+- Packages for easy installation
 
 ## Future Updates
 
 - Curved cables
 - Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagrams
+- Actual simulation of gauges, pistons, motors
+- Recursive debugging of all connected components
 - Timed competitive wiring games
 - Color themes
 - Commented code
-- Debug debugging :)
 
 ## Installation
 
@@ -42,6 +42,7 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 
 ## Device/Component List
 
+#### Hardware
 - Battery<br>
 - Breaker<br>
 - Compressor<br>
@@ -63,5 +64,12 @@ If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a con
 - Talon<br>
 - Tank<br>
 - T-Connector<br>
+
+#### Cables
+
+- Regular cables (4, 12, 18, 22 AWG)
+- Crimped cables (4, 12, 18, 22 AWG)
+- Ethernet
+- Pneumatics tubing
 
 ---

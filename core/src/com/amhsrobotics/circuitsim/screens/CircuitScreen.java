@@ -29,7 +29,6 @@ import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class CircuitScreen implements Screen {
@@ -39,7 +38,7 @@ public class CircuitScreen implements Screen {
     private final SpriteBatch batch;
     public static ModifiedShapeRenderer renderer;
     private final ModifiedShapeRenderer HUDrenderer;
-    private ClippedCameraController camera;
+    public static ClippedCameraController camera;
     private static BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40, true);
     private static String drawString = "";
     private static Vector2 drawLoc = new Vector2();

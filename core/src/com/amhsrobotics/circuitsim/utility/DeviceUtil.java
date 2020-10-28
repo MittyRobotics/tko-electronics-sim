@@ -21,6 +21,13 @@ public class DeviceUtil {
         put("Orange", new Color(255/255f, 130/255f, 0/255f, 1));
     }};
 
+    public static final LinkedHashMap<String, Color> END_COLORS = new LinkedHashMap<String, Color>() {{
+        put("Plastic", new Color(200f / 255f, 200f / 255f, 200f / 255f, 1f));
+        put("SelectedPlastic", new Color(150f / 255f, 150f / 255f, 150f / 255f, 1f));
+        put("DarkPlastic", new Color(20f / 255f, 20f / 255f, 20f / 255f, 1f));
+        put("SelectedDarkPlastic", new Color(50f / 255f, 50f / 255f, 50f / 255f, 1f));
+    }};
+
     public static final LinkedHashMap<String, Color> COLORS_EPLATE = new LinkedHashMap<String, Color>() {{
         //WIRE COLORS
         put("Plastic", new Color(255f/255f, 255f/255f, 255f/255f, 0.5f));
