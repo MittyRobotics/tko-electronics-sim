@@ -38,7 +38,7 @@ public class CircuitScreen implements Screen {
     private final SpriteBatch batch;
     public static ModifiedShapeRenderer renderer;
     private final ModifiedShapeRenderer HUDrenderer;
-    private ClippedCameraController camera;
+    public static ClippedCameraController camera;
     private static BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40, true);
     private static String drawString = "";
     private static Vector2 drawLoc = new Vector2();

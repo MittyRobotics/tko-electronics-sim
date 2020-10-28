@@ -317,6 +317,8 @@ public class Cable implements Json.Serializable {
             drawNodes(renderer, camera, nodeColor);
         }
 
+        drawEndpoints(renderer);
+
         renderer.end();
     }
 
@@ -357,8 +359,7 @@ public class Cable implements Json.Serializable {
                     renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
-            }
-            if(hoveringMouse(camera) || hover) {
+            } else if (hoveringMouse(camera) || hover) {
                 // draw hovering on cable
                 renderer.setColor(new Color(156/255f,1f,150/255f,1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
@@ -373,8 +374,7 @@ public class Cable implements Json.Serializable {
 
             renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
         }
-        renderer.setColor(nodeColor);
-        drawEndpoints(renderer);
+
         // ---------------------------------------------------------------------
 
 
@@ -573,6 +573,10 @@ public class Cable implements Json.Serializable {
                 CableManager.movingCable = false;
             }
         }
+
+        renderer.setColor(nodeColor);
+
+        drawEndpoints(renderer);
 
         // ---------------------------------------------------------------------
 

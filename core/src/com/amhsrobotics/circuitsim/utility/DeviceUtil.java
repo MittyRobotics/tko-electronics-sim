@@ -19,6 +19,8 @@ public class DeviceUtil {
         put("White", new Color(243/255f, 237/255f, 236/255f, 1));
         put("Blue", new Color(61/255f, 58/255f, 234/255f, 1));
         put("Orange", new Color(255/255f, 130/255f, 0/255f, 1));
+        put("Plastic", new Color(255f/255f, 255f/255f, 255f/255f, 0.7f));
+        put("SelectedPlastic", new Color(150f/255f, 150f/255f, 150f/255f, 0.7f));
     }};
 
     public static final LinkedHashMap<String, Color> COLORS_EPLATE = new LinkedHashMap<String, Color>() {{
