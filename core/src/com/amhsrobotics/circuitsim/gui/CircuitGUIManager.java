@@ -624,14 +624,14 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(sColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             sColor.setText(keys.get(0));
-//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             sColor.setText(keys.get(keys.indexOf(str) + 1));
-//                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
+                            Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
-//                        Constants.reloadAssets();
-//                        removeThis();
-//                        loadThis();
+                        Constants.reloadAssets();
+                        removeThis();
+                        loadThis();
                         break;
                     }
                 }
