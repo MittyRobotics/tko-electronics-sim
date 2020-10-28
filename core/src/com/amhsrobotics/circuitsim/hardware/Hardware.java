@@ -467,7 +467,7 @@ public abstract class Hardware implements Json.Serializable {
                 //SET OWN POSITION
                 setPosition(vec.x + diffX, vec.y + diffY);
             }
-
+            
         }
 
 
