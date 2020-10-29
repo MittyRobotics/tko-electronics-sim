@@ -577,7 +577,7 @@ public class CircuitGUIManager implements Disposable {
         mainColor.setAlignment(Align.center);
         optionsTable.add(mainColor).width(180).padBottom(10);
 
-        mColor = new TextButton("Gray", tbStyle);
+        mColor = new TextButton(DeviceUtil.getKeyByValue(UI_COLORS, Constants.ATLAS_STR), tbStyle);
         optionsTable.add(mColor).width(180).padBottom(10);
 
         optionsTable.row();
@@ -585,7 +585,7 @@ public class CircuitGUIManager implements Disposable {
         alternateColor.setAlignment(Align.center);
         optionsTable.add(alternateColor).width(180).padBottom(20);
 
-        sColor = new TextButton("Blue", tbStyle);
+        sColor = new TextButton(DeviceUtil.getKeyByValue(UI_COLORS, Constants.ATLAS_ALTERNATE_STR), tbStyle);
         optionsTable.add(sColor).width(180).padBottom(20);
 
         optionsTable.row();
@@ -614,9 +614,11 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(mColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             mColor.setText(keys.get(0));
+                            Constants.ATLAS_STR = UI_COLORS.get(keys.get(0));
                             Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             mColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS_STR = UI_COLORS.get(keys.get(keys.indexOf(str) + 1));
                             Constants.ATLAS = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
                         mColorChanged = true;
@@ -634,9 +636,11 @@ public class CircuitGUIManager implements Disposable {
                     if(str.contentEquals(sColor.getText())) {
                         if(keys.indexOf(str) == keys.size() - 1) {
                             sColor.setText(keys.get(0));
+                            Constants.ATLAS_ALTERNATE_STR = UI_COLORS.get(keys.get(0));
                             Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(0))));
                         } else {
                             sColor.setText(keys.get(keys.indexOf(str) + 1));
+                            Constants.ATLAS_ALTERNATE_STR = UI_COLORS.get(keys.get(keys.indexOf(str) + 1));
                             Constants.ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal(UI_COLORS.get(keys.get(keys.indexOf(str) + 1))));
                         }
                         mColorChanged = true;

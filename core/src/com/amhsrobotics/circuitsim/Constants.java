@@ -15,6 +15,9 @@ public class Constants {
     public static final BitmapFont FONT_SMALL = Tools.renderFont("font/Abel-Regular.ttf", 20);
     public static TextureAtlas ATLAS = new TextureAtlas(Gdx.files.internal("skin/ui-gray.atlas"));
     public static TextureAtlas ATLAS_ALTERNATE = new TextureAtlas(Gdx.files.internal("skin/ui-blue.atlas"));
+
+    public static String ATLAS_STR = "skin/ui-gray.atlas";
+    public static String ATLAS_ALTERNATE_STR = "skin/ui-blue.atlas";
     public static Skin SKIN = new Skin(ATLAS);
     public static Skin SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
 
@@ -28,15 +31,5 @@ public class Constants {
     public static void reloadAssets() {
         SKIN = new Skin(ATLAS);
         SKIN_ALTERNATE = new Skin(ATLAS_ALTERNATE);
-    }
-
-    public static void disposeAll() {
-        FONT.dispose();
-        FONT_MEDIUM.dispose();
-        FONT_SMALL.dispose();
-        ATLAS.dispose();
-        ATLAS_ALTERNATE.dispose();
-        SKIN_ALTERNATE.dispose();
-        SKIN.dispose();
     }
 }

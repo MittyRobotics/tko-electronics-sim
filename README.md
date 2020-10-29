@@ -12,7 +12,7 @@ Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Roha
 - Automated debugging for all errors
 - Complete LED simulation
 - 2D CAD-inspired GUI
-- Keybinds, help menu, options menu, and other QOL features
+- Keybinds, help menu, options menu, color themes, and other QOL features
 - Native, can be run cross-platform
 - Packages for easy installation
 
@@ -23,7 +23,6 @@ Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Roha
 - Actual simulation of gauges, pistons, motors
 - Recursive debugging of all connected components
 - Timed competitive wiring games
-- Color themes
 - Commented code
 
 ## Installation
