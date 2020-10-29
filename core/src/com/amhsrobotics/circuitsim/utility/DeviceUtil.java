@@ -99,21 +99,21 @@ public class DeviceUtil {
         //WIRE COLORS
         put("Nord", new Color(46 / 255f, 52 / 255f, 64 / 255f,1));
         put("Dark", new Color(30/255f, 30/255f, 35/255f, 1));
-        put("Gruvbox", new Color(102/255f, 92/255f, 84/255f, 1));
         put("Midnight", new Color(5/255f, 5/255f, 10/255f, 1));
         put("Light", new Color(230/255f, 230/255f, 240/255f, 1));
         put("Light Gray", new Color(180/255f, 180/255f, 190/255f, 1));
         put("Gray", new Color(130/255f, 130/255f, 140/255f, 1));
+        put("Gruvbox", new Color(102/255f, 92/255f, 84/255f, 1));
     }};
 
     public static final LinkedHashMap<String, Color> SNAPGRID_COLORS = new LinkedHashMap<String, Color>() {{
         //WIRE COLORS
         put("Nord", new Color(0 / 255f, 0 / 255f, 30 / 255f,1));
         put("Dark", new Color(60/255f, 60/255f, 65/255f, 1));
-        put("Gruvbox", new Color(60/255f, 60/255f, 65/255f, 1));
         put("Midnight", new Color(35/255f, 35/255f, 40/255f, 1));
         put("Light", new Color(185/255f, 185/255f, 195/255f, 1));
         put("Light Gray", new Color(140/255f, 140/255f, 150/255f, 1));
         put("Gray", new Color(90/255f, 90/255f, 100/255f, 1));
+        put("Gruvbox", new Color(60/255f, 60/255f, 65/255f, 1));
     }};
 }
