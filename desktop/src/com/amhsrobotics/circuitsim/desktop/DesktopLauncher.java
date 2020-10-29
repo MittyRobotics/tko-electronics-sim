@@ -16,6 +16,7 @@ public class DesktopLauncher {
 			config.addIcon("img/logo/logo.png", Files.FileType.Internal);
 			config.resizable = false;
 //			config.fullscreen = true;
+			config.samples = 3;
 			config.width = 1366;
 			config.height = 768;
 
