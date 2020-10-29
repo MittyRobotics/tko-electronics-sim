@@ -577,7 +577,7 @@ public class CircuitGUIManager implements Disposable {
         mainColor.setAlignment(Align.center);
         optionsTable.add(mainColor).width(180).padBottom(10);
 
-        mColor = new TextButton("Gray", tbStyle);
+        mColor = new TextButton(DeviceUtil.getKeyByValue(UI_COLORS, Constants.ATLAS_STR), tbStyle);
         optionsTable.add(mColor).width(180).padBottom(10);
 
         optionsTable.row();
@@ -585,7 +585,7 @@ public class CircuitGUIManager implements Disposable {
         alternateColor.setAlignment(Align.center);
         optionsTable.add(alternateColor).width(180).padBottom(20);
 
-        sColor = new TextButton("Blue", tbStyle);
+        sColor = new TextButton(DeviceUtil.getKeyByValue(UI_COLORS, Constants.ATLAS_ALTERNATE_STR), tbStyle);
         optionsTable.add(sColor).width(180).padBottom(20);
 
         optionsTable.row();
