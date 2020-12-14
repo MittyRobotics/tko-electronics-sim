@@ -2,6 +2,7 @@ package com.amhsrobotics.circuitsim.screens;
 
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.utility.Tools;
+import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.amhsrobotics.circuitsim.utility.scene.ModifiedStage;
 import com.amhsrobotics.circuitsim.utility.scene.SnapGrid;
 import com.badlogic.gdx.Game;
@@ -25,7 +26,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import org.lwjgl.Sys;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -51,17 +51,14 @@ public class MenuScreen implements Screen {
     private GlyphLayout rohanL = new GlyphLayout(), andyL = new GlyphLayout();
 
     private boolean creditsShown = false;
-    private boolean colorSchemeChange = false;
+    private static ClippedCameraController camera;
 
-    public MenuScreen(final Game game, boolean... colorSchemeChange) {
 
-        if(colorSchemeChange.length > 0) {
-            this.colorSchemeChange = true;
-        }
-
+    public MenuScreen(final Game game) {
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
+        camera = new ClippedCameraController(true);
 
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         Gdx.input.setInputProcessor(stage);
@@ -264,11 +261,7 @@ public class MenuScreen implements Screen {
             hideImportMenu();
         }
 
-        if(colorSchemeChange) {
-            game.setScreen(new CircuitScreen(game));
-        }
-
-        SnapGrid.renderGrid(renderer, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
+        SnapGrid.renderGrid(camera, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
         if(creditsShown) {
 

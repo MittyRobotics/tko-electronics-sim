@@ -61,6 +61,14 @@ public class ResizeNode {
         }
     }
 
+    public void setCirclePos(Vector2 vec) {
+        circle.setPosition(vec);
+    }
+
+    public Vector2 getCirclePos() {
+        return new Vector2(circle.x, circle.y);
+    }
+
     public void movePosition(CameraController camera, Box box, ArrayList<Hardware> hardwareArrayList) {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);

@@ -1,0 +1,1 @@
+use the jar next to this file to package, then drop the packaged DMG in the mac folder :D

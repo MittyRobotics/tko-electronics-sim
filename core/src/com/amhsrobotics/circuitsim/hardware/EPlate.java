@@ -14,6 +14,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -72,9 +73,25 @@ public class EPlate extends Hardware {
     public void update(SpriteBatch batch, ModifiedShapeRenderer renderer, ClippedCameraController camera) {
         super.update(batch, renderer, camera);
 
+        Rectangle rect = new Rectangle(box.x, box.y, box.width, box.height);
+        if(box.width < 0) {
+            rect.width = -rect.width;
+            rect.x -= rect.width;
+//            nodes[0].type = ResizeNode.NodeType.BOTTOM_RIGHT;
+//            nodes[2].type = ResizeNode.NodeType.BOTTOM_LEFT;
+//            nodes[4].type = ResizeNode.NodeType.TOP_RIGHT;
+//            nodes[6].type = ResizeNode.NodeType.TOP_LEFT;
+//            nodes[3].type = ResizeNode.NodeType.RIGHT_MIDDLE;
+//            nodes[7].type = ResizeNode.NodeType.LEFT_MIDDLE;
+        }
+        if(box.height < 0) {
+            rect.height = -rect.height;
+            rect.y -= rect.height;
+        }
+
         renderer.setColor(color);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.roundedRect(box.x, box.y, box.width, box.height, 5);
+        renderer.roundedRect(rect.x, rect.y, rect.width, rect.height, 5);
         renderer.end();
 
 
@@ -88,8 +105,7 @@ public class EPlate extends Hardware {
             drawHover(renderer);
         }
 
-
-        if(box.contains(vec.x, vec.y)) {
+        if(rect.contains(vec.x, vec.y)) {
             drawHover(renderer);
 
             if((CableManager.currentCable == null || (!CableManager.currentCable.hoveringMouse(camera) && (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd && CableManager.currentCable.movingNode == null))) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood(camera)) {
@@ -164,7 +180,7 @@ public class EPlate extends Hardware {
 
             if (Gdx.input.isTouched() && dragging == -1  && checkGood(camera)) {
 
-                if (box.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
+                if (rect.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
                     if (!HardwareManager.movingObject) {
                         HardwareManager.movingObject = true;
                         canMove = true;
@@ -186,7 +202,7 @@ public class EPlate extends Hardware {
                     }
                 }
 
-                if (!canMove && !box.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
+                if (!canMove && !rect.contains(vec.x, vec.y) && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210)) {
                     HardwareManager.currentHardware = null;
                     CircuitGUIManager.propertiesBox.hide();
                 }
