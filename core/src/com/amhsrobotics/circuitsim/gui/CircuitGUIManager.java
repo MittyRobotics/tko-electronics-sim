@@ -53,15 +53,15 @@ public class CircuitGUIManager implements Disposable {
     private TextButton options;
     private TextButton hidePanel;
     private TextButton save;
-    private TextButton clear;
+    private TextButton clear, temp;
     private TextButton.TextButtonStyle tStyle, t2Style;
     private TextButton fil1;
     private TextButton fil2;
     private TextButton fil3;
     private TextButton fil4;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
-    public static boolean helpMenuShown, optionsMenuShown;
-    private Window helpMenu, optionsMenu;
+    public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown;
+    private Window helpMenu, optionsMenu, welcomeMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
     private TextButton saveButton, fileSave, togGridButton, mColor, sColor;
@@ -95,7 +95,7 @@ public class CircuitGUIManager implements Disposable {
         this.game = game;
         loadThis();
 
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
+        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate, welcomeMenu);
     }
 
     private void loadThis() {
@@ -281,6 +281,7 @@ public class CircuitGUIManager implements Disposable {
         clear.setPosition(340, Gdx.graphics.getHeight() - 70);
 
 
+
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -305,6 +306,7 @@ public class CircuitGUIManager implements Disposable {
                 });
             }
         });
+
         help.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -398,6 +400,7 @@ public class CircuitGUIManager implements Disposable {
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
         buildOptionsMenu(wStyle, l2Style, l3Style, textFieldStyle, tStyle);
+        buildWelcomePanel();
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
@@ -433,6 +436,32 @@ public class CircuitGUIManager implements Disposable {
             fil.setStyle(t2Style);
         }
         filterChanged = true;
+    }
+
+    public void buildWelcomePanel() {
+        Window.WindowStyle w5Style = new Window.WindowStyle();
+        w5Style.background = Constants.SKIN.getDrawable("window_02");
+        w5Style.titleFont = Constants.FONT_MEDIUM;
+        w5Style.titleFontColor = Color.WHITE;
+        welcomeMenu = new Window("Welcome!", w5Style);
+        welcomeMenu.setWidth(800);
+        welcomeMenu.setHeight(600);
+        welcomeMenu.setKeepWithinStage(false);
+        welcomeMenu.setMovable(false);
+        welcomeMenu.setPosition(-700, -700);
+
+    }
+
+    public void showWelcomeMenu() {
+        hideOptionsMenu();
+        welcomeMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - welcomeMenu.getWidth() / 2, 80);
+        Tools.slideIn(welcomeMenu, "down", 1f, Interpolation.exp10, 600);
+        welcomeMenuShown = true;
+    }
+
+    public void hideWelcomeMenu() {
+        Tools.slideOut(welcomeMenu, "down", 1f, Interpolation.exp10, 700);
+        welcomeMenuShown = false;
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
@@ -581,7 +610,7 @@ public class CircuitGUIManager implements Disposable {
         //optionsTable.add(alternateColor).width(180).padBottom(20);
 
         sColor = new TextButton("Blue", tbStyle);
-        //optionsTable.add(sColor).width(180).padBottom(20);
+        //optionsTable.add(sColor).width(180).padBottom(20);*/
 
         togGridButton.addListener(new ChangeListener() {
             @Override
@@ -593,7 +622,7 @@ public class CircuitGUIManager implements Disposable {
             }
         });
 
-        mColor.addListener(new ChangeListener() {
+        /*mColor.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ArrayList<String> keys = new ArrayList<>(UI_COLORS.keySet());

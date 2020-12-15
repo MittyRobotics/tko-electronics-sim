@@ -306,6 +306,10 @@ public class CircuitScreen implements Screen {
             }
         }
 
+        if(!CircuitGUIManager.welcomeMenuShown) {
+            manager.showWelcomeMenu();
+        }
+
 
 
         manager.update(delta);
