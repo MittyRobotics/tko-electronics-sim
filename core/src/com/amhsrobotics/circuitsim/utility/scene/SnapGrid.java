@@ -1,9 +1,10 @@
 package com.amhsrobotics.circuitsim.utility.scene;
 
 import com.amhsrobotics.circuitsim.Constants;
-import com.amhsrobotics.circuitsim.utility.DeviceUtil;
-import com.badlogic.gdx.Gdx;
+import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -11,21 +12,33 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 public class SnapGrid {
 
     public static boolean renderGridB = true;
+    private static ImmediateModeRenderer20 lineRenderer = new ImmediateModeRenderer20(false, true, 0);
 
-    public static void renderGrid(ModifiedShapeRenderer renderer, Color color, Vector2 dimensions, int gap, int startSpace) {
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(DeviceUtil.BACKGROUND_COLORS.get(Constants.CURRENT_COLOR));
-        renderer.rect(0, 0, Constants.WORLD_DIM.x, Constants.WORLD_DIM.y);
-        renderer.end();
+    public static void line(float x1, float y1,
+                            float x2, float y2,
+                            Color color) {
+        lineRenderer.color(color);
+        lineRenderer.vertex(x1, y1, 0);
+        lineRenderer.color(color);
+        lineRenderer.vertex(x2, y2, 0);
+    }
+
+
+    public static void renderGrid(ClippedCameraController camera, Color color, Vector2 dimensions, int gap, int startSpace) {
         if(renderGridB) {
-            renderer.setColor(DeviceUtil.SNAPGRID_COLORS.get(Constants.CURRENT_COLOR));
+//            renderer.setColor(color);
             for(int i = startSpace; i < dimensions.x; i += gap) {
-                renderer.begin(ShapeRenderer.ShapeType.Line);
+
+//                renderer.begin(ShapeRenderer.ShapeType.Line);
+                lineRenderer.begin(camera.getCamera().combined, GL30.GL_LINES);
                 for (int j = startSpace; j < dimensions.y; j += gap) {
-                    renderer.line(i, 0, i, dimensions.y);
-                    renderer.line(0, j, dimensions.x, j);
+                    line(i, 0, i, dimensions.y, color);
+                    line(0, j, dimensions.x, j, color);
+//                    renderer.line(i, 0, i, dimensions.y);
+//                    renderer.line(0, j, dimensions.x, j);
                 }
-                renderer.end();
+                lineRenderer.end();
+//                renderer.end();
             }
         }
     }

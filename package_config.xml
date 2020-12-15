@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon></icon>
+  <icon>/home/titan/development/FRC_amhsrobotics/TKO1351CircuitSim/core/assets/img/logo/logo.ico</icon>
   <classPath>
     <mainClass>com.amhsrobotics.circuitsim.desktop.DesktopLauncher</mainClass>
   </classPath>

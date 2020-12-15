@@ -10,13 +10,13 @@ buildscript {
         google()
     }
     dependencies {
-        
-
+        classpath "com.netflix.nebula:gradle-ospackage-plugin:8.4.1"
     }
 }
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "nebula.ospackage"
 
     version = '1.0'
     ext {

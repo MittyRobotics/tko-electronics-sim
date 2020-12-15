@@ -50,10 +50,10 @@ public class CrimpedCable extends Cable {
 
                 angle = (float) Math.atan2(coordinates.get(coordinates.size() - 1).x - vec2.x, vec2.y - coordinates.get(coordinates.size() - 1).y);
 
-                dx = 15*(float) Math.cos(angle);
-                dy = 15*(float) Math.sin(angle);
+                dx = 20*(float) Math.cos(angle);
+                dy = 20*(float) Math.sin(angle);
 
-                renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 27);
+                renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 30);
 
             }
 
@@ -68,7 +68,7 @@ public class CrimpedCable extends Cable {
             renderer.setColor(DeviceUtil.END_COLORS.get("DarkPlastic"));
 
             if(color2 != null) {
-                renderer.rect(coordinates.get(color2n).x-27/2, coordinates.get(color2n).y-27/2, 27, 27);
+                renderer.rect(coordinates.get(color2n).x-20, coordinates.get(color2n).y-20, 40, 40);
             }
 
 
@@ -86,10 +86,10 @@ public class CrimpedCable extends Cable {
                     angle = (float) Math.atan2(coordinates.get(coordinates.size() - 2).x - coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y - coordinates.get(coordinates.size() - 2).y);
                 }
 
-                dx = 15 * (float) Math.cos(angle);
-                dy = 15 * (float) Math.sin(angle);
+                dx = 20 * (float) Math.cos(angle);
+                dy = 20 * (float) Math.sin(angle);
 
-                renderer.rectLine(coordinates.get(coordinates.size() - 1).x + dx, coordinates.get(coordinates.size() - 1).y + dy, coordinates.get(coordinates.size() - 1).x - dx, coordinates.get(coordinates.size() - 1).y - dy, 27);
+                renderer.rectLine(coordinates.get(coordinates.size() - 1).x + dx, coordinates.get(coordinates.size() - 1).y + dy, coordinates.get(coordinates.size() - 1).x - dx, coordinates.get(coordinates.size() - 1).y - dy, 30);
             }
 
 

@@ -4,6 +4,8 @@
 FRC circuit simulator for electronics diagramming and rookie training.<br>
 Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23)).
 
+![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
+
 ## Features
 
 - Circuit diagramming with FRC parts* (see subsection below)
@@ -12,7 +14,7 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 - Automated debugging for all errors
 - Complete LED simulation
 - 2D CAD-inspired GUI
-- Keybinds, help menu, options menu, color themes, and other QOL features
+- Keybinds, help menu, options menu, and other QOL features
 - Native, can be run cross-platform
 - Packages for easy installation
 
@@ -23,6 +25,7 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 - Actual simulation of gauges, pistons, motors
 - Recursive debugging of all connected components
 - Timed competitive wiring games
+- Color themes
 - Commented code
 
 ## Installation

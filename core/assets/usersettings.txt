@@ -1,6 +1,0 @@
-skin/ui-blue.atlas
-skin/ui-blue.atlas
-Gruvbox
-8000.0
-8000.0
-60

@@ -31,5 +31,8 @@ public enum HardwareType {
     RELIEFVALVE,
     GAUGE,
     TCONNECTOR,
-    REGULATOR
+    REGULATOR,
+    LIMELIGHT,
+    RASPI,
+    CUSTOM_IMPLEMENTABLE
 }

@@ -22,7 +22,7 @@ public class Box {
                 new Vector2(x, y + height), // top left
                 new Vector2(x + (width / 2), y + height), // top middle
                 new Vector2((x + width), (y + height)), // top right
-                new Vector2((x + width), y + (height / 2)), // right middle
+                new Vector2((x + width), y + (height / 2)), // right center
                 new Vector2(x + width / 2, y + height / 2) // middle
         };
     }
