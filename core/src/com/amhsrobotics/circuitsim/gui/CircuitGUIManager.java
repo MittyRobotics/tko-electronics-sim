@@ -562,7 +562,7 @@ public class CircuitGUIManager implements Disposable {
         togGridButton = new TextButton("Toggle", tbStyle);
         optionsTable.add(togGridButton).width(180).padBottom(10);
 
-        optionsTable.row();
+        /*optionsTable.row();
         Label warning = new Label("Color schemes are experimental", l3Style);
         warning.setAlignment(Align.center);
         optionsTable.add(warning).width(180).padBottom(10).colspan(2);
@@ -578,10 +578,10 @@ public class CircuitGUIManager implements Disposable {
         optionsTable.row();
         Label alternateColor = new Label("Second Color", l2Style);
         alternateColor.setAlignment(Align.center);
-        optionsTable.add(alternateColor).width(180).padBottom(20);
+        //optionsTable.add(alternateColor).width(180).padBottom(20);
 
         sColor = new TextButton("Blue", tbStyle);
-        optionsTable.add(sColor).width(180).padBottom(20);
+        //optionsTable.add(sColor).width(180).padBottom(20);
 
         togGridButton.addListener(new ChangeListener() {
             @Override
@@ -635,7 +635,7 @@ public class CircuitGUIManager implements Disposable {
                     }
                 }
             }
-        });
+        });*/
 
         optionsTable.row();
         Label spacing = new Label("Grid Spacing", l2Style);
