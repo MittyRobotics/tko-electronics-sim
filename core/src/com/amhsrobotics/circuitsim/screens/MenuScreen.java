@@ -192,37 +192,60 @@ public class MenuScreen implements Screen {
         fileLocation = new TextField("", textFieldStyle);
         importTable.add(fileLocation).width(180).colspan(2).align(Align.center).padTop(10);
 
+//        fileSave.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
+//                conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
+//
+//                conf.nameFilter = new FilenameFilter() {
+//                    @Override
+//                    public boolean accept(File dir, String name) {
+//                        return name.endsWith("tko");
+//                    }
+//                };
+//
+//                conf.title = "Choose simulator file";
+//
+//                chooser[0].chooseFile(conf, new NativeFileChooserCallback() {
+//                    @Override
+//                    public void onFileChosen(FileHandle file) {
+//                        fileLocation.setText(file.file().getAbsolutePath());
+//                    }
+//
+//                    @Override
+//                    public void onCancellation() {
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception exception) {
+//                    }
+//                });
+//            }
+//        });
+
         fileSave.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
-                conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
-
-                conf.nameFilter = new FilenameFilter() {
-                    @Override
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith("tko");
+                new Thread(() -> {
+                    JFileChooser chooser = new JFileChooser();
+                    JFrame f = new JFrame();
+                    f.setVisible(true);
+                    f.toFront();
+                    f.setVisible(false);
+                    chooser.setDialogTitle("Import");
+                    FileFilter filter = new FileNameExtensionFilter("TKO Simulator File", "tko");
+                    chooser.setAcceptAllFileFilterUsed(false);
+                    chooser.setFileFilter(filter);
+                    int res = chooser.showOpenDialog(f);
+                    f.dispose();
+                    if (res == JFileChooser.APPROVE_OPTION) {
+                        fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
                     }
-                };
-
-                conf.title = "Choose simulator file";
-
-                chooser[0].chooseFile(conf, new NativeFileChooserCallback() {
-                    @Override
-                    public void onFileChosen(FileHandle file) {
-                        fileLocation.setText(file.file().getAbsolutePath());
-                    }
-
-                    @Override
-                    public void onCancellation() {
-                    }
-
-                    @Override
-                    public void onError(Exception exception) {
-                    }
-                });
+                }).start();
             }
         });
+
         importTable.row();
         importButton = new TextButton("Import", t2Style);
         importTable.add(importButton).width(90).colspan(2).align(Align.center).padTop(60);

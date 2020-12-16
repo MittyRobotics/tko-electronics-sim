@@ -24,7 +24,7 @@ public class DesktopLauncher {
 
 			new LwjglApplication(new Main(new DesktopFileChooser()), config);
 		} else {
-			System.out.println("Incompatible Operating System. \nIf you aren't using Windows, Unix, or Mac, wtf are you using?");
+			System.out.println("Incompatible Operating System. \nIf you aren't using Windows, Unix, or OSX, wtf are you using?");
 		}
 	}
 }
