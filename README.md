@@ -36,11 +36,12 @@ Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim
 
 #### Building from Source
 
+**We constantly commit partially finished new features or bug fixes, so it is suggested that you use the latest stable release instead. Proceed at your own risk.**
+
 1. Clone the repository using git
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
 
 If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
-
 
 ## Device/Component List
 

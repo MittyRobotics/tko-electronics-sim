@@ -306,7 +306,7 @@ public class CircuitScreen implements Screen {
             }
         }
 
-        if(!CircuitGUIManager.welcomeMenuShown) {
+        if(!CircuitGUIManager.welcomeMenuShown && CircuitGUIManager.showWelcomeMenu) {
             manager.showWelcomeMenu();
         }
 

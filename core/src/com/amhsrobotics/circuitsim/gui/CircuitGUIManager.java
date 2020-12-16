@@ -60,7 +60,7 @@ public class CircuitGUIManager implements Disposable {
     private TextButton fil3;
     private TextButton fil4;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
-    public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown;
+    public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown, showWelcomeMenu = true;
     private Window helpMenu, optionsMenu, welcomeMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
@@ -304,6 +304,7 @@ public class CircuitGUIManager implements Disposable {
                             }
                         });
                         Tools.sequenceSlideOut("right", 0.5f, Interpolation.exp10, 100, 0.2f, filters, container);
+                        welcomeMenuShown = false;
                     }
                 });
             }
@@ -452,6 +453,44 @@ public class CircuitGUIManager implements Disposable {
         welcomeMenu.setKeepWithinStage(false);
         welcomeMenu.setMovable(false);
         welcomeMenu.setPosition(-700, -700);
+
+        Label.LabelStyle lStyle = new Label.LabelStyle();
+        lStyle.font = Constants.FONT_MEDIUM;
+        lStyle.fontColor = Color.BLACK;
+
+        Label.LabelStyle l2Style = new Label.LabelStyle();
+        l2Style.font = Constants.FONT_SMALL;
+        l2Style.fontColor = Color.BLACK;
+
+        Label.LabelStyle l3Style = new Label.LabelStyle();
+        l3Style.font = Constants.FONT_SMALL;
+        l3Style.fontColor = Color.RED;
+
+        Table welcomeTable = new Table();
+
+        ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
+        sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
+
+        ScrollPane scroll = new ScrollPane(welcomeTable, sStyle);
+        scroll.setScrollingDisabled(true,false);
+        scroll.addListener(new ClickListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setScrollFocus(scroll);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setScrollFocus(null);
+            }
+        });
+
+        for(int i = 0; i < 100; i++) {
+            welcomeTable.row();
+            welcomeTable.add(new Label("Welcome to FRC Electronics Circuit Sim!", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        }
+
+        welcomeMenu.padTop(50);
+        welcomeMenu.add(scroll).expand().fill();
 
     }
 
@@ -778,7 +817,7 @@ public class CircuitGUIManager implements Disposable {
         }
     }
 
-    private void hidePanel() {
+    public void hidePanel() {
         panelShown = false;
 
         Tools.sequenceSlideOut("right", 1f, Interpolation.exp5, 300, 0.2f, container, filters);
@@ -849,6 +888,12 @@ public class CircuitGUIManager implements Disposable {
         if(saveMenuShown) {
             if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideSaveMenu();
+            }
+        }
+
+        if(welcomeMenuShown) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                hideWelcomeMenu();
             }
         }
 
