@@ -5,17 +5,24 @@ import com.amhsrobotics.circuitsim.utility.LinkTimer;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 
 public class Main extends Game {
 
 	private Game game;
+
+	NativeFileChooser chooser;
+	public Main(NativeFileChooser fileChooser) {
+		super();
+		this.chooser = fileChooser;
+	}
 
 	@Override
 	public void create () {
 
 		game = this;
 
-		setScreen(new MenuScreen(game));
+		setScreen(new MenuScreen(game, chooser));
 	}
 
 	@Override

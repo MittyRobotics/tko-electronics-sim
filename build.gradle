@@ -32,6 +32,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "http://dl.bintray.com/spookygames/oss" }
     }
 }
 
@@ -45,7 +46,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        
+        compile "net.spookygames.gdx:gdx-nativefilechooser-desktop:1.0.0"
     }
 }
 
@@ -59,6 +60,6 @@ project(":core") {
         compile "me.rohanbansal.ricochet:ricochet:1.9.8-SNAPSHOT"
         compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
         compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
+        compile "net.spookygames.gdx:gdx-nativefilechooser:1.0.0"
     }
 }
