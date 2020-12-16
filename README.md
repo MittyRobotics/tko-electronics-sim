@@ -2,25 +2,24 @@
 ---
 
 FRC circuit simulator for electronics diagramming and rookie training.<br>
-Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal)) as a response to the COVID-19 pandemic.
+Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23)) as a response to the COVID-19 pandemic.
 
 ![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
 
 ## Features
 
-- Circuit diagramming with FRC parts* (see subsection below)
-- Creating, moving, editing devices and cables
-- Saving/importing circuits as files
+- Circuit diagramming with FRC parts (see subsection below for list)
+- Creating, moving, connecting devices with cables
+- Saving/importing circuits as shareable files
 - Automated debugging for wiring errors
 - Simple LED simulation
 - 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
-- Native, can be run cross-platform
-- Packages for easy installation
+- Packages for easy installation (support for Windows, MacOS, Linux)
 
 ## Future Updates
 
-- Resizing issues
+- Enable resizing and fix bugs
 - Future hardware (limelight, RSL, sensors, servos, etc.) 
 - Welcome screen with basic instructions and more intuitive interface
 - Twisted cables and groups of three cables for RoboRIO
