@@ -9,6 +9,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,11 +27,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
+import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
 
 
@@ -54,7 +60,7 @@ public class MenuScreen implements Screen {
     private static ClippedCameraController camera;
 
 
-    public MenuScreen(final Game game) {
+    public MenuScreen(final Game game, NativeFileChooser... chooser) {
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();
@@ -189,25 +195,34 @@ public class MenuScreen implements Screen {
         fileSave.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                new Thread(() -> {
-                    JFileChooser chooser = new JFileChooser();
-                    JFrame f = new JFrame();
-                    f.setVisible(true);
-                    f.toFront();
-                    f.setVisible(false);
-                    chooser.setDialogTitle("Import");
-                    FileFilter filter = new FileNameExtensionFilter("TKO Simulator File", "tko");
-                    chooser.setAcceptAllFileFilterUsed(false);
-                    chooser.setFileFilter(filter);
-                    int res = chooser.showOpenDialog(f);
-                    f.dispose();
-                    if (res == JFileChooser.APPROVE_OPTION) {
-                        fileLocation.setText(chooser.getSelectedFile().getAbsolutePath());
+                NativeFileChooserConfiguration conf = new NativeFileChooserConfiguration();
+                conf.directory = Gdx.files.absolute(System.getProperty("user.home"));
+
+                conf.nameFilter = new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith("tko");
                     }
-                }).start();
+                };
+
+                conf.title = "Choose simulator file";
+
+                chooser[0].chooseFile(conf, new NativeFileChooserCallback() {
+                    @Override
+                    public void onFileChosen(FileHandle file) {
+                        fileLocation.setText(file.file().getAbsolutePath());
+                    }
+
+                    @Override
+                    public void onCancellation() {
+                    }
+
+                    @Override
+                    public void onError(Exception exception) {
+                    }
+                });
             }
         });
-
         importTable.row();
         importButton = new TextButton("Import", t2Style);
         importTable.add(importButton).width(90).colspan(2).align(Align.center).padTop(60);
