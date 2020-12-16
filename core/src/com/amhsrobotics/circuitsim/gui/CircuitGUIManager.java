@@ -496,7 +496,7 @@ public class CircuitGUIManager implements Disposable {
 
         for(int i = 0; i < 100; i++) {
             welcomeTable.row();
-            welcomeTable.add(new Label("Welcome to FRC Electronics Circuit Sim!", lStyle)).colspan(2).align(Align.center).padBottom(5);
+            welcomeTable.add(new Label("Placeholder Text!", lStyle)).colspan(2).align(Align.center).padBottom(5);
         }
 
         welcomeMenu.add(scroll).colspan(2).expand().fill();
@@ -532,7 +532,7 @@ public class CircuitGUIManager implements Disposable {
 
     public void showWelcomeMenu() {
         hideOptionsMenu();
-        welcomeMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - welcomeMenu.getWidth() / 2, 80);
+        welcomeMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - welcomeMenu.getWidth() / 2 - 100, 60);
         Tools.slideIn(welcomeMenu, "down", 1f, Interpolation.exp10, 600);
         welcomeMenuShown = true;
     }
