@@ -2,7 +2,7 @@
 ---
 
 FRC circuit simulator for electronics diagramming and rookie training.<br>
-Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23)).
+Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal)) as a response to the COVID-19 pandemic.
 
 ![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
 
