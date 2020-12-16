@@ -409,6 +409,10 @@ public class CircuitGUIManager implements Disposable {
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
+
+        if(!welcomeMenuShown && showWelcomeMenu) {
+            showWelcomeMenu();
+        }
     }
 
     public static void saveMenu() {
@@ -471,6 +475,12 @@ public class CircuitGUIManager implements Disposable {
         ScrollPane.ScrollPaneStyle sStyle = new ScrollPane.ScrollPaneStyle();
         sStyle.vScrollKnob = Constants.SKIN.getDrawable("scroll_back_ver");
 
+        welcomeMenu.row();
+        welcomeMenu.add(new Label("", l3Style)).colspan(2);
+        welcomeMenu.row();
+        welcomeMenu.add(new Label("", l3Style)).colspan(2);
+        welcomeMenu.row();
+
         ScrollPane scroll = new ScrollPane(welcomeTable, sStyle);
         scroll.setScrollingDisabled(true,false);
         scroll.addListener(new ClickListener() {
@@ -489,9 +499,35 @@ public class CircuitGUIManager implements Disposable {
             welcomeTable.add(new Label("Welcome to FRC Electronics Circuit Sim!", lStyle)).colspan(2).align(Align.center).padBottom(5);
         }
 
-        welcomeMenu.padTop(50);
-        welcomeMenu.add(scroll).expand().fill();
+        welcomeMenu.add(scroll).colspan(2).expand().fill();
+        welcomeMenu.row();
+        welcomeMenu.add(new Label("", l3Style)).colspan(2);
+        welcomeMenu.row();
 
+        TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle();
+        tbStyle.font = Constants.FONT_SMALL;
+        tbStyle.up = Constants.SKIN.getDrawable("button_03");
+        tbStyle.down = Constants.SKIN.getDrawable("button_02");
+
+        TextButton dontshow = new TextButton("Don't Show Again", tbStyle);
+        welcomeMenu.add(dontshow).colspan(1).padRight(10).align(Align.right);
+        TextButton close = new TextButton("Close", tbStyle);
+        welcomeMenu.add(close).colspan(1).padLeft(10).align(Align.left);
+
+        dontshow.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showWelcomeMenu = false;
+                hideWelcomeMenu();
+            }
+        });
+
+        close.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                hideWelcomeMenu();
+            }
+        });
     }
 
     public void showWelcomeMenu() {

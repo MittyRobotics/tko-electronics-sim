@@ -122,31 +122,33 @@ public class CircuitScreen implements Screen {
 
             @Override
             public boolean scrolled(int amount) {
-                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    camera.getCamera().translate(0, amount > 0 ? 45f : -45f);
-                } else if(Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
-                    camera.getCamera().translate(amount > 0 ? 45f : -45f, 0);
-                } else {
+                if(!CircuitGUIManager.welcomeMenuShown) {
+                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                        camera.getCamera().translate(0, amount > 0 ? 45f : -45f);
+                    } else if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+                        camera.getCamera().translate(amount > 0 ? 45f : -45f, 0);
+                    } else {
 
-                    Vector3 screenCoords = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                        Vector3 screenCoords = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-                    Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
+                        Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
 
-                    camera.getCamera().zoom += amount * camera.getCamera().zoom * 0.1f;
-                    camera.getCamera().update();
+                        camera.getCamera().zoom += amount * camera.getCamera().zoom * 0.1f;
+                        camera.getCamera().update();
 
-                    Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
+                        Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
 
-                    Vector3 diff = new Vector3(worldCoordsAfter).sub(worldCoordsBefore);
-                    camera.getCamera().position.sub(diff);
-                    camera.getCamera().update();
+                        Vector3 diff = new Vector3(worldCoordsAfter).sub(worldCoordsBefore);
+                        camera.getCamera().position.sub(diff);
+                        camera.getCamera().update();
 
-                    if(camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
-                        camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
-                    } else if(camera.getCamera().zoom < 0.2) {
-                        camera.getCamera().zoom = 0.2f;
+                        if (camera.getCamera().zoom > 3.55 * (Constants.WORLD_DIM.x / 5000)) {
+                            camera.getCamera().zoom = 3.55f * (Constants.WORLD_DIM.x / 5000);
+                        } else if (camera.getCamera().zoom < 0.2) {
+                            camera.getCamera().zoom = 0.2f;
+                        }
+
                     }
-
                 }
 
                 return true;
@@ -306,9 +308,7 @@ public class CircuitScreen implements Screen {
             }
         }
 
-        if(!CircuitGUIManager.welcomeMenuShown && CircuitGUIManager.showWelcomeMenu) {
-            manager.showWelcomeMenu();
-        }
+
 
 
 
