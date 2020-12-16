@@ -4,9 +4,11 @@
 FRC circuit simulator for electronics diagramming and rookie training.<br>
 Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23)).
 
+![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
+
 ## Features
 
-- Circuit diagramming with FRC parts** (see subsection below)
+- Circuit diagramming with FRC parts* (see subsection below)
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
 - Automated debugging for all errors
@@ -19,7 +21,7 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 ## Future Updates
 
 - Curved cables
-- Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagrams
+- Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagramming
 - Actual simulation of gauges, pistons, motors
 - Recursive debugging of all connected components
 - Timed competitive wiring games
@@ -28,11 +30,11 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 
 ## Installation
 
-#### Releases
+#### Official Packaging
 
 Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation are also included there.
 
-#### Gradle
+#### Building from Source
 
 1. Clone the repository using git
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
