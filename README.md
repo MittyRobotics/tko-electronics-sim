@@ -2,7 +2,7 @@
 ---
 
 FRC circuit simulator for electronics diagramming and rookie training.<br>
-Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Rohan Bansal](https://github.com/Rohan-Bansal)) as a response to the COVID-19 pandemic.
+Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal), [Andy Li](https://github.com/AndyLi23)) as a response to the COVID-19 pandemic.
 
 ![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
 
@@ -11,8 +11,8 @@ Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Roha
 - Circuit diagramming with FRC parts* (see subsection below)
 - Creating, moving, editing devices and cables
 - Saving/importing circuits as files
-- Automated debugging for all errors
-- Complete LED simulation
+- Automated debugging for wiring errors
+- Simple LED simulation
 - 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
 - Native, can be run cross-platform
@@ -20,11 +20,12 @@ Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Roha
 
 ## Future Updates
 
-- Curved cables
+- Resizing issues
+- Future hardware (limelight, RSL, sensors, servos, etc.) 
+- Welcome screen with basic instructions and more intuitive interface
+- Twisted cables and groups of three cables for RoboRIO
 - Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagramming
 - Actual simulation of gauges, pistons, motors
-- Recursive debugging of all connected components
-- Timed competitive wiring games
 - Color themes
 - Commented code
 
@@ -32,16 +33,17 @@ Created by **TKO Programming** ([Andy Li](https://github.com/AndyLi23) and [Roha
 
 #### Official Packaging
 
-Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation are also included there.
+Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation can also be found there.
 
 #### Building from Source
 
-**We constantly commit partially finished new features or bug fixes, so it is suggested that you use the latest stable release instead. Proceed at your own risk.**
+**We constantly commit partially finished new features or bug fixes, so we suggest that you use the latest stable release instead. Proceed at your own risk.**
 
 1. Clone the repository using git
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
 
-If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
+If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. <br>
+If it says permission denied, do `chmod +x gradlew`.
 
 ## Device/Component List
 
