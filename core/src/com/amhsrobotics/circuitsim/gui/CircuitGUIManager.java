@@ -89,13 +89,15 @@ public class CircuitGUIManager implements Disposable {
         this.stage = stage;
 
         sim = new Simulation();
-        ConfirmDialog.init(stage);
+
 
         this.camera = camera;
         this.game = game;
         loadThis();
 
-        stage.addActors(back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate, welcomeMenu);
+        stage.addActors(welcomeMenu, back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
+
+        ConfirmDialog.init(stage);
     }
 
     private void loadThis() {
@@ -397,10 +399,11 @@ public class CircuitGUIManager implements Disposable {
         });
 
 
+        buildWelcomePanel();
         buildHelpMenu(wStyle, lStyle, l2Style);
         buildSaveMenu(wStyle, l2Style, textFieldStyle, tStyle);
         buildOptionsMenu(wStyle, l2Style, l3Style, textFieldStyle, tStyle);
-        buildWelcomePanel();
+
 
         Tools.slideIn(back, "left", 0.5f, Interpolation.exp10, 100);
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
@@ -461,7 +464,6 @@ public class CircuitGUIManager implements Disposable {
 
     public void hideWelcomeMenu() {
         Tools.slideOut(welcomeMenu, "down", 1f, Interpolation.exp10, 700);
-        welcomeMenuShown = false;
     }
 
     private void buildHelpMenu(Window.WindowStyle wStyle, Label.LabelStyle lStyle, Label.LabelStyle l2Style) {
