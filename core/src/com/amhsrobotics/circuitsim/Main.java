@@ -9,9 +9,7 @@ import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
 
 public class Main extends Game {
 
-	private Game game;
-
-	NativeFileChooser chooser;
+	private final NativeFileChooser chooser;
 	public Main(NativeFileChooser fileChooser) {
 		super();
 		this.chooser = fileChooser;
@@ -19,10 +17,7 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
-
-		game = this;
-
-		setScreen(new MenuScreen(game, chooser));
+		setScreen(new MenuScreen(this, chooser));
 	}
 
 	@Override
