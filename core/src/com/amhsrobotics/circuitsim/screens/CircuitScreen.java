@@ -122,7 +122,7 @@ public class CircuitScreen implements Screen {
 
             @Override
             public boolean scrolled(int amount) {
-                if(!CircuitGUIManager.welcomeMenuShown) {
+                if(CircuitGUIManager.welcomeMenuShown) {
                     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                         camera.getCamera().translate(0, amount > 0 ? 45f : -45f);
                     } else if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
