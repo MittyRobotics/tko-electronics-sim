@@ -8,23 +8,23 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 
 ## Features
 
-- Circuit diagramming with FRC parts* (see subsection below)
-- Creating, moving, editing devices and cables
-- Saving/importing circuits as files
-- Automated debugging for all errors
-- Complete LED simulation
+- Circuit diagramming with FRC parts (see subsection below for list)
+- Creating, moving, connecting devices with cables
+- Saving/importing circuits as shareable files
+- Automated debugging for wiring errors
+- Simple LED simulation
 - 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
-- Native, can be run cross-platform
-- Packages for easy installation
+- Packages for easy installation (support for Windows, MacOS, Linux)
 
 ## Future Updates
 
-- Curved cables
+- Enable resizing and fix bugs
+- Future hardware (limelight, RSL, sensors, servos, etc.) 
+- Welcome screen with basic instructions and more intuitive interface
+- Twisted cables and groups of three cables for RoboRIO
 - Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagramming
 - Actual simulation of gauges, pistons, motors
-- Recursive debugging of all connected components
-- Timed competitive wiring games
 - Color themes
 - Commented code
 
@@ -32,16 +32,17 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 
 #### Official Packaging
 
-Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation are also included there.
+Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim/releases) page and download the binary for your platform. Directions for installation can also be found there.
 
 #### Building from Source
 
-**We constantly commit partially finished new features or bug fixes, so it is suggested that you use the latest stable release instead. Proceed at your own risk.**
+**We constantly commit partially finished new features or bug fixes, so we suggest that you use the latest stable release instead. Proceed at your own risk.**
 
 1. Clone the repository using git
 2. Run `gradlew build` and then `gradlew run` in a console in the top directory
 
-If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. If it says permission denied, do `chmod +x gradlew`.
+If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. <br>
+If it says permission denied, do `chmod +x gradlew`.
 
 ## Device/Component List
 
