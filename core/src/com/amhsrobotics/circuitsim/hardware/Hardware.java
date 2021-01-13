@@ -671,7 +671,7 @@ public abstract class Hardware implements Json.Serializable {
         cableDX = cable.getCoordinate(endOfWire).x - getConnector(port).getX() - getConnector(port).getWidth() / 2;
         cableDY = cable.getCoordinate(endOfWire).y - getConnector(port).getY() - getConnector(port).getHeight() / 2;
 
-//        cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
+        cable.moveEntireCable(-cableDX, -cableDY, endOfWire);
     }
 
     public void populateProperties() {
