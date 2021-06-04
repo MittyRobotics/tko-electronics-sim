@@ -9,7 +9,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,16 +26,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
-import net.spookygames.gdx.nativefilechooser.NativeFileChooser;
-import net.spookygames.gdx.nativefilechooser.NativeFileChooserCallback;
-import net.spookygames.gdx.nativefilechooser.NativeFileChooserConfiguration;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.File;
-import java.io.FilenameFilter;
 import java.net.URL;
 
 
@@ -60,7 +54,7 @@ public class MenuScreen implements Screen {
     private static ClippedCameraController camera;
 
 
-    public MenuScreen(final Game game, NativeFileChooser... chooser) {
+    public MenuScreen(final Game game) {
         this.game = game;
         this.batch = new SpriteBatch();
         this.renderer = new ModifiedShapeRenderer();

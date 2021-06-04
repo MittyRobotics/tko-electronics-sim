@@ -4,7 +4,6 @@ import com.amhsrobotics.circuitsim.Main;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import net.spookygames.gdx.nativefilechooser.desktop.DesktopFileChooser;
 import org.apache.commons.lang3.SystemUtils;
 
 public class DesktopLauncher {
@@ -22,7 +21,7 @@ public class DesktopLauncher {
 
 			config.samples = 3;
 
-			new LwjglApplication(new Main(new DesktopFileChooser()), config);
+			new LwjglApplication(new Main(), config);
 		} else {
 			System.out.println("Incompatible Operating System. \nIf you aren't using Windows, Unix, or OSX, wtf are you using?");
 		}
