@@ -18,7 +18,6 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class EthernetCable extends Cable {
 
-    boolean tempBugFix = false;
     boolean canDraw = false;
 
     public EthernetCable() {}
@@ -101,10 +100,6 @@ public class EthernetCable extends Cable {
 
         super.update(renderer, camera);
 
-        if(!tempBugFix) {
-            tempBugFix = true;
-            coordinates.remove(0);
-        }
 
     }
 
