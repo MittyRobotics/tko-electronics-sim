@@ -313,6 +313,10 @@ public abstract class Hardware implements Json.Serializable {
 
                     CableManager.addCable(c);
                     HardwareManager.attachWireOnDoubleClick = null;
+
+                    c.setAppendingFromEnd(true);
+                    CableManager.currentCable = c;
+                    HardwareManager.currentHardware = null;
                 }
             }
         }
