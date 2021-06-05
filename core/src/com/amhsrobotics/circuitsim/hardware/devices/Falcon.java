@@ -53,10 +53,15 @@ public class Falcon extends Flippable {
                     return "Incorrectly wired to PDP";
                 }
             } else if (getOther(2) instanceof PneumaticsControlModule && getOther(3) instanceof PneumaticsControlModule) {
-                if((getNum(2) == 5 && getNum(3) == 4) || (getNum(2) == 3 && getNum(3) == 2)) {
+                if ((getNum(2) == 5 && getNum(3) == 4) || (getNum(2) == 3 && getNum(3) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
+            } else if (getOther(2) instanceof RoboRio && getOther(3) instanceof RoboRio) {
+                if(getNum(2) == 2 && getNum(3) == 3) {
+                    return "RoboRIO";
+                }
+                return "Incorrectly wired to RoboRIO";
             } else if (!(((getOther(3) instanceof Talon && getOther(2) instanceof Talon) || (getOther(3) instanceof Spark && getOther(2) instanceof Spark) || (getOther(3) instanceof Falcon && getOther(2) instanceof Falcon)) && getONum(2) == getONum(3))) {
                 return "CAN chain improperly wired at Falcon " + hardwareID2;
             } else {
@@ -71,10 +76,15 @@ public class Falcon extends Flippable {
                 }
                 return "Incorrectly wired to PDP";
             } else if (getOther(4) instanceof PneumaticsControlModule && getOther(5) instanceof PneumaticsControlModule) {
-                if((getNum(4) == 5 && getNum(5) == 4) || (getNum(4) == 3 && getNum(5) == 2)) {
+                if ((getNum(4) == 5 && getNum(5) == 4) || (getNum(4) == 3 && getNum(5) == 2)) {
                     return "PCM";
                 }
                 return "Incorrectly wired to PCM";
+            } else if (getOther(4) instanceof RoboRio && getOther(5) instanceof RoboRio) {
+                if(getNum(4) == 2 && getNum(5) == 3) {
+                    return "RoboRIO";
+                }
+                return "Incorrectly wired to RoboRIO";
             } else if (!(((getOther(5) instanceof Talon && getOther(4) instanceof Talon) || (getOther(5) instanceof Spark && getOther(4) instanceof Spark) || (getOther(5) instanceof Falcon && getOther(4) instanceof Falcon)) && getONum(4) == getONum(5))) {
                 return "CAN chain improperly wired at Falcon " + hardwareID2;
             } else {
@@ -87,29 +97,49 @@ public class Falcon extends Flippable {
 
     public String check() {
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            if(simLED) {
+                resetLEDs();
+                simLED = false;
+            }
             return "Falcon is not connected to PDP";
         }
 
         if(getNum(0) <= 41 && getNum(0) >= 34) {
             if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 17 && getNum(0) >= 10) {
             if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 33 && getNum(0) >= 26) {
             if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 25 && getNum(0) >= 18) {
             if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
+                if(simLED) {
+                    resetLEDs();
+                    simLED = false;
+                }
                 return "Falcon incorrectly connected to PDP";
             }
         }
@@ -119,21 +149,29 @@ public class Falcon extends Flippable {
             LEDs.get(0).blink(20);
             LEDs.get(0).setColor("red");
             LEDs.get(0).setStatus("CAN chain error");
-
         }
 
         if(getAllNull(2, 5)) {
+            if(!simLED || LEDs.get(0).getColor().equals("green")) {
+                simLED = true;
+                LEDs.get(0).blink(20);
+                LEDs.get(0).setColor("red");
+                LEDs.get(0).setStatus("CAN chain error");
+            }
             return "Falcon not connected to CAN chain";
         }
 
-        if(!((getCAN(get(3), get(2)).equals("PDP") && getCAN(get(5), get(4)).equals("PCM")) || (getCAN(get(3), get(2)).equals("PCM") && getCAN(get(5), get(4)).equals("PDP")))) {
+        if(!((getCAN(get(3), get(2)).equals("PDP") && getCAN(get(5), get(4)).equals("PCM")) ||
+                (getCAN(get(3), get(2)).equals("PCM") && getCAN(get(5), get(4)).equals("PDP"))) &&
+                !((getCAN(get(3), get(2)).equals("PDP") && getCAN(get(5), get(4)).equals("RoboRIO")) ||
+                        (getCAN(get(3), get(2)).equals("RoboRIO") && getCAN(get(5), get(4)).equals("PDP")))) {
             String ans = "";
 
             if(!getCAN(get(3), get(2)).equals("PDP") && !getCAN(get(3), get(2)).equals("PCM")) {
                 ans += getCAN(get(3), get(2));
             } else {
                 if(getCAN(get(3), get(2)).equals("PDP")) {
-                    ans += "CAN chain must reach PCM";
+                    ans += "CAN chain must reach PCM or RoboRIO";
                 } else {
                     ans += "CAN chain must reach PDP";
                 }
@@ -148,11 +186,11 @@ public class Falcon extends Flippable {
                 }
             } else {
                 if(getCAN(get(5), get(4)).equals("PDP")) {
-                    if (!ans.equals("CAN chain must reach PCM")) {
+                    if (!ans.equals("CAN chain must reach PCM or RoboRIO")) {
                         if(ans.length() > 0) {
                             ans += "\n";
                         }
-                        ans += "CAN chain must reach PCM";
+                        ans += "CAN chain must reach PCM or RoboRIO";
                     }
                 } else {
                     if (!ans.equals("CAN chain must reach PDP")) {
@@ -162,6 +200,14 @@ public class Falcon extends Flippable {
                         ans += "CAN chain must reach PDP";
                     }
                 }
+
+            }
+
+            if(!simLED || LEDs.get(0).getColor().equals("green")) {
+                simLED = true;
+                LEDs.get(0).blink(20);
+                LEDs.get(0).setColor("red");
+                LEDs.get(0).setStatus("CAN chain error");
             }
 
             return ans;
@@ -177,4 +223,5 @@ public class Falcon extends Flippable {
 
         return null;
     }
+
 }
