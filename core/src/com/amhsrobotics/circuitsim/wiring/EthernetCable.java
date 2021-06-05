@@ -11,7 +11,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
@@ -27,14 +26,8 @@ public class EthernetCable extends Cable {
         gauge = 13;
         color = DeviceUtil.COLORS.get("Orange");
         hoverColor = Color.GRAY;
-
-        //appendingFromEnd = false;
-        //appendingFromBegin = false;
-
         populateProperties();
         CircuitGUIManager.propertiesBox.show();
-
-        //coordinates.remove(startPoint);
 
     }
 
