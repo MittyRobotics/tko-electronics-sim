@@ -97,67 +97,42 @@ public class Falcon extends Flippable {
 
     public String check() {
         if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
-            if(simLED) {
-                resetLEDs();
-                simLED = false;
-            }
+            resetLedBad();
             return "Falcon is not connected to PDP";
         }
 
         if(getNum(0) <= 41 && getNum(0) >= 34) {
             if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
-                if(simLED) {
-                    resetLEDs();
-                    simLED = false;
-                }
+                resetLedBad();
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 17 && getNum(0) >= 10) {
             if(getNum(0) % 2 != 1 || getNum(1) != getNum(0) - 1) {
-                if(simLED) {
-                    resetLEDs();
-                    simLED = false;
-                }
+                resetLedBad();
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 33 && getNum(0) >= 26) {
             if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
-                if(simLED) {
-                    resetLEDs();
-                    simLED = false;
-                }
+                resetLedBad();
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
         if(getNum(0) <= 25 && getNum(0) >= 18) {
             if(getNum(0) % 2 != 0 || getNum(1) != getNum(0) + 1) {
-                if(simLED) {
-                    resetLEDs();
-                    simLED = false;
-                }
+                resetLedBad();
                 return "Falcon incorrectly connected to PDP";
             }
         }
 
-        if(!simLED) {
-            simLED = true;
-            LEDs.get(0).blink(20);
-            LEDs.get(0).setColor("red");
-            LEDs.get(0).setStatus("CAN chain error");
-        }
+        simLedBad();
 
         if(getAllNull(2, 5)) {
-            if(!simLED || LEDs.get(0).getColor().equals("green")) {
-                simLED = true;
-                LEDs.get(0).blink(20);
-                LEDs.get(0).setColor("red");
-                LEDs.get(0).setStatus("CAN chain error");
-            }
+            simLedBad();
             return "Falcon not connected to CAN chain";
         }
 
@@ -203,12 +178,7 @@ public class Falcon extends Flippable {
 
             }
 
-            if(!simLED || LEDs.get(0).getColor().equals("green")) {
-                simLED = true;
-                LEDs.get(0).blink(20);
-                LEDs.get(0).setColor("red");
-                LEDs.get(0).setStatus("CAN chain error");
-            }
+            simLedBad();
 
             return ans;
         }
@@ -222,6 +192,22 @@ public class Falcon extends Flippable {
 
 
         return null;
+    }
+
+    private void resetLedBad() {
+        if (simLED) {
+            resetLEDs();
+            simLED = false;
+        }
+    }
+
+    public void simLedBad() {
+        if(!simLED || LEDs.get(0).getColor().equals("green")) {
+            simLED = true;
+            LEDs.get(0).blink(20);
+            LEDs.get(0).setColor("red");
+            LEDs.get(0).setStatus("CAN chain error");
+        }
     }
 
 }
