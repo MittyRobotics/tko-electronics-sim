@@ -81,6 +81,10 @@ public class EthernetCable extends Cable {
 
                 angle = (float) Math.atan2(coordinates.get(0).x - vec2.x, vec2.y - coordinates.get(0).y);
 
+                if(connection2!=null) {
+                    angle = 0;
+                }
+
                 dx = 40*(float) Math.cos(angle);
                 dy = 40*(float) Math.sin(angle);
 
@@ -117,7 +121,7 @@ public class EthernetCable extends Cable {
                     renderer.setColor(DeviceUtil.END_COLORS.get("SelectedPlastic"));
                 }
 
-                if (coordinates.size() == 1) {
+                if (coordinates.size() == 1 || connection1 != null) {
                     angle = 0;
                 } else {
                     angle = (float) Math.atan2(coordinates.get(1).x - coordinates.get(0).x, coordinates.get(0).y - coordinates.get(1).y);
@@ -137,7 +141,7 @@ public class EthernetCable extends Cable {
                     renderer.setColor(DeviceUtil.END_COLORS.get("SelectedPlastic"));
                 }
 
-                if (coordinates.size() == 1) {
+                if (coordinates.size() == 1 || connection2 != null) {
                     angle = 0;
                 } else {
                     angle = (float) Math.atan2(coordinates.get(coordinates.size() - 2).x - coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y - coordinates.get(coordinates.size() - 2).y);
