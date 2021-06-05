@@ -17,7 +17,7 @@ public class Lwjgl3Launcher {
 		Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
 		configuration.setTitle("TKO Circuit Simulator");
 		configuration.setWindowedMode(1366, 768);
-		configuration.setWindowIcon("img/logo/logo.png");
+		configuration.setWindowIcon("logo.png");
 		configuration.setBackBufferConfig(8, 8, 8, 8, 16, 0, 3);
 		return configuration;
 	}
