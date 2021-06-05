@@ -1,4 +1,4 @@
-![TKO Circuit Simulator](https://github.com/MittyRobotics/tko-electronics-sim/blob/master/core/assets/img/logo/circuitsim.png)
+![TKO Circuit Simulator](https://github.com/MittyRobotics/tko-electronics-sim/blob/master/assets/img/logo/circuitsim.png)
 ---
 
 FRC circuit simulator for electronics diagramming and rookie training.<br>
