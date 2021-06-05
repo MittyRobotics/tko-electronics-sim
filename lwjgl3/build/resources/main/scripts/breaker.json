@@ -1,0 +1,27 @@
+{
+  "name": "Main Breaker",
+  "totalLeds": 0,
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Red"
+    }
+  ],
+  "pins": [
+    {
+      "type": "4",
+      "position": [85, 175],
+      "dimensions": [30, 30]
+    },
+    {
+      "type": "4",
+      "position": [-85, -178],
+      "dimensions": [30, 30]
+    }
+  ]
+}

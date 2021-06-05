@@ -1,0 +1,58 @@
+{
+  "name": "Radio",
+  "totalLeds": 4,
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    }
+  ],
+  "pins": [
+    {
+      "type": "18",
+      "position": [-36, -147],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-60, -147],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "13",
+      "position": [20, -147],
+      "dimensions": [25, 25]
+    }
+  ],
+  "leds": [
+    {
+      "color": "off",
+      "type": "Power",
+      "position": [-38, 115],
+      "dimensions": [15, 15]
+    },
+    {
+      "color": "off",
+      "type": "Ethernet",
+      "position": [-15, 115],
+      "dimensions": [15, 15]
+    },
+    {
+      "color": "off",
+      "type": "Ethernet",
+      "position": [9, 115],
+      "dimensions": [15, 15]
+    },
+    {
+      "color": "off",
+      "type": "Wifi",
+      "position": [32, 115],
+      "dimensions": [15, 15]
+    }
+  ]
+}

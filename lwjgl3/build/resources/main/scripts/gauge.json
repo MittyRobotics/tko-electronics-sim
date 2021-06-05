@@ -1,0 +1,15 @@
+{
+  "name": "Gauge",
+  "totalLeds": 0,
+  "crimpedColors": [],
+  "crimped": [],
+  "pins": [
+    {
+      "type": "2",
+      "position": [-3, -273],
+      "dimensions": [15, 15]
+    }
+  ],
+  "leds": [
+  ]
+}

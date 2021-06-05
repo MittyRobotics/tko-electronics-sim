@@ -1,0 +1,90 @@
+{
+  "name": "roboRIO",
+  "totalLeds": 6,
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Green"
+    },
+    {
+      "port": 3,
+      "color": "Yellow"
+    }
+  ],
+  "pins": [
+    {
+      "position": [-260, 413],
+      "dimensions": [15, 15],
+      "type": "18"
+    },
+    {
+      "position": [-260, 390],
+      "dimensions": [15, 15],
+      "type": "18"
+    },
+
+    {
+      "position": [-419, 362],
+      "dimensions": [15, 15],
+      "type": "22"
+    },
+    {
+      "position": [-419, 340],
+      "dimensions": [15, 15],
+      "type": "22"
+    },
+
+    {
+      "position": [151, 379],
+      "dimensions": [16, 16],
+      "type": "13"
+    }
+  ],
+  "leds": [
+    {
+      "color": "off",
+      "type": "Power",
+      "position": [468, 385],
+      "dimensions": [23, 30]
+    },
+    {
+      "color": "off",
+      "type": "Status",
+      "position": [468, 352],
+      "dimensions": [23, 30]
+    },
+    {
+      "color": "off",
+      "type": "Radio (disabled)",
+      "position": [468, 300],
+      "dimensions": [23, 30]
+    },
+    {
+      "color": "off",
+      "type": "Comm",
+      "position": [468, 268],
+      "dimensions": [23, 30]
+    },
+    {
+      "color": "off",
+      "type": "Mode",
+      "position": [468, 233],
+      "dimensions": [23, 30]
+    },
+    {
+      "color": "off",
+      "type": "RSL",
+      "position": [468, 183],
+      "dimensions": [23, 30]
+    }
+  ]
+}
