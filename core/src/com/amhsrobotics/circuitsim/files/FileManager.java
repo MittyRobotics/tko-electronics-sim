@@ -23,7 +23,7 @@ public class FileManager {
     public static void save(String filename) {
         fileName = filename;
         appdata = new AppData();
-        ArrayList<Hardware> hardware = new ArrayList<>(HardwareManager.getHardwareAsList());
+        DelayedRemovalArray<Hardware> hardware = HardwareManager.hardwares;
         DelayedRemovalArray<Cable> cables = CableManager.getCables();
 
         for(Hardware h : hardware) {

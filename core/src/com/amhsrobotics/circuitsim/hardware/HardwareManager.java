@@ -75,9 +75,6 @@ public class HardwareManager {
         return hardwares;
     }
 
-    public static List<Hardware> getHardwareAsList() {
-        return Arrays.asList(hardwares.toArray());
-    }
 
     public static Hardware getCurrentlyHovering(ClippedCameraController camera) {
         for(int i = hardwares.size-1; i >= 0; i--) {
