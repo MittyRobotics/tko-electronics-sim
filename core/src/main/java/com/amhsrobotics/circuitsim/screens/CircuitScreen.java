@@ -133,7 +133,7 @@ public class CircuitScreen implements Screen {
 
                         Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
 
-                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.1f;
+                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.015f;
                         camera.getCamera().update();
 
                         Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
