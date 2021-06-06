@@ -1,6 +1,6 @@
 ## Java
 
-
+lwjgl3/build/
 packaging/windows/jre/
 *.class
 *.war
