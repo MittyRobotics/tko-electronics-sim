@@ -518,22 +518,22 @@ public class CircuitGUIManager implements Disposable {
                                         "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(40);
 
         welcomeTable.row();
-        welcomeTable.add(new Label("GUI Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.add(new Label("Hardware Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
         welcomeTable.row();
-        Image img2 = new Image(new Texture("img/main.png"));
+        Image img2 = new Image(new Texture("img/device.png"));
         img2.setScaling(Scaling.fit);
         welcomeTable.add(img2).colspan(2).align(Align.center).padBottom(20).height(320);
 
         welcomeTable.row();
-        welcomeTable.add(new Label("To add components, use the menu on the right. \n" +
-                "Click on a button for a component, and click on the grid when you\n" +
-                "want to place it. To filter components, use the menu on the top. ", lStyle)).colspan(2).align(Align.left).padBottom(20);
+        welcomeTable.add(new Label("Once you place a device, click on it to select it.\n" +
+                                        "A menu should appear on the left. You can rotate the device and\n" +
+                                        "look at its connections. You can also drag the device to move it.\n" +
+                                        "Press delete to remove a device and esc to unselect it.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
         welcomeTable.row();
-        welcomeTable.add(new Label("Many functional buttons are on the top. \n" +
-                "You can quit, save your design to a file, open a help menu (with\n" +
-                "keybinds), open a settings menu, clear your design, toggle the panel,\n" +
-                "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+        welcomeTable.add(new Label("The salmon-colored dots are wire connections. \n" +
+                                        "Some already have crimped wires attached. Otherwise, you can\n" +
+                                        "double click to create a wire there.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
 
