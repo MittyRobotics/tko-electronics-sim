@@ -494,10 +494,15 @@ public class CircuitGUIManager implements Disposable {
             }
         });
 
-        for(int i = 0; i < 100; i++) {
-            welcomeTable.row();
-            welcomeTable.add(new Label("Placeholder Text!", lStyle)).colspan(2).align(Align.center).padBottom(5);
-        }
+
+        welcomeTable.add(new Label("Welcome to TKO Circuit Sim!", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        welcomeTable.add(new Label(" ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        welcomeTable.add(new Label("Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        welcomeTable.add(new Image(new Texture("img/main.png"))).colspan(2).align(Align.center).padBottom(5);
+
 
         welcomeMenu.add(scroll).colspan(2).expand().fill();
         welcomeMenu.row();
@@ -509,9 +514,9 @@ public class CircuitGUIManager implements Disposable {
         tbStyle.up = Constants.SKIN.getDrawable("button_03");
         tbStyle.down = Constants.SKIN.getDrawable("button_02");
 
-        TextButton dontshow = new TextButton("Don't Show Again", tbStyle);
+        TextButton dontshow = new TextButton(" Don't Show Again ", tbStyle);
         welcomeMenu.add(dontshow).colspan(1).padRight(10).align(Align.right);
-        TextButton close = new TextButton("Close", tbStyle);
+        TextButton close = new TextButton(" Close ", tbStyle);
         welcomeMenu.add(close).colspan(1).padLeft(10).align(Align.left);
 
         dontshow.addListener(new ChangeListener() {
