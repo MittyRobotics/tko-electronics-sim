@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Scaling;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.camera.CameraController;
 import me.rohanbansal.ricochet.tools.Actions;
@@ -497,11 +498,43 @@ public class CircuitGUIManager implements Disposable {
 
         welcomeTable.add(new Label("Welcome to TKO Circuit Sim!", lStyle)).colspan(2).align(Align.center).padBottom(5);
         welcomeTable.row();
-        welcomeTable.add(new Label(" ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.add(new Label("(Scroll down)", lStyle)).colspan(2).align(Align.center).padBottom(5);
         welcomeTable.row();
-        welcomeTable.add(new Label("Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.add(new Label("Menu Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
         welcomeTable.row();
-        welcomeTable.add(new Image(new Texture("img/main.png"))).colspan(2).align(Align.center).padBottom(5);
+        Image img = new Image(new Texture("img/main.png"));
+        img.setScaling(Scaling.fit);
+        welcomeTable.add(img).colspan(2).align(Align.center).padBottom(20).height(320);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("To add components, use the menu on the right. \n" +
+                                        "Click on a button for a component, and click on the grid when you\n" +
+                                        "want to place it. To filter components, use the menu on the top. ", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("Many functional buttons are on the top. \n" +
+                                        "You can quit, save your design to a file, open a help menu (with\n" +
+                                        "keybinds), open a settings menu, clear your design, toggle the panel,\n" +
+                                        "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(40);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("GUI Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        Image img2 = new Image(new Texture("img/main.png"));
+        img2.setScaling(Scaling.fit);
+        welcomeTable.add(img2).colspan(2).align(Align.center).padBottom(20).height(320);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("To add components, use the menu on the right. \n" +
+                "Click on a button for a component, and click on the grid when you\n" +
+                "want to place it. To filter components, use the menu on the top. ", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("Many functional buttons are on the top. \n" +
+                "You can quit, save your design to a file, open a help menu (with\n" +
+                "keybinds), open a settings menu, clear your design, toggle the panel,\n" +
+                "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
 
 
         welcomeMenu.add(scroll).colspan(2).expand().fill();
