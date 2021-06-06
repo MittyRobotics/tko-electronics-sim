@@ -536,10 +536,30 @@ public class CircuitGUIManager implements Disposable {
                                         "double click to create a wire there.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
+        welcomeTable.row();
+        welcomeTable.add(new Label("Wiring Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        Image img3 = new Image(new Texture("img/wire.png"));
+        img3.setScaling(Scaling.fit);
+        welcomeTable.add(img3).colspan(2).align(Align.center).padBottom(20).height(320);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("You can double click a node or place one from the menu to create\n" +
+                                        "a wire. You can drag it, extend it by clicking the endpoints, and\n" +
+                                        "delete (with key) or move individual nodes by clicking on them.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("On the top right, there is a menu with many useful functions. \n" +
+                                        "You can change the color and gauge of the wire (disabled for\n" +
+                                        "connected wires), and disconnect either end.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("That's it for the basic usage. If you have any questions or issues,\n" +
+                                        "open an issue on the Github.", lStyle)).colspan(2).align(Align.left).padBottom(5);
 
         welcomeMenu.add(scroll).colspan(2).expand().fill();
         welcomeMenu.row();
-        welcomeMenu.add(new Label("", l3Style)).colspan(2);
+        welcomeMenu.add(new Label(" ", l3Style)).colspan(2);
         welcomeMenu.row();
 
         TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle();
