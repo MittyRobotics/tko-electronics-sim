@@ -1,2 +1,0 @@
-com/amhsrobotics/circuitsim/lwjgl3/Lwjgl3Launcher.java
- com.amhsrobotics.circuitsim.lwjgl3.Lwjgl3Launcher
