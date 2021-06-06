@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.gui.ConfirmDialog;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
@@ -96,8 +97,8 @@ public class CircuitScreen implements Screen {
                         selectMultiple2 = vec2;
                     }
                 } else {
-                    float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
-                    float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
+                    float x = 4 * Gdx.input.getDeltaX() * camera.getCamera().zoom;
+                    float y = 4 * Gdx.input.getDeltaY() * camera.getCamera().zoom;
                     if(selectedMultiple) {
                         selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
                         selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
@@ -133,7 +134,7 @@ public class CircuitScreen implements Screen {
 
                         Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
 
-                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.015f;
+                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.1f;
                         camera.getCamera().update();
 
                         Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
@@ -408,6 +409,15 @@ public class CircuitScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        // TODO add confirm dialog for resize, tell user to save, go to title screen, come back
+//        ConfirmDialog.createWindow(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }
+//        );
     }
     @Override
     public void pause() { }
