@@ -97,8 +97,8 @@ public class CircuitScreen implements Screen {
                         selectMultiple2 = vec2;
                     }
                 } else {
-                    float x = 4 * Gdx.input.getDeltaX() * camera.getCamera().zoom;
-                    float y = 4 * Gdx.input.getDeltaY() * camera.getCamera().zoom;
+                    float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
+                    float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
                     if(selectedMultiple) {
                         selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
                         selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
