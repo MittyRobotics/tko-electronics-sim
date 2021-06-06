@@ -11,22 +11,21 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 - Circuit diagramming with FRC parts (see subsection below for list)
 - Creating, moving, connecting devices with cables
 - Saving/importing circuits as shareable files
-- Automated debugging for wiring errors
+- Simulation for wiring errors
 - Simple LED simulation
 - 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
 - Packages for easy installation (support for Windows, MacOS, Linux)
+- Lightweight and fast with lwjgl3 
 
 ## Future Updates
 
-- Enable resizing and fix bugs
+- Enable resizing
 - Future hardware (limelight, RSL, sensors, servos, etc.) 
-- Welcome screen with basic instructions and more intuitive interface
+- Welcome screen with basic instructions
 - Twisted cables and groups of three cables for RoboRIO
 - Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagramming
-- Actual simulation of gauges, pistons, motors
-- Color themes
-- Commented code
+- Cleaner code
 
 ## Installation
 
