@@ -470,7 +470,13 @@ public abstract class Hardware implements Json.Serializable {
                 }
 
                 //SET OWN POSITION
-                setPosition(vec.x + diffX, vec.y + diffY);
+
+                Vector2 isOutOfBounds = Tools.checkOutOfBounds(getSpriteBox(), getPosition());
+                if(isOutOfBounds != null) {
+                    setPosition(isOutOfBounds.x, isOutOfBounds.y);
+                } else {
+                    setPosition(vec.x + diffX, vec.y + diffY);
+                }
             }
 
         }

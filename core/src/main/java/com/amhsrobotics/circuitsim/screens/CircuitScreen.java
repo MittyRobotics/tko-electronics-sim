@@ -108,7 +108,9 @@ public class CircuitScreen implements Screen {
                             }
                         }
                         for(Hardware h : selected) {
+//                            if(h.getSpriteBox().x - 10 > Tools.mouseScreenToWorld(camera).x) {
                             h.move(x, -y);
+//                            }
                         }
                         selectMultiple1.add(x, -y);
                         selectMultiple2.add(x, -y);
@@ -164,6 +166,7 @@ public class CircuitScreen implements Screen {
 
     @Override
     public void render(float delta) {
+//        Gdx.app.log(Tools.mouseScreenToWorld(camera).toString(), "");
 
         camera.update();
         camera.calculateBounds();
@@ -256,7 +259,16 @@ public class CircuitScreen implements Screen {
 
 
             if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
-                currentPlacingHardware.setPosition(vec2.x, vec2.y);
+
+                Vector2 isOutOfBounds = Tools.checkOutOfBounds(currentPlacingHardware.getSpriteBox(), currentPlacingHardware.getPosition());
+                if(isOutOfBounds != null) {
+                    currentPlacingHardware.setPosition(isOutOfBounds.x, isOutOfBounds.y);
+                } else {
+                    currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                }
+
+
+
             } else {
                 if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING || Constants.placing_object == HardwareType.CURVEDCABLE) {
                     drawPlacing(vec2.x, vec2.y);
