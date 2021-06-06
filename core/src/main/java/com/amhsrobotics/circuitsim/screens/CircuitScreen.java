@@ -389,8 +389,6 @@ public class CircuitScreen implements Screen {
                 CableManager.addEthernet(vec2.x, vec2.y);
             } else if (Constants.placing_object == HardwareType.TUBING) {
                 CableManager.addTubing(vec2.x, vec2.y);
-            } else if (Constants.placing_object == HardwareType.CURVEDCABLE) {
-                    CableManager.addCurvedCable(vec2.x, vec2.y);
             } else {
                 CableManager.addCable(vec2.x, vec2.y);
             }

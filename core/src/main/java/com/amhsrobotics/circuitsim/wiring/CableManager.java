@@ -198,9 +198,6 @@ public class CableManager {
                 case 2:
                     temp = new Tubing(new Vector2(startX, startY), id);
                     break;
-                case 3:
-                    temp = new CurvedCable(new Vector2(startX, startY), id);
-                    break;
             }
             id++;
 

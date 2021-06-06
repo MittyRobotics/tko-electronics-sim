@@ -640,10 +640,27 @@ public abstract class Hardware implements Json.Serializable {
         } else if(portTypes.get(port).equals("2") && cable.getGauge() != 2) {
             CircuitGUIManager.popup.activateError("Port requires pneumatics tubing");
         }  else {
+
+
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
             cable.removeCoordinates();
+
+            if(this instanceof SandCrab) {
+                if(((SandCrab) this).getGauge() == -1) {
+                    cable.setGauge(22);
+                } else {
+                    cable.setGauge(((SandCrab) this).getGauge());
+                }
+            } else {
+                cable.setGauge(Integer.parseInt(portTypes.get(port)));
+            }
+            for(Tuple<Integer, String> tup : defaultColors) {
+                if((int) tup.x == port) {
+                    cable.setColor(DeviceUtil.COLORS.get(tup.y));
+                }
+            }
 
             attachWireLib(cable, port, endOfWire);
 
