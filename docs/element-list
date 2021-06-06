@@ -1,0 +1,13 @@
+com.amhsrobotics.circuitsim
+com.amhsrobotics.circuitsim.files
+com.amhsrobotics.circuitsim.gui
+com.amhsrobotics.circuitsim.hardware
+com.amhsrobotics.circuitsim.hardware.devices
+com.amhsrobotics.circuitsim.hardware.parts
+com.amhsrobotics.circuitsim.lwjgl3
+com.amhsrobotics.circuitsim.screens
+com.amhsrobotics.circuitsim.utility
+com.amhsrobotics.circuitsim.utility.camera
+com.amhsrobotics.circuitsim.utility.input
+com.amhsrobotics.circuitsim.utility.scene
+com.amhsrobotics.circuitsim.wiring
