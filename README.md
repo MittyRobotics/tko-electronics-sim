@@ -16,13 +16,11 @@ Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) 
 - 2D CAD-inspired GUI
 - Keybinds, help menu, options menu, and other QOL features
 - Packages for easy installation (support for Windows, MacOS, Linux)
-- Lightweight and fast with lwjgl3 
 
 ## Future Updates
 
 - Enable resizing
 - Future hardware (limelight, RSL, sensors, servos, etc.) 
-- Welcome screen with basic instructions
 - Twisted cables and groups of three cables for RoboRIO
 - Accurate scaling of parts on a blocks-per-inch grid for E-Plate diagramming
 - Cleaner code
