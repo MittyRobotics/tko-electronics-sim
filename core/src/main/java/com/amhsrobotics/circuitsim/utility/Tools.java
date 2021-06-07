@@ -1,10 +1,12 @@
 package com.amhsrobotics.circuitsim.utility;
 
+import com.amhsrobotics.circuitsim.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,6 +41,23 @@ public class Tools {
                 r1p2.y <= r2p1.y ||
                 r1p1.x >= r2p2.x ||
                 r1p1.y >= r2p2.y);
+    }
+
+    // returns coordinates to reset to if out of bounds
+    public static Vector2 checkOutOfBounds(Rectangle spriteBox, Vector2 originPosition) {
+        if(spriteBox.x <= 0) {
+            return new Vector2(5 + (float)(spriteBox.width / 2), originPosition.y);
+        } else if(spriteBox.x + spriteBox.width >= Constants.WORLD_DIM.x) {
+            return new Vector2(Constants.WORLD_DIM.x - 5 - (float)(spriteBox.width / 2), originPosition.y);
+        }
+
+        if(spriteBox.y <= 0) {
+            return new Vector2(originPosition.x, 5 + (float)(spriteBox.height / 2));
+        } else if(spriteBox.y + spriteBox.height >= Constants.WORLD_DIM.y) {
+            return new Vector2(originPosition.x, Constants.WORLD_DIM.y - 5 - (float)(spriteBox.height / 2));
+        }
+
+        return null;
     }
 
     public static void slideIn(Actor actor, String location, float duration, Interpolation interp, int offset, Runnable... runnable) {

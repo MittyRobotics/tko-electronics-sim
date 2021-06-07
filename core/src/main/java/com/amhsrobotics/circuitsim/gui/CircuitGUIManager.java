@@ -584,9 +584,9 @@ public class CircuitGUIManager implements Disposable {
         tbStyle.down = Constants.SKIN.getDrawable("button_02");
 
         TextButton dontshow = new TextButton(" Don't Show Again ", tbStyle);
-        welcomeMenu.add(dontshow).colspan(1).padRight(10).align(Align.right);
+//        welcomeMenu.add(dontshow).colspan(1).padRight(10).align(Align.right);
         TextButton close = new TextButton(" Close ", tbStyle);
-        welcomeMenu.add(close).colspan(1).padLeft(10).align(Align.left);
+        welcomeMenu.add(close).colspan(2).align(Align.center);
 
         dontshow.addListener(new ChangeListener() {
             @Override

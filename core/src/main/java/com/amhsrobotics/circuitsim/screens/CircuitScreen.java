@@ -3,6 +3,7 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
+import com.amhsrobotics.circuitsim.gui.ConfirmDialog;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
@@ -107,7 +108,9 @@ public class CircuitScreen implements Screen {
                             }
                         }
                         for(Hardware h : selected) {
+//                            if(h.getSpriteBox().x - 10 > Tools.mouseScreenToWorld(camera).x) {
                             h.move(x, -y);
+//                            }
                         }
                         selectMultiple1.add(x, -y);
                         selectMultiple2.add(x, -y);
@@ -133,7 +136,7 @@ public class CircuitScreen implements Screen {
 
                         Vector3 worldCoordsBefore = camera.getCamera().unproject(new Vector3(screenCoords));
 
-                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.015f;
+                        camera.getCamera().zoom += amountY * camera.getCamera().zoom * 0.1f;
                         camera.getCamera().update();
 
                         Vector3 worldCoordsAfter = camera.getCamera().unproject(new Vector3(screenCoords));
@@ -163,6 +166,7 @@ public class CircuitScreen implements Screen {
 
     @Override
     public void render(float delta) {
+//        Gdx.app.log(Tools.mouseScreenToWorld(camera).toString(), "");
 
         camera.update();
         camera.calculateBounds();
@@ -255,7 +259,16 @@ public class CircuitScreen implements Screen {
 
 
             if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
-                currentPlacingHardware.setPosition(vec2.x, vec2.y);
+
+                Vector2 isOutOfBounds = Tools.checkOutOfBounds(currentPlacingHardware.getSpriteBox(), currentPlacingHardware.getPosition());
+                if(isOutOfBounds != null) {
+                    currentPlacingHardware.setPosition(isOutOfBounds.x, isOutOfBounds.y);
+                } else {
+                    currentPlacingHardware.setPosition(vec2.x, vec2.y);
+                }
+
+
+
             } else {
                 if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING || Constants.placing_object == HardwareType.CURVEDCABLE) {
                     drawPlacing(vec2.x, vec2.y);
@@ -408,6 +421,15 @@ public class CircuitScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        // TODO add confirm dialog for resize, tell user to save, go to title screen, come back
+//        ConfirmDialog.createWindow(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }
+//        );
     }
     @Override
     public void pause() { }
