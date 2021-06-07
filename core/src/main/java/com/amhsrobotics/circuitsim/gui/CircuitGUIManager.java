@@ -531,9 +531,10 @@ public class CircuitGUIManager implements Disposable {
                                         "Press delete to remove a device and esc to unselect it.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
         welcomeTable.row();
-        welcomeTable.add(new Label("The salmon-colored dots are wire connections. \n" +
+        welcomeTable.add(new Label("The salmon-colored dots are wire connectors. \n" +
                                         "Some already have crimped wires attached. Otherwise, you can\n" +
-                                        "double click to create a wire there.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                                        "double click to create a wire there. Hover to see details\n" +
+                "about the connector.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
         welcomeTable.row();
@@ -552,6 +553,21 @@ public class CircuitGUIManager implements Disposable {
         welcomeTable.add(new Label("On the top right, there is a menu with many useful functions. \n" +
                                         "You can change the color and gauge of the wire (disabled for\n" +
                                         "connected wires), and disconnect either end.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("Simulation Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
+        welcomeTable.row();
+        Image img4 = new Image(new Texture("img/sim.png"));
+        img4.setScaling(Scaling.fit);
+        welcomeTable.add(img4).colspan(2).align(Align.center).padBottom(20).height(320);
+
+        welcomeTable.row();
+        welcomeTable.add(new Label("Click the Simulate button on the top to simulate your diagram.\n" +
+                                        "A green outline will appear around correctly wired components, and\n" +
+                                        "a red one around incorrectly wired ones. Error messages appear\n" +
+                                        "on top. This also simulates LEDs - hover over them for details.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+
 
         welcomeTable.row();
         welcomeTable.add(new Label("That's it for the basic usage. If you have any questions or issues,\n" +
