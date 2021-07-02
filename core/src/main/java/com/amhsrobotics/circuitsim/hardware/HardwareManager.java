@@ -14,9 +14,7 @@ import com.badlogic.gdx.utils.DelayedRemovalArray;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class HardwareManager {
 
@@ -30,27 +28,27 @@ public class HardwareManager {
     public static Hardware toBeMovedForward;
 
     public static void update(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
-        if(toBeMovedForward != null) {
+        if (toBeMovedForward != null) {
             int i = hardwares.indexOf(toBeMovedForward, true);
-            if(i != hardwares.size-1) {
-                Hardware temp = hardwares.get(i+1);
-                hardwares.set(i+1, toBeMovedForward);
+            if (i != hardwares.size - 1) {
+                Hardware temp = hardwares.get(i + 1);
+                hardwares.set(i + 1, toBeMovedForward);
                 hardwares.set(i, temp);
             }
             toBeMovedForward = null;
         }
 
 
-        for(Hardware h : hardwares) {
-            if(!(h instanceof EPlate)) {
+        for (Hardware h : hardwares) {
+            if (!(h instanceof EPlate)) {
                 h.update(batch, renderer, cam);
             }
         }
     }
 
     public static void updateEplates(ModifiedShapeRenderer renderer, SpriteBatch batch, ClippedCameraController cam) {
-        for(Hardware h : hardwares) {
-            if(h instanceof EPlate) {
+        for (Hardware h : hardwares) {
+            if (h instanceof EPlate) {
                 h.update(batch, renderer, cam);
             }
         }
@@ -62,8 +60,8 @@ public class HardwareManager {
         Vector2 vec1 = new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y));
         Vector2 vec2 = new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
 
-        for(Hardware h : hardwares) {
-            if(!(h instanceof EPlate) && h.intersect(vec1, vec2)) {
+        for (Hardware h : hardwares) {
+            if (!(h instanceof EPlate) && h.intersect(vec1, vec2)) {
                 ans.add(h);
             }
         }
@@ -77,8 +75,8 @@ public class HardwareManager {
 
 
     public static Hardware getCurrentlyHovering(ClippedCameraController camera) {
-        for(int i = hardwares.size-1; i >= 0; i--) {
-            if((!(hardwares.get(i) instanceof EPlate)) && hardwares.get(i).getHoveringMouse(camera)) {
+        for (int i = hardwares.size - 1; i >= 0; i--) {
+            if ((!(hardwares.get(i) instanceof EPlate)) && hardwares.get(i).getHoveringMouse(camera)) {
                 return hardwares.get(i);
             }
         }
@@ -88,8 +86,8 @@ public class HardwareManager {
 
     public static void moveToFront(Hardware hardware) {
         DelayedRemovalArray<Hardware> temp = new DelayedRemovalArray<>();
-        for(int i = 0; i < hardwares.size; i++) {
-            if(hardwares.get(i).getHardwareID() != hardware.getHardwareID()) {
+        for (int i = 0; i < hardwares.size; i++) {
+            if (hardwares.get(i).getHardwareID() != hardware.getHardwareID()) {
                 temp.add(hardwares.get(i));
             }
         }
@@ -102,8 +100,8 @@ public class HardwareManager {
     public static void moveToBack(Hardware hardware) {
         DelayedRemovalArray<Hardware> temp = new DelayedRemovalArray<>();
         temp.add(hardware);
-        for(int i = 0; i < hardwares.size; i++) {
-            if(hardwares.get(i).getHardwareID() != hardware.getHardwareID()) {
+        for (int i = 0; i < hardwares.size; i++) {
+            if (hardwares.get(i).getHardwareID() != hardware.getHardwareID()) {
                 temp.add(hardwares.get(i));
             }
         }
@@ -113,9 +111,9 @@ public class HardwareManager {
 
     public static void moveBack(Hardware hardware) {
         int i = hardwares.indexOf(hardware, true);
-        if(i != 0) {
-            Hardware temp = hardwares.get(i-1);
-            hardwares.set(i-1, hardware);
+        if (i != 0) {
+            Hardware temp = hardwares.get(i - 1);
+            hardwares.set(i - 1, hardware);
             hardwares.set(i, temp);
         }
     }
@@ -128,10 +126,10 @@ public class HardwareManager {
 
         //GET IF WIRE IS CLICKED ON HARDWARE
 
-        for(Hardware h : hardwares) {
-            if(h.getTotalConnectors() != 0) {
-                for(int x = 0; x < h.getTotalConnectors(); x++) {
-                    if(h.getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
+        for (Hardware h : hardwares) {
+            if (h.getTotalConnectors() != 0) {
+                for (int x = 0; x < h.getTotalConnectors(); x++) {
+                    if (h.getConnector(x).getBoundingRectangle().contains(vec.x, vec.y)) {
                         int finalX = x;
                         return new HashMap<Hardware, Integer>() {{
                             put(h, finalX);
@@ -144,14 +142,14 @@ public class HardwareManager {
     }
 
     public static void removeCableFromHardware(Cable cable, Hardware hardware) {
-        if(hardware != null) {
+        if (hardware != null) {
             hardware.clearConnection(cable);
         }
     }
 
     public static Hardware switchCaseHardware(HardwareType type, float startX, float startY, boolean addCrimped) {
         Hardware temp;
-        switch(type) {
+        switch (type) {
             case PDP:
                 temp = new PowerDistributionPanel(new Vector2(startX, startY), addCrimped);
                 break;
@@ -262,11 +260,11 @@ public class HardwareManager {
         Hardware temp = switchCaseHardware(model.type, model.position.x, model.position.y, true);
         temp.setHardwareID(model.id);
 
-        if(temp instanceof EPlate) {
+        if (temp instanceof EPlate) {
             ((EPlate) temp).setBox(model.box);
         }
-        if(temp instanceof Flippable) {
-            for(int x = 0; x < model.rotation / 90; x++) {
+        if (temp instanceof Flippable) {
+            for (int x = 0; x < model.rotation / 90; x++) {
                 ((Flippable) temp).rotateThis();
             }
         }
@@ -277,8 +275,8 @@ public class HardwareManager {
     }
 
     public static Hardware getHardwareByID(int id) {
-        for(Hardware h : hardwares) {
-            if(h.getHardwareID() == id) {
+        for (Hardware h : hardwares) {
+            if (h.getHardwareID() == id) {
                 return h;
             }
         }

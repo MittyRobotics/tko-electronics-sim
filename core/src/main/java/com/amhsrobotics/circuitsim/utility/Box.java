@@ -7,14 +7,15 @@ public class Box {
     public float x, y, width, height;
     private Vector2[] resizePoints;
 
-    public Box() {}
+    public Box() {
+    }
 
     public Box(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        resizePoints = new Vector2[] {
+        resizePoints = new Vector2[]{
                 new Vector2(x, y), // bottom left
                 new Vector2(x + (width / 2), y), // bottom center
                 new Vector2(x + width, y), // bottom right

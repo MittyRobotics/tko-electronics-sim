@@ -18,16 +18,17 @@ import org.json.simple.JSONArray;
 
 public class SandCrab extends Flippable {
 
-    public SandCrab() {}
+    public SandCrab() {
+    }
 
     public SandCrab(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
         this.type = type;
 
-        for(JSONArray arr : pinDefs) {
+        for (JSONArray arr : pinDefs) {
             Sprite temp;
-            if(connectors.size() == connNum) {
+            if (connectors.size() == connNum) {
                 break;
             }
 
@@ -43,13 +44,13 @@ public class SandCrab extends Flippable {
     public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
         position = Tools.mouseScreenToWorld(camera);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
             SnapGrid.calculateSnap(position);
         }
         base.setCenter(getPosition().x, getPosition().y);
         batch.begin();
         base.draw(batch);
-        for(Sprite c : connectors) {
+        for (Sprite c : connectors) {
             c.setCenter(position.x + (Long) pinDefs.get(connectors.indexOf(c)).get(0), position.y + (Long) pinDefs.get(connectors.indexOf(c)).get(1));
             c.draw(batch);
         }
@@ -57,7 +58,7 @@ public class SandCrab extends Flippable {
     }
 
     public String check() {
-        if(getNull(0) || getNull(1)) {
+        if (getNull(0) || getNull(1)) {
             return "Sandcrab is not connected";
         }
 
@@ -66,11 +67,11 @@ public class SandCrab extends Flippable {
 
     public Hardware getWagoOther(Cable c) {
 
-        if(c == connections.get(0)) {
+        if (c == connections.get(0)) {
             if (connections.get(1) == null) {
                 return null;
             } else {
-                if(!seen && connections.get(1).getOtherConnectionSimple(this) != this) {
+                if (!seen && connections.get(1).getOtherConnectionSimple(this) != this) {
                     seen = true;
                     return connections.get(1).getOtherConnection(this);
                 } else {
@@ -81,7 +82,7 @@ public class SandCrab extends Flippable {
             if (connections.get(0) == null) {
                 return null;
             } else {
-                if(!seen && connections.get(0).getOtherConnectionSimple(this) != this) {
+                if (!seen && connections.get(0).getOtherConnectionSimple(this) != this) {
                     seen = true;
                     return connections.get(0).getOtherConnection(this);
                 } else {
@@ -92,14 +93,14 @@ public class SandCrab extends Flippable {
     }
 
     public int getGauge() {
-        if(connections.get(0) != null) {
+        if (connections.get(0) != null) {
             return (int) connections.get(0).gauge;
         }
-        if(connections.get(1) != null) {
+        if (connections.get(1) != null) {
             return (int) connections.get(1).gauge;
         }
-        if(type == HardwareType.TRIPLESANDCRAB) {
-            if(connections.get(2) != null) {
+        if (type == HardwareType.TRIPLESANDCRAB) {
+            if (connections.get(2) != null) {
                 return (int) connections.get(2).gauge;
             }
         }
@@ -107,18 +108,18 @@ public class SandCrab extends Flippable {
     }
 
     public String getGaugeString() {
-        if(getGauge() == -1) {
+        if (getGauge() == -1) {
             return "18/22";
         }
-        return ""+getGauge();
+        return "" + getGauge();
     }
 
     public int getWagoOtherNum(Cable c) {
-        if(c == connections.get(0)) {
+        if (c == connections.get(0)) {
             if (connections.get(1) == null) {
                 return -1;
             } else {
-                if(connections.get(1).getOtherConnectionSimple(this) instanceof SandCrab) {
+                if (connections.get(1).getOtherConnectionSimple(this) instanceof SandCrab) {
                     return ((SandCrab) connections.get(1).getOtherConnectionSimple(this)).getWagoOtherNum(connections.get(1));
                 }
                 return connections.get(1).getOtherConnectionSimple(this).getConnNum(connections.get(1));
@@ -127,7 +128,7 @@ public class SandCrab extends Flippable {
             if (connections.get(0) == null) {
                 return -1;
             } else {
-                if(connections.get(0).getOtherConnectionSimple(this) instanceof SandCrab) {
+                if (connections.get(0).getOtherConnectionSimple(this) instanceof SandCrab) {
                     return ((SandCrab) connections.get(0).getOtherConnectionSimple(this)).getWagoOtherNum(connections.get(0));
                 }
                 return connections.get(0).getOtherConnectionSimple(this).getConnNum(connections.get(0));

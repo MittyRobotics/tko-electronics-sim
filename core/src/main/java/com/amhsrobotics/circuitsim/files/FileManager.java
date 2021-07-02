@@ -11,13 +11,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.Json;
 
-import java.util.ArrayList;
-
 public class FileManager {
 
-    private static Json json = new Json();
     public static AppData appdata;
     public static String fileName = "";
+    private static final Json json = new Json();
 
     // testing
     public static void save(String filename) {
@@ -26,21 +24,21 @@ public class FileManager {
         DelayedRemovalArray<Hardware> hardware = HardwareManager.hardwares;
         DelayedRemovalArray<Cable> cables = CableManager.getCables();
 
-        for(Hardware h : hardware) {
+        for (Hardware h : hardware) {
             HardwareModel hm = new HardwareModel();
             hm.load(h);
 
             appdata.addHardware(hm);
         }
 
-        for(Cable c : cables) {
+        for (Cable c : cables) {
             CableModel cm = new CableModel();
-            if((c.connection1port != -1 && c.connection2port != -1) && !(c instanceof CrimpedCable)) {
+            if ((c.connection1port != -1 && c.connection2port != -1) && !(c instanceof CrimpedCable)) {
                 cm.load(c);
                 appdata.addCable(cm);
             }
-            if(c instanceof CrimpedCable) {
-                if(c.getConnection1() != null && c.getConnection2() != null) {
+            if (c instanceof CrimpedCable) {
+                if (c.getConnection1() != null && c.getConnection2() != null) {
                     cm.load(c);
                     appdata.addCable(cm);
                 }
@@ -50,7 +48,7 @@ public class FileManager {
         appdata.setGridSize(Constants.WORLD_DIM);
         appdata.setGridSpacing(Constants.GRID_SIZE);
 
-        if(!filename.contains(".tko")) {
+        if (!filename.contains(".tko")) {
             filename += ".tko";
         }
         FileHandle file = Gdx.files.absolute(filename);
@@ -67,11 +65,11 @@ public class FileManager {
             Constants.WORLD_DIM = appdata.getGridSize();
             Constants.GRID_SIZE = Math.round(appdata.getGridSpacing());
 
-            for(HardwareModel hm : appdata.getHardware()) {
+            for (HardwareModel hm : appdata.getHardware()) {
                 HardwareManager.loadHardware(hm);
             }
 
-            for(CableModel cm : appdata.getCables()) {
+            for (CableModel cm : appdata.getCables()) {
                 CableManager.loadCable(cm);
             }
 

@@ -8,7 +8,7 @@ public class Rumble {
 
     public static float time = 0, currentTime = 0, power = 0, currentPower = 0;
     private static Random random;
-    private static Vector3 pos = new Vector3();
+    private static final Vector3 pos = new Vector3();
 
     public static void rumble(float rumblePower, float rumbleLength) {
         random = new Random();

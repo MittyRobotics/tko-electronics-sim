@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class CableModel {
 
-    public CableModel() {}
-
     public float gauge;
     public int id;
     public int hardware1ID, hardware2ID;
@@ -19,6 +17,8 @@ public class CableModel {
     public ArrayList<Vector2> coordinates;
     public int port1, port2;
     public String cableType;
+    public CableModel() {
+    }
 
     public void load(Cable c) {
         coordinates = c.coordinates;
@@ -34,11 +34,11 @@ public class CableModel {
         b = c.color.b;
         a = c.color.a;
 
-        if(c instanceof EthernetCable) {
+        if (c instanceof EthernetCable) {
             cableType = "ethernet";
-        } else if(c instanceof Tubing) {
+        } else if (c instanceof Tubing) {
             cableType = "tubing";
-        } else if(c instanceof CrimpedCable) {
+        } else if (c instanceof CrimpedCable) {
             cableType = "crimped";
         } else {
             cableType = "regular";

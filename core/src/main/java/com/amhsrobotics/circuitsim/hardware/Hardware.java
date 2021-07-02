@@ -39,7 +39,7 @@ import java.util.ArrayList;
 public abstract class Hardware implements Json.Serializable {
 
     public Vector2 position;
-    public int hardwareID, hardwareID2, cur,connNum, ledNum;
+    public int hardwareID, hardwareID2, cur, connNum, ledNum;
     public DelayedRemovalArray<Cable> connections;
     public ArrayList<Boolean> ends;
     public ArrayList<Integer> crimpedPorts;
@@ -65,7 +65,8 @@ public abstract class Hardware implements Json.Serializable {
 
     public float diffX, diffY, cableDX, cableDY;
 
-    public Hardware() {}
+    public Hardware() {
+    }
 
     public Hardware(Vector2 pos, HardwareType type, boolean... addCrimped) {
         this.position = pos;
@@ -73,7 +74,7 @@ public abstract class Hardware implements Json.Serializable {
         this.hardwareID2 = DeviceUtil.getNewHardwareID(type);
         this.hardwareID = DeviceUtil.getNewHardwareID();
 
-        if(type != HardwareType.EPLATE) {
+        if (type != HardwareType.EPLATE) {
             connections = new DelayedRemovalArray<>();
             ends = new ArrayList<>();
             crimpedPorts = new ArrayList<>();
@@ -82,11 +83,11 @@ public abstract class Hardware implements Json.Serializable {
             canMove = false;
             HardwareManager.movingObject = false;
 
-            if(addCrimped.length > 0) {
+            if (addCrimped.length > 0) {
                 this.addCrimped = addCrimped[0];
             }
 
-            if(Constants.placing_object == null) {
+            if (Constants.placing_object == null) {
                 populateProperties();
                 CircuitGUIManager.propertiesBox.show();
             }
@@ -103,8 +104,8 @@ public abstract class Hardware implements Json.Serializable {
     public void updatePosition(ClippedCameraController camera, ModifiedShapeRenderer renderer, SpriteBatch batch) {
         position = Tools.mouseScreenToWorld(camera);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-            if(SnapGrid.renderGridB) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+            if (SnapGrid.renderGridB) {
                 SnapGrid.calculateSnap(position);
             }
         }
@@ -124,14 +125,14 @@ public abstract class Hardware implements Json.Serializable {
         name = (String) (JSONReader.getCurrentConfig().get("name"));
         JSONArray pins = (JSONArray) JSONReader.getCurrentConfig().get("pins");
         connNum = pins.size();
-        for(int x = 0; x < pins.size(); x++) {
+        for (int x = 0; x < pins.size(); x++) {
             pinDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("position"));
             pinSizeDefs.add((JSONArray) ((JSONObject) pins.get(x)).get("dimensions"));
             portTypes.add((String) ((JSONObject) pins.get(x)).get("type"));
         }
         JSONArray defCols = (JSONArray) JSONReader.getCurrentConfig().get("defaultColors");
-        if(defCols != null && defCols.size() > 0) {
-            for(int x = 0; x < defCols.size(); x++) {
+        if (defCols != null && defCols.size() > 0) {
+            for (int x = 0; x < defCols.size(); x++) {
                 defaultColors.add(new Tuple<>(((Long) ((JSONObject) defCols.get(x)).get("port")).intValue(), (String) ((JSONObject) defCols.get(x)).get("color")));
             }
         }
@@ -139,9 +140,9 @@ public abstract class Hardware implements Json.Serializable {
 
         JSONArray temp = (JSONArray) JSONReader.getCurrentConfig().get("crimped");
 
-        if(temp != null) {
+        if (temp != null) {
             for (Object o : temp) {
-                if(addCrimped) {
+                if (addCrimped) {
                     crimpedIDs.add(CableManager.getCrimpedID());
                 }
                 crimpedPorts.add(((Long) o).intValue());
@@ -150,14 +151,14 @@ public abstract class Hardware implements Json.Serializable {
 
         JSONArray col = (JSONArray) JSONReader.getCurrentConfig().get("crimpedColors");
 
-        if(col != null) {
+        if (col != null) {
             for (Object k : col) {
                 crimpedPortColors.add(DeviceUtil.COLORS.get(k));
             }
         }
 
         JSONArray lights = (JSONArray) JSONReader.getCurrentConfig().get("leds");
-        if(ledNum > 0) {
+        if (ledNum > 0) {
             for (Object light : lights) {
                 LEDs.add(new LED(
                         (JSONArray) ((JSONObject) light).get("position"),
@@ -174,8 +175,8 @@ public abstract class Hardware implements Json.Serializable {
 
     public void checkCrimpedCables() {
         int j = 0;
-        for(int i : crimpedPorts) {
-            if(connections.get(i) == null) {
+        for (int i : crimpedPorts) {
+            if (connections.get(i) == null) {
                 ends.set(i, false);
                 CrimpedCable c = new CrimpedCable(Integer.parseInt(portTypes.get(i)), crimpedIDs.get(j));
                 c.setColor(crimpedPortColors.get(j));
@@ -200,21 +201,24 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean getAllNull(int conn1, int conn2) {
-        for(int i = conn1; i <= conn2; ++i) {
-            if(!getNull(i)) {
+        for (int i = conn1; i <= conn2; ++i) {
+            if (!getNull(i)) {
                 return false;
             }
         }
         return true;
     }
-    public String getCAN(Cable c1, Cable c2) {return null;}
+
+    public String getCAN(Cable c1, Cable c2) {
+        return null;
+    }
 
     public Cable get(int i) {
         return connections.get(i);
     }
 
     public Hardware getOther(int conn) {
-        if(connections.get(conn) == null) {
+        if (connections.get(conn) == null) {
             return null;
         }
         return connections.get(conn).getOtherConnection(this);
@@ -229,8 +233,8 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean getAllNotNull(int conn1, int conn2) {
-        for(int i = conn1; i <= conn2; ++i) {
-            if(getNull(i)) {
+        for (int i = conn1; i <= conn2; ++i) {
+            if (getNull(i)) {
                 return false;
             }
         }
@@ -243,27 +247,28 @@ public abstract class Hardware implements Json.Serializable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         batch.setProjectionMatrix(camera.getCamera().combined);
 
-        if(type == HardwareType.EPLATE) return;
+        if (type == HardwareType.EPLATE) return;
 
-        if(drawError || drawGood) {
+        if (drawError || drawGood) {
             drawHover(renderer);
         }
 
-        if(this.addCrimped) {
+        if (this.addCrimped) {
             checkCrimpedCables();
         }
 
         base.setCenter(getPosition().x, getPosition().y);
 
-        for(Sprite temp : connectors) {
+        for (Sprite temp : connectors) {
             temp.setCenter(getPosition().x + (Long) pinDefs.get(connectors.indexOf(temp)).get(0), getPosition().y + (Long) pinDefs.get(connectors.indexOf(temp)).get(1));
-            if(!(this instanceof SandCrab)) temp.setSize((DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2), (DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp))))*2));
-            Vector2 pos = new Vector2(temp.getX() + temp.getWidth()/2, temp.getY() + temp.getHeight()/2);
+            if (!(this instanceof SandCrab))
+                temp.setSize((DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp)))) * 2), (DeviceUtil.GAUGETOLIMIT3.get(Float.parseFloat(portTypes.get(connectors.indexOf(temp)))) * 2));
+            Vector2 pos = new Vector2(temp.getX() + temp.getWidth() / 2, temp.getY() + temp.getHeight() / 2);
             pos.rotateAround(new Vector2(base.getX() + base.getWidth() / 2, base.getY() + base.getHeight() / 2), base.getRotation());
             temp.setCenter(pos.x, pos.y);
         }
 
-        for(LED led : LEDs) {
+        for (LED led : LEDs) {
             led.setPosition();
         }
 
@@ -280,13 +285,13 @@ public abstract class Hardware implements Json.Serializable {
         Vector2 vec = Tools.mouseScreenToWorld(camera);
 
 
-        if(HardwareManager.attachWireOnDoubleClick != null) {
-            if(HardwareManager.attachWireOnDoubleClick.x == this && !canMove && connections.get(HardwareManager.attachWireOnDoubleClick.y) == null) {
-                if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y) && checkGood()) {
+        if (HardwareManager.attachWireOnDoubleClick != null) {
+            if (HardwareManager.attachWireOnDoubleClick.x == this && !canMove && connections.get(HardwareManager.attachWireOnDoubleClick.y) == null) {
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && connectors.get(HardwareManager.attachWireOnDoubleClick.y).getBoundingRectangle().contains(vec.x, vec.y) && checkGood()) {
                     Cable c;
-                    if(portTypes.get(HardwareManager.attachWireOnDoubleClick.y).equals("all")) {
+                    if (portTypes.get(HardwareManager.attachWireOnDoubleClick.y).equals("all")) {
                         c = new Cable(CableManager.id);
-                    } else if(Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
+                    } else if (Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 13) {
                         c = new EthernetCable(new Vector2(0, 0), CableManager.id);
                     } else if (Integer.parseInt(portTypes.get(HardwareManager.attachWireOnDoubleClick.y)) == 2) {
                         c = new Tubing(new Vector2(0, 0), CableManager.id);
@@ -294,8 +299,8 @@ public abstract class Hardware implements Json.Serializable {
                         c = new Cable(CableManager.id);
                     }
                     CableManager.id++;
-                    if(this instanceof SandCrab) {
-                        if(((SandCrab) this).getGauge() == -1) {
+                    if (this instanceof SandCrab) {
+                        if (((SandCrab) this).getGauge() == -1) {
                             c.setGauge(22);
                         } else {
                             c.setGauge(((SandCrab) this).getGauge());
@@ -305,8 +310,8 @@ public abstract class Hardware implements Json.Serializable {
                     }
                     firstClickAttach(c, HardwareManager.attachWireOnDoubleClick.y, false);
 
-                    for(Tuple<Integer, String> tup : defaultColors) {
-                        if((int) tup.x == HardwareManager.attachWireOnDoubleClick.y) {
+                    for (Tuple<Integer, String> tup : defaultColors) {
+                        if ((int) tup.x == HardwareManager.attachWireOnDoubleClick.y) {
                             c.setColor(DeviceUtil.COLORS.get(tup.y));
                         }
                     }
@@ -321,12 +326,12 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        for(Sprite s : connectors) {
+        for (Sprite s : connectors) {
             if (s.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
-                if(!(this instanceof SandCrab)) {
-                    if(portTypes.get(connectors.indexOf(s)).equals("2")) {
+                if (!(this instanceof SandCrab)) {
+                    if (portTypes.get(connectors.indexOf(s)).equals("2")) {
                         CircuitScreen.setHoverDraw(vec, "Tubing | port " + connectors.indexOf(s));
-                    } else if(portTypes.get(connectors.indexOf(s)).equals("13")) {
+                    } else if (portTypes.get(connectors.indexOf(s)).equals("13")) {
                         CircuitScreen.setHoverDraw(vec, "Ethernet | port " + connectors.indexOf(s));
                     } else {
                         CircuitScreen.setHoverDraw(vec, portTypes.get(connectors.indexOf(s)) + "g | port " + connectors.indexOf(s));
@@ -345,14 +350,14 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        for(LED l : LEDs) {
-            if(l.sprite.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
-                CircuitScreen.setHoverDraw(vec, l.getType()+l.status);
+        for (LED l : LEDs) {
+            if (l.sprite.getBoundingRectangle().contains(vec.x, vec.y) && HardwareManager.getCurrentlyHovering(camera) == this) {
+                CircuitScreen.setHoverDraw(vec, l.getType() + l.status);
             }
         }
 
 
-        if(HardwareManager.getCurrentlyHovering(camera) == this) {
+        if (HardwareManager.getCurrentlyHovering(camera) == this) {
 
             drawHover(renderer);
 
@@ -365,15 +370,15 @@ public abstract class Hardware implements Json.Serializable {
             }
         }
 
-        if(!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && !CableManager.currentCable.hoveringMouse(camera)) &&
+        if (!(CableManager.currentCable != null && connections.contains(CableManager.currentCable, true) && !CableManager.currentCable.hoveringMouse(camera)) &&
                 (CableManager.currentCable == null || (!(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd || CableManager.currentCable.movingNode != null)))) {
             if (Gdx.input.isTouched() && checkGood()) {
 
                 if (HardwareManager.getCurrentlyHovering(camera) == this || canMove) {
-                    if(!(HardwareManager.currentHardware != this && HardwareManager.movingObject)) {
+                    if (!(HardwareManager.currentHardware != this && HardwareManager.movingObject)) {
                         HardwareManager.moveToFront(this);
-                        for(Cable c : connections) {
-                            if(c != null) {
+                        for (Cable c : connections) {
+                            if (c != null) {
                                 CableManager.moveToFront(c);
                             }
                         }
@@ -386,8 +391,8 @@ public abstract class Hardware implements Json.Serializable {
                             HardwareManager.movingObject = true;
                             canMove = true;
                             HardwareManager.moveToFront(this);
-                            for(Cable c : connections) {
-                                if(c != null) {
+                            for (Cable c : connections) {
+                                if (c != null) {
                                     CableManager.moveToFront(c);
                                 }
                             }
@@ -472,7 +477,7 @@ public abstract class Hardware implements Json.Serializable {
                 //SET OWN POSITION
 
                 Vector2 isOutOfBounds = Tools.checkOutOfBounds(getSpriteBox(), getPosition());
-                if(isOutOfBounds != null) {
+                if (isOutOfBounds != null) {
                     setPosition(isOutOfBounds.x, isOutOfBounds.y);
                 } else {
                     setPosition(vec.x + diffX, vec.y + diffY);
@@ -483,7 +488,7 @@ public abstract class Hardware implements Json.Serializable {
 
 
         batch.begin();
-        if(this instanceof Manifold) {
+        if (this instanceof Manifold) {
             for (Sprite temp : ((Manifold) this).solenoids) {
                 temp.setCenter(getPosition().x + (Long) pinDefs.get(((Manifold) this).solenoids.indexOf(temp) + 1).get(0), getPosition().y);
                 Vector2 pos = new Vector2(temp.getX() + temp.getWidth() / 2, temp.getY() + temp.getHeight() / 2);
@@ -506,10 +511,10 @@ public abstract class Hardware implements Json.Serializable {
         }
 
         batch.begin();
-        for(Sprite conn : connectors) {
+        for (Sprite conn : connectors) {
             conn.draw(batch);
         }
-        for(LED led : LEDs) {
+        for (LED led : LEDs) {
             led.render(batch);
         }
         batch.end();
@@ -522,7 +527,7 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean getHoveringMouse(ClippedCameraController camera) {
-        if(!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
+        if (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
                 Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())) {
             Vector2 vec = Tools.mouseScreenToWorld(camera);
             if (this instanceof EPlate) {
@@ -534,20 +539,21 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public boolean checkGood() {
-        if(canMove) {
+        if (canMove) {
             return !CableManager.movingCable && Gdx.input.getX() >= 0 && Gdx.input.getX() <= Gdx.graphics.getWidth() && Gdx.input.getY() >= 0 && Gdx.input.getY() <= Gdx.graphics.getHeight() && (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple)
                     && !CircuitGUIManager.helpMenuShown && !CircuitGUIManager.optionsMenuShown && !CircuitGUIManager.saveMenuShown;
         }
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !CableManager.movingCable && (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
                 && !CircuitGUIManager.helpMenuShown && !CircuitGUIManager.optionsMenuShown && !CircuitGUIManager.saveMenuShown;
     }
 
-    public void processFlip() {}
+    public void processFlip() {
+    }
 
     public void clearConnection(Cable cable) {
-        for(int i = 0; i < connNum; i++) {
-            if(cable == connections.get(i)) {
+        for (int i = 0; i < connNum; i++) {
+            if (cable == connections.get(i)) {
                 connections.set(i, null);
             }
         }
@@ -560,7 +566,7 @@ public abstract class Hardware implements Json.Serializable {
 
     public boolean intersect(Vector2 v1, Vector2 v2) {
         Rectangle b = base.getBoundingRectangle();
-        return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x+b.width, b.y+b.height));
+        return Tools.collide(v1, v2, new Vector2(b.x, b.y), new Vector2(b.x + b.width, b.y + b.height));
     }
 
     public Sprite getConnector(int conn) {
@@ -593,7 +599,7 @@ public abstract class Hardware implements Json.Serializable {
         cable.appendingFromEnd = false;
         cable.appendingFromBegin = false;
 
-        if(CableManager.currentCable != null) {
+        if (CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;
             CableManager.currentCable.appendingFromBegin = false;
             CableManager.currentCable = null;
@@ -605,28 +611,28 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void attachWire(Cable cable, int port, boolean endOfWire) {
-        if(!acceptPortConnection(cable, port)) {
+        if (!acceptPortConnection(cable, port)) {
             return;
         }
         if (connections.get(port) != null) {
-            if(connections.get(port) instanceof CrimpedCable) {
+            if (connections.get(port) instanceof CrimpedCable) {
                 CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if((this instanceof SandCrab && ((((SandCrab) this).getGauge() == -1 && cable.gauge >= 16) || cable.gauge == ((SandCrab) this).getGauge())) || (!(this instanceof SandCrab) && cable.getGauge() == Integer.parseInt(portTypes.get(port)))) {
+        } else if ((this instanceof SandCrab && ((((SandCrab) this).getGauge() == -1 && cable.gauge >= 16) || cable.gauge == ((SandCrab) this).getGauge())) || (!(this instanceof SandCrab) && cable.getGauge() == Integer.parseInt(portTypes.get(port)))) {
             connections.set(port, cable);
             ends.set(port, endOfWire);
 
             attachWireLib(cable, port, endOfWire);
 
-            if(CableManager.currentCable != null) {
+            if (CableManager.currentCable != null) {
                 CableManager.currentCable.appendingFromEnd = false;
                 CableManager.currentCable.appendingFromBegin = false;
                 CableManager.currentCable = null;
             }
         } else {
-            if(this instanceof SandCrab) {
+            if (this instanceof SandCrab) {
                 CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge " + ((SandCrab) this).getGaugeString());
             } else {
                 CircuitGUIManager.popup.activateError("Wrong gauge - must be gauge " + portTypes.get(port));
@@ -636,16 +642,16 @@ public abstract class Hardware implements Json.Serializable {
 
     public void firstClickAttach(Cable cable, int port, boolean endOfWire) {
         if (connections.get(port) != null) {
-            if(connections.get(port) instanceof CrimpedCable) {
+            if (connections.get(port) instanceof CrimpedCable) {
                 CircuitGUIManager.popup.activateError("Port already occupied by Crimped Cable");
             } else {
                 CircuitGUIManager.popup.activateError("Port already occupied by Cable " + connections.get(port).getID());
             }
-        } else if(portTypes.get(port).equals("13") && cable.getGauge() != 13) {
+        } else if (portTypes.get(port).equals("13") && cable.getGauge() != 13) {
             CircuitGUIManager.popup.activateError("Port requires ethernet cable");
-        } else if(portTypes.get(port).equals("2") && cable.getGauge() != 2) {
+        } else if (portTypes.get(port).equals("2") && cable.getGauge() != 2) {
             CircuitGUIManager.popup.activateError("Port requires pneumatics tubing");
-        }  else {
+        } else {
 
 
             connections.set(port, cable);
@@ -653,8 +659,8 @@ public abstract class Hardware implements Json.Serializable {
 
             cable.removeCoordinates();
 
-            if(this instanceof SandCrab) {
-                if(((SandCrab) this).getGauge() == -1) {
+            if (this instanceof SandCrab) {
+                if (((SandCrab) this).getGauge() == -1) {
                     cable.setGauge(22);
                 } else {
                     cable.setGauge(((SandCrab) this).getGauge());
@@ -662,8 +668,8 @@ public abstract class Hardware implements Json.Serializable {
             } else {
                 cable.setGauge(Integer.parseInt(portTypes.get(port)));
             }
-            for(Tuple<Integer, String> tup : defaultColors) {
-                if((int) tup.x == port) {
+            for (Tuple<Integer, String> tup : defaultColors) {
+                if (tup.x == port) {
                     cable.setColor(DeviceUtil.COLORS.get(tup.y));
                 }
             }
@@ -706,13 +712,13 @@ public abstract class Hardware implements Json.Serializable {
         CircuitGUIManager.propertiesBox.addElement(new Label(name + " " + hardwareID2, CircuitGUIManager.propertiesBox.LABEL), true, 2);
 
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2+"", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2 + "", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            if(connections.get(x) == null) {
+            if (connections.get(x) == null) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x).getOtherConnection(this) != null) {
-                if((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
+            } else if (connections.get(x).getOtherConnection(this) != null) {
+                if ((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
                     Label lab = new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL);
                     Hardware h = connections.get(x).getOtherConnection(this);
                     lab.addListener(new ClickListener() {
@@ -737,10 +743,11 @@ public abstract class Hardware implements Json.Serializable {
                             CircuitGUIManager.propertiesBox.show();
                         }
                     });
-                    CircuitGUIManager.propertiesBox.addElement(lab, false, 1);                }
-            } else if(connections.get(x) instanceof CrimpedCable) {
+                    CircuitGUIManager.propertiesBox.addElement(lab, false, 1);
+                }
+            } else if (connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped " + -connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x) instanceof EthernetCable) {
+            } else if (connections.get(x) instanceof EthernetCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
@@ -750,13 +757,13 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void initConnections() {
-        for(int i = 0; i < connNum; ++i) {
+        for (int i = 0; i < connNum; ++i) {
             connections.add(null);
         }
     }
 
     public void initEnds() {
-        for(int i = 0; i < connNum; ++i) {
+        for (int i = 0; i < connNum; ++i) {
             ends.add(false);
         }
     }
@@ -770,12 +777,12 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void delete() {
-        for(Cable cable : connections) {
-            if(cable != null) {
-                if(cable instanceof CrimpedCable) {
+        for (Cable cable : connections) {
+            if (cable != null) {
+                if (cable instanceof CrimpedCable) {
                     HardwareManager.removeCableFromHardware(cable, cable.getOtherConnectionSimple(this));
                     CableManager.deleteCable(cable);
-                } else if(ends.get(connections.indexOf(cable, true))) {
+                } else if (ends.get(connections.indexOf(cable, true))) {
                     cable.setConnection2(null);
                     cable.connection2port = -1;
                 } else {
@@ -795,8 +802,8 @@ public abstract class Hardware implements Json.Serializable {
 
 
     public int getConnectionPosition(Cable cable) {
-        for(int i = 0; i < connections.size; ++i) {
-            if(connections.get(i) == cable) {
+        for (int i = 0; i < connections.size; ++i) {
+            if (connections.get(i) == cable) {
                 return i;
             }
         }
@@ -836,7 +843,7 @@ public abstract class Hardware implements Json.Serializable {
     public void reattachWire(Cable cable, int port, boolean endOfWire) {
         connections.set(port, cable);
         ends.set(port, endOfWire);
-        if(endOfWire) {
+        if (endOfWire) {
             cable.setConnection2(this);
             cable.connection2port = port;
         } else {
@@ -846,9 +853,9 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public Vector2 calculateDirection(int dir, int port, int... length) {
-        dir = (dir)%4;
+        dir = (dir) % 4;
         int useLength = length.length > 0 ? length[0] : 40;
-        if(dir == 0) {
+        if (dir == 0) {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2 - useLength);
         } else if (dir == 1) {
             return new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2 + useLength, getConnector(port).getY() + getConnector(port).getHeight() / 2);
@@ -860,13 +867,17 @@ public abstract class Hardware implements Json.Serializable {
     }
 
     public void resetLEDs() {
-        for(LED l : LEDs) {
+        for (LED l : LEDs) {
             l.reset();
         }
     }
 
     public int getHardwareID() {
         return hardwareID;
+    }
+
+    public void setHardwareID(int id) {
+        this.hardwareID = id;
     }
 
     @Override
@@ -880,10 +891,6 @@ public abstract class Hardware implements Json.Serializable {
     @Override
     public void read(Json json, JsonValue jsonData) {
         this.hardwareID = jsonData.get("hardware").getInt("id");
-    }
-
-    public void setHardwareID(int id) {
-        this.hardwareID = id;
     }
 
     public String check() {

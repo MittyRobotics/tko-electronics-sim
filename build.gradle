@@ -5,9 +5,10 @@ buildscript {
 		google()
 		gradlePluginPortal()
 		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		maven { url "http://artifactory.nimblygames.com/artifactory/ng-public-snapshot/" }
+		maven { url "http://artifactory.nimblygames.com/artifactory/ng-public-release/" }
 	}
 	dependencies {
-
 	}
 }
 

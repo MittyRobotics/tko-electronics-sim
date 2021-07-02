@@ -7,11 +7,11 @@ import java.util.HashMap;
 
 public class LinkTimer {
 
-    private static HashMap<Integer, Float> timeLeft = new HashMap<>();
-    private static HashMap<Integer, Float> timerLengths = new HashMap<>();
-    private static HashMap<Integer, Runnable> runnables = new HashMap<>();
+    private static final HashMap<Integer, Float> timeLeft = new HashMap<>();
+    private static final HashMap<Integer, Float> timerLengths = new HashMap<>();
+    private static final HashMap<Integer, Runnable> runnables = new HashMap<>();
 
-    private static DelayedRemovalArray<Integer> currentActiveTimers = new DelayedRemovalArray<>();
+    private static final DelayedRemovalArray<Integer> currentActiveTimers = new DelayedRemovalArray<>();
 
     private static int additiveTimerID = 0;
 
@@ -28,11 +28,11 @@ public class LinkTimer {
     public static void tick() {
 
         try {
-            if(currentActiveTimers.size > 0) {
-                for(int timerID : currentActiveTimers) {
+            if (currentActiveTimers.size > 0) {
+                for (int timerID : currentActiveTimers) {
                     timeLeft.put(timerID, timeLeft.get(timerID) + Gdx.graphics.getRawDeltaTime());
 
-                    if(timeLeft.get(timerID) >= timerLengths.get(timerID)) {
+                    if (timeLeft.get(timerID) >= timerLengths.get(timerID)) {
                         runnables.get(timerID).run();
                         timeLeft.remove(timerID);
                         timerLengths.remove(timerID);

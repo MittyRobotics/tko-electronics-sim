@@ -10,19 +10,20 @@ import org.json.simple.JSONArray;
 
 public class RoboRio extends Flippable {
 
-    public RoboRio() {}
+    public RoboRio() {
+    }
 
     public RoboRio(Vector2 position, boolean... addCrimped) {
         super(position, HardwareType.ROBORIO, addCrimped);
 
-        for(JSONArray arr : pinDefs) {
+        for (JSONArray arr : pinDefs) {
             Sprite temp;
-            if(connectors.size() == connNum) {
+            if (connectors.size() == connNum) {
                 break;
             }
             temp = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
             temp.setCenter(position.x + (Long) arr.get(0), position.y + (Long) arr.get(1));
-            temp.setSize((Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long)pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
+            temp.setSize((Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(0), (Long) pinSizeDefs.get(pinDefs.indexOf(arr)).get(1));
             connectors.add(temp);
         }
 
@@ -31,33 +32,33 @@ public class RoboRio extends Flippable {
     }
 
     public Vector2 calculate(int port) {
-        if(port == 0 || port == 1) {
-            return calculateDirection(cur+3, port, 80);
-        } else if(port == 2 || port == 3) {
-            return calculateDirection(cur+3, port, 40);
+        if (port == 0 || port == 1) {
+            return calculateDirection(cur + 3, port, 80);
+        } else if (port == 2 || port == 3) {
+            return calculateDirection(cur + 3, port, 40);
         } else {
             return calculateDirection(cur + 2, port, 120);
         }
     }
 
     public String check() {
-        if(getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
-            if(simLED) {
+        if (getNull(0) || getNull(1) || !(getOther(0) instanceof PowerDistributionPanel && getOther(1) instanceof PowerDistributionPanel)) {
+            if (simLED) {
                 resetLEDs();
                 simLED = false;
             }
             return "RoboRIO is not connected to PDP";
         }
 
-        if(getNum(0) != 4 || getNum(1) != 5) {
-            if(simLED) {
+        if (getNum(0) != 4 || getNum(1) != 5) {
+            if (simLED) {
                 resetLEDs();
                 simLED = false;
             }
             return "RoboRIO is improperly connected to PDP";
         }
 
-        if(!simLED) {
+        if (!simLED) {
             simLED = true;
             LEDs.get(0).setColor("green");
             LEDs.get(0).setStatus("Power is good");
@@ -69,7 +70,7 @@ public class RoboRio extends Flippable {
 
         }
 
-        if(getOther(4) instanceof Radio) {
+        if (getOther(4) instanceof Radio) {
             LEDs.get(3).setColor("green");
             LEDs.get(3).setStatus("Connected");
             LEDs.get(4).setColor("green");

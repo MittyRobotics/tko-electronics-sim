@@ -10,17 +10,18 @@ import org.json.simple.JSONArray;
 
 public class LED {
 
-    private String color, origColor;
+    public Sprite sprite;
+    public boolean blinking;
+    public String status = " | Off";
+    private String color;
+    private final String origColor;
     private String type;
     private Vector2 position;
-    private Vector2 size;
-    public Sprite sprite;
-    private Hardware hardware;
-    public boolean blinking;
+    private final Vector2 size;
+    private final Hardware hardware;
     private boolean on;
     private int speed;
     private int cnt, et;
-    public String status = " | Off";
 
     public LED(JSONArray position, Hardware hardware, JSONArray size, String type, String color) {
 
@@ -48,10 +49,10 @@ public class LED {
     }
 
     public void render(SpriteBatch batch) {
-        if(et != 0) {
+        if (et != 0) {
             et--;
-            if(et == 0) {
-                if(blinking) {
+            if (et == 0) {
+                if (blinking) {
                     blinking = false;
                     setColorTemp(color);
                 } else {
@@ -62,9 +63,9 @@ public class LED {
 
         if (blinking) {
             cnt--;
-            if(cnt == 0) {
+            if (cnt == 0) {
                 cnt = speed;
-                if(on) {
+                if (on) {
                     on = false;
                     setColorTemp("off");
                 } else {
@@ -82,7 +83,7 @@ public class LED {
 
     public void setPosition() {
         sprite.setCenter(hardware.getPosition().x + this.position.x, hardware.getPosition().y + this.position.y);
-        Vector2 pos = new Vector2(sprite.getX() + sprite.getWidth()/2, sprite.getY() + sprite.getHeight()/2);
+        Vector2 pos = new Vector2(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2);
         pos.rotateAround(new Vector2(hardware.base.getX() + hardware.base.getWidth() / 2, hardware.base.getY() + hardware.base.getHeight() / 2), hardware.base.getRotation());
         sprite.setCenter(pos.x, pos.y);
     }

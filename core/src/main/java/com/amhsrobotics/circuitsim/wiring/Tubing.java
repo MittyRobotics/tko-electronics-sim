@@ -9,7 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Tubing extends Cable {
 
-    public Tubing() {}
+    public Tubing() {
+    }
 
     public Tubing(Vector2 startPoint, int count) {
         super(startPoint, count);
@@ -27,14 +28,13 @@ public class Tubing extends Cable {
     }
 
 
-
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
-        if(!appendingFromBegin) {
+        if (!appendingFromBegin) {
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         }
-        if(!appendingFromEnd) {
+        if (!appendingFromEnd) {
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
         }
 
@@ -43,7 +43,7 @@ public class Tubing extends Cable {
     @Override
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
         renderer.setColor(Color.WHITE);
-        for(Vector2 coords : coordinates) {
+        for (Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit3);
         }
         processNodes(renderer, cam);

@@ -10,24 +10,24 @@ import com.badlogic.gdx.math.Vector2;
 
 public class HardwareModel {
 
-    public HardwareModel() {}
-
     public HardwareType type;
     public Vector2 position;
     public int id;
     public Box box;
     public int rotation;
+    public HardwareModel() {
+    }
 
     public void load(Hardware h) {
         type = h.type;
         id = h.getHardwareID();
         position = h.getPosition();
 
-        if(h instanceof EPlate) {
+        if (h instanceof EPlate) {
             box = ((EPlate) h).getBox();
         }
 
-        if(h instanceof Flippable) {
+        if (h instanceof Flippable) {
             rotation = ((Flippable) h).getRotation();
         }
     }

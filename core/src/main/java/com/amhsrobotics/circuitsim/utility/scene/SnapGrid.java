@@ -5,14 +5,12 @@ import com.amhsrobotics.circuitsim.utility.camera.ClippedCameraController;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class SnapGrid {
 
     public static boolean renderGridB = true;
-    private static ImmediateModeRenderer20 lineRenderer = new ImmediateModeRenderer20(false, true, 0);
+    private static final ImmediateModeRenderer20 lineRenderer = new ImmediateModeRenderer20(false, true, 0);
 
     public static void line(float x1, float y1,
                             float x2, float y2,
@@ -25,9 +23,9 @@ public class SnapGrid {
 
 
     public static void renderGrid(ClippedCameraController camera, Color color, Vector2 dimensions, int gap, int startSpace) {
-        if(renderGridB) {
+        if (renderGridB) {
 //            renderer.setColor(color);
-            for(int i = startSpace; i < dimensions.x; i += gap) {
+            for (int i = startSpace; i < dimensions.x; i += gap) {
 
 //                renderer.begin(ShapeRenderer.ShapeType.Line);
                 lineRenderer.begin(camera.getCamera().combined, GL30.GL_LINES);

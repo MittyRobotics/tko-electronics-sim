@@ -14,18 +14,16 @@ import com.badlogic.gdx.utils.Align;
 
 public class PropertiesBox {
 
-    public Table container;
-    private Table table;
-    public final TextButton.TextButtonStyle TBUTTON = new TextButton.TextButtonStyle();;
+    public final TextButton.TextButtonStyle TBUTTON = new TextButton.TextButtonStyle();
     public final TextButton.TextButtonStyle TBUTTON_ALT = new TextButton.TextButtonStyle();
     public final Label.LabelStyle LABEL = new Label.LabelStyle();
     public final Label.LabelStyle LABEL_SMALL = new Label.LabelStyle();
     public final TextTooltip.TextTooltipStyle TOOLTIP = new TextTooltip.TextTooltipStyle();
-    private ScrollPane scroll;
-
-    private boolean visible;
-
+    public Table container;
     public boolean hovering;
+    private final Table table;
+    private final ScrollPane scroll;
+    private boolean visible;
 
     public PropertiesBox(ModifiedStage stage) {
 
@@ -59,13 +57,14 @@ public class PropertiesBox {
 
         table = new Table();
         scroll = new ScrollPane(table, sStyle);
-        scroll.setScrollingDisabled(true,false);
+        scroll.setScrollingDisabled(true, false);
         scroll.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scroll);
                 hovering = true;
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
@@ -79,11 +78,11 @@ public class PropertiesBox {
 
 
     public void addElement(Widget widget, boolean newRow, int colspan, int... buttonSize) {
-        if(widget instanceof Label) {
+        if (widget instanceof Label) {
             ((Label) widget).setAlignment(Align.center);
         }
-        if(newRow) table.row();
-        if(buttonSize.length > 0) {
+        if (newRow) table.row();
+        if (buttonSize.length > 0) {
             table.add(widget).width(buttonSize[0]).colspan(colspan);
             return;
         }
@@ -91,12 +90,13 @@ public class PropertiesBox {
     }
 
     public void addElement(WidgetGroup widget, boolean newRow, int colspan, int... buttonSize) {
-        if(newRow) table.row();
-        if(buttonSize.length > 0) {
+        if (newRow) table.row();
+        if (buttonSize.length > 0) {
             table.add(widget).width(buttonSize[0]).colspan(colspan);
             return;
         }
-        table.add(widget).width(70).colspan(colspan);    }
+        table.add(widget).width(70).colspan(colspan);
+    }
 
     public void clearTable() {
         table.clearChildren();
@@ -104,7 +104,7 @@ public class PropertiesBox {
     }
 
     public void show() {
-        if(!CircuitGUIManager.isPanelShown()) {
+        if (!CircuitGUIManager.isPanelShown()) {
             shift(1);
         } else {
             shift(2);
@@ -114,10 +114,10 @@ public class PropertiesBox {
     }
 
     public void shift(int direction) {
-        if(direction == 1) {
-            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight()-210);
-        } else if(direction == 2) {
-            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight()-210);
+        if (direction == 1) {
+            container.setPosition(Gdx.graphics.getWidth() - 210, Gdx.graphics.getHeight() - 210);
+        } else if (direction == 2) {
+            container.setPosition(Gdx.graphics.getWidth() - 420, Gdx.graphics.getHeight() - 210);
         }
     }
 

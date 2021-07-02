@@ -16,12 +16,11 @@ import com.badlogic.gdx.utils.Align;
 
 public class ConfirmDialog {
 
-    private static Window window;
     private static final Label.LabelStyle l2Style = new Label.LabelStyle();
     private static final Window.WindowStyle wStyle = new Window.WindowStyle();
     private static final TextButton.TextButtonStyle tbStyle = new TextButton.TextButtonStyle();
+    private static Window window;
 
-    
     public static void init(Stage stage) {
 
         l2Style.font = Constants.FONT_SMALL;
@@ -75,7 +74,7 @@ public class ConfirmDialog {
     }
 
     private static void openWindow() {
-        window.setPosition(Gdx.graphics.getWidth()/2f - window.getWidth()/2f, Gdx.graphics.getHeight()/2f - window.getHeight()/2f);
+        window.setPosition(Gdx.graphics.getWidth() / 2f - window.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - window.getHeight() / 2f);
         Tools.slideIn(window, "down", 1f, Interpolation.exp10, 600);
     }
 

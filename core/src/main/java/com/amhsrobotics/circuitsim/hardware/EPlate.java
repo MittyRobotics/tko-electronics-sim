@@ -12,6 +12,8 @@ import com.amhsrobotics.circuitsim.wiring.CableManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -27,12 +29,11 @@ import java.util.ArrayList;
 
 public class EPlate extends Hardware {
 
-    private Box box;
-    private TextField.TextFieldStyle textFieldStyle;
-
     public ArrayList<Hardware> hardwareOnPlate = new ArrayList<>();
+    private Box box;
+    private final TextField.TextFieldStyle textFieldStyle;
     private Color color;
-    private ResizeNode[] nodes = new ResizeNode[9];
+    private final ResizeNode[] nodes = new ResizeNode[9];
 
     private int dragging = -1;
 
@@ -51,10 +52,11 @@ public class EPlate extends Hardware {
 
         box = new Box(getPosition().x, getPosition().y, 300, 300);
         initNodes();
+        base = new Sprite(new Texture(Gdx.files.internal("img/point.png")));
     }
 
     private void initNodes() {
-        for(int x = 0; x < 9; x++) {
+        for (int x = 0; x < 9; x++) {
             nodes[x] = new ResizeNode(box.getResizePointAtIndex(x).x, box.getResizePointAtIndex(x).y, ResizeNode.nodeMap.get(x));
         }
     }
@@ -74,7 +76,7 @@ public class EPlate extends Hardware {
         super.update(batch, renderer, camera);
 
         Rectangle rect = new Rectangle(box.x, box.y, box.width, box.height);
-        if(box.width < 0) {
+        if (box.width < 0) {
             rect.width = -rect.width;
             rect.x -= rect.width;
 //            nodes[0].type = ResizeNode.NodeType.BOTTOM_RIGHT;
@@ -84,7 +86,7 @@ public class EPlate extends Hardware {
 //            nodes[3].type = ResizeNode.NodeType.RIGHT_MIDDLE;
 //            nodes[7].type = ResizeNode.NodeType.LEFT_MIDDLE;
         }
-        if(box.height < 0) {
+        if (box.height < 0) {
             rect.height = -rect.height;
             rect.y -= rect.height;
         }
@@ -101,15 +103,15 @@ public class EPlate extends Hardware {
             SnapGrid.calculateSnap(vec);
         }
 
-        if(drawError || drawGood) {
+        if (drawError || drawGood) {
             drawHover(renderer);
         }
 
-        if(rect.contains(vec.x, vec.y)) {
+        if (rect.contains(vec.x, vec.y)) {
             drawHover(renderer);
 
-            if((CableManager.currentCable == null || (!CableManager.currentCable.hoveringMouse(camera) && (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd && CableManager.currentCable.movingNode == null))) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood(camera)) {
-                if(CableManager.currentCable != null) {
+            if ((CableManager.currentCable == null || (!CableManager.currentCable.hoveringMouse(camera) && (!CableManager.currentCable.appendingFromBegin && !CableManager.currentCable.appendingFromEnd && CableManager.currentCable.movingNode == null))) && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood(camera)) {
+                if (CableManager.currentCable != null) {
                     CableManager.currentCable = null;
                 }
                 HardwareManager.currentHardware = this;
@@ -118,8 +120,8 @@ public class EPlate extends Hardware {
             }
         }
 
-        for(int i = 0; i < HardwareManager.hardwares.size; ++i) {
-            if(!(HardwareManager.hardwares.get(i) instanceof EPlate)) {
+        for (int i = 0; i < HardwareManager.hardwares.size; ++i) {
+            if (!(HardwareManager.hardwares.get(i) instanceof EPlate)) {
                 if (hardwareOnPlate.contains(HardwareManager.hardwares.get(i))) {
                     if (!box.contains(HardwareManager.hardwares.get(i).getPosition().x, HardwareManager.hardwares.get(i).getPosition().y)) {
                         hardwareOnPlate.remove(HardwareManager.hardwares.get(i));
@@ -164,7 +166,7 @@ public class EPlate extends Hardware {
 
             if (!canMove) {
                 for (int x = 0; x < nodes.length; x++) {
-                    if (Gdx.input.isTouched()  && checkGood(camera)) {
+                    if (Gdx.input.isTouched() && checkGood(camera)) {
                         if (nodes[x].contains(vec) && (dragging == -1 || dragging == x)) {
                             dragging = x;
                         }
@@ -178,7 +180,7 @@ public class EPlate extends Hardware {
                 }
             }
 
-            if (Gdx.input.isTouched() && dragging == -1  && checkGood(camera)) {
+            if (Gdx.input.isTouched() && dragging == -1 && checkGood(camera)) {
 
                 if (rect.contains(vec.x, vec.y) && (HardwareManager.getCurrentlyHovering(camera) == null || canMove)) {
                     if (!HardwareManager.movingObject) {
@@ -223,14 +225,14 @@ public class EPlate extends Hardware {
 
     public boolean checkGood(ClippedCameraController camera) {
         boolean good = true;
-        for(Cable c : CableManager.getCables()) {
-            if(c.hoveringMouse(camera)) {
+        for (Cable c : CableManager.getCables()) {
+            if (c.hoveringMouse(camera)) {
                 good = false;
             }
         }
 
         return (good && !(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown())&& !CableManager.movingCable);
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !CableManager.movingCable);
     }
 
     @Override
@@ -271,9 +273,9 @@ public class EPlate extends Hardware {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS_EPLATE.keySet());
-                for(String str : keys) {
-                    if(str.contentEquals(cb.getText())) {
-                        if(keys.indexOf(str) == keys.size() - 1) {
+                for (String str : keys) {
+                    if (str.contentEquals(cb.getText())) {
+                        if (keys.indexOf(str) == keys.size() - 1) {
                             cb.setText(keys.get(0));
                             color = DeviceUtil.COLORS_EPLATE.get(keys.get(0));
                         } else {
@@ -290,7 +292,7 @@ public class EPlate extends Hardware {
         freeze.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!frozen) {
+                if (!frozen) {
                     frozen = true;
                     freeze.setText("Unfreeze");
                 } else {
@@ -303,21 +305,17 @@ public class EPlate extends Hardware {
 
 
         CircuitGUIManager.propertiesBox.addElement(new Label("Connections", CircuitGUIManager.propertiesBox.LABEL), true, 2);
-        for(Hardware h : hardwareOnPlate) {
+        for (Hardware h : hardwareOnPlate) {
             CircuitGUIManager.propertiesBox.addElement(new Label(h.name + " " + h.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
         }
     }
 
-    public void setBox(Box box) {
-        this.box = box;
-    }
-
     public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(255/255f, 255/255f, 255/255f, 0.2f);
-        if(drawError) {
+        renderer.setColor(255 / 255f, 255 / 255f, 255 / 255f, 0.2f);
+        if (drawError) {
             renderer.setColor(Color.RED);
         }
-        if(drawGood) {
+        if (drawGood) {
             renderer.setColor(Color.GREEN);
         }
 
@@ -328,9 +326,11 @@ public class EPlate extends Hardware {
         Gdx.gl.glLineWidth(1);
     }
 
-
-
     public Box getBox() {
         return box;
+    }
+
+    public void setBox(Box box) {
+        this.box = box;
     }
 }

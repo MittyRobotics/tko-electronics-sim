@@ -22,7 +22,7 @@ public class Tools {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = size;
-        if(bold.length > 0) {
+        if (bold.length > 0) {
             parameter.borderWidth = 2;
         }
         BitmapFont fnt = generator.generateFont(parameter);
@@ -45,16 +45,16 @@ public class Tools {
 
     // returns coordinates to reset to if out of bounds
     public static Vector2 checkOutOfBounds(Rectangle spriteBox, Vector2 originPosition) {
-        if(spriteBox.x <= 0) {
-            return new Vector2(5 + (float)(spriteBox.width / 2), originPosition.y);
-        } else if(spriteBox.x + spriteBox.width >= Constants.WORLD_DIM.x) {
-            return new Vector2(Constants.WORLD_DIM.x - 5 - (float)(spriteBox.width / 2), originPosition.y);
+        if (spriteBox.x <= 0) {
+            return new Vector2(5 + (spriteBox.width / 2), originPosition.y);
+        } else if (spriteBox.x + spriteBox.width >= Constants.WORLD_DIM.x) {
+            return new Vector2(Constants.WORLD_DIM.x - 5 - (spriteBox.width / 2), originPosition.y);
         }
 
-        if(spriteBox.y <= 0) {
-            return new Vector2(originPosition.x, 5 + (float)(spriteBox.height / 2));
-        } else if(spriteBox.y + spriteBox.height >= Constants.WORLD_DIM.y) {
-            return new Vector2(originPosition.x, Constants.WORLD_DIM.y - 5 - (float)(spriteBox.height / 2));
+        if (spriteBox.y <= 0) {
+            return new Vector2(originPosition.x, 5 + (spriteBox.height / 2));
+        } else if (spriteBox.y + spriteBox.height >= Constants.WORLD_DIM.y) {
+            return new Vector2(originPosition.x, Constants.WORLD_DIM.y - 5 - (spriteBox.height / 2));
         }
 
         return null;
@@ -64,41 +64,41 @@ public class Tools {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
         Runnable toRun = null;
-        if(runnable.length > 0) {
+        if (runnable.length > 0) {
             toRun = runnable[0];
         }
 
-        if(location.equals("left")) {
+        if (location.equals("left")) {
             actor.setPosition(-offset, actorXY.y);
-            if(toRun != null) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(location.equals("right")) {
+        } else if (location.equals("right")) {
             actor.setPosition(Gdx.graphics.getWidth() + offset, actorXY.y);
-            if(toRun != null) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(location.equals("top")) {
+        } else if (location.equals("top")) {
             actor.setPosition(actorXY.x, Gdx.graphics.getHeight() + offset);
-            if(toRun != null) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
-        } else if(location.equals("down")) {
+        } else if (location.equals("down")) {
             actor.setPosition(actorXY.x, -offset);
-            if(toRun != null) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, actorXY.y, duration, interp));
             }
         }
 
-        if(runnable.length > 0) {
+        if (runnable.length > 0) {
             actor.addAction(run(runnable[0]));
         }
     }
@@ -107,59 +107,60 @@ public class Tools {
         Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
         Runnable toRun = null;
-        if(runnable.length > 0) {
+        if (runnable.length > 0) {
             toRun = runnable[0];
         }
 
-        if(location.equals("left")) {
-            if(toRun != null) {
+        if (location.equals("left")) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(-offset, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(-offset, actorXY.y, duration, interp));
             }
-        } else if(location.equals("right")) {
-            if(toRun != null) {
+        } else if (location.equals("right")) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp));
             }
-        } else if(location.equals("top")) {
-            if(toRun != null) {
+        } else if (location.equals("top")) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp));
             }
-        } else if(location.equals("down")) {
-            if(toRun != null) {
+        } else if (location.equals("down")) {
+            if (toRun != null) {
                 actor.addAction(sequence(moveTo(actorXY.x, -offset, duration, interp), run(toRun)));
             } else {
                 actor.addAction(moveTo(actorXY.x, -offset, duration, interp));
-            }        }
+            }
+        }
     }
 
     public static void sequenceSlideIn(String location, float duration, Interpolation interp, int offset, float delay, Actor... actors) {
 
         float currentDelay = 0f;
 
-        for(int x = 0; x < actors.length; x++) {
+        for (int x = 0; x < actors.length; x++) {
             Actor actor = actors[x];
 
-            if(x != 0) {
+            if (x != 0) {
                 currentDelay += delay;
             }
 
             Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
-            if(location.equals("left")) {
+            if (location.equals("left")) {
                 actor.setPosition(-offset, actorXY.y);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(location.equals("right")) {
+            } else if (location.equals("right")) {
                 actor.setPosition(Gdx.graphics.getWidth() + offset, actorXY.y);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(location.equals("top")) {
+            } else if (location.equals("top")) {
                 actor.setPosition(actorXY.x, Gdx.graphics.getHeight() + offset);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
-            } else if(location.equals("down")) {
+            } else if (location.equals("down")) {
                 actor.setPosition(actorXY.x, -offset);
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, actorXY.y, duration, interp)));
             }
@@ -170,22 +171,22 @@ public class Tools {
 
         float currentDelay = 0f;
 
-        for(int x = 0; x < actors.length; x++) {
+        for (int x = 0; x < actors.length; x++) {
             Actor actor = actors[x];
 
-            if(x != 0) {
+            if (x != 0) {
                 currentDelay += delay;
             }
 
             Vector2 actorXY = new Vector2(actor.getX(), actor.getY());
 
-            if(location.equals("left")) {
+            if (location.equals("left")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(-offset, actorXY.y, duration, interp)));
-            } else if(location.equals("right")) {
+            } else if (location.equals("right")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(Gdx.graphics.getWidth() + offset, actorXY.y, duration, interp)));
-            } else if(location.equals("top")) {
+            } else if (location.equals("top")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, Gdx.graphics.getHeight() + offset, duration, interp)));
-            } else if(location.equals("down")) {
+            } else if (location.equals("down")) {
                 actor.addAction(sequence(delay(currentDelay), moveTo(actorXY.x, -offset, duration, interp)));
             }
         }

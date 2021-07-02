@@ -6,9 +6,8 @@ import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 
 public class Simulation {
-    private DelayedRemovalArray<Hardware> h;
-
     public boolean isRunning = false;
+    private DelayedRemovalArray<Hardware> h;
 
     public Simulation() {
     }

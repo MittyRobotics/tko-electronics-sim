@@ -21,28 +21,24 @@ public class CableManager {
     public static Cable currentCable = null;
     public static int id = 1;
     public static int cId = 0;
-
+    public static Cable toBeMovedForward;
+    public static boolean movingCable = false;
     private static DelayedRemovalArray<Cable> temp;
-
     private static DelayedRemovalArray<Cable> cables = new DelayedRemovalArray<>();
 
-    public static Cable toBeMovedForward;
-
-    public static boolean movingCable = false;
-
     public static void update(ModifiedShapeRenderer renderer, ClippedCameraController cam) {
-        if(toBeMovedForward != null) {
+        if (toBeMovedForward != null) {
             int i = cables.indexOf(toBeMovedForward, true);
-            if(i != cables.size-1) {
-                Cable temp = cables.get(i+1);
-                cables.set(i+1, toBeMovedForward);
+            if (i != cables.size - 1) {
+                Cable temp = cables.get(i + 1);
+                cables.set(i + 1, toBeMovedForward);
                 cables.set(i, temp);
             }
             toBeMovedForward = null;
         }
 
         Iterator<Cable> iterator = cables.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Cable temp = iterator.next();
             temp.update(renderer, cam);
 
@@ -64,8 +60,8 @@ public class CableManager {
 
     public static void moveToFront(Cable cable) {
         temp = new DelayedRemovalArray<>();
-        for(int i = 0; i < cables.size; i++) {
-            if(cables.get(i).getID() != cable.getID()) {
+        for (int i = 0; i < cables.size; i++) {
+            if (cables.get(i).getID() != cable.getID()) {
                 temp.add(cables.get(i));
             }
         }
@@ -78,8 +74,8 @@ public class CableManager {
     public static void moveToBack(Cable cable) {
         temp = new DelayedRemovalArray<>();
         temp.add(cable);
-        for(int i = 0; i < cables.size; i++) {
-            if(cables.get(i).getID() != cable.getID()) {
+        for (int i = 0; i < cables.size; i++) {
+            if (cables.get(i).getID() != cable.getID()) {
                 temp.add(cables.get(i));
             }
         }
@@ -90,9 +86,9 @@ public class CableManager {
 
     public static void moveBack(Cable cable) {
         int i = cables.indexOf(cable, true);
-        if(i != 0) {
-            Cable temp = cables.get(i-1);
-            cables.set(i-1, cable);
+        if (i != 0) {
+            Cable temp = cables.get(i - 1);
+            cables.set(i - 1, cable);
             cables.set(i, temp);
         }
     }
@@ -126,9 +122,9 @@ public class CableManager {
 
     public static void mergeCables(Cable cable1, Cable cable2, boolean cable1begin, boolean cable2begin) {
         try {
-            if((cable1.getConnectionSimple(!cable1begin) == null || cable2.getConnectionSimple(!cable2begin) == null || cable1.getConnectionSimple(!cable1begin).hardwareID != cable2.getConnectionSimple(!cable2begin).hardwareID)
+            if ((cable1.getConnectionSimple(!cable1begin) == null || cable2.getConnectionSimple(!cable2begin) == null || cable1.getConnectionSimple(!cable1begin).hardwareID != cable2.getConnectionSimple(!cable2begin).hardwareID)
                     && (cable1.getConnection(!cable1begin) == null || cable2.getConnection(!cable2begin) == null || cable1.getConnection(!cable1begin).hardwareID != cable2.getConnection(!cable2begin).hardwareID)) {
-                if(cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
+                if (cable1.getConnection(cable1begin) == null && cable2.getConnection(cable2begin) == null) {
                     if (cable1.gauge == cable2.gauge) {
                         //MERGE TWO CABLES
                         if (cable2 instanceof CrimpedCable) {
@@ -157,7 +153,7 @@ public class CableManager {
             } else {
                 CircuitGUIManager.popup.activateError("A device cannot be connected to itself");
             }
-            if(currentCable != null) {
+            if (currentCable != null) {
                 currentCable.appendingFromEnd = false;
                 currentCable.appendingFromBegin = false;
                 currentCable = null;
@@ -169,8 +165,8 @@ public class CableManager {
     }
 
     public static Cable getCableByID(int ID) {
-        for(int x = 0; x < cables.size; x++) {
-            if(cables.get(x).getID() == ID) {
+        for (int x = 0; x < cables.size; x++) {
+            if (cables.get(x).getID() == ID) {
                 return cables.get(x);
             }
         }
@@ -180,15 +176,15 @@ public class CableManager {
     private static void addCableLib(int type, float startX, float startY) {
         boolean good = true;
         Iterator<Cable> iterator = cables.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             if (iterator.next().pointIsOnEndpoint(startX, startY) != 0) {
                 good = false;
                 break;
             }
         }
-        if(good) {
+        if (good) {
             Cable temp = null;
-            switch(type) {
+            switch (type) {
                 case 0:
                     temp = new Cable(new Vector2(startX, startY), id);
                     break;
@@ -230,16 +226,16 @@ public class CableManager {
         Vector2 vec1 = new Vector2(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y));
         Vector2 vec2 = new Vector2(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y));
 
-        for(Hardware h : temp) {
-            for(Cable c : h.connections) {
-                if(c != null) {
+        for (Hardware h : temp) {
+            for (Cable c : h.connections) {
+                if (c != null) {
                     ans.add(c);
                 }
             }
         }
 
-        for(Cable c : cables) {
-            if(c.intersect(vec1, vec2) && !ans.contains(c)) {
+        for (Cable c : cables) {
+            if (c.intersect(vec1, vec2) && !ans.contains(c)) {
                 ans.add(c);
             }
         }
@@ -261,23 +257,23 @@ public class CableManager {
         id = 1;
         cId = 0;
         toBeMovedForward = null;
-         movingCable = false;
+        movingCable = false;
     }
 
     private static Cable loadHardwareCableType(String type, Vector2 coord, int id) {
-        if(type.equals("ethernet")) {
+        if (type.equals("ethernet")) {
             return new EthernetCable(coord, id);
-        } else if(type.equals("tubing")) {
+        } else if (type.equals("tubing")) {
             return new Tubing(coord, id);
-        } else if(type.equals("regular")) {
+        } else if (type.equals("regular")) {
             return new Cable(coord, id);
         }
         return null;
     }
 
     public static void loadCable(CableModel cm) {
-        if(cm != null) {
-            if(!cm.cableType.equals("crimped")) {
+        if (cm != null) {
+            if (!cm.cableType.equals("crimped")) {
                 Cable c = loadHardwareCableType(cm.cableType, new Vector2(0, 0), cm.id);
                 assert c != null;
                 addCable(c);
@@ -297,7 +293,7 @@ public class CableManager {
                         HardwareManager.getHardwareByID(cm.hardware2ID).getCrimpedCableByPort(cm.port2),
                         false,
                         false
-                        );
+                );
 
                 Collections.reverse(cm.coordinates);
                 HardwareManager.getHardwareByID(cm.hardware1ID).getCrimpedCableByPort(cm.port1).coordinates = cm.coordinates;

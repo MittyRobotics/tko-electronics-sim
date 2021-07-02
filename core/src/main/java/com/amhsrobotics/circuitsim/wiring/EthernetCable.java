@@ -19,7 +19,8 @@ public class EthernetCable extends Cable {
 
     boolean canDraw = false;
 
-    public EthernetCable() {}
+    public EthernetCable() {
+    }
 
     public EthernetCable(Vector2 startPoint, int count) {
         super(startPoint, count);
@@ -40,7 +41,7 @@ public class EthernetCable extends Cable {
 
         super.render(renderer, camera);
 
-        if(CableManager.currentCable == this) {
+        if (CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -59,8 +60,8 @@ public class EthernetCable extends Cable {
 
                 angle = (float) Math.atan2(coordinates.get(coordinates.size() - 1).x - vec2.x, vec2.y - coordinates.get(coordinates.size() - 1).y);
 
-                dx = 40*(float) Math.cos(angle);
-                dy = 40*(float) Math.sin(angle);
+                dx = 40 * (float) Math.cos(angle);
+                dy = 40 * (float) Math.sin(angle);
 
                 renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 50);
 
@@ -74,12 +75,12 @@ public class EthernetCable extends Cable {
 
                 angle = (float) Math.atan2(coordinates.get(0).x - vec2.x, vec2.y - coordinates.get(0).y);
 
-                if(connection2!=null) {
+                if (connection2 != null) {
                     angle = 0;
                 }
 
-                dx = 40*(float) Math.cos(angle);
-                dy = 40*(float) Math.sin(angle);
+                dx = 40 * (float) Math.cos(angle);
+                dy = 40 * (float) Math.sin(angle);
 
                 renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 50);
             }
@@ -103,7 +104,7 @@ public class EthernetCable extends Cable {
 
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
-        if(canDraw) {
+        if (canDraw) {
             renderer.setColor(DeviceUtil.END_COLORS.get("Plastic"));
 
             float angle, dx, dy;
@@ -158,9 +159,9 @@ public class EthernetCable extends Cable {
         Vector2 c2 = coordinates.get(coordinates.size() - 1);
         Vector2 c = coordinates.get(0);
 
-        if(new Circle(c2.x, c2.y, limit + 10f).contains(vec.x, vec.y)) {
+        if (new Circle(c2.x, c2.y, limit + 10f).contains(vec.x, vec.y)) {
             return 2;
-        } else if(new Circle(c.x, c.y, limit + 10f).contains(vec.x, vec.y)) {
+        } else if (new Circle(c.x, c.y, limit + 10f).contains(vec.x, vec.y)) {
             return 1;
         }
         return 0;
@@ -168,10 +169,10 @@ public class EthernetCable extends Cable {
 
     @Override
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
-        if(color.length > 0) {
+        if (color.length > 0) {
             renderer.setColor(color[0]);
         }
-        for(Vector2 coords : coordinates) {
+        for (Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit3);
         }
         processNodes(renderer, cam);

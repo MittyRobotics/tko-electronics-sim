@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 public class JSONReader {
 
-    private static JSONParser reader = new JSONParser();
+    private static final JSONParser reader = new JSONParser();
     private static JSONObject currentConfig;
 
     public static void loadConfig(String path) {

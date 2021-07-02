@@ -15,7 +15,8 @@ import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 
 public class CurvedCable extends Cable {
 
-    public CurvedCable() {}
+    public CurvedCable() {
+    }
 
     public CurvedCable(Vector2 startPoint, int count) {
         super(startPoint, count);
@@ -32,7 +33,7 @@ public class CurvedCable extends Cable {
     @Override
     public void render(ModifiedShapeRenderer renderer, ClippedCameraController camera) {
 
-        if(CableManager.currentCable == this) {
+        if (CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -79,10 +80,10 @@ public class CurvedCable extends Cable {
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
         renderer.setColor(DeviceUtil.COLORS.get("White"));
-        if(!appendingFromBegin) {
+        if (!appendingFromBegin) {
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit + 5f);
         }
-        if(!appendingFromEnd) {
+        if (!appendingFromEnd) {
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit + 5f);
         }
 
@@ -96,9 +97,9 @@ public class CurvedCable extends Cable {
         Vector2 c2 = coordinates.get(coordinates.size() - 1);
         Vector2 c = coordinates.get(0);
 
-        if(new Circle(c2.x, c2.y, limit + 5f).contains(vec.x, vec.y)) {
+        if (new Circle(c2.x, c2.y, limit + 5f).contains(vec.x, vec.y)) {
             return 2;
-        } else if(new Circle(c.x, c.y, limit + 5f).contains(vec.x, vec.y)) {
+        } else if (new Circle(c.x, c.y, limit + 5f).contains(vec.x, vec.y)) {
             return 1;
         }
         return 0;
@@ -106,10 +107,10 @@ public class CurvedCable extends Cable {
 
     @Override
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
-        if(color.length > 0) {
+        if (color.length > 0) {
             renderer.setColor(color[0]);
         }
-        for(Vector2 coords : coordinates) {
+        for (Vector2 coords : coordinates) {
             renderer.circle(coords.x, coords.y, limit3);
         }
         processNodes(renderer, cam);

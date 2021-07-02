@@ -36,22 +36,26 @@ import java.net.URL;
 
 public class MenuScreen implements Screen {
 
+    private static TextField fileLocation;
+    private static Window importMenu;
+    private static TextButton importButton, fileSave;
+    private static ClippedCameraController camera;
     private final ModifiedStage stage;
     private final Game game;
     private final SpriteBatch batch;
     private final ModifiedShapeRenderer renderer;
-
-    private TextButton new_circuit, import_circuit, credits, quit;
-    private static TextField fileLocation;
-    private static Window importMenu;
-    private static TextButton importButton, fileSave;
-    private Label rohan, andy;
-    private Image title;
-    private Label.LabelStyle lStyle, l2Style;
-    private GlyphLayout rohanL = new GlyphLayout(), andyL = new GlyphLayout();
-
+    private final TextButton new_circuit;
+    private final TextButton import_circuit;
+    private final TextButton credits;
+    private final TextButton quit;
+    private final Label rohan;
+    private final Label andy;
+    private final Image title;
+    private final Label.LabelStyle lStyle;
+    private final Label.LabelStyle l2Style;
+    private final GlyphLayout rohanL = new GlyphLayout();
+    private final GlyphLayout andyL = new GlyphLayout();
     private boolean creditsShown = false;
-    private static ClippedCameraController camera;
 
 
     public MenuScreen(final Game game) {
@@ -127,7 +131,7 @@ public class MenuScreen implements Screen {
                 Gdx.graphics.setTitle("TKO 1351 Circuit Simulator - Unsaved *");
                 Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, quit, import_circuit, new_circuit);
                 Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
-                if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
+                if (creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
                 Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
                     @Override
                     public void run() {
@@ -142,7 +146,7 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 creditsShown = !creditsShown;
-                if(creditsShown) {
+                if (creditsShown) {
                     rohan.setPosition((float) Gdx.graphics.getWidth() / 2 - rohan.getWidth() / 2, 46);
                     andy.setPosition((float) Gdx.graphics.getWidth() / 2 - andy.getWidth() / 2, 10);
                     Tools.sequenceSlideIn("down", 1f, Interpolation.pow3, 100, 0.4f, rohan, andy);
@@ -173,7 +177,7 @@ public class MenuScreen implements Screen {
         importMenu.setMovable(false);
         importMenu.setPosition(-700, -700);
 
-        Table importTable = new   Table();
+        Table importTable = new Table();
         importMenu.add(importTable).expand().fill();
         importTable.row();
         importTable.add(new Label("Import Project", l2Style)).width(90).colspan(2).padBottom(40).align(Align.center);
@@ -247,7 +251,7 @@ public class MenuScreen implements Screen {
         importButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(fileLocation.getText().contains(".")) {
+                if (fileLocation.getText().contains(".")) {
                     hideAndLoadImportMenu();
                 }
             }
@@ -268,6 +272,14 @@ public class MenuScreen implements Screen {
         Tools.slideIn(importMenu, "down", 1f, Interpolation.exp10, 600);
     }
 
+    public static void openWebpage(String urlString) {
+        try {
+            Desktop.getDesktop().browse(new URL(urlString).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void hideImportMenu() {
         Tools.slideOut(importMenu, "down", 1f, Interpolation.exp10, 700);
     }
@@ -275,7 +287,7 @@ public class MenuScreen implements Screen {
     private void hideAndLoadImportMenu() {
         Tools.sequenceSlideOut("right", 0.5f, Interpolation.pow3, 300, 0.2f, quit, import_circuit, new_circuit);
         Tools.sequenceSlideOut("down", 0.5f, Interpolation.pow3, 300, 0.2f, credits);
-        if(creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
+        if (creditsShown) Tools.sequenceSlideOut("down", 1f, Interpolation.pow3, 100, 0.4f, andy, rohan);
         Tools.slideOut(title, "top", 1.0f, Interpolation.exp10, 100, new Runnable() {
             @Override
             public void run() {
@@ -289,22 +301,22 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             hideImportMenu();
         }
 
-        SnapGrid.renderGrid(camera, new Color(0, 0, 30/255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
+        SnapGrid.renderGrid(camera, new Color(0, 0, 30 / 255f, 1), new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), Constants.GRID_SIZE, 3);
 
-        if(creditsShown) {
+        if (creditsShown) {
 
-            if(new Rectangle(
+            if (new Rectangle(
                     Math.round(rohan.getX()),
                     Math.round(rohan.getY()),
                     Math.round(rohanL.width),
                     Math.round(rohanL.height)).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
                 rohan.setStyle(l2Style);
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-                if(Gdx.input.isButtonJustPressed(0)) {
+                if (Gdx.input.isButtonJustPressed(0)) {
                     openWebpage("https://github.com/Rohan-Bansal");
                 }
             } else {
@@ -312,14 +324,14 @@ public class MenuScreen implements Screen {
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
             }
 
-            if(new Rectangle(
+            if (new Rectangle(
                     Math.round(andy.getX()),
                     Math.round(andy.getY()),
                     Math.round(andyL.width),
                     Math.round(andyL.height)).contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY())) {
                 andy.setStyle(l2Style);
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Hand);
-                if(Gdx.input.isButtonJustPressed(0)) {
+                if (Gdx.input.isButtonJustPressed(0)) {
                     openWebpage("https://github.com/AndyLi23");
                 }
             } else {
@@ -332,14 +344,6 @@ public class MenuScreen implements Screen {
         stage.draw();
     }
 
-    public static void openWebpage(String urlString) {
-        try {
-            Desktop.getDesktop().browse(new URL(urlString).toURI());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void dispose() {
         renderer.dispose();
@@ -350,12 +354,20 @@ public class MenuScreen implements Screen {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
+
     @Override
-    public void show() { }
+    public void show() {
+    }
+
     @Override
-    public void pause() { }
+    public void pause() {
+    }
+
     @Override
-    public void resume() { }
+    public void resume() {
+    }
+
     @Override
-    public void hide() { }
+    public void hide() {
+    }
 }

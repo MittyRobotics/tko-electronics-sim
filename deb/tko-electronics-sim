@@ -1,0 +1,3 @@
+#!/bin/sh
+java -jar /usr/share/tko-electronics-sim/tko-electronics-sim.jar
+

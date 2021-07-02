@@ -16,22 +16,18 @@ import java.util.ArrayList;
 
 public class Message {
 
-    private ModifiedStage stage;
-
-
     public final Label.LabelStyle LABEL = new Label.LabelStyle();
-    private Label label;
-    private Table table;
-
     public boolean visible;
-
-    private ArrayList<Table> tables = new ArrayList<>();
+    private final ModifiedStage stage;
+    private final Label label;
+    private final Table table;
+    private final ArrayList<Table> tables = new ArrayList<>();
 
     public Message(ModifiedStage stage) {
         this.stage = stage;
 
         LABEL.font = Constants.FONT_SMALL;
-        LABEL.fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
+        LABEL.fontColor = new Color(247 / 255f, 66 / 255f, 18 / 255f, 1);
 
         label = new Label("", LABEL);
 
@@ -47,14 +43,14 @@ public class Message {
 
     public void addLabel(String text, Vector2 pos) {
         Label l = new Label(text, LABEL);
-        l.getStyle().fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
+        l.getStyle().fontColor = new Color(247 / 255f, 66 / 255f, 18 / 255f, 1);
 
         Table t = new Table();
         t.setBackground(Constants.SKIN.getDrawable("textbox_01"));
         t.add(l);
         t.pack();
 
-        t.setPosition(pos.x-t.getWidth()/2, pos.y);
+        t.setPosition(pos.x - t.getWidth() / 2, pos.y);
 
         tables.add(t);
 
@@ -62,13 +58,13 @@ public class Message {
     }
 
     public void removeLabels() {
-        for(Table a : tables) {
+        for (Table a : tables) {
             a.remove();
         }
     }
 
     public void activateError(String text) {
-        label.getStyle().fontColor = new Color(247/255f, 66/255f, 18/255f, 1);
+        label.getStyle().fontColor = new Color(247 / 255f, 66 / 255f, 18 / 255f, 1);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();
@@ -79,7 +75,7 @@ public class Message {
     }
 
     public void activatePrompt(String text) {
-        label.getStyle().fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
+        label.getStyle().fontColor = new Color(50 / 255f, 167 / 255f, 94 / 255f, 1);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();
@@ -89,7 +85,7 @@ public class Message {
     }
 
     public void activatePrompt(String text, int time) {
-        label.getStyle().fontColor = new Color(50/255f, 167/255f, 94/255f, 1);
+        label.getStyle().fontColor = new Color(50 / 255f, 167 / 255f, 94 / 255f, 1);
         label.setText(text);
         table.setWidth(label.getWidth());
         table.pack();

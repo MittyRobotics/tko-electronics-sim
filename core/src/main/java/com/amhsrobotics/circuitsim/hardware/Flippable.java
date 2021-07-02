@@ -19,14 +19,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
 import org.json.simple.JSONArray;
 
-public class Flippable extends Hardware  {
+public class Flippable extends Hardware {
 
-    public Flippable() {}
+    public Flippable() {
+    }
 
     public Flippable(Vector2 position, HardwareType type, boolean... addCrimped) {
         super(position, type, addCrimped);
 
-        if(!(this instanceof SandCrab)) {
+        if (!(this instanceof SandCrab)) {
             for (JSONArray arr : pinDefs) {
                 Sprite temp;
                 if (connectors.size() == connNum) {
@@ -54,20 +55,20 @@ public class Flippable extends Hardware  {
         CircuitGUIManager.propertiesBox.addElement(flip, true, 2);
 
         CircuitGUIManager.propertiesBox.addElement(new Label("E-Plate", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2+"", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
+        CircuitGUIManager.propertiesBox.addElement(new Label(attached == null ? "None" : attached.hardwareID2 + "", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
         for (int x = 0; x < connectors.size(); x++) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. " + (x + 1), CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            if(connections.get(x) == null) {
+            if (connections.get(x) == null) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("None", CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x).getOtherConnection(this) != null) {
-                if((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
+            } else if (connections.get(x).getOtherConnection(this) != null) {
+                if ((connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2).length() > 10) {
                     CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
                 } else {
                     CircuitGUIManager.propertiesBox.addElement(new Label(connections.get(x).getOtherConnection(this).getName() + " " + connections.get(x).getOtherConnection(this).hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
                 }
-            } else if(connections.get(x) instanceof CrimpedCable) {
+            } else if (connections.get(x) instanceof CrimpedCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Crimped " + -connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
-            } else if(connections.get(x) instanceof EthernetCable) {
+            } else if (connections.get(x) instanceof EthernetCable) {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Ethernet " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             } else {
                 CircuitGUIManager.propertiesBox.addElement(new Label("Cable " + connections.get(x).getID(), CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
@@ -84,7 +85,7 @@ public class Flippable extends Hardware  {
     }
 
     public void editWire(Cable cable, int port, boolean endOfWire) {
-        if(rotated) {
+        if (rotated) {
             cable.editCoordinates(calculate(port), endOfWire, true);
             cable.editCoordinates(new Vector2(getConnector(port).getX() + getConnector(port).getWidth() / 2, getConnector(port).getY() + getConnector(port).getHeight() / 2), endOfWire, false);
         }
@@ -97,12 +98,12 @@ public class Flippable extends Hardware  {
 
     public void rotateThis() {
         base.rotate(90);
-        if(this instanceof SandCrab) {
+        if (this instanceof SandCrab) {
             for (Sprite s : connectors) {
                 s.rotate(90);
             }
         }
-        cur = (cur+1)%4;
+        cur = (cur + 1) % 4;
         for (JSONArray arr : pinDefs) {
             int index = pinDefs.indexOf(arr);
             if (connections.get(index) != null) {
@@ -115,7 +116,7 @@ public class Flippable extends Hardware  {
 
     public int getRotation() {
         float x = base.getRotation() % 360;
-        if(x < 0) {
+        if (x < 0) {
             x += 360;
         }
         return Math.round(x);
@@ -123,18 +124,18 @@ public class Flippable extends Hardware  {
 
     @Override
     public void processFlip() {
-        if(HardwareManager.currentHardware == this && Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if (HardwareManager.currentHardware == this && Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             rotateThis();
         }
     }
 
     public void drawHover(ModifiedShapeRenderer renderer) {
-        renderer.setColor(new Color(156/255f,1f,150/255f,1f));
-        if(drawError) {
+        renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 1f));
+        if (drawError) {
             renderer.setColor(Color.RED);
         }
 
-        if(drawGood) {
+        if (drawGood) {
             renderer.setColor(Color.GREEN);
         }
 

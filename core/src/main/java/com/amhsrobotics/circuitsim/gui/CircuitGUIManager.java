@@ -40,14 +40,25 @@ import java.util.*;
 
 public class CircuitGUIManager implements Disposable {
 
+    private static final LinkedHashMap<String, String> UI_COLORS = new LinkedHashMap<String, String>() {{
+        put("Blue", "skin/ui-blue.atlas");
+        put("Gray", "skin/ui-gray.atlas");
+        put("Green", "skin/ui-green.atlas");
+        put("Orange", "skin/ui-orange.atlas");
+        put("Red", "skin/ui-red.atlas");
+        put("White", "skin/ui-white.atlas");
+        put("Yellow", "skin/ui-yellow.atlas");
+    }};
     public static Table container, table, table2, filters;
     public static PropertiesBox propertiesBox;
     public static Message popup;
     public static boolean saveMenuShown = false;
     public static boolean panelShown = true;
+    public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown, showWelcomeMenu = true;
     private static Window saveMenu;
     private final ModifiedStage stage;
     private final Simulation sim;
+    private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     private TextButton simulate;
     private TextButton back;
     private TextButton help;
@@ -60,30 +71,16 @@ public class CircuitGUIManager implements Disposable {
     private TextButton fil2;
     private TextButton fil3;
     private TextButton fil4;
-    private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
-    public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown, showWelcomeMenu = true;
     private Window helpMenu, optionsMenu, welcomeMenu;
     private Map<String, LinkedList<TextButton>> reverseMap;
     private TextField gridSizingX, gridSizingY, gridSpacing, fileLocation;
     private TextButton saveButton, fileSave, togGridButton, mColor, sColor;
     private boolean filterChanged = false;
     private boolean addAll = true;
-
     private Image easter;
     private boolean easterOn = false;
-
-    private CameraController camera;
-    private Game game;
-
-    private static final LinkedHashMap<String, String> UI_COLORS = new LinkedHashMap<String, String>() {{
-        put("Blue", "skin/ui-blue.atlas");
-        put("Gray", "skin/ui-gray.atlas");
-        put("Green", "skin/ui-green.atlas");
-        put("Orange", "skin/ui-orange.atlas");
-        put("Red", "skin/ui-red.atlas");
-        put("White", "skin/ui-white.atlas");
-        put("Yellow", "skin/ui-yellow.atlas");
-    }};
+    private final CameraController camera;
+    private final Game game;
 
 
     public CircuitGUIManager(ModifiedStage stage, final CameraController camera, final Game game) {
@@ -99,6 +96,16 @@ public class CircuitGUIManager implements Disposable {
         stage.addActors(welcomeMenu, back, help, helpMenu, optionsMenu, saveMenu, options, hidePanel, save, clear, easter, simulate);
 
         ConfirmDialog.init(stage);
+    }
+
+    public static void saveMenu() {
+        saveMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - saveMenu.getWidth() / 2, 250);
+        Tools.slideIn(saveMenu, "down", 1f, Interpolation.exp10, 600);
+        saveMenuShown = true;
+    }
+
+    public static boolean isPanelShown() {
+        return panelShown;
     }
 
     private void loadThis() {
@@ -159,12 +166,13 @@ public class CircuitGUIManager implements Disposable {
 
         table = new Table();
         ScrollPane scroll = new ScrollPane(table, sStyle);
-        scroll.setScrollingDisabled(true,false);
+        scroll.setScrollingDisabled(true, false);
         scroll.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scroll);
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
@@ -184,13 +192,13 @@ public class CircuitGUIManager implements Disposable {
 
         JSONArray elementList = (JSONArray) JSONReader.getCurrentConfig().get("elements");
 
-        for(Object o : elementList) {
+        for (Object o : elementList) {
             TextButton t = new TextButton((String) ((JSONObject) o).get("name"), tStyle);
             t.addListener(new TextTooltip((String) ((JSONObject) o).get("tooltip"), ttStyle));
-            reverseMap.get((String) ((JSONObject) o).get("category")).add(t);
+            reverseMap.get(((JSONObject) o).get("category")).add(t);
             HardwareType buttonType = null;
-            for(HardwareType type : HardwareType.values()) {
-                if(type.name().equalsIgnoreCase((String) ((JSONObject) o).get("objectName"))) {
+            for (HardwareType type : HardwareType.values()) {
+                if (type.name().equalsIgnoreCase((String) ((JSONObject) o).get("objectName"))) {
                     buttonType = type;
                 }
             }
@@ -214,12 +222,13 @@ public class CircuitGUIManager implements Disposable {
 
         table2 = new Table();
         ScrollPane scrollFilters = new ScrollPane(table2, sStyle);
-        scrollFilters.setScrollingDisabled(true,false);
+        scrollFilters.setScrollingDisabled(true, false);
         scrollFilters.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scrollFilters);
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
@@ -284,14 +293,13 @@ public class CircuitGUIManager implements Disposable {
         clear.setPosition(340, Gdx.graphics.getHeight() - 70);
 
 
-
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 ConfirmDialog.createWindow(new Runnable() {
                     @Override
                     public void run() {
-                        camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
+                        camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE - 3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE - 2);
                         camera.attachCameraSequence(new ArrayList<CameraAction>() {{
                             add(Actions.zoomCameraTo(1f, 1f, Interpolation.exp10));
                         }});
@@ -314,7 +322,7 @@ public class CircuitGUIManager implements Disposable {
         help.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(helpMenuShown) {
+                if (helpMenuShown) {
                     hideHelpMenu();
                 } else {
                     showHelpMenu();
@@ -324,7 +332,7 @@ public class CircuitGUIManager implements Disposable {
         options.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(optionsMenuShown) {
+                if (optionsMenuShown) {
                     hideOptionsMenu();
                 } else {
                     showOptionsMenu();
@@ -334,13 +342,13 @@ public class CircuitGUIManager implements Disposable {
         hidePanel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(CableManager.currentCable != null) {
+                if (CableManager.currentCable != null) {
                     CableManager.currentCable.appendingFromEnd = false;
                     CableManager.currentCable.appendingFromBegin = false;
                     CableManager.currentCable = null;
                 }
                 HardwareManager.currentHardware = null;
-                if(panelShown) {
+                if (panelShown) {
                     hidePanel();
                 } else {
                     showPanel();
@@ -350,7 +358,7 @@ public class CircuitGUIManager implements Disposable {
         save.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(FileManager.fileName.equals("")) {
+                if (FileManager.fileName.equals("")) {
                     CircuitGUIManager.saveMenu();
                 } else {
                     FileManager.save(FileManager.fileName);
@@ -361,8 +369,8 @@ public class CircuitGUIManager implements Disposable {
         simulate.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(sim.isRunning) {
-                    for(Hardware h : HardwareManager.getHardware()) {
+                if (sim.isRunning) {
+                    for (Hardware h : HardwareManager.getHardware()) {
                         h.stopDrawErrorHover();
                         h.stopDrawGoodHover();
                         h.resetLEDs();
@@ -376,7 +384,7 @@ public class CircuitGUIManager implements Disposable {
                     sim.isRunning = false;
                 } else {
 
-                    if(HardwareManager.getHardware() == null || HardwareManager.getHardware().size == 0) {
+                    if (HardwareManager.getHardware() == null || HardwareManager.getHardware().size == 0) {
                         CircuitGUIManager.popup.activateError("Nothing to simulate");
                         return;
                     }
@@ -389,7 +397,7 @@ public class CircuitGUIManager implements Disposable {
         clear.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(HardwareManager.getHardware().size == 0 && CableManager.getCables().size == 0) {
+                if (HardwareManager.getHardware().size == 0 && CableManager.getCables().size == 0) {
                     popup.activateError("Nothing to clear");
                 } else {
                     ConfirmDialog.createWindow(() -> {
@@ -411,23 +419,13 @@ public class CircuitGUIManager implements Disposable {
         Tools.sequenceSlideIn("right", 1f, Interpolation.exp10, 100, 0.3f, filters, container);
         Tools.sequenceSlideIn("top", 1f, Interpolation.exp10, 100, 0.2f, save, help, options, clear, hidePanel, simulate);
 
-        if(!welcomeMenuShown && showWelcomeMenu) {
+        if (!welcomeMenuShown && showWelcomeMenu) {
             showWelcomeMenu();
         }
     }
 
-    public static void saveMenu() {
-        saveMenu.setPosition((float) Gdx.graphics.getWidth() / 2 - saveMenu.getWidth() / 2, 250);
-        Tools.slideIn(saveMenu, "down", 1f, Interpolation.exp10, 600);
-        saveMenuShown = true;
-    }
-
-    public static boolean isPanelShown() {
-        return panelShown;
-    }
-
     private void buttonDecline() {
-        if(CableManager.currentCable != null) {
+        if (CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;
             CableManager.currentCable.appendingFromBegin = false;
             CableManager.currentCable = null;
@@ -437,7 +435,7 @@ public class CircuitGUIManager implements Disposable {
     }
 
     private void filterProcess(TextButton fil) {
-        if(filtersMap.get(fil)) {
+        if (filtersMap.get(fil)) {
             filtersMap.put(fil, false);
             fil.setStyle(tStyle);
         } else {
@@ -483,12 +481,13 @@ public class CircuitGUIManager implements Disposable {
         welcomeMenu.row();
 
         ScrollPane scroll = new ScrollPane(welcomeTable, sStyle);
-        scroll.setScrollingDisabled(true,false);
+        scroll.setScrollingDisabled(true, false);
         scroll.addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scroll);
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
@@ -508,14 +507,14 @@ public class CircuitGUIManager implements Disposable {
 
         welcomeTable.row();
         welcomeTable.add(new Label("To add components, use the menu on the right. \n" +
-                                        "Click on a button for a component, and click on the grid when you\n" +
-                                        "want to place it. To filter components, use the menu on the top. ", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                "Click on a button for a component, and click on the grid when you\n" +
+                "want to place it. To filter components, use the menu on the top. ", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
         welcomeTable.row();
         welcomeTable.add(new Label("Many functional buttons are on the top. \n" +
-                                        "You can quit, save your design to a file, open a help menu (with\n" +
-                                        "keybinds), open a settings menu, clear your design, toggle the panel,\n" +
-                                        "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(40);
+                "You can quit, save your design to a file, open a help menu (with\n" +
+                "keybinds), open a settings menu, clear your design, toggle the panel,\n" +
+                "and run a wiring/LED simulation to find any problems.", lStyle)).colspan(2).align(Align.left).padBottom(40);
 
         welcomeTable.row();
         welcomeTable.add(new Label("Hardware Usage: ", lStyle)).colspan(2).align(Align.center).padBottom(5);
@@ -526,14 +525,14 @@ public class CircuitGUIManager implements Disposable {
 
         welcomeTable.row();
         welcomeTable.add(new Label("Once you place a device, click on it to select it.\n" +
-                                        "A menu should appear on the left. You can rotate the device and\n" +
-                                        "look at its connections. You can also drag the device to move it.\n" +
-                                        "Press delete to remove a device and esc to unselect it.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                "A menu should appear on the left. You can rotate the device and\n" +
+                "look at its connections. You can also drag the device to move it.\n" +
+                "Press delete to remove a device and esc to unselect it.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
         welcomeTable.row();
         welcomeTable.add(new Label("The salmon-colored dots are wire connectors. \n" +
-                                        "Some already have crimped wires attached. Otherwise, you can\n" +
-                                        "double click to create a wire there. Hover to see details\n" +
+                "Some already have crimped wires attached. Otherwise, you can\n" +
+                "double click to create a wire there. Hover to see details\n" +
                 "about the connector.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
@@ -546,13 +545,13 @@ public class CircuitGUIManager implements Disposable {
 
         welcomeTable.row();
         welcomeTable.add(new Label("You can double click a node or place one from the menu to create\n" +
-                                        "a wire. You can drag it, extend it by clicking the endpoints, and\n" +
-                                        "delete (with key) or move individual nodes by clicking on them.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                "a wire. You can drag it, extend it by clicking the endpoints, and\n" +
+                "delete (with key) or move individual nodes by clicking on them.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
         welcomeTable.row();
         welcomeTable.add(new Label("On the top right, there is a menu with many useful functions. \n" +
-                                        "You can change the color and gauge of the wire (disabled for\n" +
-                                        "connected wires), and disconnect either end.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                "You can change the color and gauge of the wire (disabled for\n" +
+                "connected wires), and disconnect either end.\n", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
         welcomeTable.row();
@@ -564,14 +563,14 @@ public class CircuitGUIManager implements Disposable {
 
         welcomeTable.row();
         welcomeTable.add(new Label("Click the Simulate button on the top to simulate your diagram.\n" +
-                                        "A green outline will appear around correctly wired components, and\n" +
-                                        "a red one around incorrectly wired ones. Error messages appear\n" +
-                                        "on top. This also simulates LEDs - hover over them for details.", lStyle)).colspan(2).align(Align.left).padBottom(20);
+                "A green outline will appear around correctly wired components, and\n" +
+                "a red one around incorrectly wired ones. Error messages appear\n" +
+                "on top. This also simulates LEDs - hover over them for details.", lStyle)).colspan(2).align(Align.left).padBottom(20);
 
 
         welcomeTable.row();
         welcomeTable.add(new Label("That's it for the basic usage. If you have any questions or issues,\n" +
-                                        "open an issue on the Github.", lStyle)).colspan(2).align(Align.left).padBottom(5);
+                "open an issue on the Github.", lStyle)).colspan(2).align(Align.left).padBottom(5);
 
         welcomeMenu.add(scroll).colspan(2).expand().fill();
         welcomeMenu.row();
@@ -638,10 +637,10 @@ public class CircuitGUIManager implements Disposable {
 
         JSONArray elementList = (JSONArray) JSONReader.getCurrentConfig().get("binds");
 
-        for(Object o : elementList) {
+        for (Object o : elementList) {
             helpTable.row();
             String id = null;
-            for(Object g : ((JSONObject) o).keySet()) {
+            for (Object g : ((JSONObject) o).keySet()) {
                 id = (String) g;
             }
             helpTable.add(new Label(id, l2Style)).width(180).align(Align.center);
@@ -660,7 +659,7 @@ public class CircuitGUIManager implements Disposable {
         saveMenu.setMovable(false);
         saveMenu.setPosition(-700, -700);
 
-        Table saveTable = new   Table();
+        Table saveTable = new Table();
         saveMenu.add(saveTable).expand().fill();
         saveTable.row();
         saveTable.add(new Label("Save Project", l2Style)).width(90).colspan(2).padBottom(40).align(Align.center);
@@ -705,7 +704,7 @@ public class CircuitGUIManager implements Disposable {
         saveButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(!fileLocation.getText().contains(".tko")) {
+                if (!fileLocation.getText().contains(".tko")) {
                     fileLocation.setText(fileLocation.getText() + ".tko");
                 }
                 FileManager.save(fileLocation.getText());
@@ -903,20 +902,20 @@ public class CircuitGUIManager implements Disposable {
         optionsMenuShown = false;
 
         try {
-            if(Integer.parseInt(gridSpacing.getText()) < 10) {
+            if (Integer.parseInt(gridSpacing.getText()) < 10) {
                 popup.activateError("Minimum spacing of 10 required");
             } else if (Integer.parseInt(gridSpacing.getText()) > 100) {
                 popup.activateError("Maximum spacing of 100 required");
             } else {
                 Constants.GRID_SIZE = Integer.parseInt(gridSpacing.getText());
             }
-            if(Float.parseFloat(gridSizingX.getText()) > 15000) {
+            if (Float.parseFloat(gridSizingX.getText()) > 15000) {
                 popup.activateError("Maximum X of 15000 required");
             } else if (Float.parseFloat(gridSizingX.getText()) < 2000) {
                 popup.activateError("Minimum X of 2000 required");
             } else if (Float.parseFloat(gridSizingY.getText()) < 2000) {
                 popup.activateError("Minimum Y of 2000 required");
-            } else if(Float.parseFloat(gridSizingY.getText()) > 15000) {
+            } else if (Float.parseFloat(gridSizingY.getText()) > 15000) {
                 popup.activateError("Maximum Y of 15000 required");
             } else {
                 Constants.WORLD_DIM.set(Float.parseFloat(gridSizingX.getText()), Float.parseFloat(gridSizingY.getText()));
@@ -948,7 +947,7 @@ public class CircuitGUIManager implements Disposable {
         help.setPosition(180, Gdx.graphics.getHeight() - 70);
         options.setPosition(260, Gdx.graphics.getHeight() - 70);
         clear.setPosition(340, Gdx.graphics.getHeight() - 70);
-        if(propertiesBox.isVisible()) {
+        if (propertiesBox.isVisible()) {
             propertiesBox.hide();
             propertiesBox.show();
         }
@@ -959,21 +958,21 @@ public class CircuitGUIManager implements Disposable {
     }
 
     public void update(float delta) {
-        if(Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.K) && Gdx.input.isKeyPressed(Input.Keys.O)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.T) && Gdx.input.isKeyPressed(Input.Keys.K) && Gdx.input.isKeyPressed(Input.Keys.O)) {
             easter.setPosition(100, 0);
-            if(!easterOn) {
+            if (!easterOn) {
                 Tools.slideIn(easter, "down", 1f, Interpolation.smooth, 165);
                 easterOn = true;
             }
         } else {
-            if(easterOn) {
+            if (easterOn) {
                 Tools.slideOut(easter, "down", 1f, Interpolation.smooth, 165);
                 easterOn = false;
             }
         }
 
-        if(sim.isRunning) {
-            for(Hardware h : HardwareManager.getHardware()) {
+        if (sim.isRunning) {
+            for (Hardware h : HardwareManager.getHardware()) {
                 h.stopDrawErrorHover();
                 h.stopDrawGoodHover();
                 //h.resetLEDs();
@@ -983,62 +982,62 @@ public class CircuitGUIManager implements Disposable {
         }
 
 
-        if(helpMenuShown) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (helpMenuShown) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideHelpMenu();
             }
         }
 
-        if(optionsMenuShown) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (optionsMenuShown) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideOptionsMenu();
             }
         }
 
-        if(saveMenuShown) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (saveMenuShown) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideSaveMenu();
             }
         }
 
-        if(welcomeMenuShown) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (welcomeMenuShown) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 hideWelcomeMenu();
             }
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SLASH)) {
                 showHelpMenu();
             } else if (Gdx.input.isKeyJustPressed(Input.Keys.PERIOD)) {
                 showOptionsMenu();
             }
         }
 
-        if(filterChanged) {
+        if (filterChanged) {
             table.clearChildren();
-            if(filtersMap.get(fil1)){
+            if (filtersMap.get(fil1)) {
                 //Wiring
                 filterWiring();
             }
 
-            if(filtersMap.get(fil2)) {
+            if (filtersMap.get(fil2)) {
                 //Control
                 filterControl();
             }
 
-            if(filtersMap.get(fil3)) {
+            if (filtersMap.get(fil3)) {
                 //Motors
                 filterMotors();
             }
 
-            if(filtersMap.get(fil4)){
+            if (filtersMap.get(fil4)) {
                 //Pneumatics
                 filterPneumatics();
             }
         }
 
-        if(addAll) {
+        if (addAll) {
             addAll = false;
             table.clear();
             filterWiring();
@@ -1047,11 +1046,11 @@ public class CircuitGUIManager implements Disposable {
             filterPneumatics();
         }
 
-        if(!filtersMap.containsValue(true) && filterChanged) {
+        if (!filtersMap.containsValue(true) && filterChanged) {
             addAll = true;
         }
 
-        if(filterChanged) {
+        if (filterChanged) {
             filterChanged = false;
         }
 
@@ -1060,7 +1059,7 @@ public class CircuitGUIManager implements Disposable {
     }
 
     public void filterWiring() {
-        for(TextButton t : reverseMap.get("wiring")) {
+        for (TextButton t : reverseMap.get("wiring")) {
             table.row();
             table.add(t).width(150);
         }
@@ -1068,7 +1067,7 @@ public class CircuitGUIManager implements Disposable {
     }
 
     public void filterControl() {
-        for(TextButton t : reverseMap.get("control")) {
+        for (TextButton t : reverseMap.get("control")) {
             table.row();
             table.add(t).width(150);
         }
@@ -1076,7 +1075,7 @@ public class CircuitGUIManager implements Disposable {
     }
 
     public void filterMotors() {
-        for(TextButton t : reverseMap.get("motors")) {
+        for (TextButton t : reverseMap.get("motors")) {
             table.row();
             table.add(t).width(150);
         }
@@ -1084,7 +1083,7 @@ public class CircuitGUIManager implements Disposable {
     }
 
     public void filterPneumatics() {
-        for(TextButton t : reverseMap.get("pneumatics")) {
+        for (TextButton t : reverseMap.get("pneumatics")) {
             table.row();
             table.add(t).width(150);
         }

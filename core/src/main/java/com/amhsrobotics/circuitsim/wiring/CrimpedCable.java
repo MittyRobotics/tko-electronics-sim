@@ -34,7 +34,7 @@ public class CrimpedCable extends Cable {
 
         super.render(renderer, camera);
 
-        if(CableManager.currentCable == this) {
+        if (CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -50,8 +50,8 @@ public class CrimpedCable extends Cable {
 
                 angle = (float) Math.atan2(coordinates.get(coordinates.size() - 1).x - vec2.x, vec2.y - coordinates.get(coordinates.size() - 1).y);
 
-                dx = 20*(float) Math.cos(angle);
-                dy = 20*(float) Math.sin(angle);
+                dx = 20 * (float) Math.cos(angle);
+                dy = 20 * (float) Math.sin(angle);
 
                 renderer.rectLine(vec2.x + dx, vec2.y + dy, vec2.x - dx, vec2.y - dy, 30);
 
@@ -65,32 +65,32 @@ public class CrimpedCable extends Cable {
 
     @Override
     public void drawEndpoints(ShapeRenderer renderer) {
-            renderer.setColor(DeviceUtil.END_COLORS.get("DarkPlastic"));
+        renderer.setColor(DeviceUtil.END_COLORS.get("DarkPlastic"));
 
-            if(color2 != null) {
-                renderer.rect(coordinates.get(color2n).x-20, coordinates.get(color2n).y-20, 40, 40);
+        if (color2 != null) {
+            renderer.rect(coordinates.get(color2n).x - 20, coordinates.get(color2n).y - 20, 40, 40);
+        }
+
+
+        float angle, dx, dy;
+
+        if (!appendingFromEnd && !disableEnd) {
+
+            if (hoveringOnEndpoint(CircuitScreen.camera) == 2) {
+                renderer.setColor(DeviceUtil.END_COLORS.get("SelectedDarkPlastic"));
             }
 
-
-            float angle, dx, dy;
-
-            if (!appendingFromEnd && !disableEnd) {
-
-                if (hoveringOnEndpoint(CircuitScreen.camera) == 2) {
-                    renderer.setColor(DeviceUtil.END_COLORS.get("SelectedDarkPlastic"));
-                }
-
-                if (coordinates.size() == 1) {
-                    angle = 0;
-                } else {
-                    angle = (float) Math.atan2(coordinates.get(coordinates.size() - 2).x - coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y - coordinates.get(coordinates.size() - 2).y);
-                }
-
-                dx = 20 * (float) Math.cos(angle);
-                dy = 20 * (float) Math.sin(angle);
-
-                renderer.rectLine(coordinates.get(coordinates.size() - 1).x + dx, coordinates.get(coordinates.size() - 1).y + dy, coordinates.get(coordinates.size() - 1).x - dx, coordinates.get(coordinates.size() - 1).y - dy, 30);
+            if (coordinates.size() == 1) {
+                angle = 0;
+            } else {
+                angle = (float) Math.atan2(coordinates.get(coordinates.size() - 2).x - coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y - coordinates.get(coordinates.size() - 2).y);
             }
+
+            dx = 20 * (float) Math.cos(angle);
+            dy = 20 * (float) Math.sin(angle);
+
+            renderer.rectLine(coordinates.get(coordinates.size() - 1).x + dx, coordinates.get(coordinates.size() - 1).y + dy, coordinates.get(coordinates.size() - 1).x - dx, coordinates.get(coordinates.size() - 1).y - dy, 30);
+        }
 
 
     }

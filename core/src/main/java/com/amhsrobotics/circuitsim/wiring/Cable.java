@@ -48,7 +48,8 @@ public class Cable implements Json.Serializable {
 
     private String title;
 
-    public Cable() {}
+    public Cable() {
+    }
 
     public Cable(Vector2 startPoint, int count) {
         voltage = 0;
@@ -90,7 +91,7 @@ public class Cable implements Json.Serializable {
         CircuitGUIManager.propertiesBox.clearTable();
         CircuitGUIManager.propertiesBox.addElement(new Label(title + " - ID " + ID, CircuitGUIManager.propertiesBox.LABEL), true, 2);
 
-        if(enableColor) {
+        if (enableColor) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Color", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             final TextButton cb = new TextButton(DeviceUtil.getKeyByValue(DeviceUtil.COLORS, this.color), CircuitGUIManager.propertiesBox.TBUTTON);
             CircuitGUIManager.propertiesBox.addElement(cb, false, 1);
@@ -98,9 +99,9 @@ public class Cable implements Json.Serializable {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     ArrayList<String> keys = new ArrayList<>(DeviceUtil.COLORS.keySet());
-                    for(String str : keys) {
-                        if(str.contentEquals(cb.getText())) {
-                            if(keys.indexOf(str) == keys.size() - 1) {
+                    for (String str : keys) {
+                        if (str.contentEquals(cb.getText())) {
+                            if (keys.indexOf(str) == keys.size() - 1) {
                                 cb.setText(keys.get(0));
                                 color = DeviceUtil.COLORS.get(keys.get(0));
                                 color2 = null;
@@ -115,7 +116,7 @@ public class Cable implements Json.Serializable {
                 }
             });
         }
-        if(enableGauge) {
+        if (enableGauge) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Gauge", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
             final TextButton ga = new TextButton(this.gauge + "", CircuitGUIManager.propertiesBox.TBUTTON);
             CircuitGUIManager.propertiesBox.addElement(ga, false, 1);
@@ -123,12 +124,12 @@ public class Cable implements Json.Serializable {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     List<Integer> gauges = Arrays.stream(DeviceUtil.GAUGES).boxed().collect(Collectors.toList());
-                    if((connection1 != null && !(connection1 instanceof SandCrab) || connection2 != null && !(connection2 instanceof SandCrab))) {
+                    if ((connection1 != null && !(connection1 instanceof SandCrab) || connection2 != null && !(connection2 instanceof SandCrab))) {
                         CircuitGUIManager.popup.activateError("Gauge cannot be modified with hardware attached");
                     } else {
-                        for(int gau : gauges) {
-                            if(gau == gauge) {
-                                if(gauges.indexOf(gau) == gauges.size() - 1) {
+                        for (int gau : gauges) {
+                            if (gau == gauge) {
+                                if (gauges.indexOf(gau) == gauges.size() - 1) {
                                     gauge = gauges.get(0);
                                     ga.setText(gauge + "");
                                 } else {
@@ -142,15 +143,15 @@ public class Cable implements Json.Serializable {
                 }
             });
         }
-        if(enableConnections) {
+        if (enableConnections) {
             CircuitGUIManager.propertiesBox.addElement(new Label("Conn. 1", CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 1);
-            if((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
+            if ((connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2).length() > 10) {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), true, 2);
             } else {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection1 == null ? "None" : connection1.name + " " + connection1.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             }
 
-            if(!(this instanceof CrimpedCable)) {
+            if (!(this instanceof CrimpedCable)) {
 
                 final TextButton dis = new TextButton("Remove", CircuitGUIManager.propertiesBox.TBUTTON);
                 Cable cable = this;
@@ -175,7 +176,7 @@ public class Cable implements Json.Serializable {
                 CircuitGUIManager.propertiesBox.addElement(new Label(connection2 == null ? "None" : connection2.name + " " + connection2.hardwareID2, CircuitGUIManager.propertiesBox.LABEL_SMALL), false, 1);
             }
 
-            if(!(this instanceof CrimpedCable)) {
+            if (!(this instanceof CrimpedCable)) {
 
                 final TextButton dis2 = new TextButton("Remove", CircuitGUIManager.propertiesBox.TBUTTON);
                 Cable cable = this;
@@ -184,7 +185,7 @@ public class Cable implements Json.Serializable {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         if (connection2 != null) {
-                            coordinates.remove(coordinates.size()-1);
+                            coordinates.remove(coordinates.size() - 1);
                             HardwareManager.removeCableFromHardware(cable, connection2);
                             connection2 = null;
                             populateProperties();
@@ -202,7 +203,7 @@ public class Cable implements Json.Serializable {
     public void addCoordinates(Vector2 point, boolean begin) {
         // ADD TO ENDS OF CABLE
         // ---------------------------------------------------------------------
-        if(begin) {
+        if (begin) {
             this.coordinates.add(0, point);
         } else {
             this.coordinates.add(point);
@@ -212,14 +213,14 @@ public class Cable implements Json.Serializable {
     public void editCoordinates(Vector2 point, boolean endOfWire, boolean second) {
         // UPDATE COORDINATES FOR HARDWARE
         // ---------------------------------------------------------------------
-        if(endOfWire) {
-            if(second) {
+        if (endOfWire) {
+            if (second) {
                 this.coordinates.set(this.coordinates.size() - 2, point);
             } else {
                 this.coordinates.set(this.coordinates.size() - 1, point);
             }
         } else {
-            if(second) {
+            if (second) {
                 this.coordinates.set(1, point);
             } else {
                 this.coordinates.set(0, point);
@@ -237,35 +238,35 @@ public class Cable implements Json.Serializable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        if(nodeColor == null) {
+        if (nodeColor == null) {
             nodeColor = Color.SALMON;
         }
 
         // DRAW CABLE
         // ---------------------------------------------------------------------
         renderer.setColor(color);
-        for(int i = 0; i < coordinates.size() - 1; ++i) {
-            if(CableManager.currentCable != null) {
-                if(CableManager.currentCable == this) {
+        for (int i = 0; i < coordinates.size() - 1; ++i) {
+            if (CableManager.currentCable != null) {
+                if (CableManager.currentCable == this) {
                     // draw cable selected
-                    renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                    renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 1f));
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             }
-            if(hoveringMouse(camera) || hover) {
+            if (hoveringMouse(camera) || hover) {
                 // draw hovering on cable
-                renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
             }
             // draw actual cable
-            if(i >= color2n && color2 != null) {
+            if (i >= color2n && color2 != null) {
                 renderer.setColor(color2);
             } else {
                 renderer.setColor(color);
             }
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit);
 
-            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
+            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit / 2);
         }
 
         // ---------------------------------------------------------------------
@@ -274,7 +275,7 @@ public class Cable implements Json.Serializable {
         // CABLE SELECTED MECHANICS
         // ---------------------------------------------------------------------
 
-        if(CableManager.currentCable == this) {
+        if (CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -287,7 +288,7 @@ public class Cable implements Json.Serializable {
 
             if (appendingFromEnd && !disableEnd) {
                 // draw potential cable wire
-                if(coordinates.size()-1 >= color2n && color2 != null) {
+                if (coordinates.size() - 1 >= color2n && color2 != null) {
                     renderer.setColor(color2);
                 } else {
                     renderer.setColor(color);
@@ -295,9 +296,9 @@ public class Cable implements Json.Serializable {
                 renderer.rectLine(coordinates.get(coordinates.size() - 1), new Vector2(vec2.x, vec2.y), limit);
                 renderer.setColor(nodeColor);
                 renderer.circle(vec2.x, vec2.y, limit3);
-            } else if (appendingFromBegin && !disableBegin){
+            } else if (appendingFromBegin && !disableBegin) {
                 // draw potential cable wire
-                if(0 >= color2n && color2 != null) {
+                if (0 >= color2n && color2 != null) {
                     renderer.setColor(color2);
                 } else {
                     renderer.setColor(color);
@@ -313,7 +314,7 @@ public class Cable implements Json.Serializable {
         renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
         renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
 
-        if(hoveringMouse(camera) || hover) {
+        if (hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
         }
 
@@ -331,13 +332,13 @@ public class Cable implements Json.Serializable {
         renderer.setProjectionMatrix(camera.getCamera().combined);
         renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        if(nodeColor == null) {
+        if (nodeColor == null) {
             nodeColor = Color.SALMON;
         }
 
         // LOGIC
         // ---------------------------------------------------------------------
-        if(nodeChanged) {
+        if (nodeChanged) {
             nodeChanged = false;
         }
         disableBegin = connection1 != null;
@@ -347,42 +348,41 @@ public class Cable implements Json.Serializable {
 
         // DRAW CABLE
         // ---------------------------------------------------------------------
-        if(0 >= color2n && color2 != null) {
+        if (0 >= color2n && color2 != null) {
             renderer.setColor(color2);
         } else {
             renderer.setColor(color);
         }
-        for(int i = 0; i < coordinates.size() - 1; ++i) {
-            if(CableManager.currentCable != null) {
-                if(CableManager.currentCable == this) {
+        for (int i = 0; i < coordinates.size() - 1; ++i) {
+            if (CableManager.currentCable != null) {
+                if (CableManager.currentCable == this) {
                     // draw cable selected
-                    renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                    renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 1f));
                     renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
                 }
             } else if (hoveringMouse(camera) || hover) {
                 // draw hovering on cable
-                renderer.setColor(new Color(156/255f,1f,150/255f,1f));
+                renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 1f));
                 renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit2);
             }
             // draw actual cable
-            if(i >= color2n && color2 != null) {
+            if (i >= color2n && color2 != null) {
                 renderer.setColor(color2);
             } else {
                 renderer.setColor(color);
             }
             renderer.rectLine(coordinates.get(i), coordinates.get(i + 1), limit);
 
-            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit/2);
+            renderer.circle(coordinates.get(i).x, coordinates.get(i).y, limit / 2);
         }
 
         // ---------------------------------------------------------------------
 
 
-
         // CABLE SELECTED MECHANICS
         // ---------------------------------------------------------------------
 
-        if(CableManager.currentCable == this) {
+        if (CableManager.currentCable == this) {
 
             Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
@@ -401,7 +401,7 @@ public class Cable implements Json.Serializable {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 
                     if (movingNode != null) {
-                        if(coordinates.contains(movingNode)) {
+                        if (coordinates.contains(movingNode)) {
                             coordinates.set(coordinates.indexOf(movingNode), backupNode);
                             movingNode = null;
                             backupNode = null;
@@ -412,7 +412,7 @@ public class Cable implements Json.Serializable {
                             CircuitGUIManager.propertiesBox.hide();
                         }
                     } else {
-                        if(!appendingFromEnd && !appendingFromBegin) {
+                        if (!appendingFromEnd && !appendingFromBegin) {
                             CableManager.currentCable = null;
                             CircuitGUIManager.propertiesBox.hide();
                         }
@@ -422,7 +422,7 @@ public class Cable implements Json.Serializable {
 
                 }
 
-                if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && checkGood() && canMove) {
+                if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && checkGood() && canMove) {
                     Vector2 diff = Tools.mouseScreenToWorld(camera).sub(prevPos);
                     prevPos = Tools.mouseScreenToWorld(camera);
                     moveEntireCable(diff.x, diff.y);
@@ -431,7 +431,7 @@ public class Cable implements Json.Serializable {
 
                 // CLICK
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood()) {
-                    if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
+                    if (!appendingFromEnd && !appendingFromBegin && movingNode == null) {
                         backupNode = null;
                         CircuitGUIManager.propertiesBox.hide();
                         CableManager.currentCable = null;
@@ -443,28 +443,28 @@ public class Cable implements Json.Serializable {
                         processHardwareClick(hardware);
                         disableBegin = connection1 != null;
                         disableEnd = connection2 != null;
-                        if(disableBegin) {
+                        if (disableBegin) {
                             appendingFromBegin = false;
                         }
-                        if(disableEnd) {
+                        if (disableEnd) {
                             appendingFromEnd = false;
                         }
                     } else {
                         // ADD NEW POINT
                         if (checkBeforeClick(camera) && appendingFromEnd && !disableEnd) {
-                            if(!CircuitGUIManager.propertiesBox.hovering) {
+                            if (!CircuitGUIManager.propertiesBox.hovering) {
                                 addCoordinates(new Vector2(vec2.x, vec2.y), false);
                             } else {
                                 appendingFromEnd = false;
                             }
                         } else if (checkBeforeClick(camera) && appendingFromBegin && !disableBegin) {
-                            if(!CircuitGUIManager.propertiesBox.hovering) {
+                            if (!CircuitGUIManager.propertiesBox.hovering) {
                                 addCoordinates(new Vector2(vec2.x, vec2.y), true);
                             } else {
                                 appendingFromBegin = false;
                             }
                         } else if (movingNode != null && backupNode.x != movingNode.x && backupNode.y != movingNode.y) {
-                            if(coordinates.contains(movingNode)) {
+                            if (coordinates.contains(movingNode)) {
                                 coordinates.set(coordinates.indexOf(movingNode), new Vector2(vec2.x, vec2.y));
                             }
                             movingNode = null;
@@ -482,12 +482,12 @@ public class Cable implements Json.Serializable {
 
                 // DELETE
                 if ((Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) && movingNode == null) {
-                    if((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
-                        if(appendingFromBegin && coordinates.size() > 2) {
+                    if ((appendingFromBegin && !disableBegin) || (appendingFromEnd && !disableEnd)) {
+                        if (appendingFromBegin && coordinates.size() > 2) {
                             coordinates.remove(0);
                             color2n--;
                         } else if (appendingFromEnd && coordinates.size() > 2) {
-                            coordinates.remove(coordinates.size()-1);
+                            coordinates.remove(coordinates.size() - 1);
                         } else {
                             CableManager.deleteCable(this);
                             CableManager.currentCable = null;
@@ -511,7 +511,7 @@ public class Cable implements Json.Serializable {
 
                 if (appendingFromEnd && !disableEnd) {
                     // draw potential cable wire
-                    if(coordinates.size()-1 >= color2n && color2 != null) {
+                    if (coordinates.size() - 1 >= color2n && color2 != null) {
                         renderer.setColor(color2);
                     } else {
                         renderer.setColor(color);
@@ -520,9 +520,9 @@ public class Cable implements Json.Serializable {
                     renderer.setColor(nodeColor);
                     renderer.circle(vec2.x, vec2.y, limit3);
 
-                } else if (appendingFromBegin && !disableBegin){
+                } else if (appendingFromBegin && !disableBegin) {
                     // draw potential cable wire
-                    if(0 >= color2n && color2 != null) {
+                    if (0 >= color2n && color2 != null) {
                         renderer.setColor(color2);
                     } else {
                         renderer.setColor(color);
@@ -534,10 +534,10 @@ public class Cable implements Json.Serializable {
                 } else if (movingNode != null) {
                     movingNode.set(vec2.x, vec2.y);
                     if (Gdx.input.isKeyJustPressed(Input.Keys.FORWARD_DEL) || Gdx.input.isKeyJustPressed(Input.Keys.DEL)) {
-                        if(coordinates.indexOf(movingNode) < color2n) {
+                        if (coordinates.indexOf(movingNode) < color2n) {
                             color2n--;
                         }
-                        if(!(this instanceof CrimpedCable && coordinates.indexOf(movingNode) == 1)) {
+                        if (!(this instanceof CrimpedCable && coordinates.indexOf(movingNode) == 1)) {
                             coordinates.remove(movingNode);
                         } else {
                             coordinates.set(coordinates.indexOf(movingNode), backupNode);
@@ -559,16 +559,16 @@ public class Cable implements Json.Serializable {
         // ---------------------------------------------------------------------
 
 
-        if(hoveringMouse(camera) || hover) {
+        if (hoveringMouse(camera) || hover) {
             drawNodes(renderer, camera, nodeColor);
             checkForClick(camera);
-            if(!appendingFromEnd && !appendingFromBegin && movingNode == null) {
+            if (!appendingFromEnd && !appendingFromBegin && movingNode == null) {
                 canMove = true;
                 CableManager.movingCable = true;
                 prevPos = Tools.mouseScreenToWorld(camera);
             }
         } else {
-            if(!Gdx.input.isButtonPressed(0)) {
+            if (!Gdx.input.isButtonPressed(0)) {
                 canMove = false;
                 CableManager.movingCable = false;
             }
@@ -584,16 +584,16 @@ public class Cable implements Json.Serializable {
     }
 
     public void drawEndpoints(ShapeRenderer renderer) {
-        if(coordinates.size() > 0) {
+        if (coordinates.size() > 0) {
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
         }
     }
 
     public Hardware getHardwareAtOtherEnd(Hardware hardware) {
-        if(hardware == connection1) {
+        if (hardware == connection1) {
             return connection2;
-        } else if(hardware == connection2) {
+        } else if (hardware == connection2) {
             return connection1;
         } else {
             return null;
@@ -602,7 +602,7 @@ public class Cable implements Json.Serializable {
 
     public boolean checkGood() {
         return (!(CircuitGUIManager.panelShown && Gdx.input.getX() >= Gdx.graphics.getWidth() - 420 && Gdx.input.getY() <= 210) && !(!CircuitGUIManager.panelShown &&
-                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject&& (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
+                Gdx.input.getX() >= Gdx.graphics.getWidth() - 210 && Gdx.input.getY() <= 210) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 210) || !CircuitGUIManager.isPanelShown()) && !HardwareManager.movingObject && (!CircuitScreen.selectMultiple && !CircuitScreen.selectedMultiple))
                 && !CircuitGUIManager.helpMenuShown && !CircuitGUIManager.optionsMenuShown && !CircuitGUIManager.saveMenuShown;
     }
 
@@ -612,14 +612,14 @@ public class Cable implements Json.Serializable {
 
         // FIRST CLICK
 
-        if(coordinates.size() == 1) {
+        if (coordinates.size() == 1) {
             if (appendingFromEnd) {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), true);
             } else if (appendingFromBegin) {
                 clist.get(0).firstClickAttach(this, hardware.get(clist.get(0)), false);
             }
         } else {
-            if((getConnectionSimple(!appendingFromBegin) == clist.get(0) || getConnection(!appendingFromBegin) == clist.get(0)) && (appendingFromBegin || appendingFromEnd)) {
+            if ((getConnectionSimple(!appendingFromBegin) == clist.get(0) || getConnection(!appendingFromBegin) == clist.get(0)) && (appendingFromBegin || appendingFromEnd)) {
                 CircuitGUIManager.popup.activateError("A device cannot be connected to itself");
                 appendingFromEnd = false;
                 appendingFromBegin = false;
@@ -638,7 +638,7 @@ public class Cable implements Json.Serializable {
     }
 
     protected void checkForClick(ClippedCameraController camera) {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood() &&
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && checkGood() &&
                 ((CableManager.currentCable == null || !(CableManager.currentCable.appendingFromBegin || CableManager.currentCable.appendingFromEnd)) || CableManager.currentCable == this)) {
             // CLICKED ON END
 
@@ -679,10 +679,10 @@ public class Cable implements Json.Serializable {
                 }
                 CableManager.currentCable = this;
                 CableManager.moveToFront(this);
-                if(connection1 != null) {
+                if (connection1 != null) {
                     HardwareManager.moveToFront(connection1);
                 }
-                if(connection2 != null) {
+                if (connection2 != null) {
                     HardwareManager.moveToFront(connection2);
                 }
                 HardwareManager.currentHardware = null;
@@ -709,9 +709,9 @@ public class Cable implements Json.Serializable {
 
         //RETURN NODE THAT MOUSE IS HOVERING ON
 
-        for(Vector2 coord : coordinates) {
-            if(coordinates.indexOf(coord) != 0 && coordinates.indexOf(coord) != coordinates.size() - 1) {
-                if(new Circle(coord.x, coord.y, limit3).contains(vec.x, vec.y)) {
+        for (Vector2 coord : coordinates) {
+            if (coordinates.indexOf(coord) != 0 && coordinates.indexOf(coord) != coordinates.size() - 1) {
+                if (new Circle(coord.x, coord.y, limit3).contains(vec.x, vec.y)) {
                     return coord;
                 }
             }
@@ -720,10 +720,10 @@ public class Cable implements Json.Serializable {
     }
 
     protected void drawNodes(ShapeRenderer renderer, ClippedCameraController cam, Color... color) {
-        if(color.length > 0) {
+        if (color.length > 0) {
             renderer.setColor(color[0]);
         }
-        for(Vector2 coords : coordinates) {
+        for (Vector2 coords : coordinates) {
             // DRAW POINTS
             renderer.circle(coords.x, coords.y, limit3);
         }
@@ -732,23 +732,19 @@ public class Cable implements Json.Serializable {
 
     public void processNodes(ShapeRenderer renderer, ClippedCameraController cam) {
         //DRAW IF HOVERING ON ENDPOINTS
-        if(hoveringOnEndpoint(cam) == 1) {
+        if (hoveringOnEndpoint(cam) == 1) {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(0).x, coordinates.get(0).y, limit3);
-        } else if(hoveringOnEndpoint(cam) == 2) {
+        } else if (hoveringOnEndpoint(cam) == 2) {
             renderer.setColor(hoverColor);
             renderer.circle(coordinates.get(coordinates.size() - 1).x, coordinates.get(coordinates.size() - 1).y, limit3);
-        } else if(hoveringOnNode(cam) != null) {
+        } else if (hoveringOnNode(cam) != null) {
             //DRAW IF HOVERING ON OTHER NODE
-            if(movingNode == null) {
+            if (movingNode == null) {
                 renderer.setColor(hoverColor);
                 renderer.circle(hoveringOnNode(cam).x, hoveringOnNode(cam).y, limit3);
             }
         }
-    }
-
-    public void setGauge(float gauge) {
-        this.gauge = gauge;
     }
 
     public int hoveringOnEndpoint(CameraController cameraController) {
@@ -759,9 +755,9 @@ public class Cable implements Json.Serializable {
         Vector2 c2 = coordinates.get(coordinates.size() - 1);
         Vector2 c = coordinates.get(0);
 
-        if(new Circle(c2.x, c2.y, limit3).contains(vec.x, vec.y)) {
+        if (new Circle(c2.x, c2.y, limit3).contains(vec.x, vec.y)) {
             return 2;
-        } else if(new Circle(c.x, c.y, limit3).contains(vec.x, vec.y)) {
+        } else if (new Circle(c.x, c.y, limit3).contains(vec.x, vec.y)) {
             return 1;
         }
         return 0;
@@ -770,9 +766,9 @@ public class Cable implements Json.Serializable {
     public int pointIsOnEndpoint(float x, float y) {
         Vector2 c2 = coordinates.get(coordinates.size() - 1);
         Vector2 c = coordinates.get(0);
-        if(new Circle(c2.x, c2.y, limit3).contains(x, y)) {
+        if (new Circle(c2.x, c2.y, limit3).contains(x, y)) {
             return 2;
-        } else if(new Circle(c.x, c.y, limit3).contains(x, y)) {
+        } else if (new Circle(c.x, c.y, limit3).contains(x, y)) {
             return 1;
         }
         return 0;
@@ -783,7 +779,7 @@ public class Cable implements Json.Serializable {
     }
 
     public void setConnection1(Hardware connection1) {
-        if(connection1 == null) {
+        if (connection1 == null) {
             disableBegin = false;
             this.connection1 = null;
         } else {
@@ -796,7 +792,7 @@ public class Cable implements Json.Serializable {
     }
 
     public void setConnection2(Hardware connection2) {
-        if(connection2 == null) {
+        if (connection2 == null) {
             disableEnd = false;
             this.connection2 = null;
         } else {
@@ -805,19 +801,19 @@ public class Cable implements Json.Serializable {
     }
 
     public Hardware getOtherConnection(Hardware h) {
-        if(connection1 == h) {
-            if(connection2 instanceof SandCrab) {
-                Hardware temp =  ((SandCrab) connection2).getWagoOther(this);
-                ((SandCrab) connection2).seen = false;
+        if (connection1 == h) {
+            if (connection2 instanceof SandCrab) {
+                Hardware temp = ((SandCrab) connection2).getWagoOther(this);
+                connection2.seen = false;
                 return temp;
 
             } else {
                 return connection2;
             }
         } else {
-            if(connection1 instanceof SandCrab) {
-                Hardware temp =  ((SandCrab) connection1).getWagoOther(this);
-                ((SandCrab) connection1).seen = false;
+            if (connection1 instanceof SandCrab) {
+                Hardware temp = ((SandCrab) connection1).getWagoOther(this);
+                connection1.seen = false;
                 return temp;
             } else {
                 return connection1;
@@ -830,8 +826,8 @@ public class Cable implements Json.Serializable {
     }
 
     public int getOtherConnectionNum(Hardware h) {
-        if(connection1 == h) {
-            if(connection2 instanceof SandCrab) {
+        if (connection1 == h) {
+            if (connection2 instanceof SandCrab) {
                 connection2.seen = false;
                 int i = ((SandCrab) connection2).getWagoOtherNum(this);
                 return i;
@@ -839,7 +835,7 @@ public class Cable implements Json.Serializable {
                 return connection2.getConnNum(this);
             }
         } else {
-            if(connection1 instanceof SandCrab) {
+            if (connection1 instanceof SandCrab) {
                 connection1.seen = false;
                 int i = ((SandCrab) connection1).getWagoOtherNum(this);
                 return i;
@@ -865,6 +861,10 @@ public class Cable implements Json.Serializable {
         return gauge;
     }
 
+    public void setGauge(float gauge) {
+        this.gauge = gauge;
+    }
+
     public ArrayList<Vector2> getCoordinates() {
         return coordinates;
     }
@@ -884,27 +884,27 @@ public class Cable implements Json.Serializable {
 
         ArrayList<Vector2> l = cable2.getCoordinates();
 
-        if(cable1begin) {
+        if (cable1begin) {
             // AGGREGATE COORDINATES
-            for(int i = 0; i < l.size(); i++) {
+            for (int i = 0; i < l.size(); i++) {
                 this.addCoordinates(l.get(i), begin);
             }
 
             // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
             Hardware temp = cable2.getConnection2();
-            if(temp != null) {
+            if (temp != null) {
                 temp.reattachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
 
         } else {
             // AGGREGATE COORDINATES
-            for(int i = l.size()-1; i >= 0; i--) {
+            for (int i = l.size() - 1; i >= 0; i--) {
                 this.addCoordinates(l.get(i), begin);
             }
 
             // CARRY OVER HARDWARE CONNECTIONS (DON'T CHANGE)
             Hardware temp = cable2.getConnection1();
-            if(temp != null) {
+            if (temp != null) {
                 temp.reattachWire(this, temp.getConnectionPosition(cable2), !begin);
             }
 
@@ -921,8 +921,8 @@ public class Cable implements Json.Serializable {
     }
 
     public boolean intersect(Vector2 vec1, Vector2 vec2) {
-        for(int i = 0; i < coordinates.size()-1; ++i) {
-            if(Intersector.intersectLinePolygon(coordinates.get(i), coordinates.get(i+1), new Polygon(new float[]{vec1.x, vec1.y, vec1.x, vec2.y, vec2.x, vec2.y, vec2.x, vec1.y}))) {
+        for (int i = 0; i < coordinates.size() - 1; ++i) {
+            if (Intersector.intersectLinePolygon(coordinates.get(i), coordinates.get(i + 1), new Polygon(new float[]{vec1.x, vec1.y, vec1.x, vec2.y, vec2.x, vec2.y, vec2.x, vec1.y}))) {
                 return true;
             }
         }
@@ -935,12 +935,12 @@ public class Cable implements Json.Serializable {
         float x = vec.x;
         float y = vec.y;
 
-        if(hoveringOnEndpoint(cameraController) != 0) {
+        if (hoveringOnEndpoint(cameraController) != 0) {
             return true;
         }
 
-        for(Vector2 coord : coordinates) {
-            if(new Circle(coord.x, coord.y, limit3).contains(vec.x, vec.y)) {
+        for (Vector2 coord : coordinates) {
+            if (new Circle(coord.x, coord.y, limit3).contains(vec.x, vec.y)) {
                 return true;
             }
         }
@@ -949,7 +949,7 @@ public class Cable implements Json.Serializable {
         // CHECK IF HOVERING ON CABLE
 
 
-        for(int i = 0; i < coordinates.size() - 1; ++i) {
+        for (int i = 0; i < coordinates.size() - 1; ++i) {
             x1 = coordinates.get(i).x;
             x2 = coordinates.get(i + 1).x;
             y1 = coordinates.get(i).y;
@@ -957,22 +957,22 @@ public class Cable implements Json.Serializable {
 
             //VERTICAL LINES
 
-            if(x1 == x2 && x > x1-limit2/2 && x < x1+limit2/2 && ((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
+            if (x1 == x2 && x > x1 - limit2 / 2 && x < x1 + limit2 / 2 && ((y1 < y2 && y >= y1 && y <= y2) || (y1 > y2 && y <= y1 && y >= y2))) {
                 return true;
             }
 
             //HORIZONTAL LINES
 
-            if(y1 == y2 && y > y1-limit2/2 && y < y1+limit2/2 && ((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))) {
+            if (y1 == y2 && y > y1 - limit2 / 2 && y < y1 + limit2 / 2 && ((x1 < x2 && x >= x1 && x <= x2) || (x1 > x2 && x <= x1 && x >= x2))) {
                 return true;
             }
 
             //SIDEWAYS LINES
-            if(((x1 < x2 && x >= x1 && x <= x2)||(x1 > x2 && x <= x1 && x >= x2))&&((y1 < y2 && y >= y1 && y <= y2)||(y1 > y2 && y <= y1 && y >= y2))) {
+            if (((x1 < x2 && x >= x1 && x <= x2) || (x1 > x2 && x <= x1 && x >= x2)) && ((y1 < y2 && y >= y1 && y <= y2) || (y1 > y2 && y <= y1 && y >= y2))) {
 
                 a = -1 * ((y2 - y1) / (x2 - x1));
 
-                if (Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit2/2) {
+                if (Math.abs(x * a + y + (((y2 - y1) / (x2 - x1)) * x1 - y1)) / Math.sqrt(a * a + 1) < limit2 / 2) {
                     return true;
                 }
             }
@@ -981,7 +981,7 @@ public class Cable implements Json.Serializable {
     }
 
     public void moveEntireCable(float x, float y) {
-        if(movingNode == null) {
+        if (movingNode == null) {
             for (int i = 0; i < coordinates.size(); i++) {
                 if ((connection1 == null || (i != 0 && i != 1)) && (connection2 == null || (i != coordinates.size() - 1 && i != coordinates.size() - 2))) {
                     coordinates.set(i, new Vector2(coordinates.get(i).x + x, coordinates.get(i).y + y));
@@ -991,7 +991,7 @@ public class Cable implements Json.Serializable {
     }
 
     public void moveEntireCable(float x, float y, boolean endOfWire) {
-        if(movingNode == null) {
+        if (movingNode == null) {
             for (int i = 0; i < coordinates.size(); i++) {
                 if ((!endOfWire || connection1 == null || (i != 0 && i != 1)) && (endOfWire || connection2 == null || (i != coordinates.size() - 1 && i != coordinates.size() - 2))) {
                     coordinates.set(i, new Vector2(coordinates.get(i).x + x, coordinates.get(i).y + y));
@@ -1001,8 +1001,8 @@ public class Cable implements Json.Serializable {
     }
 
     public Vector2 getCoordinate(boolean endOfWire) {
-        if(endOfWire) {
-            return coordinates.get(coordinates.size()-1);
+        if (endOfWire) {
+            return coordinates.get(coordinates.size() - 1);
         }
         return coordinates.get(0);
     }
@@ -1030,17 +1030,17 @@ public class Cable implements Json.Serializable {
         try {
             var.r = jsonData.get(identifier).getFloat("r");
         } catch (Exception e) {
-            var.r = 0/255f;
+            var.r = 0 / 255f;
         }
         try {
             var.g = jsonData.get(identifier).getFloat("g");
         } catch (Exception e) {
-            var.g = 0/255f;
+            var.g = 0 / 255f;
         }
         try {
             var.b = jsonData.get(identifier).getFloat("b");
         } catch (Exception e) {
-            var.b = 0/255f;
+            var.b = 0 / 255f;
         }
         var.a = jsonData.get(identifier).getFloat("a");
     }

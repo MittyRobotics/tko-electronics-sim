@@ -1,0 +1,19 @@
+{
+  "platform": "windows64",
+  "jdk": "/home/kronos/Documents/prebuilt_jdk_jre/windows/OpenJDK8U-jre_x64_windows_hotspot_8u292b10.zip",
+  "executable": "tko-electronics-sim",
+  "classpath": [
+    "lwjgl3/build/libs/tko-electronics-sim-0.0.1.jar"
+  ],
+  "mainclass": "com.amhsrobotics.circuitsim.lwjgl3.Lwjgl3Launcher",
+  "vmargs": [
+    "Xmx1G"
+  ],
+  "resources": [
+    "lwjgl3/src/main/resources/",
+    "assets/"
+  ],
+  "minimizejre": "soft",
+  "output": "packaging/out-windows",
+  "verbose": true
+}

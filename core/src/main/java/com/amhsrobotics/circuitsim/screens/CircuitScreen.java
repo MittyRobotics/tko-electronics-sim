@@ -3,7 +3,6 @@ package com.amhsrobotics.circuitsim.screens;
 import com.amhsrobotics.circuitsim.Constants;
 import com.amhsrobotics.circuitsim.files.FileManager;
 import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
-import com.amhsrobotics.circuitsim.gui.ConfirmDialog;
 import com.amhsrobotics.circuitsim.hardware.Hardware;
 import com.amhsrobotics.circuitsim.hardware.HardwareManager;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
@@ -29,45 +28,45 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.rohanbansal.ricochet.camera.CameraAction;
 import me.rohanbansal.ricochet.tools.Actions;
 import me.rohanbansal.ricochet.tools.ModifiedShapeRenderer;
+import org.apache.commons.lang3.SystemUtils;
 
 import java.util.ArrayList;
 
 public class CircuitScreen implements Screen {
 
-    private static ModifiedStage stage;
-    private final Game game;
-    private final SpriteBatch batch;
+    private static final BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40, true);
+    private static final GlyphLayout layout = new GlyphLayout();
     public static ModifiedShapeRenderer renderer;
-    private final ModifiedShapeRenderer HUDrenderer;
     public static ClippedCameraController camera;
-    private static BitmapFont hoverFont = Tools.renderFont("font/Abel-Regular.ttf", 40, true);
-    private static String drawString = "";
-    private static Vector2 drawLoc = new Vector2();
-    private static GlyphLayout layout = new GlyphLayout();
-
-    private Hardware currentPlacingHardware;
-
-    private CircuitGUIManager manager;
-
     public static boolean selectMultiple, selectedMultiple;
-    public Vector2 selectMultiple1, selectMultiple2;
     public static ArrayList<Hardware> selected;
     public static ArrayList<Cable> selectedC;
+    private static ModifiedStage stage;
+    private static String drawString = "";
+    private static Vector2 drawLoc = new Vector2();
 
     static {
         hoverFont.setColor(Color.SALMON);
     }
+
+    private final Game game;
+    private final SpriteBatch batch;
+    private final ModifiedShapeRenderer HUDrenderer;
+    private final CircuitGUIManager manager;
+    public Vector2 selectMultiple1, selectMultiple2;
+    private Hardware currentPlacingHardware;
+    private boolean isMac = false;
 
 
     public CircuitScreen(final Game game, String... loading) {
 
         this.game = game;
         this.batch = new SpriteBatch();
-        this.renderer = new ModifiedShapeRenderer();
+        renderer = new ModifiedShapeRenderer();
         this.HUDrenderer = new ModifiedShapeRenderer();
 
         camera = new ClippedCameraController(true);
-        camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE-2);
+        camera.getCamera().translate(Constants.WORLD_DIM.x / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE - 3, Constants.WORLD_DIM.y / 2 - (Constants.WORLD_DIM.x / 2) % Constants.GRID_SIZE - 2);
         camera.attachCameraSequence(new ArrayList<CameraAction>() {{
             add(Actions.zoomCameraTo(3f, 1f, Interpolation.exp10));
         }});
@@ -75,16 +74,20 @@ public class CircuitScreen implements Screen {
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         manager = new CircuitGUIManager(stage, camera, game);
 
+        if (SystemUtils.IS_OS_MAC) {
+            isMac = true;
+        }
+
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
                     Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-                    if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                         SnapGrid.calculateSnap(vec2);
                     }
-                    if(selectMultiple) {
+                    if (selectMultiple) {
                         selectMultiple2 = vec2;
                     } else {
                         CableManager.currentCable = null;
@@ -99,15 +102,15 @@ public class CircuitScreen implements Screen {
                 } else {
                     float x = Gdx.input.getDeltaX() * camera.getCamera().zoom;
                     float y = Gdx.input.getDeltaY() * camera.getCamera().zoom;
-                    if(selectedMultiple) {
+                    if (selectedMultiple) {
                         selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
                         selectedC = CableManager.getSelectedCables(selectMultiple1, selectMultiple2);
-                        for(Cable c : selectedC) {
-                            if(!selected.contains(c.connection1) && !selected.contains(c.connection2)) {
+                        for (Cable c : selectedC) {
+                            if (!selected.contains(c.connection1) && !selected.contains(c.connection2)) {
                                 c.moveEntireCable(x, -y);
                             }
                         }
-                        for(Hardware h : selected) {
+                        for (Hardware h : selected) {
 //                            if(h.getSpriteBox().x - 10 > Tools.mouseScreenToWorld(camera).x) {
                             h.move(x, -y);
 //                            }
@@ -116,7 +119,11 @@ public class CircuitScreen implements Screen {
                         selectMultiple2.add(x, -y);
 
                     } else if (Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null && HardwareManager.currentHardware == null) {
-                        camera.getCamera().translate(-x, y);
+                        if (!isMac) {
+                            camera.getCamera().translate(-x * 5, y * 5);
+                        } else {
+                            camera.getCamera().translate(-x, y);
+                        }
                     }
                 }
 
@@ -125,7 +132,7 @@ public class CircuitScreen implements Screen {
 
             @Override
             public boolean scrolled(float amountX, float amountY) {
-                if(CircuitGUIManager.welcomeMenuShown) {
+                if (CircuitGUIManager.welcomeMenuShown) {
                     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                         camera.getCamera().translate(0, amountY > 0 ? 45f : -45f);
                     } else if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
@@ -159,9 +166,15 @@ public class CircuitScreen implements Screen {
         });
         Gdx.input.setInputProcessor(plexer);
 
-        if(loading.length > 0) {
+        if (loading.length > 0) {
             FileManager.load(loading[0]);
         }
+    }
+
+    public static void setHoverDraw(Vector2 loc, String string) {
+        drawString = string;
+        drawLoc = loc;
+        layout.setText(hoverFont, string);
     }
 
     @Override
@@ -171,33 +184,33 @@ public class CircuitScreen implements Screen {
         camera.update();
         camera.calculateBounds();
 
-        if (Rumble.getRumbleTimeLeft() > 0){
+        if (Rumble.getRumbleTimeLeft() > 0) {
             Rumble.tick(Gdx.graphics.getDeltaTime());
             camera.getCamera().translate(Rumble.getPos());
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-                if(FileManager.fileName.equals("")) {
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+                if (FileManager.fileName.equals("")) {
                     CircuitGUIManager.saveMenu();
                 } else {
                     FileManager.save(FileManager.fileName);
                 }
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
                     CircuitGUIManager.saveMenu();
                 }
             }
         }
 
         renderer.setProjectionMatrix(camera.getCamera().combined);
-        SnapGrid.renderGrid(camera, new Color(0/255f, 0/255f, 30/255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
+        SnapGrid.renderGrid(camera, new Color(0 / 255f, 0 / 255f, 30 / 255f, 1), Constants.WORLD_DIM, Constants.GRID_SIZE, 0);
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-        if(selectMultiple || selectedMultiple) {
-            if(selectMultiple && !(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+        if (selectMultiple || selectedMultiple) {
+            if (selectMultiple && !(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
                 selectMultiple = false;
                 selectedMultiple = true;
 
@@ -207,8 +220,8 @@ public class CircuitScreen implements Screen {
             }
 
             renderer.begin(ShapeRenderer.ShapeType.Filled);
-            renderer.setColor(new Color(156/255f,1f,150/255f,0.3f));
-            renderer.rect(selectMultiple1.x, selectMultiple1.y, selectMultiple2.x- selectMultiple1.x, selectMultiple2.y- selectMultiple1.y);
+            renderer.setColor(new Color(156 / 255f, 1f, 150 / 255f, 0.3f));
+            renderer.rect(selectMultiple1.x, selectMultiple1.y, selectMultiple2.x - selectMultiple1.x, selectMultiple2.y - selectMultiple1.y);
             renderer.end();
 
             selected = HardwareManager.getSelectedHardware(selectMultiple1, selectMultiple2);
@@ -218,18 +231,18 @@ public class CircuitScreen implements Screen {
                 h.drawHover(renderer);
             }
 
-            for(Cable c : selectedC) {
+            for (Cable c : selectedC) {
                 c.hover = true;
             }
 
-            if(selectedMultiple) {
-                if(Gdx.input.isKeyPressed(Input.Keys.DEL) || Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
-                    for(Cable c : selectedC) {
+            if (selectedMultiple) {
+                if (Gdx.input.isKeyPressed(Input.Keys.DEL) || Gdx.input.isKeyPressed(Input.Keys.BACKSPACE)) {
+                    for (Cable c : selectedC) {
                         HardwareManager.removeCableFromHardware(c, c.connection1);
                         HardwareManager.removeCableFromHardware(c, c.connection2);
                         CableManager.deleteCable(c);
                     }
-                    for(Hardware h : selected) {
+                    for (Hardware h : selected) {
                         h.delete();
                     }
                     selectedMultiple = false;
@@ -239,7 +252,7 @@ public class CircuitScreen implements Screen {
             }
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
             SnapGrid.calculateSnap(vec2);
         }
 
@@ -261,12 +274,11 @@ public class CircuitScreen implements Screen {
             if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
 
                 Vector2 isOutOfBounds = Tools.checkOutOfBounds(currentPlacingHardware.getSpriteBox(), currentPlacingHardware.getPosition());
-                if(isOutOfBounds != null) {
+                if (isOutOfBounds != null) {
                     currentPlacingHardware.setPosition(isOutOfBounds.x, isOutOfBounds.y);
                 } else {
                     currentPlacingHardware.setPosition(vec2.x, vec2.y);
                 }
-
 
 
             } else {
@@ -293,18 +305,18 @@ public class CircuitScreen implements Screen {
         CableManager.update(renderer, camera);
         HardwareManager.update(renderer, batch, camera);
 
-        if(CableManager.currentCable != null) {
-            if(!CircuitGUIManager.propertiesBox.isVisible()) {
+        if (CableManager.currentCable != null) {
+            if (!CircuitGUIManager.propertiesBox.isVisible()) {
                 CircuitGUIManager.propertiesBox.show();
             }
             CableManager.currentCable.render(renderer, camera);
-            if(CableManager.currentCable.connection1 != null) {
+            if (CableManager.currentCable.connection1 != null) {
                 HardwareManager.moveToFront(CableManager.currentCable.connection1);
                 batch.begin();
                 CableManager.currentCable.connection1.getConnector(CableManager.currentCable.connection1.getConnectionPosition(CableManager.currentCable)).draw(batch);
                 batch.end();
             }
-            if(CableManager.currentCable.connection2 != null) {
+            if (CableManager.currentCable.connection2 != null) {
                 HardwareManager.moveToFront(CableManager.currentCable.connection2);
                 batch.begin();
                 CableManager.currentCable.connection2.getConnector(CableManager.currentCable.connection2.getConnectionPosition(CableManager.currentCable)).draw(batch);
@@ -313,7 +325,7 @@ public class CircuitScreen implements Screen {
         }
 
 
-        if(Constants.placing_object != null) {
+        if (Constants.placing_object != null) {
             if (Constants.placing_object == HardwareType.WIRE || Constants.placing_object == HardwareType.ETHERNET || Constants.placing_object == HardwareType.TUBING || Constants.placing_object == HardwareType.CURVEDCABLE) {
                 drawPlacing(vec2.x, vec2.y);
             } else if (currentPlacingHardware != null && currentPlacingHardware.type == Constants.placing_object) {
@@ -322,14 +334,11 @@ public class CircuitScreen implements Screen {
         }
 
 
-
-
-
         manager.update(delta);
 
         batch.setProjectionMatrix(camera.getCamera().combined);
         batch.begin();
-        if(!drawString.equals("")) {
+        if (!drawString.equals("")) {
             hoverFont.draw(batch, drawString, drawLoc.x + (-layout.width) / 2, drawLoc.y + 60);
         }
         batch.end();
@@ -339,14 +348,14 @@ public class CircuitScreen implements Screen {
 
     public String getError(Exception e) {
         StringBuilder ans = new StringBuilder();
-        for(StackTraceElement i : e.getStackTrace()) {
+        for (StackTraceElement i : e.getStackTrace()) {
             ans.append("Line ").append(i.getLineNumber()).append(" in ").append(i.getClassName()).append(": ").append(i.toString()).append("\n");
         }
         return ans.toString();
     }
 
     private void handleHardware(HardwareType type) {
-        if(CableManager.currentCable != null) {
+        if (CableManager.currentCable != null) {
             CableManager.currentCable.appendingFromEnd = false;
             CableManager.currentCable.appendingFromBegin = false;
             CableManager.currentCable = null;
@@ -354,8 +363,8 @@ public class CircuitScreen implements Screen {
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && ((Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) || !CircuitGUIManager.isPanelShown())) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
 
@@ -375,30 +384,23 @@ public class CircuitScreen implements Screen {
         renderer.end();
     }
 
-    public static void setHoverDraw(Vector2 loc, String string) {
-        drawString = string;
-        drawLoc = loc;
-        layout.setText(hoverFont, string);
-    }
-
-
     private void handleCable() {
         HardwareManager.currentHardware = null;
 
         Vector2 vec2 = Tools.mouseScreenToWorld(camera);
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
-            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && Gdx.input.getX() <= Gdx.graphics.getWidth() - 200) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 SnapGrid.calculateSnap(vec2);
             }
 
-            if(CableManager.currentCable != null) {
+            if (CableManager.currentCable != null) {
                 CableManager.currentCable.appendingFromEnd = false;
                 CableManager.currentCable.appendingFromBegin = false;
                 CableManager.currentCable = null;
             }
 
-            if(Constants.placing_object == HardwareType.ETHERNET) {
+            if (Constants.placing_object == HardwareType.ETHERNET) {
                 CableManager.addEthernet(vec2.x, vec2.y);
             } else if (Constants.placing_object == HardwareType.TUBING) {
                 CableManager.addTubing(vec2.x, vec2.y);
@@ -417,7 +419,9 @@ public class CircuitScreen implements Screen {
     }
 
     @Override
-    public void show() { }
+    public void show() {
+    }
+
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
@@ -431,10 +435,16 @@ public class CircuitScreen implements Screen {
 //                }
 //        );
     }
+
     @Override
-    public void pause() { }
+    public void pause() {
+    }
+
     @Override
-    public void resume() { }
+    public void resume() {
+    }
+
     @Override
-    public void hide() { }
+    public void hide() {
+    }
 }

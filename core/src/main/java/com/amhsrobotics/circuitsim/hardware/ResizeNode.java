@@ -14,16 +14,6 @@ import java.util.HashMap;
 
 public class ResizeNode {
 
-    public NodeType type;
-    private boolean selected;
-    private Circle circle;
-
-    public enum NodeType {
-        BOTTOM_LEFT, BOTTOM_MIDDLE, BOTTOM_RIGHT,
-        TOP_LEFT, TOP_MIDDLE, TOP_RIGHT,
-        LEFT_MIDDLE, RIGHT_MIDDLE, MIDDLE
-    }
-
     public static HashMap<Integer, NodeType> nodeMap = new HashMap<Integer, NodeType>() {{
         put(0, NodeType.BOTTOM_LEFT);
         put(1, NodeType.BOTTOM_MIDDLE);
@@ -35,6 +25,9 @@ public class ResizeNode {
         put(7, NodeType.RIGHT_MIDDLE);
         put(8, NodeType.MIDDLE);
     }};
+    public NodeType type;
+    private boolean selected;
+    private final Circle circle;
 
     public ResizeNode(float x, float y, NodeType type) {
         this.type = type;
@@ -52,7 +45,7 @@ public class ResizeNode {
 
     public void draw(ModifiedShapeRenderer renderer, CameraController camera) {
         Vector2 vec = Tools.mouseScreenToWorld(camera);
-        if(circle.contains(vec)) {
+        if (circle.contains(vec)) {
             renderer.setColor(Color.WHITE);
             renderer.circle(circle.x, circle.y, circle.radius);
         } else {
@@ -61,20 +54,20 @@ public class ResizeNode {
         }
     }
 
-    public void setCirclePos(Vector2 vec) {
-        circle.setPosition(vec);
-    }
-
     public Vector2 getCirclePos() {
         return new Vector2(circle.x, circle.y);
+    }
+
+    public void setCirclePos(Vector2 vec) {
+        circle.setPosition(vec);
     }
 
     public void movePosition(CameraController camera, Box box, ArrayList<Hardware> hardwareArrayList) {
 
         Vector2 vec = Tools.mouseScreenToWorld(camera);
         circle.setPosition(vec);
-        if(isSelected()) {
-            switch(type) {
+        if (isSelected()) {
+            switch (type) {
                 case BOTTOM_LEFT:
                     box.width += box.x - vec.x;
                     box.height += box.y - vec.y;
@@ -115,11 +108,11 @@ public class ResizeNode {
                     break;
                 case MIDDLE:
 
-                    for(Hardware h : hardwareArrayList) {
+                    for (Hardware h : hardwareArrayList) {
                         h.setPosition(h.getPosition().x + vec.x - box.width / 2 - box.x, h.getPosition().y + vec.y - box.height / 2 - box.y);
 
-                        for(Cable c : h.connections) {
-                            if(c != null) {
+                        for (Cable c : h.connections) {
+                            if (c != null) {
                                 c.moveEntireCable(vec.x - box.width / 2 - box.x, vec.y - box.height / 2 - box.y);
                             }
                         }
@@ -133,7 +126,7 @@ public class ResizeNode {
     }
 
     public void updateIdlePos(Box box) {
-        switch(type) {
+        switch (type) {
             case BOTTOM_LEFT:
                 circle.x = box.x;
                 circle.y = box.y;
@@ -175,5 +168,11 @@ public class ResizeNode {
 
     public boolean contains(Vector2 vec) {
         return circle.contains(vec);
+    }
+
+    public enum NodeType {
+        BOTTOM_LEFT, BOTTOM_MIDDLE, BOTTOM_RIGHT,
+        TOP_LEFT, TOP_MIDDLE, TOP_RIGHT,
+        LEFT_MIDDLE, RIGHT_MIDDLE, MIDDLE
     }
 }

@@ -14,8 +14,8 @@ public class ModifiedStage extends Stage {
     }
 
     public void addActors(Actor... actors) {
-        if(actors.length > 0) {
-            for(Actor actor : actors) {
+        if (actors.length > 0) {
+            for (Actor actor : actors) {
                 addActor(actor);
             }
         }
