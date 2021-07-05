@@ -116,7 +116,7 @@ public class LED {
         et = time;
     }
 
-    public void stopBink() {
+    public void stopBlink() {
         blinking = false;
     }
 
