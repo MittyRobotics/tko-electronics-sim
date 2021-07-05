@@ -1,10 +1,6 @@
+sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-eclipse.project.name = appName + '-core'
 
-dependencies {
-	api "com.badlogicgames.gdx:gdx:$gdxVersion"
-	api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-	api "me.rohanbansal.ricochet:ricochet:1.9.8-SNAPSHOT"
-	api group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
-	api group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-}
+sourceSets.main.java.srcDirs = [ "src/" ]
+
+eclipse.project.name = appName + "-core"

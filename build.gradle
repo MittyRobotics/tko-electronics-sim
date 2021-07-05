@@ -1,40 +1,65 @@
 buildscript {
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		google()
-		gradlePluginPortal()
-		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url "http://artifactory.nimblygames.com/artifactory/ng-public-snapshot/" }
-		maven { url "http://artifactory.nimblygames.com/artifactory/ng-public-release/" }
-	}
-	dependencies {
-	}
+
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath "com.netflix.nebula:gradle-ospackage-plugin:8.4.1"
+    }
 }
 
 allprojects {
-	apply plugin: 'eclipse'
-	apply plugin: 'idea'
+    apply plugin: "eclipse"
+    apply plugin: "nebula.ospackage"
+
+    version = '1.0'
+    ext {
+        appName = "TKO1351_CircuitSim"
+        gdxVersion = '1.9.11'
+        roboVMVersion = '2.3.8'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "http://dl.bintray.com/spookygames/oss" }
+    }
 }
 
-configure(subprojects) {
-	apply plugin: 'java-library'
-	sourceCompatibility = 8.0
-	compileJava {
-		options.incremental = true
-	}
+project(":desktop") {
+    apply plugin: "java-library"
+
+
+    dependencies {
+        implementation project(":core")
+        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+//        compile "net.spookygames.gdx:gdx-nativefilechooser-desktop:1.0.0"
+    }
 }
 
-subprojects {
-	version = '0.0.1'
-	ext.appName = 'tko-electronics-sim'
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		gradlePluginPortal()
-		maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
-		maven { url 'https://jitpack.io' }
-	}
-}
+project(":core") {
+    apply plugin: "java-library"
 
-eclipse.project.name = 'tko-electronics-sim' + '-parent'
+
+    dependencies {
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "me.rohanbansal.ricochet:ricochet:1.9.8-SNAPSHOT"
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+        compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+//        compile "net.spookygames.gdx:gdx-nativefilechooser:1.0.0"
+    }
+}
