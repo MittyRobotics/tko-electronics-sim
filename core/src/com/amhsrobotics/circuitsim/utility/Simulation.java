@@ -12,15 +12,13 @@ public class Simulation {
     public boolean isRunning = false;
     public boolean changed = false;
     private DelayedRemovalArray<Hardware> h;
-    public HashMap<Hardware, String> temp, store;
+    public HashMap<Hardware, String> store;
 
     public Simulation() {
-        temp = new HashMap<>();
         store = new HashMap<>();
     }
 
     public void simulate() {
-        temp.clear();
         store.clear();
         isRunning = true;
         changed = false;
@@ -42,9 +40,6 @@ public class Simulation {
 
         System.gc();
 
-        //CircuitGUIManager.popup.activateError("Simulation Not Implemented");
-
-        //return error;
     }
 
 
