@@ -1,0 +1,186 @@
+{
+  "name": "VRM",
+  "totalLeds": 2,
+  "crimped": [],
+  "defaultColors": [
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Red"
+    },
+    {
+      "port": 3,
+      "color": "Black"
+    },
+    {
+      "port": 4,
+      "color": "Red"
+    },
+    {
+      "port": 5,
+      "color": "Black"
+    },
+    {
+      "port": 6,
+      "color": "Red"
+    },
+    {
+      "port": 7,
+      "color": "Black"
+    },
+    {
+      "port": 8,
+      "color": "Red"
+    },
+    {
+      "port": 9,
+      "color": "Black"
+    },
+    {
+      "port": 10,
+      "color": "Black"
+    },
+    {
+      "port": 11,
+      "color": "Red"
+    },
+    {
+      "port": 12,
+      "color": "Black"
+    },
+    {
+      "port": 13,
+      "color": "Red"
+    },
+    {
+      "port": 14,
+      "color": "Black"
+    },
+    {
+      "port": 15,
+      "color": "Red"
+    },
+    {
+      "port": 16,
+      "color": "Black"
+    },
+    {
+      "port": 17,
+      "color": "Red"
+    }
+  ],
+  "pins": [
+    {
+      "type": "18",
+      "position": [-11, 105],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [11, 105],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, 74],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, 52],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, 31],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, 11],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, -10],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, -32],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, -53],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [-120, -74],
+      "dimensions": [10, 10]
+    },
+
+    {
+      "type": "18",
+      "position": [120, 74],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, 52],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, 31],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, 11],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, -10],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, -32],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, -53],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "18",
+      "position": [120, -74],
+      "dimensions": [10, 10]
+    }
+  ],
+  "leds": [
+    {
+      "color": "off",
+      "type": "5V",
+      "position": [42, -110],
+      "dimensions": [25, 25]
+    },
+    {
+      "color": "off",
+      "type": "12V",
+      "position": [-44, -110],
+      "dimensions": [25, 25]
+    }
+  ]
+}

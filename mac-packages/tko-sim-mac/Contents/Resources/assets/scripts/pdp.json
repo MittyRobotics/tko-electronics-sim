@@ -1,0 +1,304 @@
+{
+  "name": "PDP",
+  "totalLeds": 2,
+  "crimpedColors": ["Black","Red", "Black","Red", "Black","Red", "Black","Red","Red", "Black", "Red", "Black","Red", "Black","Red", "Black", "Red", "Black","Red", "Black","Red", "Black","Red", "Black", "Black","Red", "Black","Red", "Black","Red", "Black","Red"],
+  "crimped": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+  "defaultColors": [
+    {
+      "port": 42,
+      "color": "Red"
+    },
+    {
+      "port": 43,
+      "color": "Black"
+    },
+    {
+      "port": 0,
+      "color": "Red"
+    },
+    {
+      "port": 1,
+      "color": "Black"
+    },
+    {
+      "port": 2,
+      "color": "Red"
+    },
+    {
+      "port": 3,
+      "color": "Black"
+    },
+    {
+      "port": 4,
+      "color": "Red"
+    },
+    {
+      "port": 5,
+      "color": "Black"
+    },
+    {
+      "port": 9,
+      "color": "Green"
+    },
+    {
+      "port": 8,
+      "color": "Yellow"
+    },
+    {
+      "port": 7,
+      "color": "Green"
+    },
+    {
+      "port": 6,
+      "color": "Yellow"
+    }
+  ],
+  "pins": [
+    {
+      "type": "18",
+      "position": [-714, 102],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-714, 61],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-714, 20],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-714, -21],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-714, -61],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "18",
+      "position": [-714, -102],
+      "dimensions": [15, 15]
+    },
+
+
+    {
+      "type": "22",
+      "position": [626, 321],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "22",
+      "position": [655, 321],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "22",
+      "position": [685, 321],
+      "dimensions": [10, 10]
+    },
+    {
+      "type": "22",
+      "position": [713, 321],
+      "dimensions": [10, 10]
+    },
+
+
+    {
+      "type": "12",
+      "position": [-624, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-561, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-499, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-434, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-372, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-312, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-249, -453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-187, -453],
+      "dimensions": [25, 25]
+    },
+
+
+    {
+      "type": "12",
+      "position": [-624, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-561, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-499, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-434, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-372, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-312, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-249, 453],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-187, 453],
+      "dimensions": [25, 25]
+    },
+
+
+    {
+      "type": "12",
+      "position": [-98, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-16, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [64, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [148, 467],
+      "dimensions":[25, 25]
+    },
+    {
+      "type": "12",
+      "position": [232, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [313, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [397, 467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [479, 467],
+      "dimensions": [25, 25]
+    },
+
+
+    {
+      "type": "12",
+      "position": [-98, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [-16, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [64, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [148, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [232, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [313, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [397, -467],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "12",
+      "position": [479, -467],
+      "dimensions": [25, 25]
+    },
+
+
+    {
+      "type": "4",
+      "position": [775, -82],
+      "dimensions": [25, 25]
+    },
+    {
+      "type": "4",
+      "position": [775, -300],
+      "dimensions": [25, 25]
+    }
+  ],
+  "leds": [
+    {
+      "color": "off",
+      "type": "Status",
+      "position": [607, 151],
+      "dimensions": [30, 30]
+    },
+    {
+      "color": "off",
+      "type": "Comms",
+      "position": [707, 151],
+      "dimensions": [30, 30]
+    }
+  ]
+}

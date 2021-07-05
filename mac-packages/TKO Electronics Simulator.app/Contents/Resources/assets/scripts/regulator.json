@@ -1,0 +1,17 @@
+{
+  "name": "Regulator",
+  "totalLeds": 0,
+  "crimped": [],
+  "pins": [
+    {
+      "type": "2",
+      "position": [92, -65],
+      "dimensions": [15, 15]
+    },
+    {
+      "type": "2",
+      "position": [-92, -65],
+      "dimensions": [15, 15]
+    }
+  ]
+}
