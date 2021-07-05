@@ -133,6 +133,7 @@ public class CableManager {
                                 cable2.mergeCable(cable1, cable1begin, cable2begin);
                                 cable2.color2 = cable1.color;
                                 deleteCable(cable1);
+                                CircuitGUIManager.getSim().changed = true;
                             } else {
                                 CircuitGUIManager.popup.activateError("A crimped cable cannot be connected to a regular cable");
                             }
@@ -140,6 +141,7 @@ public class CableManager {
                             if (!(cable1 instanceof CrimpedCable)) {
                                 cable1.mergeCable(cable2, cable2begin, cable1begin);
                                 deleteCable(cable2);
+                                CircuitGUIManager.getSim().changed = true;
                             } else {
                                 CircuitGUIManager.popup.activateError("A crimped cable cannot be connected to a regular cable");
                             }

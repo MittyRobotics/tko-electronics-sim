@@ -51,9 +51,8 @@ public class Falcon extends Flippable {
             } else if (getOther(2) instanceof PowerDistributionPanel && getOther(3) instanceof PowerDistributionPanel) {
                 if ((getNum(2) == 9 && getNum(3) == 8) || (getNum(2) == 7 && getNum(3) == 6)) {
                     return "PDP";
-                } else {
-                    return "Incorrectly wired to PDP";
                 }
+                return "Incorrectly wired to PDP";
             } else if (getOther(2) instanceof PneumaticsControlModule && getOther(3) instanceof PneumaticsControlModule) {
                 if ((getNum(2) == 5 && getNum(3) == 4) || (getNum(2) == 3 && getNum(3) == 2)) {
                     return "PCM";
@@ -150,7 +149,7 @@ public class Falcon extends Flippable {
                         (getCAN(get(3), get(2)).equals("RoboRIO") && getCAN(get(5), get(4)).equals("PDP")))) {
             String ans = "";
 
-            if (!getCAN(get(3), get(2)).equals("PDP") && !getCAN(get(3), get(2)).equals("PCM")) {
+            if (!getCAN(get(3), get(2)).equals("PDP") && !getCAN(get(3), get(2)).equals("PCM") && !getCAN(get(3), get(2)).equals("RoboRIO")) {
                 ans += getCAN(get(3), get(2));
             } else {
                 if (getCAN(get(3), get(2)).equals("PDP")) {
@@ -160,7 +159,7 @@ public class Falcon extends Flippable {
                 }
             }
 
-            if (!getCAN(get(5), get(4)).equals("PDP") && !getCAN(get(5), get(4)).equals("PCM")) {
+            if (!getCAN(get(5), get(4)).equals("PDP") && !getCAN(get(5), get(4)).equals("PCM") && !getCAN(get(5), get(4)).equals("RoboRIO")) {
                 if (!getCAN(get(5), get(4)).equals(ans)) {
                     if (ans.length() > 0) {
                         ans += "\n";
