@@ -1,7 +1,7 @@
 {
   "jrePath": "jre",
   "classPath": [
-    "tko.jar"
+    "desktop-1.0.jar"
   ],
   "mainClass": "com.amhsrobotics.circuitsim.desktop.DesktopLauncher",
   "useZgcIfSupportedOs": false,
