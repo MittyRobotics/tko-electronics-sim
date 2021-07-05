@@ -1,5 +1,6 @@
 package com.amhsrobotics.circuitsim.hardware.devices;
 
+import com.amhsrobotics.circuitsim.gui.CircuitGUIManager;
 import com.amhsrobotics.circuitsim.hardware.Flippable;
 import com.amhsrobotics.circuitsim.hardware.HardwareType;
 import com.amhsrobotics.circuitsim.wiring.Cable;
@@ -63,7 +64,10 @@ public class Talon extends Flippable {
             } else if (!(((getOther(5) instanceof Talon && getOther(4) instanceof Talon) || (getOther(5) instanceof Spark && getOther(4) instanceof Spark) || (getOther(5) instanceof Falcon && getOther(4) instanceof Falcon)) && getONum(4) == getONum(5))) {
                 return "CAN chain improperly wired at Talon " + hardwareID2;
             } else {
-                return getOther(5).getCAN(get(5), get(4));
+                if(!CircuitGUIManager.getSim().temp.containsKey(getOther(5))) {
+                    CircuitGUIManager.getSim().temp.put(getOther(5), getOther(5).getCAN(get(5), get(4)));
+                }
+                return CircuitGUIManager.getSim().temp.get(getOther(5));
             }
         } else if (c1 == get(5) && c2 == get(4)) {
             if (getNull(7) || getNull(6)) {
@@ -86,7 +90,10 @@ public class Talon extends Flippable {
             } else if (!(((getOther(7) instanceof Talon && getOther(6) instanceof Talon) || (getOther(7) instanceof Spark && getOther(6) instanceof Spark) || (getOther(7) instanceof Falcon && getOther(6) instanceof Falcon)) && getONum(6) == getONum(7))) {
                 return "CAN chain improperly wired at Talon " + hardwareID2;
             } else {
-                return getOther(7).getCAN(get(7), get(6));
+                if(!CircuitGUIManager.getSim().temp.containsKey(getOther(7))) {
+                    CircuitGUIManager.getSim().temp.put(getOther(7), getOther(7).getCAN(get(7), get(6)));
+                }
+                return CircuitGUIManager.getSim().temp.get(getOther(7));
             }
         } else {
             return "CAN chain improperly wired at Talon " + hardwareID2;

@@ -57,7 +57,7 @@ public class CircuitGUIManager implements Disposable {
     public static boolean helpMenuShown, optionsMenuShown, welcomeMenuShown, showWelcomeMenu = true;
     private static Window saveMenu;
     private final ModifiedStage stage;
-    private final Simulation sim;
+    private static Simulation sim;
     private final HashMap<TextButton, Boolean> filtersMap = new HashMap<>();
     private TextButton simulate;
     private TextButton back;
@@ -1088,6 +1088,10 @@ public class CircuitGUIManager implements Disposable {
             table.add(t).width(150);
         }
         table.row();
+    }
+
+    public static Simulation getSim() {
+        return sim;
     }
 
     @Override
