@@ -41,7 +41,7 @@ Head over to the [releases](https://github.com/MittyRobotics/tko-electronics-sim
 If you use Linux/Mac OS, run `./gradlew build` and then `./gradlew run` in a console in the top directory. <br>
 If it says permission denied, do `chmod +x gradlew`.
 
-Mac OS only: switch to the **lwjgl2-macs** branch to run. Otherwise, app may freeze during usage.
+Due to compatibility issues with LWJGL3 and the M1 chipset, the mac version pf the simulator still uses LWJGL2. Functionality should be close to identical. **Mac OS only: switch to the lwjgl2-macs branch to run.** Otherwise, app may freeze during usage.
 
 ## Device/Component List
 
