@@ -382,6 +382,8 @@ public class CircuitGUIManager implements Disposable {
                     propertiesBox.hide();
                     simulate.setText("Simulate");
                     sim.isRunning = false;
+                    sim.changed = false;
+                    System.gc();
                 } else {
 
                     if (HardwareManager.getHardware() == null || HardwareManager.getHardware().size == 0) {
@@ -972,13 +974,22 @@ public class CircuitGUIManager implements Disposable {
         }
 
         if (sim.isRunning) {
-            for (Hardware h : HardwareManager.getHardware()) {
-                h.stopDrawErrorHover();
-                h.stopDrawGoodHover();
-                //h.resetLEDs();
+            if(sim.changed) {
+                for (Hardware h : HardwareManager.getHardware()) {
+                    h.stopDrawErrorHover();
+                    h.stopDrawGoodHover();
+                    //h.resetLEDs();
+                }
+                popup.removeLabels();
+                sim.simulate();
+            } else {
+                popup.removeLabels();
+                for (Hardware h : HardwareManager.getHardware()) {
+                    if(sim.store.containsKey(h)) {
+                        CircuitGUIManager.popup.addLabel(sim.store.get(h), h.getPositionProjected());
+                    }
+                }
             }
-            popup.removeLabels();
-            sim.simulate();
         }
 
 

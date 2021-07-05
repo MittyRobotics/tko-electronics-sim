@@ -504,6 +504,7 @@ public class Cable implements Json.Serializable {
                         HardwareManager.removeCableFromHardware(this, connection1);
                         HardwareManager.removeCableFromHardware(this, connection2);
                     }
+                    CircuitGUIManager.getSim().changed = true;
                 }
 
                 // DRAW NODES IF SELECTED
@@ -632,6 +633,7 @@ public class Cable implements Json.Serializable {
                 }
                 appendingFromEnd = false;
                 appendingFromBegin = false;
+                CircuitGUIManager.getSim().changed = true;
             }
 
         }
