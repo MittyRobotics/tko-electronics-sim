@@ -604,6 +604,8 @@ public abstract class Hardware implements Json.Serializable {
             CableManager.currentCable.appendingFromBegin = false;
             CableManager.currentCable = null;
         }
+
+        CircuitGUIManager.getSim().changed = true;
     }
 
     public boolean acceptPortConnection(Cable cable, int port) {
@@ -697,6 +699,8 @@ public abstract class Hardware implements Json.Serializable {
             CableManager.currentCable.appendingFromBegin = false;
             CableManager.currentCable = null;
         }
+
+        CircuitGUIManager.getSim().changed = true;
     }
 
 
@@ -794,6 +798,8 @@ public abstract class Hardware implements Json.Serializable {
         HardwareManager.removeHardware(this);
         HardwareManager.currentHardware = null;
         CircuitGUIManager.propertiesBox.hide();
+
+        CircuitGUIManager.getSim().changed = true;
     }
 
     public void setPosition(float x, float y) {
@@ -850,6 +856,7 @@ public abstract class Hardware implements Json.Serializable {
             cable.setConnection1(this);
             cable.connection1port = port;
         }
+        CircuitGUIManager.getSim().changed = true;
     }
 
     public Vector2 calculateDirection(int dir, int port, int... length) {
