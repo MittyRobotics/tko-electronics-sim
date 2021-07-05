@@ -55,7 +55,7 @@ public class CircuitScreen implements Screen {
     private final CircuitGUIManager manager;
     public Vector2 selectMultiple1, selectMultiple2;
     private Hardware currentPlacingHardware;
-    private boolean isMac = false;
+    private boolean isMacOrWindows = false;
 
 
     public CircuitScreen(final Game game, String... loading) {
@@ -74,8 +74,8 @@ public class CircuitScreen implements Screen {
         stage = new ModifiedStage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()), batch);
         manager = new CircuitGUIManager(stage, camera, game);
 
-        if (SystemUtils.IS_OS_MAC) {
-            isMac = true;
+        if (SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_WINDOWS) {
+            isMacOrWindows = true;
         }
 
         InputMultiplexer plexer = new InputMultiplexer(stage, new InputManager() {
@@ -119,7 +119,7 @@ public class CircuitScreen implements Screen {
                         selectMultiple2.add(x, -y);
 
                     } else if (Constants.placing_object == null && !HardwareManager.movingObject && CableManager.currentCable == null && HardwareManager.currentHardware == null) {
-                        if (!isMac) {
+                        if (!isMacOrWindows) {
                             camera.getCamera().translate(-x * 5, y * 5);
                         } else {
                             camera.getCamera().translate(-x, y);
