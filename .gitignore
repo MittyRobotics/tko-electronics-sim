@@ -1,14 +1,14 @@
 ## Java
 
 lwjgl3/build/
-packaging/out-windows-launch4j/jre/
+packaging/exe/jre/
 *.class
 *.war
 *.ear
 hs_err_pid*
 
-deb/
-packaging/
+packaging/exe/jre/
+packaging/exe/tko-electronics-sim.exe
 
 ## Robovm
 /ios/robovm-build/

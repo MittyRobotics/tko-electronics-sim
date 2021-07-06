@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>/home/kronos/development/FRC_amhsrobotics/tko-electronics-sim/packaging/out-windows-launch4j/bin/tko-electronics-sim.jar</jar>
-  <outfile>/home/kronos/development/FRC_amhsrobotics/tko-electronics-sim/packaging/out-windows-launch4j/bin/tko-electronics-sim.exe</outfile>
+  <jar>/home/kronos/development/FRC_amhsrobotics/tko-electronics-sim/lwjgl3/build/libs/tko-electronics-sim-0.0.1.jar</jar>
+  <outfile>/home/kronos/development/FRC_amhsrobotics/tko-electronics-sim/packaging/out-windows-launch4j/tko-electronics-sim.exe</outfile>
   <errTitle>TKO Circuit Simulator Requires Java!</errTitle>
   <cmdLine></cmdLine>
   <chdir>.</chdir>
@@ -15,14 +15,14 @@
   <manifest></manifest>
   <icon>/home/kronos/development/FRC_amhsrobotics/tko-electronics-sim/lwjgl3/src/main/resources/logo.ico</icon>
   <classPath>
-    <mainClass>com.amhsrobotics.circuitsim.lwjgl3.DesktopLauncher</mainClass>
+    <mainClass>com.amhsrobotics.circuitsim.lwjgl3.Lwjgl3Launcher</mainClass>
   </classPath>
   <jre>
-    <path>../jre</path>
+    <path>jre</path>
     <bundledJre64Bit>true</bundledJre64Bit>
     <bundledJreAsFallback>false</bundledJreAsFallback>
-    <minVersion>1.8.0</minVersion>
-    <maxVersion>1.14.0</maxVersion>
+    <minVersion></minVersion>
+    <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
     <runtimeBits>64/32</runtimeBits>
     <initialHeapSize>1024</initialHeapSize>
