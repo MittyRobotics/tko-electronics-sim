@@ -163,6 +163,18 @@ a.white:hover {
   color: #ffffff;
 }
 
+.contact-link:hover {
+  color: #85d4ff;
+}
+
+.name-link {
+  color: #85d4ff !important;
+}
+
+.name-link:hover {
+  color: #1AADFF !important;
+}
+
 .download-tile {
   background-color: #f0f0f6;
   padding-top: 2rem;
