@@ -728,8 +728,8 @@ input[type="checkbox"] {
 /*     Features     */
 /********************/
 .tabs {
-  padding-top: 8rem;
-  padding-bottom: 8.5rem;
+  padding-top: 5rem;
+  padding-bottom: 6rem;
 }
 
 .tabs .section-title {
@@ -809,8 +809,8 @@ input[type="checkbox"] {
 /*     Details     */
 /*******************/
 .basic-1 {
-  padding-top: 7.75rem;
-  padding-bottom: 8.25rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 
 .basic-1 .text-container {
