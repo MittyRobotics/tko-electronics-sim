@@ -1253,7 +1253,7 @@ input[type="checkbox"] {
 /******************************/
 /*     Back To Top Button     */
 /******************************/
-a.back-to-top {
+/* a.back-to-top {
   position: fixed;
   z-index: 999;
   right: 12px;
@@ -1269,7 +1269,7 @@ a.back-to-top {
 
 a:hover.back-to-top {
   background-color: #4d3dc4;
-}
+} */
 
 /***********************/
 /*     Extra Pages     */
