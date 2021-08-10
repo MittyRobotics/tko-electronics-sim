@@ -179,7 +179,6 @@ a.white:hover {
   background-color: #f0f0f6;
   padding-top: 2rem;
   
-  padding-bottom: 2rem;
   border-radius: 30px;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
 }
@@ -190,6 +189,7 @@ a.white:hover {
 
 .download-col {
   transition: transform 0.5s;
+  margin-bottom: 30px;
 }
 
 .download-col:hover {
@@ -1416,6 +1416,10 @@ a:hover.back-to-top {
   .h1-large {
     font-size: 3.5rem;
     line-height: 4.375rem;
+  }
+
+  .download-tile {
+    padding-bottom: 2rem;
   }
 
   .h2-heading {
