@@ -148,6 +148,11 @@ a.white:hover {
   color: #ffffff;
 }
 
+.download-col:nth-child(2) {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+
 .section-title {
   color: #1bacff;
   font-weight: 600;
@@ -1160,28 +1165,28 @@ input[type="checkbox"] {
   text-align: center;
 }
 
-.basic-3 .fa-stack {
+.fa-stack {
   width: 2em;
   margin-bottom: 0.75rem;
   margin-right: 0.375rem;
   font-size: 1.5rem;
 }
 
-.basic-3 .fa-stack .fa-stack-1x {
+.fa-stack .fa-stack-1x {
   color: #fff;
   transition: all 0.2s ease;
 }
 
-.basic-3 .fa-stack .fa-stack-2x {
+.fa-stack .fa-stack-2x {
   color: #295397;
   transition: all 0.2s ease;
 }
 
-.basic-3 .fa-stack:hover .fa-stack-1x {
+.fa-stack:hover .fa-stack-1x {
   color: #295397;
 }
 
-.basic-3 .fa-stack:hover .fa-stack-2x {
+.fa-stack:hover .fa-stack-2x {
   color: #f3f7fd;
 }
 
