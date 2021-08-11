@@ -42,20 +42,19 @@ html {
   height: 100%;
 }
 
-::-webkit-scrollbar { 
-  width: 6px; 
-} 
- 
-::-webkit-scrollbar-track { 
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); 
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); 
-  border-radius: 10px; 
-} 
- 
-::-webkit-scrollbar-thumb { 
-  background-color: #68c7fe; 
-} 
- 
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #68c7fe;
+}
 
 body,
 p {
@@ -172,13 +171,13 @@ a.white:hover {
 }
 
 .name-link:hover {
-  color: #1AADFF !important;
+  color: #1aadff !important;
 }
 
 .download-tile {
   background-color: #f0f0f6;
   padding-top: 2rem;
-  
+
   border-radius: 30px;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
 }
@@ -839,9 +838,6 @@ input[type="checkbox"] {
   margin-left: 0.5rem;
 }
 
-
-
-
 /*******************/
 /*     Pricing     */
 /*******************/
@@ -1460,7 +1456,6 @@ a:hover.back-to-top {
   #special {
     top: 25% !important;
   }
-  
 
   /* Header */
   .header {
@@ -1477,7 +1472,7 @@ a:hover.back-to-top {
     z-index: 1;
     top: -80px;
     left: -40px;
-    width: 800px;
+    width: 750px;
   }
 
   .header .header-decoration {
