@@ -1228,11 +1228,6 @@ a:hover.back-to-top {
     line-height: 4.375rem;
   }
 
-  #special {
-    top: 25% !important;
-  }
-
-
   .download-tile {
     padding-bottom: 2rem;
   }
@@ -1461,6 +1456,11 @@ a:hover.back-to-top {
     padding-left: 1.5rem;
   }
   /* end of navigation */
+
+  #special {
+    top: 25% !important;
+  }
+  
 
   /* Header */
   .header {
