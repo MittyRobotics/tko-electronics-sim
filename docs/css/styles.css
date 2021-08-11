@@ -717,7 +717,7 @@ input[type="checkbox"] {
 }
 
 #special {
-  top: 20%;
+  top: 20% !important;
 }
 
 .cards-1 .card-title {
