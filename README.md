@@ -24,6 +24,8 @@ https://user-images.githubusercontent.com/54689920/197682521-fb6d358b-164f-48b4-
 - Keybinds, help menu, options menu, and other QOL features
 - Packages for easy installation (support for Windows, MacOS, Linux)
 
+![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
+
 ## Future Updates
 
 - Enable resizing
