@@ -4,11 +4,10 @@
 FRC circuit simulator for electronics diagramming and rookie training.<br>
 Created by **TKO Programming** ([Rohan Bansal](https://github.com/Rohan-Bansal) and [Andy Li](https://github.com/AndyLi23)).
 
-Winner of the **2021 KLA Software Engineering Award**!
+### Winner of the 2021 KLA Software Engineering Award!
+### Website: [sim.amhsrobotics.com](https://sim.amhsrobotics.com)
 
-Website: [sim.amhsrobotics.com](https://sim.amhsrobotics.com)
-
-![diagram](https://www.chiefdelphi.com/uploads/default/original/3X/4/b/4b3d36734577676d8211377c06b7b3f657fd1967.png)
+https://user-images.githubusercontent.com/54689920/197682397-4952add3-5619-4b1e-ae45-b23b28ffb389.mp4
 
 ## Features
 
